@@ -1,0 +1,22 @@
+version: '3.1'
+
+services:
+
+  db:
+    build: ./db
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: trytofindme
+
+  adminer:
+    build: ./adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  node:
+    build: ./app
+    restart: always
+    ports: 
+      - 9000:3000
+
