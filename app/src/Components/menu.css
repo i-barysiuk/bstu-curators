@@ -1,0 +1,176 @@
+.container-menu
+{
+    top:5%;
+    left: 0%;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    flex-direction: column;
+    width: 250px;
+    height: 95%;
+    background: #353F52;
+}
+
+.ul-menu
+{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.li-menu
+{
+    display: flex;
+    list-style-type: none; 
+    width: 100%;
+    transition-property: background;
+    transition-duration: 0.3s;
+}
+
+.li-menu:hover
+{
+    background:#2B3443;   
+}
+
+.li-menu-1
+{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    margin-bottom: 10px;
+}
+
+.li-menu-7
+{
+    background: #2B3443;
+    position: absolute;
+    bottom: 6.5%;
+}
+
+.li-menu-8
+{
+    position: absolute;
+    bottom: 2%;
+}
+
+.Icons-menu
+{
+    filter: invert(1);
+    height: 25px;
+    width: 25px;
+    margin-left: 30px;
+}
+
+.Icons-menu-l
+{
+    filter: invert(1);
+    height: 25px;
+    width: 25px;
+    margin-left: 21px;
+}
+
+.photo-menu
+{
+    float: left;
+    margin-right: 8px;
+    margin-left: 25px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100px; /* Радиус скругления */
+    border: 3px solid rgb(25, 44, 25); /* Параметры рамки */
+    box-shadow: 0 0 7px #666;   
+}
+
+.a-menu
+{
+    text-decoration: none; 
+    color:white;
+    font-family: century;
+    width: 100%;              
+}
+
+.FIO-menu
+{
+    font-size: 15px;
+    display: flex;  
+}
+
+.no-marka-menu
+{   
+    display:none; 
+    height: 90%;
+    width: 5px;
+    background: #04BAFF;
+}
+
+.marka-menu
+{   
+    display:inline-flex; 
+    height: 90%;
+    width: 5px;
+    background: #04BAFF;
+}
+
+.text-menu
+{
+    font-size: 24px;
+    margin-left: 5px;
+}
+ 
+.active-menu
+{
+    background: #2B3443;
+}
+
+@media screen and (max-width: 720px)
+{
+    .container-menu
+    {
+        width: 50px;
+        left:0%;
+    }
+    
+    .text-menu, .FIO-menu , .li-menu-7 , .li-menu-5
+    {
+        display: none;
+    }
+   
+    .a-menu
+    {
+        margin-right: 0px;
+    }
+
+    .Icons-menu
+    {
+        margin-left: 13px;
+    }
+
+    .Icons-menu-l
+    {
+        filter: invert(1);
+        height: 25px;
+        width: 25px;
+        margin-left: 4px;
+    }
+    
+    .photo-menu
+    {
+        display: flex;
+        margin-left: 6px;
+    }  
+
+    .marka-menu
+    {
+        width: 5px;
+        margin-left: 0px;
+    }
+
+    .li-menu-1
+    {
+        display: flex; 
+        width: 100%;
+        
+    }   
+}   
+
