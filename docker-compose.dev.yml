@@ -1,27 +1,27 @@
 version: "3.1"
 
 services:
-  db:
+  db_dev:
     image: postgres
     restart: always
     environment:
       POSTGRES_PASSWORD: trytofindme
     volumes:
-      - ./db:/var/lib/postgresql/data
+      - ./db:/var/lib/postgresql/data_dev
 
-  adminer:
+  adminer_dev:
     image: adminer
     restart: always
     ports:
       - 8090:8080
 
-  app:
+  app_dev:
     build: ./app
     restart: always
     ports:
       - 8091:3000
 
-  server:
+  server_dev:
     build: ./server
     restart: always
     ports:
