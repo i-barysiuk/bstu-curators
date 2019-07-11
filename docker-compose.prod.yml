@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_PASSWORD: trytofindme
     volumes:
-      - ./db:/var/lib/postgresql/data_prod
+      - ./db/db_prod:/var/lib/postgresql/data
 
   adminer_prod:
     image: adminer
@@ -16,13 +16,17 @@ services:
       - 8070:8080
 
   app_prod:
-    build: ./app
+    build:
+        context: ./app
+        dockerfile: prod.Dockerfile
     restart: always
     ports:
       - 8071:3000
 
   server_prod:
-    build: ./server
+    build:
+        context: ./server
+        dockerfile: prod.Dockerfile
     restart: always
     ports:
       - 8072:3000

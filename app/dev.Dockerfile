@@ -10,7 +10,7 @@ RUN npm install
 ADD src /usr/src/app/src
 ADD public /usr/src/app/public
 
-#RUN npm run build
+#RUN npm run start
 
 EXPOSE 3000
 
