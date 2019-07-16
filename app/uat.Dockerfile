@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 COPY package.json ./
 RUN npm install
 COPY . ./
-RUN npm run build
+RUN npm run build:uat
 
 # Stage 2 - the production environment
 FROM nginx:stable-alpine

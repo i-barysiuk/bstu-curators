@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD sleep 15s && npm start
+CMD npm start
