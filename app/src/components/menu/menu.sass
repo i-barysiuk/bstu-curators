@@ -1,0 +1,120 @@
+//container
+$width-container-mobile: 50px    
+$width-container: 250px
+$bg-container: #353F52
+//first item height
+$firstItem-height: 50px 
+//photo in menu
+$ph-width: 30px
+$ph-height: 30px 
+//FIO in menu
+$FIO-size: 15px
+//Icons in menu
+$Icon-height: 34px
+$Icon-width: 34px  
+//text in menu
+$tx-color: white
+$tx-font: century
+$tx-size: 24px
+//label in menu(blue)
+$ll-width: 5px
+$ll-color: #04BAFF
+//hover color on menu
+$hover-color: #2B3443    
+//color when click on menu    
+$click-color: #2B3443    
+
+.container-menu
+    height: 94vh
+    width: $width-container   
+    background: $bg-container
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+
+.ul-menu
+    display: flex
+    flex-direction: column
+    padding: 0
+    width: 100%
+
+.li-menu
+    list-style-type: none 
+    width: 100%
+    transition-property: background
+    transition-duration: 0.5s 
+
+.li-menu:hover
+    background: $hover-color   
+
+.li-menu:hover .no-label-menu
+    background: $hover-color
+
+.li-menu-7
+    background: $hover-color
+
+.li-menu-8
+    order: 8
+
+.Icons-menu
+    height: $Icon-height
+    width: $Icon-width
+
+.photo-menu
+    width: $ph-width
+    height: $ph-height
+    border-radius: 100px    
+
+.FIO-menu
+    font-size: $FIO-size
+    flex-basis: 74% 
+
+.a-menu
+    display: flex
+    text-decoration: none 
+    color: $tx-color
+    font-family: $tx-font
+    width: 100%       
+    height: 34px       
+    flex-direction: row
+    justify-content: space-between
+    align-items: center
+
+.a-menu-1
+    height: $firstItem-height
+
+.no-label-menu
+    height: 100%
+    width: 5px
+    background: $bg-container
+    transition-property: background
+    transition-duration: 0.5s 
+
+.label-menu
+    height: 100%
+    width: $ll-width
+    background: $ll-color
+
+.text-menu
+    font-size: $tx-size
+    flex-basis: 74%
+
+.active-menu
+    background: $click-color
+ 
+.invisibility-cloak-menu
+    display: none
+
+@media screen and (max-width: 720px)
+
+    .container-menu
+        width: $width-container-mobile
+    
+    .text-menu, .FIO-menu , .li-menu-7 , .li-menu-5
+        display: none
+    
+    .invisibility-cloak-menu
+        display: inline
+    
+   
+
