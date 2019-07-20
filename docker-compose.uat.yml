@@ -21,7 +21,7 @@ services:
       dockerfile: uat.Dockerfile
     restart: always
     ports:
-      - 8010:3000
+      - 8010:80
 
   server_uat:
     build:
