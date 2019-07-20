@@ -1,18 +1,18 @@
-var express = require('express');
+var express = require("express");
 var app = express();
 
-//Sequelize
+
 var env = require('dotenv');
 //Models
 var models = require("./db/models");
 
 var PORT = 3000;
-app.get('/' , (req, res) => res.send('Hi world'));
-app.listen(PORT , (err) => 
-{
-    if(err) return console.log('something bad happened', err);
-    console.log('Server is starting');
+app.get("/", (req, res) => res.send("Hi world"));
+app.listen(PORT, err => {
+  if (err) return console.log("something bad happened", err);
+  console.log("Server is starting");
 });
+
 
 //Sync Database
 models.sequelize.sync().then(function() {

@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  db_uat:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: trytofindme
+    volumes:
+      - ./db/db_uat:/var/lib/postgresql/data
+
+  adminer_uat:
+    image: adminer
+    restart: always
+    ports:
+      - 8012:8080
+
+  app_uat:
+    build:
+      context: ./app
+      dockerfile: uat.Dockerfile
+    restart: always
+    ports:
+      - 8010:80
+
+  server_uat:
+    build:
+      context: ./server
+      dockerfile: uat.Dockerfile
+    restart: always
+    ports:
+      - 8011:3000

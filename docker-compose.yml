@@ -6,23 +6,11 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: trytofindme
-    volumes:
-      - ./db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
 
   adminer:
     image: adminer
     restart: always
     ports:
-      - 8090:8080
-
-  app:
-    build: ./app
-    restart: always
-    ports:
-      - 8091:3000
-
-  server:
-    build: ./server
-    restart: always
-    ports:
-      - 8092:3000
+      - 8020:8080
