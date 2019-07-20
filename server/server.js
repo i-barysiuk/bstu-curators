@@ -1,5 +1,8 @@
 var express = require("express");
-var app = express();
+var cors = require('cors')
+var app = express()
+
+app.use(cors())
 
 var PORT = 3000;
 app.get("/", (req, res) => res.send("Hi world"));
