@@ -1,22 +1,19 @@
-var JWTService =require('./services/jwtService');
-var express = require('express');
-var app = express();
+var sequelize = require("./db");
+const app = require("./app");
+const PORT = 8000;
+const HOST = "0.0.0.0";
 
-var PORT = 3000;
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Connection has been established successfully");
+  })
+  .catch(err => {
+    console.error("Unable to connect to the database:", err);
+  });
 
-app.get('/' , (req, res) => res.send('Hi world'));
-app.get('/login' , (req, res) => {
-    var tokens = JWTService.generate({id: 1, role: 'admin'})
-    var decode = JWTService.validate(tokens.accessToken)
-    res.send({tokens : tokens, decode : decode})
+server = app.listen(PORT, err => {
+  if (err) console.error(err);
 });
-
-app.listen(PORT , (err) => 
-{
-    if(err) return console.log('something bad happened', err);
-    console.log('Server is starting');
-});
-
-
-//for start server use: 1 - 'node server.js' , 2 - 'npm start' , or 3 - 'nodemon server.js'
-// '3' way allows you to refresh the page without rebooting the server
+server.setTimeout(5000000);
+console.log(`Running on http://${HOST}:${PORT}`);
