@@ -1,12 +1,12 @@
 import React from 'react';
-import axios from 'axios';
- 
+import api from '../../helper/api';
+
 export default class Request extends React.Component {
   state = {
     people: []
   }
   componentDidMount() {
-    axios.get(`http://localhost:3000/`)
+    api(`http://localhost:3000/`)
       .then(res => {
         const people= res.data;
         this.setState({ people});

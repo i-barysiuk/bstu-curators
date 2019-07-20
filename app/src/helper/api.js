@@ -11,11 +11,10 @@ const api = (url, method="GET", data)=>{
         case 'DELETE':
             return axios.delete(url);
         case 'PATCH':
-            return axios.patch(url, date);
+            return axios.patch(url, data);
         case 'OPTIONS':
             return axios.options(url);
 
     }
 }
-
-module.exports=api;
+export default api;
