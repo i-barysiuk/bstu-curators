@@ -1,27 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import But from './components/antd-example/Ant-d.js'
+import React from "react";
+import "./App.css";
+import { BrowserRouter, Route } from "react-router-dom";
+import Login from "./components/login/Login";
+import Dashboard from "./components/dashboard/Dashboard";
+import Header from "./components/header/Header";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <But/>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Route exact path="/" component={Header} />
+      <Route path="/login" component={Login} />
+      <Route path="/dashboard" component={Dashboard} />
+    </BrowserRouter>
   );
 }
 
