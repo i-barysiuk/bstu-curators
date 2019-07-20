@@ -29,6 +29,11 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("Hello world\n");
 });
+app.get("/login", (req, res) => {
+  var tokens = JWTService.generate({ id: 1, role: "admin" });
+  var decode = JWTService.validate(tokens.accessToken);
+  res.send({ tokens: tokens, decode: decode });
+});
 
 app.use("/api/users", UserController);
 
