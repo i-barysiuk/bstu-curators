@@ -9,7 +9,7 @@
     "react-scripts": "3.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env NODE_ENV=development react-scripts start",
     "build": "cross-env NODE_ENV=production react-scripts build",
     "build:uat": "cross-env NODE_ENV=test react-scripts build",
     "test": "react-scripts test",
