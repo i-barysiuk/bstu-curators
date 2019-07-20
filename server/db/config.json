@@ -1,29 +1,23 @@
 {
- 
     "development": {
         "username": "postgres",
         "password": "trytofindme",
         "database": "postgres",
         "host": "127.0.0.1",
         "dialect": "postgres"
- 
     },
- 
     "test": {
-        "username": "",
-        "password": null,
-        "database": "",
-        "host": "",
+        "username": "postgres",
+        "password": "trytofindme",
+        "database": "postgres",
+        "host": "db_uat",
         "dialect": "postgres"
     },
- 
     "production": {
         "username": "postgres",
         "password": "trytofindme",
         "database": "postgres",
-        "host": "127.0.0.1",
+        "host": "db",
         "dialect": "postgres"
- 
     }
- 
 }
