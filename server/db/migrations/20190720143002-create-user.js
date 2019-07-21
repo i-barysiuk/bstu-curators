@@ -27,31 +27,31 @@ module.exports = {
         allowNull: false
       },
       first_name: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: false
       },
       last_name: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: false
       },
       f_name: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: true
       },
       email: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: false
       },
       phone: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: false
       },
       password: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: false
       },
       role: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         defaultValue: "user",
         allowNull: false
       },

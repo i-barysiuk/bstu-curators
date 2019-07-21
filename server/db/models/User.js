@@ -60,6 +60,18 @@ var User = sequelize.define(
       type: Sequelize.JSON,
       defaultValue: [],
       allowNull: false
+    },
+    departments: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    position: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    title: {
+      type: Sequelize.STRING,
+      allowNull: true
     }
   },
   {
