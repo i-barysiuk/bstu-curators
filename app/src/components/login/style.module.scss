@@ -8,98 +8,81 @@ $loginform-height: 250px;
 $loginform-bg: white;
 
 //logo
-$logo-width: 25%;
-$logo-height: 30%;
+$logo-width: 200px;
 
-.container
-{
-    display: flex;
-    width: 100%;
-    height: 100%;
+.container {
+  display: flex;
+  width: 100%;
+  height: 100%;
 }
-.bar
-{
-    height: 100%;
-    width: $bar-width;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    background: black;
-
+.bar {
+  height: 100%;
+  width: $bar-width;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background: black;
 }
-.rightSide
-{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: $rightside-width;
+.rightSide {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: $rightside-width;
 }
-.textCenter
-{
-    font-size: 36px;
+.textCenter {
+  font-size: 36px;
 }
-.loginForm
-{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    width: $loginform-width;
-    height: $loginform-height;
-    background: $loginform-bg;
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: $loginform-width;
+  height: $loginform-height;
+  background: $loginform-bg;
 }
-.boxAndForget
-{
-    display: flex;
-    flex-direction: row;
-    width: 90%;
-    justify-content: flex-end;
-    height: 30px;
-    align-items: center;
+.boxAndForget {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  justify-content: flex-end;
+  height: 30px;
+  align-items: center;
 }
-.checkBox
-{
-    flex-basis: 230px;
+.checkBox {
+  flex-basis: 230px;
 }
-.passAndCheckBox
-{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+.passAndCheckBox {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
-.logoAndCarousel
-{
-    width: 100%;
-    height: 70%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-
+.logoAndCarousel {
+  width: 100%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
 }
-.buttons
-{
-    width: 100%;
-    height: 10%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-
+.buttons {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
-.logo
-{
-    width: $logo-width;
-    height: $logo-height;
+.logo {
+  width: $logo-width;
 }
 @media screen and (max-width: 700px) {
-    .bar {
-      display: none;
-    }
-    .rightSide {
-        width: 100%;
-    }
+  .bar {
+    display: none;
   }
-  
+  .rightSide {
+    width: 100%;
+  }
+}

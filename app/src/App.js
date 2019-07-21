@@ -9,14 +9,12 @@ import Request from "./components/request/Request";
 
 function App() {
   return (
-    <div>
-      <Request />
-      <BrowserRouter>
-        <Route exact path="/" component={Header} />
-        <Route path="/login" component={Login} />
-        <Route path="/dashboard" component={Dashboard} />
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Route exact path="/" component={Header} />
+      <Route path="/login" component={Login} />
+      <Route path="/dashboard" component={Dashboard} />
+      <Route path="/dashboard" component={Request} />
+    </BrowserRouter>
   );
 }
 
