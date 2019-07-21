@@ -1,5 +1,65 @@
+import React from "react";
+import { Input, Checkbox, Button, Carousel, Icon } from 'antd';
+import { Link } from 'react-router-dom';
+import './style.css'
+import style from "./style.module.scss";
+import logo from "../../assets/images/logos/logo.png";
+
 function Login() {
-  return "LOGIN";
+  return (
+    <div className={style.container}>
+      
+      <div className={style.bar}> 
+
+        <div className={style.logoAndCarousel}>
+          <img src={logo} className={style.logo} alt="logo"/>
+          <Carousel autoplay>
+            <div>
+              <span>Безделие - игрушка дьявола.</span>
+            </div>
+            <div>
+              <span >У педа есть потеха, хуй сосать у политеха.</span>
+            </div>
+            <div>
+              <span >БрГТУ - самый лучший вуз.</span>
+            </div>
+            <div>
+              <span>Лучше хуем бить орехи чем учиться в политехе.</span>
+            </div>
+          </Carousel>
+        </div>
+        <div className={style.buttons}>
+          <span className={style.mainButton}>
+            <Button type="primary" href="#">
+              <Icon type="left" />
+              На главную
+            </Button>
+          </span>
+          <span className={style.helpButton}>
+            <Button type="primary" shape="round" size={'medium'} href="#">
+              Помощь
+            </Button>
+          </span>
+        </div>
+      </div>
+
+      <div className={style.rightSide}>
+        <div className={style.loginForm}>
+          <span className={style.textCenter}>Вход</span>
+          <Input size="large" placeholder="Email" />
+          <span className={style.passAndCheckBox}>
+            <Input.Password size="large" placeholder="Password" />
+            <span className={style.boxAndForget}>
+              <span className={style.checkBox}><Checkbox>Запомнить меня</Checkbox></span>
+              <Link to={'#'}><span className={style.forgetPass}>Забыли пароль?</span></Link>  
+            </span>
+          </span>
+          <Button type="primary" className={style.button} href="#">Войти</Button>
+        </div>
+      </div>
+    </div>
+      
+  );
 }
 
 export default Login;

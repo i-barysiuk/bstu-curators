@@ -1,0 +1,106 @@
+.container
+{
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+.bar
+{
+    height: 100%;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background: black;
+
+}
+.rightSide
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 60%;
+}
+.loginForm
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 400px;
+    height: 250px;
+    background: white;
+}
+
+.enterButton
+{
+    width: 250px;
+}
+.textCenter
+{
+    font-size: 36px;
+}
+.boxAndForget
+{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    justify-content: flex-end;
+    height: 30px;
+    align-items: center;
+}
+.checkBox
+{
+    flex-basis: 230px;
+}
+.passAndCheckBox
+{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.logoAndCarousel
+{
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+
+}
+
+
+.sliderText
+{
+    color: white;
+    font-size: 21px;
+    align-items: center;
+
+}
+.buttons
+{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+}
+.logo
+{
+    width: 25%;
+    height: 30%;
+}
+@media screen and (max-width: 700px) {
+    .bar {
+      display: none;
+    }
+    .rightSide {
+        width: 100%;
+    }
+  }
+  
