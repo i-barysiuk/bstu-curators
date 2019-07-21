@@ -1,3 +1,16 @@
+//bar
+$bar-width: 40%;
+//rightside
+$rightside-width: 60%;
+//loginform
+$loginform-width: 400px;
+$loginform-height: 250px;
+$loginform-bg: white;
+
+//logo
+$logo-width: 25%;
+$logo-height: 30%;
+
 .container
 {
     display: flex;
@@ -7,7 +20,7 @@
 .bar
 {
     height: 100%;
-    width: 40%;
+    width: $bar-width;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -22,7 +35,7 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    width: 60%;
+    width: $rightside-width;
 }
 .loginForm
 {
@@ -30,18 +43,9 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    width: 400px;
-    height: 250px;
-    background: white;
-}
-
-.enterButton
-{
-    width: 250px;
-}
-.textCenter
-{
-    font-size: 36px;
+    width: $loginform-width;
+    height: $loginform-height;
+    background: $loginform-bg;
 }
 .boxAndForget
 {
@@ -72,15 +76,6 @@
     align-items: center;
 
 }
-
-
-.sliderText
-{
-    color: white;
-    font-size: 21px;
-    align-items: center;
-
-}
 .buttons
 {
     width: 100%;
@@ -92,8 +87,8 @@
 }
 .logo
 {
-    width: 25%;
-    height: 30%;
+    width: $logo-width;
+    height: $logo-height;
 }
 @media screen and (max-width: 700px) {
     .bar {

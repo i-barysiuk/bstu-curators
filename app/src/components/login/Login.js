@@ -15,16 +15,16 @@ function Login() {
           <img src={logo} className={style.logo} alt="logo"/>
           <Carousel autoplay>
             <div>
-              <span>Безделие - игрушка дьявола.</span>
+              <span>Test 1</span>
             </div>
             <div>
-              <span >У педа есть потеха, хуй сосать у политеха.</span>
+              <span >Test 2</span>
             </div>
             <div>
-              <span >БрГТУ - самый лучший вуз.</span>
+              <span >Test 3</span>
             </div>
             <div>
-              <span>Лучше хуем бить орехи чем учиться в политехе.</span>
+              <span>Что-то прекрасное о вузе</span>
             </div>
           </Carousel>
         </div>
@@ -54,7 +54,7 @@ function Login() {
               <Link to={'#'}><span className={style.forgetPass}>Забыли пароль?</span></Link>  
             </span>
           </span>
-          <Button type="primary" className={style.button} href="#">Войти</Button>
+          <Button type="primary" href="#">Войти</Button>
         </div>
       </div>
     </div>
