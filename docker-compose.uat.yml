@@ -29,4 +29,4 @@ services:
       dockerfile: uat.Dockerfile
     restart: always
     ports:
-      - 8011:3000
+      - 8011:8000
