@@ -1,20 +1,11 @@
 const Sequelize = require("sequelize");
 const Group = require("../db/models/Group");
-const Op = Sequelize.Op;
 
 class GroupService {
   get(uuid) {
     return Group.findOne({
       where: {
         uuid
-      }
-    });
-  }
-
-  find(userId) {
-    return Group.findOne({
-      where: {
-        [Op.or]: [{ name: userId}, { faculty: userId }]
       }
     });
   }
@@ -26,12 +17,12 @@ class GroupService {
   create(body) {
     return Group.findOrCreate({
       where: {
-        uuid: body.uuid
+        uuid: body.uuid,
+        name: body.name
       },
       defaults: {
         userId: body.userId,
         faculty: body.faculty,
-        name: body.name,
         total: body.total,
         gender: body.gender,
         comunity: body.comunity,

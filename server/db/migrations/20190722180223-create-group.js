@@ -2,15 +2,14 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('groups', {
-      uuid: {
-        type: Sequelize.UUID,
-        primaryKey: true,
-        defaultValue: Sequelize.UUIDV4
+    uuid: {
+      type: Sequelize.UUID,
+      primaryKey: true,
+      defaultValue: Sequelize.UUIDV4
       },
       userId: {
         type: Sequelize.UUID,
-        primaryKey: true,
-        defaultValue: Sequelize.UUIDV4
+        primaryKey: false
       },
       faculty: {
         type: Sequelize.ENUM('ФЭИС','ЭФ ','СФ','МСФ','ФИСЭ', 'Заочное', 'Иностранные'),
@@ -25,46 +24,84 @@ module.exports = {
         allowNull: false
       },
       gender: {
-        type: Sequelize.JSON({
-          men: INT,
-          women: INT
-        }),
-        allowNull: false
-      },
+          men = {
+            type: Sequelize.INT,
+            allowNull: false
+          },
+          women = {
+            type: Sequelize.INT,
+            allowNull: false
+          }
+        },
       comunity: {
-        type: Sequelize.JSON({
-          brsm: INT,
-          profcom: INT,
-          belrus: INT,
-          other: INT
-        }),
-        allowNull: false
+          brsm = {
+            type: Sequelize.INT,
+            allowNull: false
+          },
+          profcom = {
+            type: Sequelize.INT,
+            allowNull: false
+          },
+          belrus = {
+            type: Sequelize.INT,
+            allowNull: false
+          },
+          other = {
+            type: Sequelize.INT,
+            allowNull: false
+          }
       },
       family: {
-        type: Sequelize.JSON({
-          standart: INT,
-          many: INT,
-          incomplete: INT,
-          orphans: INT
-        }),
-        allowNull: false
+          standart = {
+            type: Sequelize.INT,
+            allowNull: false
+          },
+          many = {
+            type: Sequelize.INT,
+            allowNull: false
+          },
+          incomplete = {
+            type: Sequelize.INT,
+            allowNull: false
+          },
+          orphans = {
+            type: Sequelize.INT,
+            allowNull: false
+          }
       },
       geography: {
-        type: Sequelize.JSON({
-          local: INT,
-          nonresident: INT,
-          foreigners: INT
-        }),
-        allowNull: true
+          local = 
+          {
+            type: Sequelize.INT,
+            allowNull: false
+          },
+          nonresident = {
+            type: Sequelize.INT,
+            allowNull: false
+          },
+          foreigners = {
+            type: Sequelize.INT,
+            allowNull: false
+          }
       },
       living: {
-        type: Sequelize.JSON({
-          parents: INT,
-          relatives: INT,
-          hostel: INT,
-          apartments: INT
-        }),
-        allowNull: false
+
+          parents = {
+            type: Sequelize.INT,
+            allowNull: false
+          },
+          relatives = {
+            type: Sequelize.INT,
+            allowNull: false
+          },
+          hostel = {
+            type: Sequelize.INT,
+            allowNull: false
+          },
+          apartments = {
+            type: Sequelize.INT,
+            allowNull: false
+          }
       },
       social: {
         type: Sequelize.JSON({
