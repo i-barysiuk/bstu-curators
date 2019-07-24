@@ -2,27 +2,6 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.addColumn("users", {
-      departments: {
-        type: Sequelize.STRING,
-      },
-      position: {
-        type: Sequelize.STRING,
-      },
-      title: {
-        type: Sequelize.STRING,
-      },
-    });
-  },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.removeColumn("users",{ departaments, position, title})}
-};
-
-
-"use strict";
-
-module.exports = {
-  up: (queryInterface, Sequelize) => {
     return queryInterface.sequelize.transaction(t => {
       return Promise.all([
         queryInterface.addColumn(
