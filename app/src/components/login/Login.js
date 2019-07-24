@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "./style.css";
 import style from "./style.module.scss";
 import logo from "../../assets/images/logos/logo.png";
+import 'antd/dist/antd.css';
 
 function Login(props) {
   const { getFieldDecorator } = props.form;
@@ -28,17 +29,13 @@ function Login(props) {
           </Carousel>
         </div>
         <div className={style.buttons}>
-        <span className={style.mainButton}>
-          <Button type="primary" href="#">
-            <Icon type="left" />
-              На главную
-          </Button>
-        </span>
-        <span className={style.helpButton}>
-          <Button type="primary" size={"medium"} href="#">
-            Помощь
-          </Button>
-        </span>
+        <Button type="primary" href="#">
+          <Icon type="left" />
+            На главную
+        </Button>
+        <Button type="primary" size={"medium"} href="#">
+          Помощь
+        </Button>
         </div>
       </div>
 
@@ -56,55 +53,33 @@ function Login(props) {
                     placeholder="Имя пользователя"
                   />,
                 )}
+              </Form.Item>           
+               <Form.Item>
+                 {getFieldDecorator('password', {
+                  rules: [{ required: true, message: 'Введите ваш пароль!' }],
+                })(
+                  <Input.Password
+                    size="large"
+                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    type="password"
+                    placeholder="Пароль"
+                  />,
+                )}
               </Form.Item>
-              <span className={style.passAndCheckBox}>
-                <Form.Item>
-                  {getFieldDecorator('password', {
-                    rules: [{ required: true, message: 'Введите ваш пароль!' }],
-                  })(
-                    <Input.Password
-                      size="large"
-                      prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                      type="password"
-                      placeholder="Парольawdaw"
-                    />,
-                  )}
-                </Form.Item>
-                <span className={style.boxAndForget}>
-                  <Form.Item>
-                    {getFieldDecorator('remember', {
-                      valuePropName: 'checked',
-                      initialValue: true,
-                    })(<Checkbox>Запомнить меня</Checkbox>)}
-                  </Form.Item>     
-                </span> 
-              </span>
+              <Form.Item>
+                {getFieldDecorator('remember', {
+                  valuePropName: 'checked',
+                  initialValue: true,
+                })(<Checkbox>Запомнить меня</Checkbox>)}
+                  <Link to={"#"} className="login-form-forgot">
+                   Забыли пароль?
+                </Link>
+              </Form.Item>         
             </Form>  
             <Button type="primary" href="#">
               Войти
             </Button>
               или <Link to={"#"}>зарегистрироваться</Link>   
-            <Link to={"#"}>
-              забыли пароль?
-            </Link>   
-
-          {/* <Input size="large" placeholder="Email" />
-          <span className={style.passAndCheckBox}>
-            <Input.Password size="large" placeholder="Password" />
-            <span className={style.boxAndForget}>
-              <span className={style.checkBox}>
-                <Checkbox>Запомнить меня</Checkbox>
-              </span>
-              <Link to={"#"}>
-                <span className={style.forgetPass}>Забыли пароль?</span>
-              </Link>
-            </span>
-          </span>
-          <Button type="primary" href="#">
-            Войти
-          </Button>
-          <a href="">или зарегестрироваться</a>  */}
-
         </div>  
       </div> 
     
