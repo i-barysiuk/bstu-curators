@@ -24,81 +24,81 @@ module.exports = {
         allowNull: false
       },
       gender: {
-          men = {
+          men: {
             type: Sequelize.INT,
             allowNull: false
           },
-          women = {
+          women: {
             type: Sequelize.INT,
             allowNull: false
           }
         },
       comunity: {
-          brsm = {
+          brsm: {
             type: Sequelize.INT,
             allowNull: false
           },
-          profcom = {
+          profcom: {
             type: Sequelize.INT,
             allowNull: false
           },
-          belrus = {
+          belrus: {
             type: Sequelize.INT,
             allowNull: false
           },
-          other = {
+          other: {
             type: Sequelize.INT,
             allowNull: false
           }
       },
       family: {
-          standart = {
+          standart: {
             type: Sequelize.INT,
             allowNull: false
           },
-          many = {
+          many: {
             type: Sequelize.INT,
             allowNull: false
           },
-          incomplete = {
+          incomplete: {
             type: Sequelize.INT,
             allowNull: false
           },
-          orphans = {
+          orphans: {
             type: Sequelize.INT,
             allowNull: false
           }
       },
       geography: {
-          local = 
+          local: 
           {
             type: Sequelize.INT,
             allowNull: false
           },
-          nonresident = {
+          nonresident: {
             type: Sequelize.INT,
             allowNull: false
           },
-          foreigners = {
+          foreigners: {
             type: Sequelize.INT,
             allowNull: false
           }
       },
       living: {
 
-          parents = {
+          parents: {
             type: Sequelize.INT,
             allowNull: false
           },
-          relatives = {
+          relatives: {
             type: Sequelize.INT,
             allowNull: false
           },
-          hostel = {
+          hostel: {
             type: Sequelize.INT,
             allowNull: false
           },
-          apartments = {
+          apartments: {
             type: Sequelize.INT,
             allowNull: false
           }
