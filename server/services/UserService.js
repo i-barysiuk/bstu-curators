@@ -39,9 +39,9 @@ class UserService {
         phone: body.phone,
         isActive: body.isActive,
         role: body.role,
-        departments: body.departments,
+        department: body.department,
         position: body.position,
-        title: body.title 
+        title: body.title
       }
     });
   }
