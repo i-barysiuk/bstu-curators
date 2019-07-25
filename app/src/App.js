@@ -1,22 +1,18 @@
 import React from "react";
 import "./App.css";
-
 import { BrowserRouter, Route } from "react-router-dom";
-import Login from "./components/login/Login";
+import Login from "./views/login/Login";
 import Dashboard from "./components/dashboard/Dashboard";
-import Header from "./components/header/Header";
-import Request from "./components/request/Request";
+import Menu from "./components/menu/Menu";
 
 function App() {
   return (
-    <div>
-      <Request />
-      <BrowserRouter>
-        <Route exact path="/" component={Header} />
-        <Route path="/login" component={Login} />
-        <Route path="/dashboard" component={Dashboard} />
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Route exact path="/" component={Menu} />
+      <Route path="/login" component={Login} />
+      <Route path="/dashboard" component={Dashboard} />
+      <Route path="/dashboard" component={Request} />
+    </BrowserRouter>
   );
 }
 
