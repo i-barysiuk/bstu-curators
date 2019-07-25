@@ -1,42 +1,38 @@
 import React from "react";
-import { Button, Carousel, Icon} from "antd";
+import { Carousel } from "antd";
 import "./style.css";
 import style from "./style.module.scss";
-import logo from "../../assets/images/logos/logo.png";
+import tips from "../../const/tips";
 
-class Tips extends React.Component {
-    render()
-    {return (
-    
-        <div className={style.bar}>
-          <div className={style.logoAndCarousel}>
-            <img src={logo} className={style.logo} alt="logo" />
-            <Carousel autoplay>
-              <div>
-                <span>Test 1</span>
-              </div>
-              <div>
-                <span>Test 2</span>
-              </div>
-              <div>
-                <span>Test 3</span>
-               </div>
-              <div>
-                <span>Что-то прекрасное о вузе</span>
-              </div>
-            </Carousel>
-          </div>
-          <div className={style.buttons}>
-          <Button type="primary" href="#">
-            <Icon type="left" />
-              На главную
-          </Button>
-          <Button type="primary" size={"medium"} href="#">
-            Помощь
-          </Button>
-          </div>
-        </div>
-     );
+const Tips = props => {
+  function getRandom(arr, count) {
+    var shuffled = arr.slice(0),
+      i = arr.length,
+      min = i - count,
+      temp,
+      index;
+    while (i-- > min) {
+      index = Math.floor((i + 1) * Math.random());
+      temp = shuffled[index];
+      shuffled[index] = shuffled[i];
+      shuffled[i] = temp;
     }
-}
+    return shuffled.slice(min);
+  }
+  var list = props.tips ? props.tips : getRandom(tips, 5);
+
+  return (
+    <div className={style.container}>
+      <Carousel autoplay>
+        {list.map((item, i) => {
+          return (
+            <p className={style.tip} key={i}>
+              {item}
+            </p>
+          );
+        })}
+      </Carousel>
+    </div>
+  );
+};
 export default Tips;

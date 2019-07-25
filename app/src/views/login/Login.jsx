@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "antd";
 import style from "./style.module.scss";
 import LoginForm from "../../components/loginForm/LoginForm";
+import Tips from "../../components/tips/Tips";
 import logo from "../../assets/images/logos/curators.png";
 
 const Login = props => {
@@ -17,7 +18,7 @@ const Login = props => {
             авторизованы в системе. Пожалуйста введите ваш логин и пароль в
             форме справа.
           </p>
-          {/* <div>TODO TIPS COMPONENTS</div> */}
+          <Tips />
           <div className={style.buttons}>
             <Button
               type="primary"
