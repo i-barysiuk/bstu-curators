@@ -1,6 +1,5 @@
 import React from "react";
 import { Carousel } from "antd";
-import "./style.css";
 import style from "./style.module.scss";
 import tips from "../../const/tips";
 
