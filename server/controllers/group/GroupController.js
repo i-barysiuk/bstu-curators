@@ -1,28 +1,28 @@
 const express = require("express");
 const router = express.Router();
 
-const UserService = require("../../services/UserService");
+const GroupService = require("../../services/GroupService");
 
 router.get("/", (req, res) => {
-  UserService.getAll()
+  GroupService.getAll()
     .then(data => res.status(200).json(data))
-    .catch(err => console.error(err));
+    .catch(res.status(500).json(err));
 });
 
 router.get("/:id", (req, res) => {
-  UserService.get(req.params.id)
+  GroupService.get(req.params.id)
     .then(data => res.status(200).json(data))
-    .catch(err => console.error(err));
+    .catch(res.status(500).json(err));
 });
 
 router.post("/", (req, res) => {
-  UserService.create(req.body)
-    .then(user => res.status(201).json(user))
-    .catch(err => console.error(err));
+  GroupService.create(req.body)
+    .then(group => res.status(201).json(group))
+    .catch(res.status(500).json(err));
 });
 
 router.put("/:id", (req, res) => {
-  UserService.update(req.body, req.params.id)
+  GroupService.update(req.body, req.params.id)
     .then(updatedRecord => {
       if (updatedRecord[0] === 1) {
         res.status(200).json({ message: "Updated successfully" });
@@ -36,7 +36,7 @@ router.put("/:id", (req, res) => {
 });
 
 router.delete("/:id", (req, res) => {
-  UserService.delete(req.params.id)
+  GroupService.delete(req.params.id)
     .then(deletedRecordCount => {
       if (deletedRecordCount === 1) {
         res.status(200).json({ message: "Deleted successfully" });
