@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { Router, Route } from "react-router-dom";
-import Login from "./components/login/Login";
+import Login from "./views/login/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import Menu from "./components/menu/Menu";
 import { createBrowserHistory } from "history";

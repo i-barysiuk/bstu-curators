@@ -4,8 +4,10 @@ const cors = require("cors");
 const sequelize = require("./db");
 
 const UserController = require("./controllers/user/UserController");
+const GroupController = require("./controllers/group/GroupController");
 
 const UserService = require("./services/UserService");
+const GroupService = require("./services/GroupService");
 
 UserService.create({
   email: "admin@care.webdad.by",
@@ -36,5 +38,6 @@ app.get("/login", (req, res) => {
 });
 
 app.use("/api/users", UserController);
+app.use("/api/groups", GroupController);
 
 module.exports = app;
