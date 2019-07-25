@@ -1,129 +1,79 @@
-'use strict';
+"use strict";
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('groups', {
-    uuid: {
-      type: Sequelize.UUID,
-      primaryKey: true,
-      defaultValue: Sequelize.UUIDV4
-      },
-      userId: {
+    return queryInterface.createTable("groups", {
+      id: {
         type: Sequelize.UUID,
-        primaryKey: false
+        primaryKey: true,
+        defaultValue: Sequelize.UUIDV4
+      },
+      createdAt: {
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        type: Sequelize.DATE
+      },
+      curatorId: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       faculty: {
-        type: Sequelize.ENUM('ФЭИС','ЭФ ','СФ','МСФ','ФИСЭ', 'Заочное', 'Иностранные'),
+        type: Sequelize.ENUM(
+          "ФЭИС",
+          "ЭФ ",
+          "СФ",
+          "МСФ",
+          "ФИСЭ",
+          "Заочное",
+          "Иностранные"
+        ),
         allowNull: false
       },
       name: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: false
       },
-      total: {
-        type: Sequelize.INT,
+      totalStudents: {
+        type: Sequelize.INTEGER,
         allowNull: false
       },
       gender: {
-          men: {
-            type: Sequelize.INT,
-            allowNull: false
-          },
-          women: {
-            type: Sequelize.INT,
-            allowNull: false
-          }
-        },
-      comunity: {
-          brsm: {
-            type: Sequelize.INT,
-            allowNull: false
-          },
-          profcom: {
-            type: Sequelize.INT,
-            allowNull: false
-          },
-          belrus: {
-            type: Sequelize.INT,
-            allowNull: false
-          },
-          other: {
-            type: Sequelize.INT,
-            allowNull: false
-          }
+        type: Sequelize.JSON,
+        defaultValue: {},
+        allowNull: false
+      },
+      community: {
+        type: Sequelize.JSON,
+        defaultValue: {},
+        allowNull: true
       },
       family: {
-          standart: {
-            type: Sequelize.INT,
-            allowNull: false
-          },
-          many: {
-            type: Sequelize.INT,
-            allowNull: false
-          },
-          incomplete: {
-            type: Sequelize.INT,
-            allowNull: false
-          },
-          orphans: {
-            type: Sequelize.INT,
-            allowNull: false
-          }
+        type: Sequelize.JSON,
+        defaultValue: {},
+        allowNull: false
       },
       geography: {
-          local: 
-          {
-            type: Sequelize.INT,
-            allowNull: false
-          },
-          nonresident: {
-            type: Sequelize.INT,
-            allowNull: false
-          },
-          foreigners: {
-            type: Sequelize.INT,
-            allowNull: false
-          }
+        type: Sequelize.JSON,
+        defaultValue: {},
+        allowNull: false
       },
       living: {
-
-          parents: {
-            type: Sequelize.INT,
-            allowNull: false
-          },
-          relatives: {
-            type: Sequelize.INT,
-            allowNull: false
-          },
-          hostel: {
-            type: Sequelize.INT,
-            allowNull: false
-          },
-          apartments: {
-            type: Sequelize.INT,
-            allowNull: false
-          }
+        type: Sequelize.JSON,
+        defaultValue: {},
+        allowNull: false
       },
       social: {
-        type: Sequelize.JSON({
-          
-        }),
+        type: Sequelize.JSON,
+        defaultValue: {},
         allowNull: true
       },
       others: {
         type: Sequelize.TEXT,
         allowNull: true
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('groups');
+    return queryInterface.dropTable("groups");
   }
 };

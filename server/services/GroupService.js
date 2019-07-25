@@ -1,11 +1,10 @@
-const Sequelize = require("sequelize");
 const Group = require("../db/models/Group");
 
 class GroupService {
-  get(uuid) {
+  get(id) {
     return Group.findOne({
       where: {
-        uuid
+        id
       }
     });
   }
@@ -17,15 +16,14 @@ class GroupService {
   create(body) {
     return Group.findOrCreate({
       where: {
-        uuid: body.uuid,
         name: body.name
       },
       defaults: {
-        userId: body.userId,
+        curatorId: body.curatorId,
         faculty: body.faculty,
-        total: body.total,
+        totalStudents: body.totalStudents,
         gender: body.gender,
-        comunity: body.comunity,
+        community: body.community,
         family: body.family,
         geography: body.geography,
         living: body.living,
@@ -35,18 +33,19 @@ class GroupService {
     });
   }
 
-  update(body, uuid) {
+  update(body, id) {
     return User.update(body, {
       where: {
-        uuid
-      }
+        id
+      },
+      returning: true
     });
   }
 
-  delete(uuid) {
+  delete(id) {
     return User.destroy({
       where: {
-        uuid
+        id
       }
     });
   }
