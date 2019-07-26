@@ -1,10 +1,12 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
-import SignIn from "./components/signIn/SignIn";
-import Login from "./components/login/Login";
+import SignIn from "./views/Register/SignIn";
+import Login from "./views/login/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import Menu from "./components/menu/Menu";
+import { createBrowserHistory } from "history";
+import Analitic from "./helper/analitics";
 
 function App() {
   return (

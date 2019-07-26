@@ -16,7 +16,7 @@ var User = sequelize.define(
     },
     birthday: {
       type: Sequelize.DATE,
-      allowNull: false
+      allowNull: true
     },
     sex: {
       type: Sequelize.ENUM("men", "women"),
@@ -60,6 +60,18 @@ var User = sequelize.define(
       type: Sequelize.JSON,
       defaultValue: [],
       allowNull: false
+    },
+    department: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    position: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    title: {
+      type: Sequelize.STRING,
+      allowNull: true
     }
   },
   {
