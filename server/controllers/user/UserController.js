@@ -36,7 +36,7 @@ router.put("/:id", (req, res) => {
 });
 
 router.delete("/:id", (req, res) => {
-  UserService.deleteRespondent(req.params.id)
+  UserService.delete(req.params.id)
     .then(deletedRecordCount => {
       if (deletedRecordCount === 1) {
         res.status(200).json({ message: "Deleted successfully" });
