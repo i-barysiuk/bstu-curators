@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt , faFileAlt  , faSearch , faUsers , faBell , faIdCard} from "@fortawesome/free-solid-svg-icons";
 import logoK from '../../assets/img/logo_k.png';
 import { Popover,  Badge , Avatar} from 'antd';
+
 import {Helmet} from "react-helmet";
 class Menu extends React.Component 
 {
@@ -21,10 +22,13 @@ class Menu extends React.Component
                     <img src={logoK} className={style.logo}></img>
                 </NavLink>
                 <div>
-            <Helmet>
-                <title>Menu</title>
-            </Helmet>
-        </div>            </div>
+                    <Helmet>
+                        <title>Menu
+
+                        </title>
+                    </Helmet>
+                </div>           
+        </div>
             <div className={style.middleMenu}>
                     <NavLink to="/dashboard/groups" className={style.button}>
                          <FontAwesomeIcon icon={faUsers} className={style.icon} />   
