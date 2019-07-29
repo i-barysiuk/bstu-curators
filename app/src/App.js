@@ -4,8 +4,11 @@ import { Router, Route } from "react-router-dom";
 import Login from "./views/login/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import Menu from "./components/menu/Menu";
+import CarTest from "./components/carTest/CarTest";
 import { createBrowserHistory } from "history";
 import Analitic from "./helper/analitics";
+import {Provider} from 'react-redux';
+import GlobalStore from './store/GlobalStore';
 
 const history = createBrowserHistory();
 history.listen(location => {
@@ -18,17 +21,20 @@ class App extends React.Component {
   }
   render() {
     return (
-      <Router history={history}>
-        <Route exact path="/" component={Menu} />
-        <Route path="/home" component={Menu} />
-        <Route path="/users" component={Menu} />
-        <Route path="/idcard" component={Menu} />
-        <Route path="/file" component={Menu} />
-        <Route path="/calendar" component={Menu} />
-        <Route path="/search" component={Menu} />
-        <Route path="/login" component={Login} />
-        <Route path="/dashboard" component={Dashboard} />
-      </Router>
+      <Provider store = {GlobalStore}>
+        <Router history={history}>
+          <Route exact path="/" component={Menu} />
+          <Route path="/testRedux" component={CarTest}/>
+          <Route path="/home" component={Menu} />
+          <Route path="/users" component={Menu} />
+          <Route path="/idcard" component={Menu} />
+          <Route path="/file" component={Menu} />
+          <Route path="/calendar" component={Menu} />
+          <Route path="/search" component={Menu} />
+          <Route path="/login" component={Login} />
+          <Route path="/dashboard" component={Dashboard} />
+        </Router>
+      </Provider>  
     );
   }
 }
