@@ -4,11 +4,10 @@ import { Router, Route } from "react-router-dom";
 import Login from "./views/login/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import Menu from "./components/menu/Menu";
-import CarTest from "./components/carTest/CarTest";
 import { createBrowserHistory } from "history";
 import Analitic from "./helper/analitics";
 import {Provider} from 'react-redux';
-import GlobalStore from './store/GlobalStore';
+import store from './store/store';
 
 const history = createBrowserHistory();
 history.listen(location => {
@@ -21,10 +20,9 @@ class App extends React.Component {
   }
   render() {
     return (
-      <Provider store = {GlobalStore}>
+      <Provider store = {store}>
         <Router history={history}>
           <Route exact path="/" component={Menu} />
-          <Route path="/testRedux" component={CarTest}/>
           <Route path="/home" component={Menu} />
           <Route path="/users" component={Menu} />
           <Route path="/idcard" component={Menu} />
