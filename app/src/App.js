@@ -7,7 +7,7 @@ import Menu from "./components/menu/Menu";
 import { createBrowserHistory } from "history";
 import Analitic from "./helper/analitics";
 import {Provider} from 'react-redux';
-import store from './store/store';
+import store from './redux/store/store';
 
 const history = createBrowserHistory();
 history.listen(location => {
