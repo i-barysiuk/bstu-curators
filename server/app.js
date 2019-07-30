@@ -3,9 +3,16 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const sequelize = require("./db");
 
+const ExecJWT = require("./middlewares/ExecJWT");
+const isAuth = require("./middlewares/isAuth");
+const onlineUpdate = require("./middlewares/online");
+
+const AuthController = require("./controllers/auth/AuthController");
 const UserController = require("./controllers/user/UserController");
+const GroupController = require("./controllers/group/GroupController");
 
 const UserService = require("./services/UserService");
+const GroupService = require("./services/GroupService");
 
 UserService.create({
   email: "admin@care.webdad.by",
@@ -25,16 +32,15 @@ const app = express();
 
 app.use(bodyParser.json({ limit: "10mb", extended: true }));
 app.use(cors());
+app.use(ExecJWT);
+app.use(onlineUpdate);
 
 app.get("/", (req, res) => {
-  res.send("Hello world\n");
-});
-app.get("/login", (req, res) => {
-  var tokens = JWTService.generate({ id: 1, role: "admin" });
-  var decode = JWTService.validate(tokens.accessToken);
-  res.send({ tokens: tokens, decode: decode });
+  res.send(req.user);
 });
 
-app.use("/api/users", UserController);
+app.use("/api/auth", AuthController);
+app.use("/api/users", isAuth, UserController);
+app.use("/api/groups", isAuth, GroupController);
 
 module.exports = app;
