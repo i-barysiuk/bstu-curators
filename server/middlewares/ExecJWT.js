@@ -1,4 +1,4 @@
-const JWTService = require("../services/JWTService");
+const JWTService = require("../services/jwtService");
 
 let execJWT = (req, res, next) => {
   let token = req.header("Authorization");

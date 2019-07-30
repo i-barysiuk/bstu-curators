@@ -2,6 +2,7 @@ import React from "react";
 import { Avatar, Form, Input, Button, Icon } from "antd";
 import style from "./style.module.scss";
 import auth from "../../helper/auth";
+import authFront from "../services/authFront";
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -33,6 +34,7 @@ class LoginForm extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         // TODO Redux Auth action
+        authFront.login(values);
         console.log("Received values of form: ", values);
       }
     });
