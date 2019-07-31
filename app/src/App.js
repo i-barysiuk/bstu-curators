@@ -1,12 +1,11 @@
 import React from "react";
 import "./App.css";
-import { Router, Route } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 import Login from "./views/login/Login";
 import Register from "./views/login/Login";
 import Welcom from "./views/login/Login";
 import Dashboard from "./views/dashboard/Dashboard";
-
-import Request from "./components/request/Request";
+import NotFound from './components/404/404';
 
 import { createBrowserHistory } from "history";
 import Analitic from "./helper/analitics";
@@ -26,11 +25,13 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <Router history={history}>
-          <Route exact path="/" component={Welcom} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route component={Request} />
+          <Switch>
+            <Route  exact path="/"         component={Welcom}    />
+            <Route  exact path="/login"    component={Login}     />
+            <Route  exact path="/register" component={Register}  />
+            <Route  path="/dashboard"      component={Dashboard} />
+            <Route                         component={NotFound}  />
+          </Switch>
         </Router>
       </Provider>
     );
