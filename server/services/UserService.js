@@ -61,6 +61,11 @@ class UserService {
       }
     });
   }
+
+  logout(){
+    return User.tokens ='';
+  }
 }
+
 
 module.exports = new UserService();
