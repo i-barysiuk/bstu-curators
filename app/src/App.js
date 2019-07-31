@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
-import SignIn from "./views/Register/SignIn";
+import SignUp from "./views/Register/SignUp";
 import Login from "./views/login/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import Menu from "./components/menu/Menu";
@@ -19,7 +19,7 @@ function App() {
       <Route path="/calendar" component={Menu} />
       <Route path="/search" component={Menu} />
       <Route path="/login" component={Login} />
-      <Route path="/signIn" component={SignIn} />
+      <Route path="/signUp" component={SignUp} />
        <Route path="/dashboard" component={Dashboard} />
     </BrowserRouter>
   );
