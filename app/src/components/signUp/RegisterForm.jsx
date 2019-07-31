@@ -111,7 +111,7 @@ class RegistrationForm extends React.Component {
     ];
     return (
       <div>
-      <Steps size="small" current={current}>
+      <Steps  current={current}>
         {steps.map(item => (
           <Step key={item.title} title={item.title} />
         ))}
