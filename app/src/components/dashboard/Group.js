@@ -250,9 +250,15 @@ class Group extends React.Component {
           centered
           closable = {false}
           destroyOnClose = {true}
-          okText = 'Отправить'
+          footer = {
+            <Button
+              type="primary"
+              onClick={() => this.setModalVisible(false)}
+              >
+              Отправить
+            </Button>
+          }
           visible={this.state.modalVisible}
-          onOk={() => this.setModalVisible(false)}
         >
           <Form>
             <Faculty/>
