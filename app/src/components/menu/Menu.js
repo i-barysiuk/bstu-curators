@@ -23,19 +23,39 @@ class Menu extends React.Component {
           </NavLink>
         </div>
         <div className={style.middleMenu}>
-          <NavLink to="/dashboard/groups" className={style.button}>
+          <NavLink
+            to="/dashboard/groups"
+            className={style.button}
+            activeClassName={style.buttonActive}
+          >
             <FontAwesomeIcon icon={faUsers} className={style.icon} />
           </NavLink>
-          <NavLink to="/dashboard/students" className={style.button}>
+          <NavLink
+            to="/dashboard/students"
+            className={style.button}
+            activeClassName={style.buttonActive}
+          >
             <FontAwesomeIcon icon={faIdCard} className={style.icon} />
           </NavLink>
-          <NavLink to="/dashboard/reports" className={style.button}>
+          <NavLink
+            to="/dashboard/reports"
+            className={style.button}
+            activeClassName={style.buttonActive}
+          >
             <FontAwesomeIcon icon={faFileAlt} className={style.icon} />
           </NavLink>
-          <NavLink to="/dashboard/events" className={style.button}>
+          <NavLink
+            to="/dashboard/events"
+            className={style.button}
+            activeClassName={style.buttonActive}
+          >
             <FontAwesomeIcon icon={faCalendarAlt} className={style.icon} />
           </NavLink>
-          <NavLink to="/search" className={style.button}>
+          <NavLink
+            to="/dashboard/search"
+            className={style.button}
+            activeClassName={style.buttonActive}
+          >
             <FontAwesomeIcon icon={faSearch} className={style.icon} />
           </NavLink>
         </div>
