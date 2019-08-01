@@ -49,11 +49,8 @@ router.delete("/:id", (req, res) => {
     });
 });
 
-router.logout("/:id", (req, res) => {
-  UserService.logout()
-}
 
-)
+
 
 
 module.exports = router;

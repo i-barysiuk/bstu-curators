@@ -60,11 +60,7 @@ class UserService {
         id
       }
     });
-  }
-
-  logout(){
-    return User.tokens ='';
-  }
+  } 
 }
 
 

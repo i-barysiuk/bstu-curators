@@ -2,7 +2,7 @@ import React from "react";
 import { Avatar, Form, Input, Button, Icon } from "antd";
 import style from "./style.module.scss";
 import auth from "../../helper/auth";
-import authFront from "../services/authFront";
+import authFront from "../../services/authFront";
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);

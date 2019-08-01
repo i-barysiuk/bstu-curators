@@ -115,4 +115,24 @@ router.post("/check", (req, res) => {
     });
 });
 
+router.post("/logout", (req, res) =>{
+  UserService.get(req.user.id)
+    .then(data =>{
+      if (!data) throw new Error("User not found");
+      data.tokens.filter(item =>{
+        return item.token != req.body.token
+      })
+      console.log(data.tokens);
+      return UserService.update({tokens: data.tokens}, req.user.id)
+    })
+    .then(data => {
+      if(data[0] === 0) throw new Error("Token not removed");
+      res.sendStatus(200);
+    })
+    .catch(err =>{
+      res.send(400).json(err);
+    })
+
+})
+
 module.exports = router;

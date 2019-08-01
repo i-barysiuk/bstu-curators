@@ -1,20 +1,19 @@
-import auth from "../../helper/auth"
+import auth from "../helper/auth"
 
 class AuthFront {
     login(data){
-        auth("/login", "POST", { login: data.login, password: data.password})     
+        auth("/login", "POST", data)     
         .then(res => {
           localStorage.setItem('accessToken', res.body.accessToken);
           localStorage.setItem('refreshToken', res.body.refreshToken);
           localStorage.setItem('expires_in', res.body.expires_in);
-          document.location.replace("/");
         });
     }
     check(data){
-        auth("/info", "POST", {login: data.login})
+        auth("/info", "POST", data)
         .then(res =>{
             if(res.status === 200)
-                next();           
+                console.log(res);                      
         })
         .catch(err => {
             console.log.JSON(err);
