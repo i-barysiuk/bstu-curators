@@ -1,68 +1,73 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter, Route } from "react-router-dom";
-import Login from "./components/login/Login";
-import Dashboard from "./components/dashboard/Dashboard";
-import Menu from "./components/menu/Menu";
-import Page from "./Page";
+import { Router, Route, Switch } from "react-router-dom";
+import Login from "./views/login/Login";
+import Register from "./views/login/Login";
+import Welcom from "./views/login/Login";
+import Dashboard from "./views/dashboard/Dashboard";
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Route
-        exact
-        path="/"
-        render={props => <Page {...props} component={Menu} title="Menu" />}
-      />
+import Request from "./components/request/Request";
 
-      <Route
-        path="/home"
-        render={props => <Page {...props} component={Menu} title="Home page" />}
-      />
-      <Route
-        exact
-        path="/users"
-        render={props => <Page {...props} component={Menu} title="Users" />}
-      />
+import { createBrowserHistory } from "history";
+import Analitic from "./helper/analitics";
+import { Provider } from "react-redux";
+import store from "./redux/store/store";
 
-      <Route
-        path="/idcard"
-        render={props => <Page {...props} component={Menu} title="Cards" />}
-      />
-      <Route
-        exact
-        path="/file"
-        render={props => <Page {...props} component={Menu} title="Files" />}
-      />
+import PageWrapper from "./containers/pageWrapper/PageWrapper";
 
-      <Route
-        path="/calendar"
-        render={props => <Page {...props} component={Menu} title="Calendar" />}
-      />
-      <Route
-        exact
-        path="/search"
-        render={props => <Page {...props} component={Menu} title="Search" />}
-      />
+const history = createBrowserHistory();
+history.listen(location => {
+  Analitic.pageview(location.pathname);
+});
 
-      <Route
-        path="/login"
-        render={props => <Page {...props} component={Login} title="Login" />}
-      />
-      <Route
-        exact
-        path="/login"
-        render={props => <Page {...props} component={Menu} title="Login" />}
-      />
-
-      <Route
-        path="/dashboard"
-        render={props => (
-          <Page {...props} component={Dashboard} title="Dashboard" />
-        )}
-      />
-    </BrowserRouter>
-  );
+class App extends React.Component {
+  componentDidMount() {
+    Analitic.pageview(window.location.pathname);
+  }
+  render() {
+    return (
+      <Provider store={store}>
+        <Router history={history}>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={props => (
+                <PageWrapper {...props} title="Главная" component={Welcom} />
+              )}
+            />
+            <Route
+              path="/login"
+              render={props => (
+                <PageWrapper {...props} title="Вход" component={Login} />
+              )}
+            />
+            <Route
+              path="/register"
+              render={props => (
+                <PageWrapper
+                  {...props}
+                  title="Регистрация"
+                  component={Register}
+                />
+              )}
+            />
+            <Route
+              path="/dashboard"
+              render={props => <PageWrapper {...props} component={Dashboard} />}
+            />
+            <Route
+              path="*"
+              exact
+              render={props => (
+                <PageWrapper {...props} title="Упс!" component={Request} />
+              )}
+            />
+          </Switch>
+        </Router>
+      </Provider>
+    );
+  }
 }
 
 export default App;
