@@ -3,6 +3,7 @@ import { Button } from "antd";
 import style from "./style.module.scss";
 import RegistrationForm from "../../components/signUp/RegisterForm";
 import logo from "../../assets/images/logos/curators.png";
+import Tips from "../../components/tips/Tips";
 
 const SignUp = props => {
   return (
@@ -26,6 +27,7 @@ const SignUp = props => {
             Что бы начать использовать данный продукт вы должны быть
             авторизованы в системе. Пожалуйста зарегистрируйтесь.
           </p>
+          <Tips />
           <div className={style.buttons}>
             <Button
               type="primary"
