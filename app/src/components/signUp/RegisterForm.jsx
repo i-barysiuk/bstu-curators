@@ -5,6 +5,10 @@ import style from "../loginForm/style.module.scss";
 
 const { Step } = Steps;
 const { Option } = Select;
+
+function hasErrors(fieldsError) {
+  return Object.keys(fieldsError).some(field => fieldsError[field]);
+}
 class RegistrationForm extends React.Component {
   constructor(props) {
     super(props);
@@ -14,9 +18,9 @@ class RegistrationForm extends React.Component {
   }
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log("Заполните все поля !: ", values);
+        console.log("Received values of form: ", values);
       }
     });
   };
@@ -51,7 +55,7 @@ class RegistrationForm extends React.Component {
 
   render() {
     const { current } = this.state;
-    const { getFieldDecorator } = this.props.form;
+    const { getFieldDecorator, getFieldsError} = this.props.form;
     const steps = [
       {
         title: 'Основное',
@@ -74,7 +78,7 @@ class RegistrationForm extends React.Component {
          <Form.Item label="Отчетсво">
           <Col span={24}>
           {getFieldDecorator('Отчество', {
-            rules: [{ required: true, message: 'Выберите дату рождения!', whitespace: true }],
+            rules: [{ required: true, message: 'Введите своё отчество!', whitespace: true }],
           })(<Input placeholder="Введите свое отчество" style={{ width: 300 }}/>)}
           </Col>
          </Form.Item> 
@@ -125,7 +129,12 @@ class RegistrationForm extends React.Component {
          </Form.Item>
          <Form.Item label="Телефон">
           {getFieldDecorator('Телефон', {
-            rules: [{ required: true, message: 'Введите свой номер телефона!' }],
+            rules: [
+              {
+                 required: true,
+                 message: 'Введите свой номер телефона!' 
+              }
+                   ],
           })(<Input placeholder="Введите свой номер телефона"/>)}
          </Form.Item>
          <Form.Item label="Пароль" hasFeedback>
@@ -158,7 +167,6 @@ class RegistrationForm extends React.Component {
       },
     ];
     return (
-      
       <div className={style.s}>
       <Steps  size = "small" current={current}>
         {steps.map(item => (
@@ -169,17 +177,28 @@ class RegistrationForm extends React.Component {
         <div className={style.stepsContent}>{steps[current].content}</div>
          <div className={style.stepsAction}>
           {current > 0 && (
-            <Button htmlType="submit" style={{ marginLeft: 8 }} onClick={() => this.prev()}>
+            <Button 
+             htmlType="submit"
+             style={{ marginLeft: 8 }}
+             onClick={() => this.prev()}>
               Назад
             </Button>
           )}
            {current < steps.length - 1 && (
-            <Button htmlType="submit" style={{ marginLeft: 200 }} type="primary" onClick={() => this.next()}>
+            <Button 
+             htmlType="submit" 
+             style={{ marginLeft: 200 }}
+             type="primary"
+              onClick={() => this.next()}>
               Далее
             </Button>
           )}
            {current === steps.length - 1 && (
-            <Button  htmlType="submit" type="primary" style={{ marginLeft: 80 }} onClick={() => message.success('Вы успешно зарегестрировались!')}>
+            <Button  type="primary"
+             htmlType="submit"
+             style={{ marginLeft: 80 }}
+             disabled={hasErrors(getFieldsError())}
+             onClick={() => message.success('Вы успешно зарегестрировались!')}>
               Зарегистрироваться
             </Button>
           )}
