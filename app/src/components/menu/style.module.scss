@@ -1,10 +1,10 @@
 //container
-$bg-menu: #2D50EC;    
+$bg-menu: #2d50ec;
 $width-menu: 55px;
 
 //Icons_menu
-$width-icon:  20px ;    
-$height-icon: 20px ;  
+$width-icon: 20px;
+$height-icon: 20px;
 $color-icons: white;
 
 //logo
@@ -13,80 +13,71 @@ $margin-top: 20px;
 
 //Hover
 $hover-width: 40px;
-$hover-height:40px;
+$hover-height: 40px;
 
 //Down menu
 $margin-bottom: 15px;
 
-
-.container
-{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    width: $width-menu;
-    height: 100%;
-    background: $bg-menu;
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: $width-menu;
+  height: 100%;
+  background: $bg-menu;
 }
 
-.upMenu, .middleMenu, .downMenu 
-{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.upMenu,
+.middleMenu,
+.downMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.logo{
-    width: $width-logo;
-    margin-top:$margin-top;
+.logo {
+  width: $width-logo;
+  margin-top: $margin-top;
 }
 
-.button
-{
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    width: $hover-width;
-    height: $hover-height;
-    border-radius: 7px;
-    color: white;
-    margin-bottom: 20px;
-    
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: $hover-width;
+  height: $hover-height;
+  border-radius: 7px;
+  color: white;
+  margin-bottom: 20px;
 }
 
-.button:hover
-{
-    background: rgba(30, 59, 186, 0.79);
+.button:hover,
+.buttonActive {
+  background: rgba(30, 59, 186, 0.79);
 }
 
-.icon
-{
-    height: $height-icon !important;
-    width:  $width-icon  !important;
-    color: $color-icons;
+.icon {
+  height: $height-icon !important;
+  width: $width-icon !important;
+  color: $color-icons;
 }
 
-.Link_to_menu
-{
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
+.Link_to_menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }
 
-.avatar , .bell
-{
-    margin-bottom: $margin-bottom !important;
-    
+.avatar,
+.bell {
+  margin-bottom: $margin-bottom !important;
 }
 
-.bell
-{
-    height: 16px !important;
-    width:  16px !important;
-    color: $color-icons;
+.bell {
+  height: 16px !important;
+  width: 16px !important;
+  color: $color-icons;
 }
-
-

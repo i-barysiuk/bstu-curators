@@ -2,7 +2,7 @@ import Menu from "../../components/menu/Menu";
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Request from "../../components/request/Request";
-import Groups from "../../components/dashboard/Group";
+import PageWrapper from "../../containers/pageWrapper/PageWrapper";
 
 class Dashboard extends React.Component {
   render() {
@@ -10,9 +10,35 @@ class Dashboard extends React.Component {
       <div style={{ display: "flex", height: "100%" }}>
         <Menu />
         <Switch>
-          <Route path="/dashboard/groups" component={Groups} />
-          <Route path="/dashboard/students" component={Request} />
-          <Route path="/dashboard/reports" component={Request} />
+
+          <Route
+            exec
+            path="/dashboard/groups"
+            render={props => (
+              <PageWrapper {...props} title="Группы" component={Request} />
+            )}
+          />
+          <Route
+            exec
+            path="/dashboard/students"
+            render={props => (
+              <PageWrapper {...props} title="Студенты" component={Request} />
+            )}
+          />
+          <Route
+            exec
+            path="/dashboard/reports"
+            render={props => (
+              <PageWrapper {...props} title="Отчеты" component={Request} />
+            )}
+          />
+          <Route
+            path="/dashboard/*"
+            exact
+            render={props => (
+              <PageWrapper {...props} title="Упс!" component={Request} />
+            )}
+          />
         </Switch>
       </div>
     );

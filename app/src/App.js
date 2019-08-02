@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Router, Route } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 import Login from "./views/login/Login";
 import Register from "./views/login/Login";
 import Welcom from "./views/login/Login";
@@ -12,6 +12,8 @@ import { createBrowserHistory } from "history";
 import Analitic from "./helper/analitics";
 import { Provider } from "react-redux";
 import store from "./redux/store/store";
+
+import PageWrapper from "./containers/pageWrapper/PageWrapper";
 
 const history = createBrowserHistory();
 history.listen(location => {
@@ -26,11 +28,42 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <Router history={history}>
-          <Route exact path="/" component={Welcom} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route component={Request} />
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={props => (
+                <PageWrapper {...props} title="Главная" component={Welcom} />
+              )}
+            />
+            <Route
+              path="/login"
+              render={props => (
+                <PageWrapper {...props} title="Вход" component={Login} />
+              )}
+            />
+            <Route
+              path="/register"
+              render={props => (
+                <PageWrapper
+                  {...props}
+                  title="Регистрация"
+                  component={Register}
+                />
+              )}
+            />
+            <Route
+              path="/dashboard"
+              render={props => <PageWrapper {...props} component={Dashboard} />}
+            />
+            <Route
+              path="*"
+              exact
+              render={props => (
+                <PageWrapper {...props} title="Упс!" component={Request} />
+              )}
+            />
+          </Switch>
         </Router>
       </Provider>
     );
