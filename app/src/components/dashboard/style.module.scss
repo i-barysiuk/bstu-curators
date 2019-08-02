@@ -6,3 +6,26 @@
     display: flex;
     flex-direction: row;
   }
+
+  div[class="ant-modal-content"]{
+    border-radius: 15px 15px 15px 15px;
+  }
+
+  div[class="ant-modal-header"]{
+    background: #2D50EC;
+    border-radius: 15px 15px 0px 0px;
+  }
+
+  div[class="ant-modal-title"]{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 26px;
+
+    color: #FFFDFD;
+  }
+
+  span[class="ant-modal-close-x"]{
+    font-size: 20px;
+    color: #FFFDFD;
+  }

@@ -246,18 +246,22 @@ class Group extends React.Component {
 
         <Modal
           title = "Добавление группы"
-          width = '1024px'
+          width = '925px'
           centered
-          closable = {false}
           destroyOnClose = {true}
           footer = {
+            <div className={style.column}>
+            <h3>Поля, отмеченные * обязательны для заполнения</h3>
             <Button
+              style = {{marginLeft: 385}}
               type="primary"
               onClick={() => this.setModalVisible(false)}
               >
               Отправить
             </Button>
+            </div>
           }
+          onCancel={() => this.setModalVisible(false)}
           visible={this.state.modalVisible}
         >
           <Form>
