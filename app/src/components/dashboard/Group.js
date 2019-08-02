@@ -77,10 +77,9 @@ class Curator extends React.Component{
               <div style={{marginLeft: 80}}>
                 <h2>Телефон куратора: </h2>
                 <div className={style.column}>
-                  <p>+375</p>
+                  <p className={style.phone}>+375</p>
                     <Input
                       style={{ width: 350 }}
-                      placeholder="1234567"
                     />
                 </div>
               </div>
@@ -90,19 +89,21 @@ class Curator extends React.Component{
 }
 
 class SliderSync extends React.Component{
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-  }
+  state = {
+    totalValue: 1,
+    womenValue: 0,
+    menValue: 0
+  };
 
-  handleChange(e) {
-    this.props.onChange(e.target.value);
-  }
+  onChange = total => {
+    this.setState({
+      totalValue: total,
+    });
+  };
+
 
   render() {
-    const total = this.props.total;
-    const women = this.props.women;
-    const men = this.props.men;
+    const { totalValue, womenValue, menValue } = this.state;
     return (
           <div className={style.row}>
           <h2>Количество человек</h2>
@@ -110,16 +111,16 @@ class SliderSync extends React.Component{
               <Slider
                 min={1}
                 max={40}
-                onChange={this.handleChange}
-                total={typeof total === 'number' ? total : 0}
+                onChange={this.onChange}
+                total={typeof totalValue === 'number' ? totalValue : 0}
                 style={{width: 300}}
               />
               <InputNumber
                 min={1}
                 max={40}
                 style={{ marginLeft: 16 }}
-                totalValue={total}
-                onChange={this.handleChange}
+                total={totalValue}
+                onChange={this.onChange}
                 placeholder = '0'
               />
           </div>
@@ -130,14 +131,14 @@ class SliderSync extends React.Component{
                 min={0}
                 max={40}
                 onChange={this.handleChange}
-                womenValue={typeof women === 'number' ? women : 0}
+                women={typeof womenValue === 'number' ? womenValue : 0}
                 style={{width: 300}}
               />
               <InputNumber
                 min={0}
                 max={40}
                 style={{ marginLeft: 16 }}
-                womenValue={women}
+                women={womenValue}
                 onChange={this.handleChange}
                 placeholder = '0'
               />
@@ -148,14 +149,14 @@ class SliderSync extends React.Component{
                 min={0}
                 max={40}
                 onChange={this.handleChange}
-                menValue={typeof men === 'number' ? men : 0}
+                men={typeof menValue === 'number' ? menValue : 0}
                 style={{width: 300}}
               />
               <InputNumber
                 min={0}
                 max={40}
                 style={{ marginLeft: 16 }}
-                menValue={men}
+                men={menValue}
                 onChange={this.handleChange}
                 placeholder = '0'
               />
@@ -205,27 +206,16 @@ class Organisation extends React.Component{
   }
 }
 
-class Margin extends React.Component{
-  render(){
+function Margin(){
   return (
     <div>
     <br/>
     <br/>
     </div>
     );
-  }
 }
 
 class Group extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleTotalChange = this.handleTotalChange.bind(this);
-  }
-
-  handleTotalChange(value) {
-    this.setState({value});
-  }
-
   state = {
     modalVisible: false
   };
