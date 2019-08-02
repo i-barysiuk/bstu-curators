@@ -1,0 +1,108 @@
+//midle text
+$text-size: 20px;
+$text-color: Black;
+$text-width: 430px;
+$text-weight: 700;
+$text-top:150px;
+// #404
+$size404:40px;
+// oops
+$oops-size:120px;
+$oops-color: white;
+//buttons
+$margin-to-buttons: 40px;
+
+
+.container
+{
+    height: 100%;
+    width: 100%;
+    background:url(../../assets/img/child.png) repeat-x#00d8ff;
+    -moz-background-size: 100%;
+    -webkit-background-size: 100%; 
+    -o-background-size: 100%; 
+    background-size: 100%; 
+    background-position: bottom left 250px;
+}
+
+.massage
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $text-color;
+    font-weight: $text-weight;
+    height: 100%;
+    min-width: $text-width + 70px;
+    width : 50%;
+    padding-top: $text-top;
+}
+
+.number
+{
+    font-size: $size404;
+    text-align: center;
+    width: $text-width;
+}
+
+.oops
+{
+    font-size: $oops-size;
+    color: $oops-color;
+    height: $oops-size * 0.75;
+    line-height: 0.6;
+}
+
+.text
+{
+    text-align: center;
+    font-size: $text-size;
+    width: $text-width - 10px;
+    padding-bottom: $margin-to-buttons;
+}
+
+.buttons
+{
+    width: $text-width;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.button
+{
+    background:white;
+    color: black;
+    font-weight: $text-weight;
+}
+
+@media screen and (max-width : 720px)
+{
+    .container
+    {
+        background: url(../../assets/img/child.png) no-repeat  #00d8ff;
+        background-position: bottom;
+        background-size: 100%; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .massage
+    {
+        min-width: 320px;
+        padding-top: 40px;
+    }
+
+    .number , .massage , .buttons , .text , .oops
+    {
+        width: 320px;
+    }
+
+    .oops
+    {
+        font-size: 80px;
+        text-align: center;
+    }
+    
+}

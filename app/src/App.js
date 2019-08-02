@@ -5,7 +5,7 @@ import Login from "./views/login/Login";
 import Register from "./views/login/Login";
 import Welcom from "./views/login/Login";
 import Dashboard from "./views/dashboard/Dashboard";
-import NotFound from './components/404/404';
+import NotFound from './views/404/404';
 
 import { createBrowserHistory } from "history";
 import Analitic from "./helper/analitics";
