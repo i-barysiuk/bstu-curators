@@ -1,6 +1,7 @@
 import auth from "../helper/auth"
 
 class AuthFront {
+    
     login(data){
         auth("/login", "POST", data)     
         .then(res => {
@@ -9,6 +10,7 @@ class AuthFront {
           localStorage.setItem('expires_in', res.body.expires_in);
         });
     }
+
     check(data){
         auth("/info", "POST", data)
         .then(res =>{

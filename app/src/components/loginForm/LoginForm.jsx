@@ -33,7 +33,7 @@ class LoginForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        // TODO Redux Auth action
+        // TODO Redux Auth action        
         authFront.login(values);
         console.log("Received values of form: ", values);
       }
