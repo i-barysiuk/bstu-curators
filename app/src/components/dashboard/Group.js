@@ -26,6 +26,8 @@ render() {
         <div>
         <h2>Факультет:</h2>
           <Select
+            className = {style.border}
+            dropdownClassName = {style.border}
             showSearch
             style={{ width: 400 }}
             placeholder="Факультет:"
@@ -55,6 +57,7 @@ class GroupName extends React.Component{
       <div>
       <h2>Название группы: </h2>
           <Input 
+          className={style.border}
           style={{ width: 400 }} 
           placeholder="Группа" 
           />
@@ -66,19 +69,21 @@ class GroupName extends React.Component{
 class Curator extends React.Component{
   render(){
     return(
-           <div className={style.column}>
+           <div className={style.row}>
             <div>
               <h2>Куратор: </h2>
                 <Input 
-                style={{ width: 400 }} 
+                className={style.border}
+                style={{ width: 400 }}
                 placeholder="ФИО"
                 />
               </div>
-              <div style={{marginLeft: 80}}>
+              <div style={{marginLeft: 40}}>
                 <h2>Телефон куратора: </h2>
-                <div className={style.column}>
+                <div className={style.row}>
                   <p className={style.phone}>+375</p>
                     <Input
+                      className={style.border}
                       style={{ width: 350 }}
                     />
                 </div>
@@ -89,7 +94,8 @@ class Curator extends React.Component{
 }
 
 function convert(total,value){
-  return total - value;
+  if(total-value < 0) return 0;
+  else return total - value;
 }
 
 class SliderSync extends React.Component {
@@ -122,9 +128,9 @@ class SliderSync extends React.Component {
     const { inputValue2 } = this.state;
     const { inputValue3 } = this.state;
     return (
-          <div className={style.row}>
+          <div className={style.colunm}>
           <h2>Количество человек</h2>
-            <div className={style.column}>
+            <div className={style.row}>
             <Slider
             min={1}
             max={40}
@@ -133,6 +139,7 @@ class SliderSync extends React.Component {
             style={{width: 300}}
           />
           <InputNumber
+            className={style.border}
             min={1}
             max={40}
             style={{ marginLeft: 16 }}
@@ -141,8 +148,8 @@ class SliderSync extends React.Component {
           />
           </div>
           <h2>Из них:</h2>
-          <h2>- Девушек</h2>
-          <div className={style.column}>
+          <div className={style.row}>
+          <h2 style={{ marginLeft: 50, marginRight: 50 }}>- Девушек</h2>
           <Slider
             min={0}
             max= {convert(inputValue1,inputValue3)}
@@ -151,6 +158,7 @@ class SliderSync extends React.Component {
             style={{width: 300}}
           />
           <InputNumber
+            className={style.border}
             min={0}
             max={convert(inputValue1,inputValue3)}
             style={{ marginLeft: 16 }}
@@ -158,8 +166,8 @@ class SliderSync extends React.Component {
             onChange={this.onWomenChange}
           />
             </div>
-            <h2>- Юношей</h2>
-            <div className={style.column}>
+            <div className={style.row}>
+            <h2 style={{ marginLeft: 50, marginRight: 50 }}>- Юношей</h2>
             <Slider
             min={0}
             max={convert(inputValue1,inputValue2)}
@@ -168,6 +176,7 @@ class SliderSync extends React.Component {
             style={{width: 300}}
           />
           <InputNumber
+            className={style.border}
             min={0}
             max={convert(inputValue1,inputValue2)}
             style={{ marginLeft: 16 }}
@@ -183,31 +192,36 @@ class SliderSync extends React.Component {
 class Organisation extends React.Component{
   render(){
     return(
-          <div className={style.column}>
-            <div className={style.row}>
-              <h3>- БРСМ</h3>
-              <h3>- Профком</h3>
-              <h3>- Прочее</h3> 
+          <div className={style.row}>
+            <div className={style.colunm}>
+              <h3>- БРСМ</h3>    <br/>
+              <h3>- Профком</h3> <br/>
+              <h3>- Прочее</h3>
             </div>
-            <div className={style.row}>
+            <div className={style.colunm}>
               <div>
               <InputNumber
+                  className={style.border}
                   min={1}
                   max={40}
                   style={{ marginLeft: 50 }}
                   placeholder = '0'
                 />
                 </div>
+                <br/>
                 <div>
                  <InputNumber
+                  className={style.border}
                   min={1}
                   max={40}
                   style={{ marginLeft: 50 }}
                   placeholder = '0'
                 />
                 </div>
+                <br/>
                 <div>
                 <InputNumber
+                  className={style.border}
                   min={1}
                   max={40}
                   style={{ marginLeft: 50 }}
@@ -218,15 +232,6 @@ class Organisation extends React.Component{
           </div>    
     )
   }
-}
-
-function Margin(){
-  return (
-    <div>
-    <br/>
-    <br/>
-    </div>
-    );
 }
 
 class Group extends React.Component {
@@ -254,7 +259,7 @@ class Group extends React.Component {
           centered
           destroyOnClose = {true}
           footer = {
-            <div className={style.column}>
+            <div className={style.row}>
             <h3>Поля, отмеченные * обязательны для заполнения</h3>
             <Button
               style = {{marginLeft: 385}}
@@ -270,13 +275,13 @@ class Group extends React.Component {
         >
           <Form>
             <Faculty/>
-            <Margin/>
+            <br/>
             <GroupName/>
-            <Margin/>
+            <br/>
             <Curator/>
-            <Margin/>
+            <br/>
             <SliderSync/>
-            <Margin/>
+            <br/>
             <Organisation/> 
           </Form>
         </Modal>
