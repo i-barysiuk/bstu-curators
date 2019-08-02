@@ -1,5 +1,6 @@
 import React from "react";
 import api from "../../helper/api";
+import groupModal from "./Group"
 
 export default class Request extends React.Component {
   // state = {
@@ -13,6 +14,11 @@ export default class Request extends React.Component {
   // }
 
   render() {
-    return <p style={{ width: "100%" }}>Я ТУТ!</p>;
+    return (
+    <div>
+    <groupModal/>
+    <p>Я ТУТ!</p>
+    </div>
+    );
   }
 }

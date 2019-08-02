@@ -1,0 +1,126 @@
+  .column{
+    display: flex;
+    flex-direction: column;
+  }
+  .row{
+    display: flex;
+    flex-direction: row;
+    h2{
+      margin-left: 30px;
+      margin-right: 50px;
+    }
+  }
+
+  .flex{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .select{
+    div>div{
+    border-radius: 15px 15px 15px 15px;
+    }
+  }
+
+  .phoneBlock{
+    padding-left:25px;
+  }
+
+  .phone{
+    padding: 5px;
+    font-size: 18px;
+    line-height: 20px;
+
+    color: #000000;
+  }
+  
+  .input{
+    border-radius: 15px 15px 15px 15px;
+    width:400px;
+  }
+
+  .border{
+    border-radius: 15px 15px 15px 15px;
+  }
+
+  .footerButton{
+    position: absolute;
+    right: 20px;
+    margin: 5px;
+  }
+
+  div[class="ant-select"]{
+    border-radius: 15px 15px 15px 15px;
+  }
+
+  div[class="ant-modal-content"]{
+    border-radius: 15px 15px 15px 15px;
+  }
+
+  div[class="ant-modal-header"]{
+    background: #2D50EC;
+    border-radius: 15px 15px 0px 0px;
+  }
+
+  div[class="ant-modal-title"]{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 26px;
+
+    color: #FFFDFD;
+  }
+
+  span[class="ant-modal-close-x"]{
+    font-size: 20px;
+    color: #FFFDFD;
+  }
+
+  //adaptation
+
+@media (max-width: 1024px) {
+  .flex{
+    display: flex;
+    flex-direction: column;
+  }
+  .phoneBlock{
+    padding-left:0;
+  }
+  .row{
+    h2{
+      margin-left: 0;
+      margin-right: 25px;
+    }
+  }
+}
+@media (max-width: 610px) {
+  .row{
+    div[class="ant-slider"]{
+      width: 172px;
+    }
+    h2{
+      margin-right: 0;
+      font-size: 14px;
+      width: 125px;
+    }
+    h3{
+      font-size: 14px;
+    }
+  }
+  h2{
+    font-size: 18px;
+  }
+
+}
+
+@media (max-width: 490px) {
+  .border{
+    width: none;
+  }
+  .row{
+    h3{
+      font-size: 14px;
+      width: 290px;
+    }
+  }
+}
