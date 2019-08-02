@@ -1,5 +1,5 @@
 //midle text
-$text-size: 20px;
+$text-size: 30px;
 $text-color: Black;
 $text-width: 430px;
 $text-weight: 700;
@@ -7,10 +7,10 @@ $text-top:150px;
 // #404
 $size404:40px;
 // oops
-$oops-size:120px;
+$oops-size:150px;
 $oops-color: white;
 //buttons
-$margin-to-buttons: 40px;
+$margin-to-buttons: 50px;
 
 
 .container
@@ -33,7 +33,7 @@ $margin-to-buttons: 40px;
     color: $text-color;
     font-weight: $text-weight;
     height: 100%;
-    min-width: $text-width + 70px;
+    min-width: 720px;
     width : 50%;
     padding-top: $text-top;
 }
@@ -49,8 +49,8 @@ $margin-to-buttons: 40px;
 {
     font-size: $oops-size;
     color: $oops-color;
-    height: $oops-size * 0.75;
-    line-height: 0.6;
+    height: $oops-size * 0.9;
+    line-height: 0.8;
 }
 
 .text
@@ -91,7 +91,7 @@ $margin-to-buttons: 40px;
     .massage
     {
         min-width: 320px;
-        padding-top: 40px;
+        padding-top: 25px;
     }
 
     .number , .massage , .buttons , .text , .oops
@@ -103,6 +103,12 @@ $margin-to-buttons: 40px;
     {
         font-size: 80px;
         text-align: center;
+        height: 80px;
+        line-height: 0.85;
     }
     
+    .text
+    {
+        font-size: 25px;
+    }
 }

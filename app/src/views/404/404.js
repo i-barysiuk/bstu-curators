@@ -16,7 +16,7 @@ class NotFound extends React.Component {
             </div>
             <div className={style.buttons}>
             <Button 
-              type="primary" 
+              type="default" 
               shape="round" 
               icon="left"
               size="large"
@@ -26,7 +26,7 @@ class NotFound extends React.Component {
                 Назад     
               </Button>
             <Button
-                type="primary"
+                type="default"
                 shape="round"
                 icon="home"
                 size="large"
