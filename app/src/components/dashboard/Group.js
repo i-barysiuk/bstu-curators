@@ -23,7 +23,7 @@ function onSearch(val) {
 class Faculty extends React.Component{
 render() {
   return (
-        <div>
+        <div className={style.select}>
         <h2>Факультет:</h2>
           <Select
             className = {style.border}
@@ -69,7 +69,7 @@ class GroupName extends React.Component{
 class Curator extends React.Component{
   render(){
     return(
-           <div className={style.row}>
+           <div className={style.flex}>
             <div>
               <h2>Куратор: </h2>
                 <Input 
@@ -78,7 +78,7 @@ class Curator extends React.Component{
                 placeholder="ФИО"
                 />
               </div>
-              <div style={{marginLeft: 40}}>
+              <div className={style.phoneBlock}>
                 <h2>Телефон куратора: </h2>
                 <div className={style.row}>
                   <p className={style.phone}>+375</p>
@@ -100,33 +100,33 @@ function convert(total,value){
 
 class SliderSync extends React.Component {
   state = {
-    inputValue1: 1,
-    inputValue2: 0,
-    inputValue3: 0,
+    total: 1,
+    women: 0,
+    men: 0,
   };
 
   onTotalChange = value => {
     this.setState({
-      inputValue1: value,
+      total: value,
     });
   };
 
   onWomenChange = value => {
     this.setState({
-      inputValue2: value,
+      women: value,
     });
   };
 
   onMenChange = value => {
     this.setState({
-      inputValue3: value,
+      men: value,
     });
   };
 
   render() {
-    const { inputValue1 } = this.state;
-    const { inputValue2 } = this.state;
-    const { inputValue3 } = this.state;
+    const { total } = this.state;
+    const { women } = this.state;
+    const { men } = this.state;
     return (
           <div className={style.colunm}>
           <h2>Количество человек</h2>
@@ -135,7 +135,7 @@ class SliderSync extends React.Component {
             min={1}
             max={40}
             onChange={this.onTotalChange}
-            value={typeof inputValue1 === 'number' ? inputValue1 : 0}
+            value={typeof total === 'number' ? total : 0}
             style={{width: 300}}
           />
           <InputNumber
@@ -143,44 +143,44 @@ class SliderSync extends React.Component {
             min={1}
             max={40}
             style={{ marginLeft: 16 }}
-            value={inputValue1}
+            value={total}
             onChange={this.onTotalChange}
           />
           </div>
           <h2>Из них:</h2>
           <div className={style.row}>
-          <h2 style={{ marginLeft: 50, marginRight: 50 }}>- Девушек</h2>
+          <h2>- Девушек</h2>
           <Slider
             min={0}
-            max= {convert(inputValue1,inputValue3)}
+            max= {convert(total,men)}
             onChange={this.onWomenChange}
-            value={typeof inputValue2 === 'number' ? inputValue2 : 0}
+            value={typeof women === 'number' ? women : 0}
             style={{width: 300}}
           />
           <InputNumber
             className={style.border}
             min={0}
-            max={convert(inputValue1,inputValue3)}
+            max={convert(total,men)}
             style={{ marginLeft: 16 }}
-            value={inputValue2}
+            value={women}
             onChange={this.onWomenChange}
           />
             </div>
             <div className={style.row}>
-            <h2 style={{ marginLeft: 50, marginRight: 50 }}>- Юношей</h2>
+            <h2>- Юношей</h2>
             <Slider
             min={0}
-            max={convert(inputValue1,inputValue2)}
+            max={convert(total,women)}
             onChange={this.onMenChange}
-            value={typeof inputValue3 === 'number' ? inputValue3 : 0}
+            value={typeof men === 'number' ? men : 0}
             style={{width: 300}}
           />
           <InputNumber
             className={style.border}
             min={0}
-            max={convert(inputValue1,inputValue2)}
+            max={convert(total,women)}
             style={{ marginLeft: 16 }}
-            value={inputValue3}
+            value={men}
             onChange={this.onMenChange}
           />
               </div>
@@ -194,9 +194,9 @@ class Organisation extends React.Component{
     return(
           <div className={style.row}>
             <div className={style.colunm}>
-              <h3>- БРСМ</h3>    <br/>
-              <h3>- Профком</h3> <br/>
-              <h3>- Прочее</h3>
+              <h2>- БРСМ</h2>    <br/>
+              <h2>- Профком</h2> <br/>
+              <h2>- Прочее</h2>
             </div>
             <div className={style.colunm}>
               <div>
@@ -255,14 +255,14 @@ class Group extends React.Component {
 
         <Modal
           title = "Добавление группы"
-          width = '925px'
+          width = 'none'
           centered
           destroyOnClose = {true}
           footer = {
             <div className={style.row}>
             <h3>Поля, отмеченные * обязательны для заполнения</h3>
             <Button
-              style = {{marginLeft: 385}}
+              className={style.footerButton}
               type="primary"
               onClick={() => this.setModalVisible(false)}
               >

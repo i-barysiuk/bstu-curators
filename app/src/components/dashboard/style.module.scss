@@ -5,6 +5,25 @@
   .row{
     display: flex;
     flex-direction: row;
+    h2{
+      margin-left: 30px;
+      margin-right: 50px;
+    }
+  }
+
+  .flex{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .select{
+    div>div{
+    border-radius: 15px 15px 15px 15px;
+    }
+  }
+
+  .phoneBlock{
+    padding-left:25px;
   }
 
   .phone{
@@ -22,6 +41,12 @@
 
   .border{
     border-radius: 15px 15px 15px 15px;
+  }
+
+  .footerButton{
+    position: absolute;
+    right: 20px;
+    margin: 5px;
   }
 
   div[class="ant-select"]{
@@ -50,3 +75,52 @@
     font-size: 20px;
     color: #FFFDFD;
   }
+
+  //adaptation
+
+@media (max-width: 1024px) {
+  .flex{
+    display: flex;
+    flex-direction: column;
+  }
+  .phoneBlock{
+    padding-left:0;
+  }
+  .row{
+    h2{
+      margin-left: 0;
+      margin-right: 25px;
+    }
+  }
+}
+@media (max-width: 610px) {
+  .row{
+    div[class="ant-slider"]{
+      width: 172px;
+    }
+    h2{
+      margin-right: 0;
+      font-size: 14px;
+      width: 125px;
+    }
+    h3{
+      font-size: 14px;
+    }
+  }
+  h2{
+    font-size: 18px;
+  }
+
+}
+
+@media (max-width: 490px) {
+  .border{
+    width: none;
+  }
+  .row{
+    h3{
+      font-size: 14px;
+      width: 290px;
+    }
+  }
+}
