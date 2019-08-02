@@ -88,78 +88,92 @@ class Curator extends React.Component{
   }
 }
 
-class SliderSync extends React.Component{
+function convert(total,value){
+  return total - value;
+}
+
+class SliderSync extends React.Component {
   state = {
-    totalValue: 1,
-    womenValue: 0,
-    menValue: 0
+    inputValue1: 1,
+    inputValue2: 0,
+    inputValue3: 0,
   };
 
-  onChange = total => {
+  onTotalChange = value => {
     this.setState({
-      totalValue: total,
+      inputValue1: value,
     });
   };
 
+  onWomenChange = value => {
+    this.setState({
+      inputValue2: value,
+    });
+  };
+
+  onMenChange = value => {
+    this.setState({
+      inputValue3: value,
+    });
+  };
 
   render() {
-    const { totalValue, womenValue, menValue } = this.state;
+    const { inputValue1 } = this.state;
+    const { inputValue2 } = this.state;
+    const { inputValue3 } = this.state;
     return (
           <div className={style.row}>
           <h2>Количество человек</h2>
             <div className={style.column}>
-              <Slider
-                min={1}
-                max={40}
-                onChange={this.onChange}
-                total={typeof totalValue === 'number' ? totalValue : 0}
-                style={{width: 300}}
-              />
-              <InputNumber
-                min={1}
-                max={40}
-                style={{ marginLeft: 16 }}
-                total={totalValue}
-                onChange={this.onChange}
-                placeholder = '0'
-              />
+            <Slider
+            min={1}
+            max={40}
+            onChange={this.onTotalChange}
+            value={typeof inputValue1 === 'number' ? inputValue1 : 0}
+            style={{width: 300}}
+          />
+          <InputNumber
+            min={1}
+            max={40}
+            style={{ marginLeft: 16 }}
+            value={inputValue1}
+            onChange={this.onTotalChange}
+          />
           </div>
           <h2>Из них:</h2>
           <h2>- Девушек</h2>
           <div className={style.column}>
-              <Slider
-                min={0}
-                max={40}
-                onChange={this.handleChange}
-                women={typeof womenValue === 'number' ? womenValue : 0}
-                style={{width: 300}}
-              />
-              <InputNumber
-                min={0}
-                max={40}
-                style={{ marginLeft: 16 }}
-                women={womenValue}
-                onChange={this.handleChange}
-                placeholder = '0'
-              />
+          <Slider
+            min={0}
+            max= {convert(inputValue1,inputValue3)}
+            onChange={this.onWomenChange}
+            value={typeof inputValue2 === 'number' ? inputValue2 : 0}
+            style={{width: 300}}
+          />
+          <InputNumber
+            min={0}
+            max={convert(inputValue1,inputValue3)}
+            style={{ marginLeft: 16 }}
+            value={inputValue2}
+            onChange={this.onWomenChange}
+          />
             </div>
             <h2>- Юношей</h2>
             <div className={style.column}>
-              <Slider
-                min={0}
-                max={40}
-                onChange={this.handleChange}
-                men={typeof menValue === 'number' ? menValue : 0}
-                style={{width: 300}}
-              />
-              <InputNumber
-                min={0}
-                max={40}
-                style={{ marginLeft: 16 }}
-                men={menValue}
-                onChange={this.handleChange}
-                placeholder = '0'
-              />
+            <Slider
+            min={0}
+            max={convert(inputValue1,inputValue2)}
+            onChange={this.onMenChange}
+            value={typeof inputValue3 === 'number' ? inputValue3 : 0}
+            style={{width: 300}}
+          />
+          <InputNumber
+            min={0}
+            max={convert(inputValue1,inputValue2)}
+            style={{ marginLeft: 16 }}
+            value={inputValue3}
+            onChange={this.onMenChange}
+          />
               </div>
         </div>
     );
