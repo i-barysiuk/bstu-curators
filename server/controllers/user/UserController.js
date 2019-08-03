@@ -9,6 +9,12 @@ router.get("/", (req, res) => {
     .catch(err => console.error(err));
 });
 
+router.get("/me", (req, res) => {
+  UserService.get(req.user.id)
+    .then(data => res.status(200).json(data))
+    .catch(err => console.error(err));
+});
+
 router.get("/:id", (req, res) => {
   UserService.get(req.params.id)
     .then(data => res.status(200).json(data))
