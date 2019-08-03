@@ -1,6 +1,7 @@
 $bar-width: 40%;
 $main-width: 60%;
 $logo-width: 200px;
+$logo-width-mobile: 130px;
 
 .container {
   display: flex;
@@ -67,14 +68,13 @@ $logo-width: 200px;
     width: 100%;
     padding: 20px;
   }
-  .textbar {
+  .textbar,
+  .tips,
+  .buttons {
     display: none;
   }
   .logo {
-    width: 130px;
-  }
-  .buttons {
-    display: none;
+    width: $logo-width-mobile;
   }
   .pageName {
     margin: 0;
