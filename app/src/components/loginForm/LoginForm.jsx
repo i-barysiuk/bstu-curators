@@ -1,7 +1,10 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Avatar, Form, Input, Button, Icon } from "antd";
 import style from "./style.module.scss";
-import auth from "../../helper/auth";
+import { login } from "../../redux/actions/auth";
+import { whoAmI } from "../../redux/actions/users";
+import AuthService from "../../services/AuthService";
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -17,7 +20,7 @@ class LoginForm extends React.Component {
   }
 
   checkUser = (rule, value, callback) => {
-    auth("/info", "POST", { login: value })
+    AuthService.info(value)
       .then(res => {
         this.setState({ user: res.data, icon: null });
         callback();
@@ -32,8 +35,7 @@ class LoginForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        // TODO Redux Auth action
-        console.log("Received values of form: ", values);
+        this.props.login(values);
       }
     });
   };
@@ -85,6 +87,7 @@ class LoginForm extends React.Component {
               />
             )}
           </Form.Item>
+          <p className={style.errorMessage}>{this.props.auth.message}</p>
           <Form.Item>
             <Button
               type="primary"
@@ -92,6 +95,7 @@ class LoginForm extends React.Component {
               htmlType="submit"
               className={style.loginButton}
               disabled={hasErrors(getFieldsError())}
+              loading={this.props.auth.loading}
             >
               Войти
             </Button>
@@ -102,5 +106,15 @@ class LoginForm extends React.Component {
   }
 }
 
+const mapStateToProps = ({ auth }) => ({ auth });
+const mapDispatchToProps = {
+  login,
+  whoAmI
+};
+
 const WrappedLoginForm = Form.create({ name: "login" })(LoginForm);
-export default WrappedLoginForm;
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WrappedLoginForm);

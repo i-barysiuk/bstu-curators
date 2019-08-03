@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { logout } from "../../redux/actions/auth";
 import style from "./style.module.scss";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,7 +13,7 @@ import {
   faIdCard
 } from "@fortawesome/free-solid-svg-icons";
 import logoK from "../../assets/img/logo_k.png";
-import { Popover, Badge, Avatar } from "antd";
+import { Popover, Badge, Avatar, Button } from "antd";
 
 class Menu extends React.Component {
   render() {
@@ -74,7 +76,7 @@ class Menu extends React.Component {
           <Popover
             placement="rightBottom"
             trigger="click"
-            content="button"
+            content={<Button onClick={() => this.props.logout()}>Выход</Button>}
             title="Title"
           >
             <Avatar icon="user" className={style.avatar} />
@@ -84,5 +86,12 @@ class Menu extends React.Component {
     );
   }
 }
+const mapStateToProps = ({ auth }) => ({ auth });
+const mapDispatchToProps = {
+  logout
+};
 
-export default Menu;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Menu);

@@ -1,5 +1,4 @@
 import React from "react";
-import api from "../../helper/api";
 
 export default class Request extends React.Component {
   // state = {

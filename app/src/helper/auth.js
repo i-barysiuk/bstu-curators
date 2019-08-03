@@ -1,20 +1,20 @@
 import axios from "axios";
 
 if (process.env.NODE_ENV === "production")
-  axios.defaults.baseURL = "http://185.66.71.54:8001/api/auth";
+  axios.defaults.baseURL = "http://185.66.71.54:8001/api/";
 if (process.env.NODE_ENV === "test")
-  axios.defaults.baseURL = "http://185.66.71.58:8011/api/auth";
+  axios.defaults.baseURL = "http://185.66.71.58:8011/api/";
 if (process.env.NODE_ENV === "development")
-  axios.defaults.baseURL = "http://localhost:8000/api/auth";
+  axios.defaults.baseURL = "http://localhost:8000/api/";
 
 const auth = (url, method = "GET", data) => {
   switch (method) {
     case "GET":
-      return axios.get(url);
+      return axios.get("/auth" + url);
     case "POST":
-      return axios.post(url, data);
+      return axios.post("/auth" + url, data);
     default:
-      return axios.get(url);
+      return axios.get("/auth" + url);
   }
 };
 

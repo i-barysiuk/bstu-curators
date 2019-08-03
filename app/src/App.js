@@ -1,21 +1,21 @@
 import React from "react";
+import { connect } from "react-redux";
 import "./App.css";
-import { Router, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Login from "./views/login/Login";
 import Register from "./views/login/Login";
-import Welcom from "./views/login/Login";
+import Welcom from "./views/dashboard/Dashboard";
 import Dashboard from "./views/dashboard/Dashboard";
-
 import Request from "./components/request/Request";
 
-import { createBrowserHistory } from "history";
+import history from "./helper/history";
 import Analitic from "./helper/analitics";
-import { Provider } from "react-redux";
-import store from "./redux/store/store";
 
 import PageWrapper from "./containers/pageWrapper/PageWrapper";
 
-const history = createBrowserHistory();
+import { logout } from "./redux/actions/auth";
+import { whoAmI } from "./redux/actions/users";
+
 history.listen(location => {
   Analitic.pageview(location.pathname);
 });
@@ -23,51 +23,63 @@ history.listen(location => {
 class App extends React.Component {
   componentDidMount() {
     Analitic.pageview(window.location.pathname);
+    if (this.props.auth.accessToken)
+      this.props.whoAmI().catch(() => {
+        this.props.logout();
+      });
   }
   render() {
     return (
-      <Provider store={store}>
-        <Router history={history}>
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={props => (
-                <PageWrapper {...props} title="Главная" component={Welcom} />
-              )}
+      <Switch>
+        <Route
+          exact
+          path="/"
+          render={props => (
+            <PageWrapper {...props} title="Главная" component={Welcom} />
+          )}
+        />
+        <Route
+          path="/login"
+          render={props => (
+            <PageWrapper {...props} title="Вход" component={Login} notAuth />
+          )}
+        />
+        <Route
+          path="/register"
+          render={props => (
+            <PageWrapper
+              {...props}
+              title="Регистрация"
+              component={Register}
+              notAuth
             />
-            <Route
-              path="/login"
-              render={props => (
-                <PageWrapper {...props} title="Вход" component={Login} />
-              )}
-            />
-            <Route
-              path="/register"
-              render={props => (
-                <PageWrapper
-                  {...props}
-                  title="Регистрация"
-                  component={Register}
-                />
-              )}
-            />
-            <Route
-              path="/dashboard"
-              render={props => <PageWrapper {...props} component={Dashboard} />}
-            />
-            <Route
-              path="*"
-              exact
-              render={props => (
-                <PageWrapper {...props} title="Упс!" component={Request} />
-              )}
-            />
-          </Switch>
-        </Router>
-      </Provider>
+          )}
+        />
+        <Route
+          path="/dashboard"
+          render={props => (
+            <PageWrapper {...props} component={Dashboard} Auth />
+          )}
+        />
+        <Route
+          path="*"
+          exact
+          render={props => (
+            <PageWrapper {...props} title="Упс!" component={Request} />
+          )}
+        />
+      </Switch>
     );
   }
 }
 
-export default App;
+const mapStateToProps = ({ auth }) => ({ auth });
+const mapDispatchToProps = {
+  logout,
+  whoAmI
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
