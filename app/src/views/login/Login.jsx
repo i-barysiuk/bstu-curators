@@ -13,12 +13,14 @@ const Login = props => {
           <img src={logo} className={style.logo} alt="logo" />
           <p>Система заботы о студентах</p>
           <h2 className={style.header}>Рады видеть Вас снова!</h2>
-          <p>
+          <div className={style.textbar}>
             Что бы начать использовать данный продукт вы должны быть
             авторизованы в системе. Пожалуйста введите ваш логин и пароль в
             форме справа.
-          </p>
-          <Tips />
+          </div>
+
+          <Tips className={style.tips} />
+
           <div className={style.buttons}>
             <Button
               type="primary"
