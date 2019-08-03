@@ -6,7 +6,8 @@ import Login from "./views/login/Login";
 import Register from "./views/login/Login";
 import Welcom from "./views/dashboard/Dashboard";
 import Dashboard from "./views/dashboard/Dashboard";
-import Request from "./components/request/Request";
+
+import NotFound from "./views/404/404";
 
 import history from "./helper/history";
 import Analitic from "./helper/analitics";
@@ -65,7 +66,7 @@ class App extends React.Component {
           path="*"
           exact
           render={props => (
-            <PageWrapper {...props} title="Упс!" component={Request} />
+            <PageWrapper {...props} title="Упс!" component={NotFound} />
           )}
         />
       </Switch>
