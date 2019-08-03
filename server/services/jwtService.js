@@ -6,7 +6,7 @@ class JWTService {
     var accessToken = jwt.sign(
       {
         id: data.id,
-        roles: data.role
+        role: data.role
       },
       secret,
       { expiresIn: "1h" }

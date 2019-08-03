@@ -83,16 +83,16 @@ router.post("/register", (req, res) => {
       else res.sendStatus(400);
     })
     .catch(err => {
-      res.send(400).json(err);
+      res.status(400).json(err);
     });
 });
 
 router.post("/info", (req, res) => {
   UserService.find(req.body.login)
-    .then(data => {
-      if (!data) throw new Error("User not found");
+    .then(user => {
+      if (!user) throw new Error("User not found");
       var initials = user.first_name[0] + user.last_name[0];
-      res.send(200).json({
+      res.status(200).json({
         id: user.id,
         first_name: user.first_name,
         last_name: user.last_name,
@@ -100,7 +100,7 @@ router.post("/info", (req, res) => {
       });
     })
     .catch(err => {
-      res.send(401).json(err);
+      res.status(401).json(err.message);
     });
 });
 
@@ -111,7 +111,26 @@ router.post("/check", (req, res) => {
       res.sendStatus(200);
     })
     .catch(err => {
-      res.send(400).json(err);
+      res.status(400).json(err);
+    });
+});
+
+router.post("/logout", (req, res) => {
+  const user = JWTService.validate(req.body.token);
+  UserService.get(user.id)
+    .then(data => {
+      if (!data) throw new Error("User not found");
+      data.tokens.filter(item => {
+        return item.token != req.body.token;
+      });
+      return UserService.update({ tokens: data.tokens }, user.id);
+    })
+    .then(data => {
+      if (data[0] === 0) throw new Error("Token not removed");
+      res.sendStatus(200);
+    })
+    .catch(err => {
+      res.status(400).json(err);
     });
 });
 
