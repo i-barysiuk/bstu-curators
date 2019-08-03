@@ -8,7 +8,9 @@ import Welcom from "./views/dashboard/Dashboard";
 import Dashboard from "./views/dashboard/Dashboard";
 
 import NotFound from "./views/404/404";
+
 import DemoLine from "./components/charts/DemoLine" 
+import ChartDate from "./components/charts/ChartDate"
 
 import history from "./helper/history";
 import Analitic from "./helper/analitics";
@@ -68,6 +70,13 @@ class App extends React.Component {
           exact
           render={props => (
             <PageWrapper {...props} title="График" component={DemoLine} />
+          )}
+        />
+         <Route
+          path="/charts"
+          exact
+          render={props => (
+            <PageWrapper {...props} title="График" component={ChartDate} />
           )}
         />
         <Route
