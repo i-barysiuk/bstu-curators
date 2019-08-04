@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  align-items: center;  
+  align-items: center;
 }
 .userName {
   margin-top: 10px;
@@ -13,14 +13,19 @@
 .loginButton {
   width: 100%;
 }
-.stepsContent{
+.stepsContent {
   display: flex;
   flex-direction: row;
   align-content: space-between;
   justify-content: center;
 }
-.stepsAction{
+.stepsAction {
   text-align: center;
+}
+
+.errorMessage {
+  text-align: center;
+  color: red;
 }
 
 @media screen and (max-width: 700px) {

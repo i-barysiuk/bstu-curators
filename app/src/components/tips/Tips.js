@@ -21,7 +21,7 @@ const Tips = props => {
   var list = props.tips ? props.tips : getRandom(tips, 5);
 
   return (
-    <div className={style.container}>
+    <div className={style.container + " " + props.className}>
       <Carousel autoplay>
         {list.map((item, i) => {
           return (
