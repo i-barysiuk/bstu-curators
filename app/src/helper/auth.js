@@ -3,11 +3,12 @@ import axios from "axios";
 if (process.env.NODE_ENV === "production")
   axios.defaults.baseURL = "http://185.66.71.54:8001/api/";
 if (process.env.NODE_ENV === "test")
-  axios.defaults.baseURL = "http://185.66.71.58:8011/api/";
+  axios.defaults.baseURL = "http://185.66.71.54:8011/api/";
 if (process.env.NODE_ENV === "development")
   axios.defaults.baseURL = "http://localhost:8000/api/";
 
 const auth = (url, method = "GET", data) => {
+  console.log(process.env.NODE_ENV);
   switch (method) {
     case "GET":
       return axios.get("/auth" + url);
