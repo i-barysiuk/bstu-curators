@@ -11,6 +11,7 @@ class Dashboard extends React.Component {
       <div style={{ display: "flex", height: "100%" }}>
         <Menu />
         <Switch>
+
           <Route
             exec
             path="/dashboard/groups"

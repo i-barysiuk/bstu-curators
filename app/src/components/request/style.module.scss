@@ -1,0 +1,178 @@
+  .column{
+    display: flex;
+    flex-direction: column;
+  }
+  .row{
+    display: flex;
+    flex-direction: row;
+    h2{
+      margin-left: 30px;
+      margin-right: 50px;
+    }
+    div[class="ant-slider"]{
+      width: 300px;
+    }
+  }
+
+  div[class="ant-modal"]{
+    width:850px;
+  }
+
+  .flex{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .select{
+    div>div{
+    border-radius: 15px 15px 15px 15px;
+    }
+  }
+
+  .phone{
+    padding: 5px;
+    font-size: 18px;
+    line-height: 20px;
+
+    color: #000000;
+  }
+  
+  .container{
+    width:400px;
+    padding-right:25px;
+    padding-bottom:25px;
+  }
+
+  .sliderBox{
+    padding-right:25px;
+    padding-bottom:25px;
+    input{
+      width:92px;
+    }
+  }
+
+  .otherBox{
+    margin-left:50px;
+  }
+
+  .border{
+    border-radius: 15px 15px 15px 15px;
+  }
+
+  .footerButton{
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+  }
+
+  div[class="ant-input-number-handler-wrap"]{
+    display: none;
+  }
+
+  div[class="ant-select"]{
+    border-radius: 15px 15px 15px 15px;
+  }
+
+  div[class="ant-modal-content"]{
+    border-radius: 15px 15px 15px 15px;
+  }
+
+  div[class="ant-modal-header"]{
+    background: #2D50EC;
+    border-radius: 15px 15px 0px 0px;
+  }
+
+  div[class="ant-modal-title"]{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 26px;
+
+    color: #FFFDFD;
+  }
+
+  span[class="ant-modal-close-x"]{
+    font-size: 20px;
+    color: #FFFDFD;
+  }
+
+  //adaptation
+
+@media (max-width: 850px) {
+  div[class="ant-modal"]{
+    width:100%;
+  }
+}
+@media (max-width: 750px) {
+  .container{
+    width: 100%;
+  }
+  .row{
+    div[class="ant-slider"]{
+      width:100%;
+    }
+    h2{
+      margin-left: 0;
+      margin-right: 16px;
+      font-size: 16px;
+    }
+    h3{
+      font-size: 16px;
+    }
+  }
+
+  h2{
+    font-size: 18x;
+  }
+}
+
+@media (max-width: 610px) {
+  
+  .flex{
+    flex-direction: column;
+  }
+  .row{
+    h2{
+      font-size: 14px;
+    }
+    h3{
+      font-size: 14px;
+    }
+  }
+
+  h2{
+    font-size: 18px;
+  }
+
+  .container{
+    width: 100%;
+    padding-right:0;
+    padding-bottom:16px;
+  }
+
+  .sliderBox{
+   width: 100%;
+   padding-right:0;
+   padding-bottom:16px;
+  }
+
+}
+
+@media (max-width: 490px) {
+  .row{
+    h3{
+      font-size: 14px;
+      width: 55%;
+    }
+  }
+  .sliderBox{
+    input{
+      width:60px;
+    }
+  }
+
+}
+
+@media (max-height: 330px) {
+
+}

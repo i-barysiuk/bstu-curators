@@ -12,6 +12,8 @@ export default class Request extends React.Component {
   // }
 
   render() {
-    return <p style={{ width: "100%" }}>Я ТУТ!</p>;
+    return (
+    <p>Я ТУТ!</p>
+    );
   }
 }
