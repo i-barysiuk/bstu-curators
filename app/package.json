@@ -27,9 +27,9 @@
     "roboto-fontface": "^0.10.0"
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=development react-scripts start",
-    "build": "cross-env NODE_ENV=production react-scripts build",
-    "build:uat": "cross-env NODE_ENV=test react-scripts build",
+    "start": "cross-env REACT_APP_ENV=development react-scripts start",
+    "build": "cross-env REACT_APP_ENV=production react-scripts build",
+    "build:uat": "cross-env REACT_APP_ENV=test react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
