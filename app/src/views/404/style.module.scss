@@ -16,7 +16,7 @@ $margin-to-buttons: 50px;
 .container {
   height: 100%;
   width: 100%;
-  background: url(../../assets/img/child.png) repeat-x#00d8ff;
+  background: url(../../assets/images/backgrounds/child.png) repeat-x#00d8ff;
   -moz-background-size: 100%;
   -webkit-background-size: 100%;
   -o-background-size: 100%;
@@ -72,7 +72,7 @@ $margin-to-buttons: 50px;
 
 @media screen and (max-width: 720px) {
   .container {
-    background: url(../../assets/img/child.png) no-repeat #00d8ff;
+    background: url(../../assets/images/backgrounds/child.png) no-repeat #00d8ff;
     background-position: bottom;
     background-size: 100%;
     display: flex;

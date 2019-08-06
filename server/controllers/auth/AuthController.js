@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const UserService = require("../../services/UserService");
-const JWTService = require("../../services/JWTService");
+const JWTService = require("../../services/jwtService");
 
 router.post("/login", (req, res) => {
   var ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;

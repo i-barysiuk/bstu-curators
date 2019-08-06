@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
 }
 .userName {
   margin-top: 10px;
@@ -13,6 +12,15 @@
 }
 .loginButton {
   width: 100%;
+}
+.stepsContent {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  justify-content: center;
+}
+.stepsAction {
+  text-align: center;
 }
 
 .errorMessage {
