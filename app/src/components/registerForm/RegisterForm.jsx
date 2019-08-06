@@ -163,7 +163,7 @@ class RegistrationForm extends React.Component {
               {getFieldDecorator("f_name", {
                 rules: [
                   {
-                    pattern: /(^[А-я]{1,25}$)/, 
+                    pattern: /(^[А-я]{1,20}$)/, 
                     message: "Используйте только буквы русского алфавита"
                   },
                 ],
