@@ -1,0 +1,71 @@
+//container
+$con-width: 255px;
+$all-field: 200px;
+$gray-color:  #65696C;
+.container
+{
+    
+    width: $con-width;
+    height: 100%;
+    padding-top: 30px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    box-shadow: 4px 0px 4px 2px #E8E9EC;
+}
+
+.addAndGroups
+{
+    width: $all-field;
+    height: 35px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.grp
+{
+    font-size: 23px;
+    color: black;
+}
+
+.plus
+{
+    color: blue;
+    font-size: 30px;   
+}
+
+.input
+{
+    width: $all-field + 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 7px;
+}
+
+.link
+{
+    width: $all-field;
+    color: $gray-color;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+}
+
+.icons
+{
+    
+}
+
+.menu
+{
+    width: 140px;
+}
+.menuAnt{
+    border-right: 0px solid !important;
+}
