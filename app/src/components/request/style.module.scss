@@ -36,6 +36,11 @@
 
     color: #000000;
   }
+
+  .padding{
+    padding-right:25px;
+    padding-bottom:25px;
+  }
   
   .container{
     width:400px;
@@ -45,11 +50,11 @@
 
   .sliderBox{
     padding-right:25px;
-    padding-bottom:25px;
     input{
       width:92px;
     }
   }
+
 
   .otherBox{
     margin-left:50px;
@@ -63,6 +68,11 @@
     position: absolute;
     right: 20px;
     bottom: 10px;
+  }
+
+  div[class="ant-modal-body"]{
+    height: 800px;
+    overflow-y: scroll;
   }
 
   div[class="ant-input-number-handler-wrap"]{
@@ -153,7 +163,6 @@
   .sliderBox{
    width: 100%;
    padding-right:0;
-   padding-bottom:16px;
   }
 
 }
@@ -170,9 +179,5 @@
       width:60px;
     }
   }
-
-}
-
-@media (max-height: 330px) {
 
 }
