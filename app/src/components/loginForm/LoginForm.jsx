@@ -5,6 +5,7 @@ import style from "./style.module.scss";
 import { login } from "../../redux/actions/auth";
 import { whoAmI } from "../../redux/actions/users";
 import AuthService from "../../services/AuthService";
+import { Link } from 'react-router-dom'
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -101,6 +102,9 @@ class LoginForm extends React.Component {
             </Button>
           </Form.Item>
         </Form>
+        <div >
+          Нет аккаунта?  <Link to="/register"> Зарегистрируйтесь</Link>
+        </div>
       </div>
     );
   }
