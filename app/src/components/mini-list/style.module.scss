@@ -1,0 +1,46 @@
+$width-elem: 220px;
+$color-kurs: #D4D5D6;
+$color-text: #65696C;
+
+.main
+{
+    width: $width-elem;
+    display: flex;
+    flex-direction: row;
+    padding-left: 25px;
+    align-items: center;
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.5);
+    border-radius: 7px;
+}
+
+.icons
+{
+    margin-left: 2px;
+    margin-right: 5px;
+    color: $color-text;
+    display: none;
+}
+
+.text
+{
+    display: flex;
+    flex-direction: row;
+    color: $color-text;
+}
+
+.kurs
+{
+    color:$color-kurs;
+}
+
+.main:hover 
+{
+    justify-content: space-between;
+    padding-left: 0;
+}
+
+.main:hover .icons
+{
+    display: inline;
+}
+
