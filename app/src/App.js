@@ -4,7 +4,7 @@ import "./App.css";
 import { Route, Switch } from "react-router-dom";
 
 import Login from "./views/login/Login";
-import Register from "./views/register/register";
+import Register from "./views/register/Register";
 import Welcom from "./views/dashboard/Dashboard";
 import Dashboard from "./views/dashboard/Dashboard";
 import NotFound from "./views/404/404";
