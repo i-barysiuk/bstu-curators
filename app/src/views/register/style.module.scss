@@ -9,14 +9,14 @@ $logo-width-mobile: 130px;
   height: 100%;
 }
 .bar {
-  background-image: url("../../assets/images/backgrounds/login.jpg");
+  background-image: url("../../assets/images/backgrounds/register.jpg");
   background-position: center;
   background-size: cover;
   height: 100%;
   width: $bar-width;
 }
 .darkBackground {
-  background: rgba(30, 37, 54, 0.6);
+  background: rgba(30, 37, 54, 0.7);
   padding: 50px;
   height: 100%;
   display: flex;
@@ -55,10 +55,18 @@ $logo-width-mobile: 130px;
 .logo {
   width: $logo-width;
 }
+
+.registrationForm {
+  width: 400px;
+  align-self: center;
+}
+
 @media screen and (max-width: 700px) {
   .container {
-    flex-direction: column;
+    flex-direction: column-reverse;
+    min-height: 100%;
     font-size: 14px;
+    overflow: auto;
   }
   .bar {
     width: 100%;
@@ -83,5 +91,9 @@ $logo-width-mobile: 130px;
   .header {
     font-size: 17px;
     font-weight: bold;
+  }
+  .registrationForm {
+    min-width: 300px;
+    width: 80%;
   }
 }

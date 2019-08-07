@@ -13,6 +13,20 @@
 .loginButton {
   width: 100%;
 }
+.stepsContent {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  justify-content: center;
+}
+.stepsAction {
+  text-align: center;
+}
+
+.errorMessage {
+  text-align: center;
+  color: red;
+}
 
 @media screen and (max-width: 700px) {
 }

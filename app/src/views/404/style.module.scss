@@ -1,0 +1,107 @@
+//midle text
+$text-size: 30px;
+$text-color: Black;
+$text-width: 430px;
+$text-weight: 700;
+$text-top: 150px;
+$text-top-mobile: 60px;
+// #404
+$size404: 40px;
+// oops
+$oops-size: 150px;
+$oops-color: white;
+//buttons
+$margin-to-buttons: 50px;
+
+.container {
+  height: 100%;
+  width: 100%;
+  background: url(../../assets/images/backgrounds/child.png) repeat-x#00d8ff;
+  -moz-background-size: 100%;
+  -webkit-background-size: 100%;
+  -o-background-size: 100%;
+  background-size: 100%;
+  background-position: bottom left 250px;
+}
+
+.massage {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: $text-color;
+  font-weight: $text-weight;
+  height: 100%;
+  min-width: 720px;
+  width: 50%;
+}
+
+.number {
+  font-size: $size404;
+  text-align: center;
+  width: $text-width;
+}
+
+.oops {
+  font-size: $oops-size;
+  color: $oops-color;
+  height: $oops-size * 0.9;
+  line-height: 0.8;
+}
+
+.text {
+  text-align: center;
+  font-size: $text-size;
+  width: $text-width - 10px;
+  padding-bottom: $margin-to-buttons;
+}
+
+.buttons {
+  width: $text-width;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.button {
+  background: white;
+  color: black;
+  font-weight: $text-weight;
+}
+
+@media screen and (max-width: 720px) {
+  .container {
+    background: url(../../assets/images/backgrounds/child.png) no-repeat #00d8ff;
+    background-position: bottom;
+    background-size: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .massage {
+    min-width: 320px;
+    padding-top: $text-top-mobile;
+    justify-content: start;
+  }
+
+  .number,
+  .massage,
+  .buttons,
+  .text,
+  .oops {
+    width: 320px;
+  }
+
+  .oops {
+    font-size: 60px;
+    text-align: center;
+    height: 60px;
+    line-height: 0.85;
+  }
+
+  .text {
+    font-size: 20px;
+  }
+}
