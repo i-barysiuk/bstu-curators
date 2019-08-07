@@ -1,6 +1,9 @@
   .column{
     display: flex;
     flex-direction: column;
+    div[class="ant-slider"]{
+      width: 100%;
+    }
   }
   .row{
     display: flex;
@@ -12,10 +15,6 @@
     div[class="ant-slider"]{
       width: 300px;
     }
-  }
-
-  div[class="ant-modal"]{
-    width:850px;
   }
 
   .flex{
@@ -70,9 +69,16 @@
     bottom: 10px;
   }
 
+  div[class="ant-modal"]{
+    width:850px;
+  }
+
+  div[class="steps-content"]{
+    padding-top: 25px;
+  }
+
   div[class="ant-modal-body"]{
     height: 800px;
-    overflow-y: scroll;
   }
 
   div[class="ant-input-number-handler-wrap"]{
@@ -84,6 +90,7 @@
   }
 
   div[class="ant-modal-content"]{
+    width:850px;
     border-radius: 15px 15px 15px 15px;
   }
 
@@ -112,11 +119,15 @@
   div[class="ant-modal"]{
     width:100%;
   }
+  div[class="ant-modal-content"]{
+    width:100%;
+  }
 }
 @media (max-width: 750px) {
   .container{
     width: 100%;
   }
+  
   .row{
     div[class="ant-slider"]{
       width:100%;
@@ -155,9 +166,8 @@
   }
 
   .container{
-    width: 100%;
     padding-right:0;
-    padding-bottom:16px;
+    padding-bottom:0;
   }
 
   .sliderBox{
@@ -179,5 +189,13 @@
       width:60px;
     }
   }
+}
 
+@media (max-width: 480px){
+  div[class="ant-steps ant-steps-horizontal ant-steps-label-horizontal"] {
+    display: flex !important;
+  }
+  div[class="ant-steps-item-icon"]{
+    width:24px;
+  }
 }
