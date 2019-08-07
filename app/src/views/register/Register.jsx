@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "antd";
 import style from "./style.module.scss";
-import RegistrationForm from "../../components/registerForm/registerForm";
+import RegistrationForm from "../../components/registerForm/RegisterForm";
 import logo from "../../assets/images/logos/curators.png";
 import Tips from "../../components/tips/Tips";
 
