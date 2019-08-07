@@ -38,7 +38,6 @@ class GroupCard extends React.Component
               </div>
             <Input prefix={<Icon type="search" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Найти группу" className={style.input} />
       <Menu className={style.menuAnt}
-        inlineIndent={15}
         mode="inline"
         openKeys={this.state.openKeys}
         onOpenChange={this.onOpenChange}
@@ -64,7 +63,7 @@ class GroupCard extends React.Component
             </span>
           }
         >
-          <Menu.Item key="9">test 2</Menu.Item>
+          <Menu.Item key="2">test 2</Menu.Item>
         </SubMenu>
         <SubMenu
           key="sub3"
@@ -75,7 +74,7 @@ class GroupCard extends React.Component
             </span>
           }
         >
-          <Menu.Item key="1">test 3</Menu.Item>
+          <Menu.Item key="3">test 3</Menu.Item>
         </SubMenu>
         <SubMenu
           key="sub4"
@@ -86,7 +85,7 @@ class GroupCard extends React.Component
             </span>
           }
         >
-          <Menu.Item key="1">test 4</Menu.Item>
+          <Menu.Item key="4">test 4</Menu.Item>
         </SubMenu>
       </Menu>
       </div>
