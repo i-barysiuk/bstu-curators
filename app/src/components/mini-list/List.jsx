@@ -13,20 +13,41 @@ import Convert from '../../helper/toRim';
 function List(props) 
 {
     return (
-        <div className={style.main}> 
+        <div className={style.main}  onClick={props.onClick} > 
             <div className={style.text}>
-                <FontAwesomeIcon className={style.icons} icon={faStar}  onClick={props.onStarClick}/>
+                <FontAwesomeIcon className={style.icons} icon={faStar}  
+                onClick={(e) => 
+                {
+                    props.onStarClick();
+                    e.stopPropagation();
+                }}/>
                 <div className={style.group}>{props.group}</div> 
                 <div className={style.kurs}>&nbsp;- {Convert(props.kurs)}</div>
             </div>
             <div>
-                <FontAwesomeIcon className={style.icons} icon={faPencilAlt} onClick={props.onEditClick}/>
-                <FontAwesomeIcon className={style.icons} icon={faUsers}     onClick={props.onStudentsClick}/>
-                <FontAwesomeIcon className={style.icons} icon={faArchive}   onClick={props.onArchiveClick}/>
+                <FontAwesomeIcon className={style.icons} icon={faPencilAlt}  
+                onClick={(e) => 
+                {
+                    props.onEditClick();
+                    e.stopPropagation();
+                } }/>
+                <FontAwesomeIcon className={style.icons} icon={faUsers}     
+                onClick={(e) => 
+                {
+                    props.onStudentsClick();
+                    e.stopPropagation();
+                } }/>
+                <FontAwesomeIcon className={style.icons} icon={faArchive}   
+                onClick={(e) => 
+                {
+                    props.onArchiveClick();
+                    e.stopPropagation();
+                } }/>
             </div>
         </div>
     );
 
 }
+
 
 export default List;
