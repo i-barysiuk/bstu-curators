@@ -3,6 +3,7 @@ import React from "react";
 
 import style from "./style.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import GroupsCard from "../groupItem/GroupItem";
 import {
   faPlusSquare
 } from "@fortawesome/free-solid-svg-icons";
@@ -15,7 +16,7 @@ class GroupCard extends React.Component
   rootSubmenuKeys = ['sub1', 'sub2','sub3', 'sub4'];
 
   state = {
-    openKeys: ['sub1'],
+    openKeys: '',
   }
 
       onOpenChange = openKeys => {
@@ -41,18 +42,22 @@ class GroupCard extends React.Component
         mode="inline"
         openKeys={this.state.openKeys}
         onOpenChange={this.onOpenChange}
-        style={{ width: 250 }}
+        style={{ width: 250}}
       >
         <SubMenu
           key="sub1"
           title={
             <span>
               <Icon type="star" theme="filled" />
-              <span>Избранное</span>
+              <span>
+               Избранное
+              </span>
             </span>
           }
         >
-          <Menu.Item key="1">test 1</Menu.Item>
+          <div className={style.groupCard}>
+          <Menu.Item  key="1"> <GroupsCard group = {"МС-4"} course = {"2"} /></Menu.Item>
+          </div>
         </SubMenu>
         <SubMenu
           key="sub2"
@@ -63,7 +68,7 @@ class GroupCard extends React.Component
             </span>
           }
         >
-          <Menu.Item key="2">test 2</Menu.Item>
+          <Menu.Item key="5">test 2</Menu.Item>
         </SubMenu>
         <SubMenu
           key="sub3"
@@ -74,7 +79,7 @@ class GroupCard extends React.Component
             </span>
           }
         >
-          <Menu.Item key="3">test 3</Menu.Item>
+          <Menu.Item key="6">test 3</Menu.Item>
         </SubMenu>
         <SubMenu
           key="sub4"
@@ -85,7 +90,7 @@ class GroupCard extends React.Component
             </span>
           }
         >
-          <Menu.Item key="4">test 4</Menu.Item>
+          <Menu.Item key="7">test 4</Menu.Item>
         </SubMenu>
       </Menu>
       </div>
