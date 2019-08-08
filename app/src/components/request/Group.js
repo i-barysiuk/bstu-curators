@@ -256,7 +256,7 @@ class Group extends React.Component {
               >{fieldText[i]}</h2>
               <br/>
             </div>
-            <Form.Item>
+            <Form.Item className={style.correction}>  
             <div className={style.row}>
                 {getFieldDecorator(fieldName[i], {
                   rules: [
