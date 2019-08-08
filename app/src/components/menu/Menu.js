@@ -16,8 +16,6 @@ import {
 import logoK from "../../assets/images/logos/curators.png";
 import { Popover, Badge, Avatar, Button } from "antd";
 
-import GroupModal from "../request/Group"
-
 class Menu extends React.Component {
   render() {
     return (
@@ -87,7 +85,6 @@ class Menu extends React.Component {
           </Popover>
         </div>
       </div>
-      <GroupModal/>
       </div>
     );
   }

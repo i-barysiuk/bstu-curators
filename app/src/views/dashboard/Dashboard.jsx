@@ -5,14 +5,15 @@ import Request from "../../components/request/Request";
 import NotFound from "../404/404";
 import PageWrapper from "../../containers/pageWrapper/PageWrapper";
 import GroupLayout from "./groups";
+import GroupModal from "../../components/groupModal/Group";
 
 class Dashboard extends React.Component {
   render() {
     return (
       <div style={{ display: "flex", height: "100%" }}>
-        <Menu />
+        <Menu/>
+        <GroupModal/>
         <Switch>
-
           <Route
             exec
             path="/dashboard/groups"
