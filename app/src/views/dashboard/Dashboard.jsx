@@ -2,9 +2,9 @@ import Menu from "../../components/menu/Menu";
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Request from "../../components/request/Request";
-import groupCard from "../../components/groupsCard/GroupCard";
 import NotFound from "../404/404";
 import PageWrapper from "../../containers/pageWrapper/PageWrapper";
+import GroupLayout from "./groups";
 
 class Dashboard extends React.Component {
   render() {
@@ -16,7 +16,7 @@ class Dashboard extends React.Component {
             exec
             path="/dashboard/groups"
             render={props => (
-              <PageWrapper {...props} title="Группы" component={groupCard} />
+              <PageWrapper {...props} title="Группы" component={GroupLayout} />
             )}
           />
           <Route

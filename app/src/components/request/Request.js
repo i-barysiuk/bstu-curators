@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "antd";
 
 export default class Request extends React.Component {
   // state = {
@@ -12,6 +13,10 @@ export default class Request extends React.Component {
   // }
 
   render() {
-    return <p style={{ width: "100%" }}>Я ТУТ!</p>;
+    return (
+      <p style={{ width: "100%" }}>
+        Я ТУТ!<Button type={"primary"}>123</Button>
+      </p>
+    );
   }
 }
