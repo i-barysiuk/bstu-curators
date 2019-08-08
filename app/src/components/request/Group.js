@@ -1,14 +1,11 @@
 import React from "react";
 import style from "./style.module.scss"
-import { Form, Input, Modal, Select, Slider, InputNumber, Button, Switch, Steps } from "antd";
+import { Form, Input, Modal, Select, Slider, InputNumber, Button, Steps, Tabs } from "antd";
 const { Option } = Select;
 const {TextArea} = Input;
 const { Step } = Steps;
+const { TabPane } = Tabs;
 
-
-function onChange(value) {
-  console.log(`selected ${value}`);
-}
 
 function onBlur() {
   console.log('blur');
@@ -22,84 +19,82 @@ function onSearch(val) {
   console.log('search:', val);
 }
 
-function sum(arg1,arg2,arg3) {return arg1 + arg2 + arg3;}
-
 function convert(total,value){
   if(total-value < 0) return 0;
   else return total - value;
-}
-
-function text(i){
-  switch(i){
-  case 0:
-    return (
-    <div>
-    <h3>Дети-сироты</h3>
-    <h3>(до 18 лет)</h3>
-    </div>
-    );
-  case 1:
-    return (
-    <div>
-    <h3>Дети, оставшиеся без попечения родителей</h3>
-    <h3>(до 18 лет)</h3>
-    </div>
-    );
-  case 2:
-    return (
-    <div>
-    <h3>Дети, оставшиеся без попечения родителей</h3>
-    <h3>(до 18 лет)</h3>
-    </div>
-    );
-  case 3:
-    return (
-    <div>
-    <h3>Лица из числа детей - сирот и детей, оставшихся без попечения родителей</h3>
-    <h3>(18-23 лет)</h3>
-    </div>
-    );
-  case 4:
-    return (<h3>Студенты с особенностями психофизического развития</h3>);
-  case 5:
-    return (<h3>Имеющие родителей инвалидов 1, 2 группы</h3>);
-  case 6:
-    return (<h3>Из регионов пострадавших от катастрофы на Чернобыльской АЭС</h3>);
-  case 7:
-    return (<h3>Из семей, отселенных из зон радиоактивного загрязнения</h3>);
-  }
 }
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
 
+const text = [
+  {fieldText: "Дети-сироты", note: "(до 18 лет)"},
+  {fieldText: "Дети, оставшиеся без попечения родителей", note: "(до 18 лет)"},
+  {fieldText: "Дети, оставшиеся без попечения родителей", note: "(до 18 лет)"},
+  {fieldText: "Лица из числа детей-сирот и детей, оставшихся без попечения родителей", note: "(18-23 лет)"},
+  {fieldText: "Студенты с особенностями психофизического развития"},
+  {fieldText: "Имеющие родителей инвалидов 1, 2 группы"},
+  {fieldText: "Из регионов пострадавших от катастрофы на Чернобыльской АЭС"},
+  {fieldText: "Из семей, отселенных из зон радиоактивного загрязнения"}
+]
+
 class Group extends React.Component {
-  state = {
-    modalVisible: false,
-    current: 0,
-    
-    total: 1,
-    women: 0,
-    men: 0,
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalVisible: false,
+      current:0,
 
-    standart:0,
-    large:0,
-    incomplete:0,
+      faculty: '',
+      group: '',
+      curator: '',
+      phone: '',
 
-    parent: 0, 
-    hostel: 0, 
-    relative: 0, 
-    privat: 0,
-  };
+      total:1,
+      women:0,
+      men:0,
+
+      brsm: 0,
+      profcom: 0,
+      other: 0,
+
+      //здесь должен быть соц статус
+
+      standart:0,
+      large:0,
+      incomplete:0,
+
+      parent:0, 
+      hostel:0, 
+      relative:0,
+      privat:0,
+
+      more: '',
+    };
+  }
 
   setModalVisible(modalVisible) {
     this.setState({ modalVisible, current: 0 });
   }
 
   next() {
-    const current = this.state.current + 1;
-    this.setState({ current });
+    const fields = [
+      {fieldList: ['faculty','group','curator']},//,'sex-w','sex-m'
+      {fieldList: ['brsm','profcom','other']},
+      {fieldList: [`social-0`,`social-1`,`social-2`,`social-3`,`social-4`,`social-5`,`social-6`,`social-7`,`social-8`]},
+      {fieldList: ['standart','large','incomplete']},//,'parent','hostel','relative','private'
+      {fieldList: ['more']},
+    ]
+    this.props.form.validateFieldsAndScroll(
+     fields[this.state.current].fieldList,
+      (err,values) => {
+      if(!err)
+      {
+        const current = this.state.current + 1;
+        this.setState({ current });
+      }
+  })
   }
 
   prev() {
@@ -107,77 +102,72 @@ class Group extends React.Component {
     this.setState({ current });
   }
 
-  onTotalChange = value => {
-    this.setState({
-      total: value,
-    });
-  };
+  onFacultyChange = value => {this.setState({faculty: value,}, console.log(`selected ${value}`))};
+  onGroupChange = value => {this.setState({group: value,})};
+  onCuratorChange = value => {this.setState({curator: value,})};
+  onPhoneChange = value => {this.setState({phone: value,})};
 
-  onWomenChange = value => {
-    this.setState({
-      women: value,
-    });
-  };
+  onTotalChange = value => {this.setState({total: value,})};
+  onWomenChange = value => {this.setState({women: value,})};
+  onMenChange = value => {this.setState({men: value,})};
 
-  onMenChange = value => {
-    this.setState({
-      men: value,
-    });
-  };
+  onParentChange = value => {this.setState({parent: value,})};
+  onHostelChange = value => {this.setState({hostel: value,})};
+  onRelativeChange = value => {this.setState({relative: value,})};
+  onPrivateChange = value => {this.setState({privat: value,})};
 
-  onParentChange = value => {
-    this.setState({
-      parent: value,
-    });
-  };
-
-  onHostelChange = value => {
-    this.setState({
-      hostel: value,
-    });
-  };
-
-  onRelativeChange = value => {
-    this.setState({
-      relative: value,
-    });
-  };
-
-  onPrivateChange = value => {
-    this.setState({
-      privat: value,
-    });
-  };
-
-  onStandartChange = value => {
-    this.setState({
-      standart: value,
-    });
-  };
-
-  onLargeChange = value => {
-    this.setState({
-      large: value,
-    });
-  };
-
-  onIncompleteChange = value => {
-    this.setState({
-      incomplete: value,
-    });
-  };
-
-   getSocial(column) {
-    const first = column ? 1 : 0;
+  onStandartChange = value => {this.setState({standart: value,})};
+  onLargeChange = value => {this.setState({large: value,})};
+  onIncompleteChange = value => {this.setState({incomplete: value,})};
+  
+  getOrganisation() {
+    const fieldName = [ 'brsm','profcom','other' ];
+    const fieldText = [ 'БРСМ', 'Профком', 'Прочее'];
     const { getFieldDecorator } = this.props.form;
     const children = [];
-    for (let i = first; i < 8; i+=2) {
+    for (let i = 0; i < 3; i++) {
+      children.push(
+        <div className = {style.container}>
+          <div className={style.row}>
+              <h2
+              style={{width:100}}
+              >{fieldText[i]}</h2>
+              <br/>
+            <div className={style.otherBox}>
+            <Form.Item>
+                {getFieldDecorator(fieldName[i], {
+                })(
+                  <InputNumber 
+                    className={style.border}
+                    min={0}
+                    max={40}
+                    placeholder="0" 
+                />)
+                }
+              </Form.Item>
+            </div>
+          </div>
+        </div>
+          );
+        }
+        return children;
+  }
+
+  getSocial(column) {
+    const first = column ? 4 : 0;
+    const last = column ? 8 : 4;
+    const { getFieldDecorator } = this.props.form;
+    const children = [];
+    for (let i = first; i < last; i++) {
       children.push(
           <Form.Item
           style={{marginLeft: 30}}
           >
-            {text(i)}
-            {getFieldDecorator(`field-${i}`, {
+            <div className={style.text}>
+            <h3>{text[i].fieldText}</h3>
+            <h4>{text[i].note}</h4>
+            </div>
+            {getFieldDecorator(`social-${i}`, {
             })(
               <InputNumber 
                 className={style.border}
@@ -192,11 +182,118 @@ class Group extends React.Component {
     return children;
   }
 
+  getFamilyComposition() {
+    const fieldName = [ 'standart','large','incomplete' ];
+    const fieldText = [ 'Cтандартная', 'Многодетная', 'Неполная'];
+    const total = this.state.total;
+    const value = [this.state.standart,this.state.large,this.state.incomplete]
+    const calc = [
+      this.state.large + this.state.incomplete,
+      this.state.standart + this.state.incomplete,
+      this.state.standart + this.state.large
+    ];
+    const change = [this.onStandartChange,this.onLargeChange,this.onIncompleteChange];
+    const { getFieldDecorator } = this.props.form;
+    const children = [];
+    for (let i = 0; i < 3; i++) {
+      children.push(
+          <div className={style.row}>
+          <div className={style.dynamicText}>
+              <h2
+              className={style.dynamicText}
+              >{fieldText[i]}</h2>
+              <br/>
+            </div>
+            <div className={style.otherBox}>
+            <Form.Item>
+                {getFieldDecorator(fieldName[i], {
+                  rules: [
+                  {
+                    required: true,
+                    message: "Распределите всех"
+                  },
+                ],
+                validateTrigger: "onBlur"
+                })(
+                  <InputNumber 
+                    className={style.border}
+                    min={0}
+                    max={convert(total,calc[i])}
+                    value={value[i]}
+                    onChange={change[i]}
+                    placeholder="0" 
+                />)
+                }
+              </Form.Item>
+            </div>
+          </div>
+          );
+        }
+        return children;
+  }
+
+  getPlace() {
+    const fieldName = [ 'parent', 'hostel', 'relative', 'privat' ];
+    const fieldText = [ 'С родителями', 'В общежитии', 'У родственников', 'На частной квартире'];
+    const total = this.state.total;
+    const value = [this.state.parent,this.state.hostel,this.state.relative,this.state.privat]
+    const calc = [
+      this.state.hostel + this.state.relative + this.state.privat,
+      this.state.parent + this.state.relative + this.state.privat,
+      this.state.parent + this.state.hostel + this.state.privat,
+      this.state.parent + this.state.hostel + this.state.relative
+    ];
+    const change = [this.onParentChange,this.onHostelChange,this.onRelativeChange,this.onPrivateChange];
+    const { getFieldDecorator } = this.props.form;
+    const children = [];
+
+    for (let i = 0; i < 4; i++) {
+      children.push(
+          <div className={style.row}>
+          <div className={style.dynamicText}>
+              <h2
+              className={style.dynamicText}
+              >{fieldText[i]}</h2>
+              <br/>
+            </div>
+            <Form.Item>
+            <div className={style.row}>
+                {getFieldDecorator(fieldName[i], {
+                  rules: [
+                  {
+                    required: true,
+                    message: "Не все участники группы распределены"
+                  },
+                ],
+                validateTrigger: "onBlur"
+                })(
+                  <Slider
+                      min={0}
+                      max={convert(total,calc[i])}
+                      onChange={change[i]}
+                      value={typeof value[i] === 'number' ? value[i] : 0}
+                    />)
+                    }
+                    <InputNumber
+                      className={style.border}
+                      min={0}
+                      max={convert(total,calc[i])}
+                      style={{ marginLeft: 16 }}
+                      value={value[i]}
+                      onChange={change[i]}
+                    />
+              </div>
+              </Form.Item>
+          </div>
+          );
+        }
+        return children;
+  }
+
   render() {
     const { current } = this.state;
+    const { faculty, group, curator, phone  } = this.state;
     const { total, women, men } = this.state;
-    const { standart, large, incomplete } = this.state;
-    const { parent, hostel, relative, privat } = this.state;
     const { getFieldDecorator, getFieldsError } = this.props.form;
 
     const steps = [
@@ -206,9 +303,8 @@ class Group extends React.Component {
         <div className={style.container}>
         <div className={style.select}>
         <Form.Item>
-        <h2>Факультет:</h2>
+        <h2>Факультет:<span className={style.red}>*</span></h2>
         {getFieldDecorator('faculty', {
-            validateFirst: true,
             rules: [
               {
                 required: true,
@@ -223,13 +319,13 @@ class Group extends React.Component {
             showSearch
             placeholder="Факультет:"
             optionFilterProp="children"
-            onChange={onChange}
+            onChange={this.onFacultyChange}
             onFocus={onFocus}
             onBlur={onBlur}
             onSearch={onSearch}
             filterOption={(input, option) =>
-              option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
+            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+            value={faculty}
             >
             <Option value="ФЭИС">ФЭИС</Option>
             <Option value="ФИСЭ">ФИСЭ</Option>
@@ -245,18 +341,20 @@ class Group extends React.Component {
 
           <div className={style.container}>
           <Form.Item>
-          <h2>Название группы: </h2>
-          {getFieldDecorator(`group`, {
+          <h2>Название группы:<span className={style.red}>*</span></h2>
+          {getFieldDecorator('group', {
             rules: [
               {
                 required: true,
                 message: "Пожалуйста укажите название группы"
               },
             ],
-            validateTrigger: "onBlur" 
+            validateTrigger: "onBlur"
           })(
               <Input
               className={style.border}
+              onChange={this.onGroupChange}
+              value={group}
               placeholder="Группа" 
               />)
           }
@@ -266,7 +364,7 @@ class Group extends React.Component {
           
           <div className={style.flex}>
           <div className={style.container}> 
-            <h2>Куратор: </h2>
+            <h2>Куратор:<span className={style.red}>*</span></h2>
             <Form.Item>
             {getFieldDecorator('curator', {
             rules: [
@@ -278,6 +376,8 @@ class Group extends React.Component {
             validateTrigger: "onBlur" 
             })(
               <Input 
+              value={curator}
+              onChange={this.onCuratorChange}
               className={style.border}
               placeholder="ФИО"
               />)
@@ -290,11 +390,15 @@ class Group extends React.Component {
               <Form.Item>
               <div className={style.row}>
                 <p className={style.phone}>+375</p>
+                {getFieldDecorator('phone')(
                   <InputNumber
                     min={0}
+                    value={phone}
+                    onChange={this.onPhoneChange}
                     className={style.border}
                     style={{ width: '100%' }}
-                  />
+                  />)
+                }
               </div>
               </Form.Item>
             </div>
@@ -304,30 +408,31 @@ class Group extends React.Component {
           
           <div className={style.colunm}>
           <Form.Item>
-            <h2>Количество человек</h2>
+            <h2>Количество человек<span className={style.red}>*</span></h2>
             <div className={style.sliderBox}>
               <div className={style.row}>
               {getFieldDecorator('total', {
-                validateFirst: true,
-                rules: [
-              {
-                required: true,
-                message: "Пожалуйста укажите количество человек"
-              },
-              { validator: this.checkSlider }
-              ],
-              validateTrigger: "onBlur" 
-              })(
+                  rules: [
+                {
+                  required: true,
+                  message: "Пожалуйста укажите количество человек"
+                },
+                {
+                  validateTrigger: "onBlur"
+                }
+                ],
+                })(
                 <Slider
-                  min={1}
+                  min={0}
                   max={40}
                   onChange={this.onTotalChange}
                   value={typeof total === 'number' ? total : 0}
-                />)
-              }
-                <InputNumber
+                />
+                )
+               }
+                  <InputNumber
                   className={style.border}
-                  min={1}
+                  min={0}
                   max={40}
                   style={{ marginLeft: 16 }}
                   value={total}
@@ -341,119 +446,87 @@ class Group extends React.Component {
           
           <div>
           <h2>Из них:</h2>
+          <div className={style.row}>
+          <div className={style.dynamicText}>
+              <h2
+              className={style.dynamicText}
+              >Девушек<span className={style.red}>*</span></h2>
+              <br/>
+            </div>
+            <Form.Item>
             <div className={style.row}>
-              <div className={style.colunm}>
-                <h2>Девушек</h2>    <br/>
-                <h2>Юношей</h2>
-              </div>
-              <div className={style.colunm}>
-              <Form.Item>
-              <div className={style.sliderBox}>
-              <div className={style.row}>
-              {getFieldDecorator('sex-w', {
-                rules: [
+                {getFieldDecorator('sex-w', {
+                  rules: [
                   {
                     required: true,
                     message: "Не все участники группы распределены"
                   },
                 ],
-                validateTrigger: "onBlur" 
+                validateTrigger: "onBlur"
                 })(
-                <Slider
-                  min={0}
-                  max= {convert(total,men)}
-                  onChange={this.onWomenChange}
-                  value={typeof women === 'number' ? women : 0}
-                />)
-                }
-                <InputNumber
-                  className={style.border}
-                  min={0}
-                  max={convert(total,men)}
-                  style={{ marginLeft: 16 }}
-                  value={women}
-                  onChange={this.onWomenChange}
-                />
-              </div>
+                  <Slider
+                      min={0}
+                      max={convert(total,men)}
+                      onChange={this.onWomenChange}
+                      value={typeof women === 'number' ? women : 0}
+                    />)
+                    }
+                    <InputNumber
+                      className={style.border}
+                      min={0}
+                      max={convert(total,men)}
+                      style={{ marginLeft: 16 }}
+                      value={women}
+                      onChange={this.onWomenChange}
+                    />
               </div>
               </Form.Item>
-                <div className={style.sliderBox}>
-              <Form.Item>
-              <div className={style.row}>
-              {getFieldDecorator('sex-m', {
-                rules: [
+          </div>
+          <div className={style.row}>
+          <div className={style.dynamicText}>
+              <h2
+              className={style.dynamicText}
+              >Юношей<span className={style.red}>*</span></h2>
+              <br/>
+            </div>
+            <Form.Item>
+            <div className={style.row}>
+                {getFieldDecorator('sex-m', {
+                  rules: [
                   {
                     required: true,
                     message: "Не все участники группы распределены"
                   },
                 ],
-                validateTrigger: "onBlur" 
+                validateTrigger: "onBlur"
                 })(
-                <Slider
-                  min={0}
-                  max={convert(total,women)}
-                  onChange={this.onMenChange}
-                  value={typeof men === 'number' ? men : 0}
-                />)
-                }
-                <InputNumber
-                  className={style.border}
-                  min={0}
-                  max={convert(total,women)}
-                  style={{ marginLeft: 16 }}
-                  value={men}
-                  onChange={this.onMenChange}
-                />
+                  <Slider
+                      min={0}
+                      max={convert(total,women)}
+                      onChange={this.onMenChange}
+                      value={typeof men === 'number' ? men : 0}
+                    />)
+                    }
+                    <InputNumber
+                      className={style.border}
+                      min={0}
+                      max={convert(total,women)}
+                      style={{ marginLeft: 16 }}
+                      value={men}
+                      onChange={this.onMenChange}
+                    />
               </div>
               </Form.Item>
-            </div>
-              </div>
-            </div>
           </div>
           </div>
-            )
+          </div>
+          )
       },
       {
         content: (
           <div>
           <h2>Нахождение студентов в различных объединениях, сообществах и т.д.</h2>
-          <div className = {style.container}>
-          <div className={style.row}>
-            <div className={style.colunm}>
-              <h3>БРСМ</h3>    <br/>
-              <h3>Профком</h3> <br/>
-              <h3>Прочее</h3>
-            </div>
-            <div className={style.colunm}>
-              <div className={style.otherBox}>
-                <InputNumber
-                    className={style.border}
-                    min={1}
-                    max={40}
-                    placeholder = '0'
-                  />
-              </div>
-              <br/>
-              <div className={style.otherBox}>
-                <InputNumber
-                  className={style.border}
-                  min={1}
-                  max={40}
-                  placeholder = '0'
-                />
-              </div>
-              <br/>
-              <div className={style.otherBox}>
-                <InputNumber
-                  className={style.border}
-                  min={1}
-                  max={40}
-                  placeholder = '0'
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+          {this.getOrganisation()}
         </div>
         )
       },
@@ -466,12 +539,18 @@ class Group extends React.Component {
             >Социальный статус</h2>
               </div>
               <div className={style.row}>
-              <div className={style.column}>
-              {this.getSocial(0)}
-              </div>
-              <div className={style.column}>
-              {this.getSocial(1)}
-              </div>
+              <Tabs tabPosition="bottom">
+                <TabPane tab="Часть 1" key="1">
+                  <div className={style.column}>
+                    {this.getSocial(0)}
+                  </div>
+                </TabPane>
+                <TabPane tab="Часть 2" key="2">
+                  <div className={style.column}>
+                    {this.getSocial(1)}
+                  </div>
+                </TabPane>
+              </Tabs>
               </div>
             </div>
         )
@@ -481,233 +560,19 @@ class Group extends React.Component {
           <div>
           <div className={style.padding}>
             <div className = {style.column}>
-            <h2>Состав семей:</h2>
-              <div className={style.row}>
-                <div className={style.colunm}>
-                  <h3>Стандартная</h3>  <br/>
-                  <h3>Многодетная</h3>  <br/>
-                  <h3>Неполная</h3>
-                </div>
-                <div className={style.colunm}>
-                <div className={style.otherBox}>
-                <Form.Item>
-                {getFieldDecorator('standart', {
-                  validateFirst: true,
-                  rules: [
-                    {
-                      required: true,
-                      message: "Пожалуйста заполните это поле"
-                    },
-                  ],
-                  validateTrigger: "onBlur" 
-                  })(
-                    <InputNumber
-                        className={style.border}
-                        min={1}
-                        max={convert(total,sum(large,incomplete))}
-                        placeholder = '0'
-                        value={standart}
-                        onChange={this.onStandartChange}
-                      />)
-                  }
-                  </Form.Item>
-                  </div>
-                  <br/>
-                  <div className={style.otherBox}>
-                  <Form.Item>
-                  {getFieldDecorator('large', {
-                    validateFirst: true,
-                    rules: [
-                      {
-                        required: true,
-                        message: "Пожалуйста заполните это поле"
-                      },
-                    ],
-                    validateTrigger: "onBlur" 
-                    })(
-                    <InputNumber
-                      className={style.border}
-                      min={1}
-                      max={convert(total,sum(standart,incomplete))}
-                      placeholder = '0'
-                      value={large}
-                      onChange={this.onLargeChange}
-                    />)
-                  }
-                  </Form.Item>
-                  </div>
-                  <br/>
-                  <div className={style.otherBox}>
-                  <Form.Item>
-                  {getFieldDecorator('incompl', {
-                    validateFirst: true,
-                    rules: [
-                      {
-                        required: true,
-                        message: "Пожалуйста заполните это поле"
-                      },
-                    ],
-                    validateTrigger: "onBlur" 
-                    })(
-                    <InputNumber
-                      className={style.border}
-                      min={1}
-                      max={convert(total,sum(standart,large))}
-                      placeholder = '0'
-                      value={incomplete}
-                      onChange={this.onIncompleteChange}
-                    />)
-                  }
-                  </Form.Item>
-                  </div>
-                </div>
-              </div>
-            </div>     
+            <h2>Состав семей:<span className={style.red}>*</span></h2>
+            {this.getFamilyComposition()}
             </div>
+            </div>     
             
 
             <div className={style.container}>
             <div className = {style.column}>
-            <h2>Проживают:</h2>
-              <div className={style.row}>
-                <div className={style.colunm}>
-                  <h3>С родителями</h3>    <br/>
-                  <h3>В общежитии</h3>     <br/>
-                  <h3>У родственников</h3> <br/>
-                  <h3>На частной квартире</h3>
-                </div>
-                <div className={style.colunm}>
-                  <div className={style.sliderBox}>
-                  <Form.Item>
-                  <div className={style.row}>
-                  {getFieldDecorator('parent', {
-                  validateFirst: true,
-                  rules: [
-                    {
-                      required: true,
-                      message: "Не все участники группы распределены"
-                    },
-                  ],
-                  validateTrigger: "onBlur" 
-                  })(
-                    <Slider
-                      min={0}
-                      max= {convert(total,sum(hostel,relative,privat))}
-                      onChange={this.onParentChange}
-                      value={typeof parent === 'number' ? parent : 0}
-                    />)
-                    }
-                    <InputNumber
-                      className={style.border}
-                      min={0}
-                      max={convert(total,sum(hostel,relative,privat))}
-                      style={{ marginLeft: 16 }}
-                      value={parent}
-                      onChange={this.onParentChange}
-                    />
-                  </div>
-                  </Form.Item>
-                </div>
-                  <br/>
-                  <div className={style.sliderBox}>
-                  <Form.Item>
-                  <div className={style.row}>
-                    {getFieldDecorator('hostel', {
-                    validateFirst: true,
-                    rules: [
-                      {
-                        required: true,
-                        message: "Не все участники группы распределены"
-                      },
-                    ],
-                    validateTrigger: "onBlur" 
-                    })(
-                    <Slider
-                      min={0}
-                      max= {convert(total,sum(parent,relative,privat))}
-                      onChange={this.onHostelChange}
-                      value={typeof hostel === 'number' ? hostel : 0}
-                    />)
-                    }
-                    <InputNumber
-                      className={style.border}
-                      min={0}
-                      max={convert(total,sum(parent,relative,privat))}
-                      style={{ marginLeft: 16 }}
-                      value={hostel}
-                      onChange={this.onHostelChange}
-                    />
-                  </div>
-                  </Form.Item>
-                  </div>
-                  <br/>
-                  <div className={style.sliderBox}>
-                  <Form.Item>
-                  <div className={style.row}>
-                    {getFieldDecorator('relative', {
-                    validateFirst: true,
-                    rules: [
-                      {
-                        required: true,
-                        message: "Не все участники группы распределены"
-                      },
-                    ],
-                    validateTrigger: "onBlur" 
-                    })(
-                    <Slider
-                      min={0}
-                      max= {convert(total,sum(parent,hostel,privat))}
-                      onChange={this.onRelativeChange}
-                      value={typeof this.relative === 'number' ? relative : 0}
-                    />)
-                    }
-                    <InputNumber
-                      className={style.border}
-                      min={0}
-                      max={convert(total,sum(parent,hostel,privat))}
-                      style={{ marginLeft: 16 }}
-                      value={relative}
-                      onChange={this.onRelativeChange}
-                    />
-                  </div>
-                  </Form.Item>
-                  </div>
-                  <br/>
-                  <div className={style.sliderBox}>
-                  <Form.Item>
-                  <div className={style.row}>
-                    {getFieldDecorator('private', {
-                    validateFirst: true,
-                    rules: [
-                      {
-                        required: true,
-                        message: "Не все участники группы распределены"
-                      },
-                    ],
-                    validateTrigger: "onBlur" 
-                    })(
-                    <Slider
-                      min={0}
-                      max={convert(total,sum(parent,hostel,relative))}
-                      onChange={this.onPrivateChange}
-                      value={typeof privat === 'number' ? privat : 0}
-                    />)
-                    }
-                    <InputNumber
-                      className={style.border}
-                      min={0}
-                      max={convert(total,sum(parent,hostel,relative))}
-                      style={{ marginLeft: 16 }}
-                      value={privat}
-                      onChange={this.onPrivateChange}
-                    />
-                  </div>
-                  </Form.Item>
-                  </div>
-                </div>
-              </div>
-            </div>   
+            <h2>Проживают:<span className={style.red}>*</span></h2>
+            {this.getPlace()}
             </div>
+            </div>
+
             </div>
         )
       },
@@ -715,10 +580,12 @@ class Group extends React.Component {
         content: (
           <div className={style.padding}>
               <h2>Другие сведения</h2>
-              <TextArea 
-                className={style.border}
-                style={{height:120}}
-                />
+              {getFieldDecorator('more')(
+                <TextArea 
+                  className={style.border}
+                  style={{height:120}}
+                  />)
+                  }
             </div>
         )
       },
@@ -740,8 +607,10 @@ class Group extends React.Component {
           centered
           destroyOnClose = {true}
           footer = {
-            <div className={style.row}>
-            <h3>Поля, отмеченные * обязательны для заполнения</h3>
+            <div className={style.flex}>
+            <div style={{marginBottom:50}}>
+            <h3>Поля, отмеченные <span className={style.red}>*</span> обязательны для заполнения</h3>
+            </div>
             <div className={style.footerButton}>
             {current > 0 && (
             <Button 
@@ -755,7 +624,7 @@ class Group extends React.Component {
               <Button 
               type="primary" 
               style={{ width: 100 }}
-              className={style.border}
+              className={style.primary}
               disabled={hasErrors(getFieldsError())}
               onClick={() => this.next()}>
                 Далее
@@ -764,7 +633,7 @@ class Group extends React.Component {
             {current === 4 && (
               <Button type="primary" 
               style={{ width: 100 }}
-              className={style.border}
+              className={style.primary}
               onClick={() => this.setModalVisible(false)}>
                 Готово
               </Button>

@@ -1,3 +1,7 @@
+  .red{
+    color: red;
+  }
+  
   .column{
     display: flex;
     flex-direction: column;
@@ -47,13 +51,15 @@
     padding-bottom:25px;
   }
 
-  .sliderBox{
-    padding-right:25px;
-    input{
-      width:92px;
-    }
+  .text{
+    line-height: 20px;
+    height: 90px;
+    width: 100%;
   }
 
+  .dynamicText{
+    width:350px;
+  }
 
   .otherBox{
     margin-left:50px;
@@ -67,6 +73,20 @@
     position: absolute;
     right: 20px;
     bottom: 10px;
+    button{
+      border-radius: 15px 15px 15px 15px;
+    }
+  }
+
+  .primary{
+    background: #2D50EC !important;
+      span{
+        color: white;
+      }
+  }
+
+  div[class="ant-row ant-form-item"]{
+    width:100%;
   }
 
   div[class="ant-modal"]{
@@ -83,6 +103,12 @@
 
   div[class="ant-input-number-handler-wrap"]{
     display: none;
+  }
+
+  div[class="ant-steps-item ant-steps-item-process"]{
+    div[class="ant-steps-item-icon"]{
+    background: #2D50EC !important;
+    }
   }
 
   div[class="ant-select"]{
@@ -122,6 +148,9 @@
   div[class="ant-modal-content"]{
     width:100%;
   }
+  .dynamicText{
+    width:200px;
+  }
 }
 @media (max-width: 750px) {
   .container{
@@ -144,6 +173,15 @@
 
   h2{
     font-size: 18x;
+  }
+  .dynamicText{
+    width:100px;
+  }
+  .text{
+    width: 100%;
+    h3{
+      width: 80%;
+    }
   }
 }
 
@@ -174,7 +212,11 @@
    width: 100%;
    padding-right:0;
   }
-
+}
+.text{
+  h3{
+    width: 90% !important;
+  }
 }
 
 @media (max-width: 490px) {
@@ -194,8 +236,17 @@
 @media (max-width: 480px){
   div[class="ant-steps ant-steps-horizontal ant-steps-label-horizontal"] {
     display: flex !important;
-  }
-  div[class="ant-steps-item-icon"]{
-    width:24px;
+    div[class="ant-steps-item ant-steps-item-finish"]{
+      overflow: hidden !important;
+      }
+      div[class="ant-steps-item ant-steps-item-process"]{
+        overflow: hidden !important;
+      }
+      div[class="ant-steps-item ant-steps-item-wait"]{
+        overflow: hidden !important;
+      }
+      div[class="ant-steps-item-tail"]{
+        display: none !important;
+      }
   }
 }
