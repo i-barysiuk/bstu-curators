@@ -2,12 +2,15 @@ import React from "react";
 import { connect } from "react-redux";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
+
 import Login from "./views/login/Login";
-import Register from "./views/login/Login";
+import Register from "./views/register/Register";
 import Welcom from "./views/dashboard/Dashboard";
 import Dashboard from "./views/dashboard/Dashboard";
-
 import NotFound from "./views/404/404";
+
+import DemoLine from "./components/charts/DemoLine" 
+import ChartDate from "./components/charts/ChartDate"
 
 import history from "./helper/history";
 import Analitic from "./helper/analitics";
@@ -60,6 +63,20 @@ class App extends React.Component {
           path="/dashboard"
           render={props => (
             <PageWrapper {...props} component={Dashboard} Auth />
+          )}
+        />
+         <Route
+          path="/chart"
+          exact
+          render={props => (
+            <PageWrapper {...props} title="График" component={DemoLine} />
+          )}
+        />
+         <Route
+          path="/charts"
+          exact
+          render={props => (
+            <PageWrapper {...props} title="График" component={ChartDate} />
           )}
         />
         <Route

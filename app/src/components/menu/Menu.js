@@ -12,7 +12,8 @@ import {
   faBell,
   faIdCard
 } from "@fortawesome/free-solid-svg-icons";
-import logoK from "../../assets/img/logo_k.png";
+
+import logoK from "../../assets/images/logos/curators.png";
 import { Popover, Badge, Avatar, Button } from "antd";
 
 import GroupModal from "../request/Group"

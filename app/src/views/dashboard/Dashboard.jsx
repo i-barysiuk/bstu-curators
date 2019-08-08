@@ -4,6 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import Request from "../../components/request/Request";
 import NotFound from "../404/404";
 import PageWrapper from "../../containers/pageWrapper/PageWrapper";
+import GroupLayout from "./groups";
 
 class Dashboard extends React.Component {
   render() {
@@ -16,7 +17,7 @@ class Dashboard extends React.Component {
             exec
             path="/dashboard/groups"
             render={props => (
-              <PageWrapper {...props} title="Группы" component={Request} />
+              <PageWrapper {...props} title="Группы" component={GroupLayout} />
             )}
           />
           <Route
