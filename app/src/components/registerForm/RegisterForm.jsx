@@ -131,20 +131,21 @@ class RegistrationForm extends React.Component {
                   {
                     required: true,
                     message: "Поле фамилия должно быть заполнено!",
-                    whitespace: true
+                    whitespace: true,  
+                    transform(last_name) {
+                      last_name = last_name.replace(/\s+/g,'').trim();                  
+                      return last_name;
+                    },              
                   },
                   {
-                    pattern: /(^[А-я]{1,20}$)|(^[А-я]{1,20}\-([А-я]{1,16})$|(\s$))/, 
-                    message: "Используйте только буквы русского алфавита"          
-                  },
-                  {
-                    pattern: /[^\s]$/, 
-                    message: "Поле содержит недопустимый символ пробел"
-                  }
+                    pattern: /(^[А-я]{1,20}$)|(^[А-я]{1,20}\-([А-я]{1,16})$)/,  
+                    message: "Используйте только буквы русского алфавита",
+                   },                  
                 ],
                 initialValue: this.state.form.last_name,
-                validateTrigger: "onBlur"
-              })(<Input placeholder="Введите свою фамилию" />)}
+                validateTrigger: "onChange"
+              })
+              (<Input placeholder="Введите свою фамилию" />)}
             </Form.Item>
             <Form.Item label="Имя">
               {getFieldDecorator("first_name", {
@@ -152,32 +153,32 @@ class RegistrationForm extends React.Component {
                   {
                     required: true,
                     message: "Поле имя должно быть заполнено!",
-                    whitespace: true
+                    whitespace: true,
+                    transform(first_name) {
+                      first_name = first_name.replace(/\s+/g,'').trim();                      
+                      return first_name;
+                    }  
                   },
                   {
-                    pattern: /(^[А-я]{1,20}$)|(^[А-я]{1,20}\-([А-я]{1,16})$|(\s$))/, 
+                    pattern: /(^[А-я]{1,20}$)|(^[А-я]{1,20}\-([А-я]{1,16})$)/, 
                     message: "Используйте только буквы русского алфавита"          
-                  },
-                  {
-                    pattern: /[^\s]$/, 
-                    message: "Поле содержит недопустимый символ пробел"
-                  }
+                  },                  
                 ],
                 initialValue: this.state.form.first_name,
-                validateTrigger: "onBlur"
+                validateTrigger: "onChange"
               })(<Input placeholder="Введите своё имя" />)}
             </Form.Item>
             <Form.Item label="Отчетсво">
               {getFieldDecorator("f_name", {
                 rules: [
                   {
-                    pattern: /(^[А-я]{1,20}$|(\s$))/, 
+                    transform(first_name) {
+                      first_name = first_name.replace(/\s+/g,'').trim();
+                      return first_name;
+                    },  
+                    pattern: /(^[А-я]{1,20}$)/, 
                     message: "Используйте только буквы русского алфавита"
-                  },
-                  {
-                    pattern: /[^\s]$/, 
-                    message: "Поле содержит недопустимый символ пробел"
-                  }
+                  },            
                 ],
                 initialValue: this.state.form.f_name
               })(<Input placeholder="Введите свое отчество" />)}
@@ -239,12 +240,12 @@ class RegistrationForm extends React.Component {
                 rules: [
                   {
                     required: true,
-                    message: "Введите свою электронную почту!"
-                  },
-                  {
-                    pattern: /[^\s]$/, 
-                    message: "Недопустимо использовать пробел"
-                  },
+                    message: "Введите свою электронную почту!",
+                    transform(email) {
+                      email = email.replace(/\s+/g,'').trim();                    
+                      return email;
+                    },     
+                  },              
                   {
                     type: "email",
                     message: "Некорректная электронная почта!"
@@ -263,12 +264,12 @@ class RegistrationForm extends React.Component {
                 rules: [
                   {
                     required: true,
-                    message: "Введите свой номер телефона!"
-                  },
-                  {
-                    pattern: /[^\s]$/, 
-                    message: "Недопустимо использовать пробел"
-                  },
+                    message: "Введите свой номер телефона!",
+                    transform(phone) {
+                      phone = phone.replace(/\s+/g,'').trim();                      
+                      return phone;
+                    },
+                  },                  
                   {
                     pattern: /(^\+375[0-9]{7,9}$)/, 
                     message: "Введите корректный номер телефона"
