@@ -12,9 +12,6 @@ const UserController = require("./controllers/user/UserController");
 const GroupController = require("./controllers/group/GroupController");
 
 const UserService = require("./services/UserService");
-const GroupService = require("./services/GroupService");
-const MailService = require("./services/MailService");
-
 
 UserService.create({
   email: "admin@care.webdad.by",
