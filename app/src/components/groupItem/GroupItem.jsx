@@ -28,7 +28,7 @@ export default props => {
           }}
         />
         {props.group}
-        <span>&nbsp;- {toRomane(props.kurs)}</span>
+        <span>&nbsp;- {toRomane(props.course)}</span>
       </div>
       <div>
         <FontAwesomeIcon
