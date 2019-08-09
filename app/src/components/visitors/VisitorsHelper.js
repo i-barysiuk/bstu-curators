@@ -1,3 +1,11 @@
+import { 
+    faThermometerEmpty,
+    faThermometerQuarter,
+    faThermometerHalf,
+    faThermometerThreeQuarters,
+    faThermometerFull
+} from "@fortawesome/free-solid-svg-icons";
+
 var not_respectful = 100;
 var respectful = 200;
 var all = 1000;
