@@ -14,12 +14,12 @@ import {
 import style from "../registerForm/style.module.scss";
 import AuthService from "../../services/AuthService";
 import { withRouter } from "react-router-dom";
-import moment from 'moment';
+import moment from "moment";
 
 const { Step } = Steps;
 
 function disabledDate(current) {
-  return current && current > moment().endOf('day');
+  return current && current > moment().endOf("day");
 }
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -60,7 +60,6 @@ class RegistrationForm extends React.Component {
               content: JSON.stringify(err.response.data.errors[0].message),
               okText: "Исправить данные"
             });
-            message.error("ОШИБКа!");
           });
       }
     });
@@ -91,6 +90,10 @@ class RegistrationForm extends React.Component {
       form.validateFields(["confirm"], { force: true });
     }
     callback();
+  };
+
+  normalize = value => {
+    return value && value.replace(/s+/g, "").trim();
   };
 
   prev() {
@@ -134,12 +137,13 @@ class RegistrationForm extends React.Component {
                     whitespace: true
                   },
                   {
-                    pattern: /(^[А-я]{1,20}$)|(^[А-я]{1,20}$-[А-я]{1,16}$)/, 
+                    pattern: /(^[А-я]{1,20}$)|(^[А-я]{1,20}\-([А-я]{1,16})$)/,
                     message: "Используйте только буквы русского алфавита"
-                  },
+                  }
                 ],
+                normalize: this.normalize,
                 initialValue: this.state.form.last_name,
-                validateTrigger: "onBlur"
+                validateTrigger: "onChange"
               })(<Input placeholder="Введите свою фамилию" />)}
             </Form.Item>
             <Form.Item label="Имя">
@@ -151,22 +155,24 @@ class RegistrationForm extends React.Component {
                     whitespace: true
                   },
                   {
-                    pattern: /(^[А-я]{1,20}$)/, 
+                    pattern: /(^[А-я]{1,20}$)|(^[А-я]{1,20}\-([А-я]{1,16})$)/,
                     message: "Используйте только буквы русского алфавита"
-                  },
+                  }
                 ],
+                normalize: this.normalize,
                 initialValue: this.state.form.first_name,
-                validateTrigger: "onBlur"
+                validateTrigger: "onChange"
               })(<Input placeholder="Введите своё имя" />)}
             </Form.Item>
             <Form.Item label="Отчетсво">
               {getFieldDecorator("f_name", {
                 rules: [
                   {
-                    pattern: /(^[А-я]{1,20}$)/, 
+                    pattern: /(^[А-я]{1,20}$)/,
                     message: "Используйте только буквы русского алфавита"
-                  },
+                  }
                 ],
+                normalize: this.normalize,
                 initialValue: this.state.form.f_name
               })(<Input placeholder="Введите свое отчество" />)}
             </Form.Item>
@@ -195,7 +201,12 @@ class RegistrationForm extends React.Component {
                 <Form.Item label="Дата рождения">
                   {getFieldDecorator("birthday", {
                     initialValue: this.state.form.birthday
-                  })(<DatePicker disabledDate={disabledDate} placeholder="Дата рождения" />)}
+                  })(
+                    <DatePicker
+                      disabledDate={disabledDate}
+                      placeholder="Дата рождения"
+                    />
+                  )}
                 </Form.Item>
               </Col>
             </Row>
@@ -237,6 +248,7 @@ class RegistrationForm extends React.Component {
                     validator: this.check
                   }
                 ],
+                normalize: this.normalize,
                 initialValue: this.state.form.email,
                 validateTrigger: "onBlur",
                 validateFirst: true
@@ -250,13 +262,14 @@ class RegistrationForm extends React.Component {
                     message: "Введите свой номер телефона!"
                   },
                   {
-                    pattern: /(^\+375[0-9]{7,9}$)/, 
+                    pattern: /(^\+375[0-9]{7,9}$)/,
                     message: "Введите корректный номер телефона"
                   },
                   {
                     validator: this.check
                   }
                 ],
+                normalize: this.normalize,
                 initialValue: this.state.form.phone,
                 validateTrigger: "onBlur",
                 validateFirst: true
