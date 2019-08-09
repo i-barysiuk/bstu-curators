@@ -2,6 +2,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import NotFound from "../../404/404";
 import PageWrapper from "../../../containers/pageWrapper/PageWrapper";
+import GroupsMenu from "../../../components/groupsMenu/GroupMenu";
 import Groups from "./home/Grops";
 import GroupProfile from "./profile/GroupProfile";
 import GroupStudentsList from "./studentsList/GroupStudentsList";
@@ -10,6 +11,7 @@ class GroupsLayout extends React.Component {
   render() {
     return (
       <div style={{ display: "flex", height: "100%" }}>
+        <GroupsMenu />
         <Switch>
           <Route
             exec
