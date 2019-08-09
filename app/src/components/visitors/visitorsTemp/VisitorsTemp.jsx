@@ -1,41 +1,68 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { 
-    faThermometerEmpty,
-    faThermometerQuarter,
-    faThermometerHalf,
-    faThermometerThreeQuarters,
-    faThermometerFull
+import {
+  faThermometerEmpty,
+  faThermometerQuarter,
+  faThermometerHalf,
+  faThermometerThreeQuarters,
+  faThermometerFull
 } from "@fortawesome/free-solid-svg-icons";
 import style from "./style.module.scss";
-import ThermChoose from "../VisitorsHelper";
+
+var not_respectful = 308;
+var respectful = 200;
+var all = 1000;
+var percent = (not_respectful + respectful * 0.5) / all;
+
+var color = function() {
+  var ret = "green";
+  if (percent <= 1) ret = "red";
+  if (percent <= 0.66) ret = "orange";
+  if (percent <= 0.33) ret = "green";
+  return ret;
+};
+
+var inlineStyle = {
+  color: color()
+};
+
+var temp = function() {
+  return (percent * 4.4 + 36.6).toFixed(1);
+};
+
+var thermIcon = function() {
+  var ret = faThermometerEmpty;
+  if (percent <= 1) ret = faThermometerFull;
+  if (percent <= 0.8) ret = faThermometerThreeQuarters;
+  if (percent <= 0.6) ret = faThermometerHalf;
+  if (percent <= 0.4) ret = faThermometerQuarter;
+  if (percent <= 0.2) ret = faThermometerEmpty;
+  return ret;
+};
 
 export default props => {
-    var icon_choosed = ThermChoose.thermIcon();
-    var color_choosed = ThermChoose.color();
-    return (
-      <div
-        className={style.main}
-      >
-        Наглость
-        <div>
-            <div>
-                {ThermChoose.temp}
-            </div>
-            <div>
-                <FontAwesomeIcon
-                    className={style.icons}
-                    icon={icon_choosed}
-                    color={color_choosed}
-                />
-            </div>
+  return (
+    <div className={style.main}>
+      <div className={style.title}>Наглость</div>
+      <div className={style.fblock}>
+        <div className={style.temp} style={inlineStyle}>
+          {temp()}
         </div>
-        <div>
-            Все пропы
+        <div className={style.thermometer}>
+          <FontAwesomeIcon
+            className={style.icons}
+            icon={thermIcon()}
+            color={color()}
+            size={"3x"}
+          />
         </div>
       </div>
-    );
-  };
-
-
-
+      <div className={style.sblock}>
+        <div className={style.count}>
+          {respectful}/{not_respectful}/{all}
+        </div>
+        <div className={style.expl}>Уважительно/Неуважительно/Всего</div>
+      </div>
+    </div>
+  );
+};
