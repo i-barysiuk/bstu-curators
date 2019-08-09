@@ -13,6 +13,7 @@ import DemoLine from "./components/charts/DemoLine";
 import ChartDate from "./components/charts/ChartDate";
 
 import VisitorsTemp from "./components/visitors/visitorsTemp/VisitorsTemp";
+import VisitorsHealth from "./components/visitors/visitorsHealth/VisitorsHealth";
 
 import history from "./helper/history";
 import Analitic from "./helper/analitics";
@@ -85,7 +86,18 @@ class App extends React.Component {
           path="/visit"
           exact
           render={props => (
-            <PageWrapper {...props} title="График" component={VisitorsTemp} />
+            <PageWrapper {...props} title="Наглость" component={VisitorsTemp} />
+          )}
+        />
+        <Route
+          path="/health"
+          exact
+          render={props => (
+            <PageWrapper
+              {...props}
+              title="Здоровье"
+              component={VisitorsHealth}
+            />
           )}
         />
         <Route
