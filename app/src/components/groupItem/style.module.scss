@@ -1,0 +1,41 @@
+$width-elem: 220px;
+$text-light-color: #d4d5d6;
+$text-dark-color: #65696c;
+$primary-color: #2d50ec;
+
+.main {
+  margin: 5px;
+  padding: 3px;
+  width: $width-elem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 7px;
+  color: $text-dark-color;
+}
+.main:hover {
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.main:hover .icons {
+  color: $text-dark-color;
+}
+
+.main div {
+  display: flex;
+}
+
+.main span {
+  color: $text-light-color;
+}
+
+.icons {
+  font-size: 12px;
+  margin: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.icons:hover {
+  color: $primary-color !important;
+}

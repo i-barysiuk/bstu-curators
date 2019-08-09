@@ -1,5 +1,4 @@
 
-const JWTService = require("./services/jwtService");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -14,7 +13,6 @@ const UserController = require("./controllers/user/UserController");
 const GroupController = require("./controllers/group/GroupController");
 
 const UserService = require("./services/UserService");
-const GroupService = require("./services/GroupService");
 
 UserService.create({
   email: "admin@care.webdad.by",
