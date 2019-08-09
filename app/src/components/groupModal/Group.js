@@ -7,94 +7,83 @@ const { Step } = Steps;
 const { TabPane } = Tabs;
 
 
-function onBlur() {
-  console.log('blur');
-}
-
-function onFocus() {
-  console.log('focus');
-}
-
-function onSearch(val) {
-  console.log('search:', val);
-}
-
 function convert(total,value){
   if(total-value < 0) return 0;
   else return total - value;
 }
 
-function hasErrors(fieldsError) {
-  return Object.keys(fieldsError).some(field => fieldsError[field]);
-}
-
-const text = [
-  {fieldText: "Дети-сироты", note: "(до 18 лет)"},
-  {fieldText: "Дети, оставшиеся без попечения родителей", note: "(до 18 лет)"},
-  {fieldText: "Дети, оставшиеся без попечения родителей", note: "(до 18 лет)"},
-  {fieldText: "Лица из числа детей-сирот и детей, оставшихся без попечения родителей", note: "(18-23 лет)"},
-  {fieldText: "Студенты с особенностями психофизического развития"},
-  {fieldText: "Имеющие родителей инвалидов 1, 2 группы"},
-  {fieldText: "Из регионов пострадавших от катастрофы на Чернобыльской АЭС"},
-  {fieldText: "Из семей, отселенных из зон радиоактивного загрязнения"}
-]
-
-class Group extends React.Component {
+class GroupForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       modalVisible: false,
       current:0,
-
-      faculty: '',
-      group: '',
-      curator: '',
-      phone: '',
-
-      total:1,
-      women:0,
-      men:0,
-
-      brsm: 0,
-      profcom: 0,
-      other: 0,
-
-      //здесь должен быть соц статус
-
-      standart:0,
-      large:0,
-      incomplete:0,
-
-      parent:0, 
-      hostel:0, 
-      relative:0,
-      privat:0,
-
-      more: '',
+      form: {
+        total:0,
+        sex_w:0,
+        sex_m:0,
+        standart:0,
+        large:0,
+        incomplete:0,
+        parent:0,
+        hostel:0,
+        relative:0,
+        private:0,
+      },
     };
   }
 
   setModalVisible(modalVisible) {
-    this.setState({ modalVisible, current: 0 });
+    this.setState({ modalVisible, current: 0, form: {
+      total:0,
+      sex_w:0,
+      sex_m:0,
+      standart:0,
+      large:0,
+      incomplete:0,
+      parent:0,
+      hostel:0,
+      relative:0,
+      private:0
+    } 
+  });
   }
 
+
+
+  onTotalChange = (value) => {this.props.form.setFieldsValue({total: typeof value === 'number' ? value : 0})};
+  onWomenChange = (value) => {this.props.form.setFieldsValue({sex_w: typeof value === 'number' ? value : 0})};
+  onMenChange = (value) => {this.props.form.setFieldsValue({sex_m: typeof value === 'number' ? value : 0})};
+
+  onStandartChange = (value) => {this.props.form.setFieldsValue({standart: typeof value === 'number' ? value : 0})};
+  onLargeChange = (value) => {this.props.form.setFieldsValue({large: typeof value === 'number' ? value : 0})};
+  onIncompleteChange = (value) => {this.props.form.setFieldsValue({incomplete: typeof value === 'number' ? value : 0})};
+
+  onParentChange = (value) => {this.props.form.setFieldsValue({parent: typeof value === 'number' ? value : 0})};
+  onHostelChange = (value) => {this.props.form.setFieldsValue({hostel: typeof value === 'number' ? value : 0})};
+  onRelativeChange = (value) => {this.props.form.setFieldsValue({relative: typeof value === 'number' ? value : 0})};
+  onPrivateChange = (value) => {this.props.form.setFieldsValue({private: typeof value === 'number' ? value : 0})};
+
   next() {
-    const fields = [
-      {fieldList: ['faculty','group','curator']},//,'sex-w','sex-m'
-      {fieldList: ['brsm','profcom','other']},
-      {fieldList: [`social-0`,`social-1`,`social-2`,`social-3`,`social-4`,`social-5`,`social-6`,`social-7`,`social-8`]},
-      {fieldList: ['standart','large','incomplete']},//,'parent','hostel','relative','private'
-      {fieldList: ['more']},
+    var validation = [
+      ['faculty','group','curator','total','sex_w','sex_m'],
+      ['brsm','profcom','other'],
+      ['social_0','social_1','social_2','social_3','social_4','social_5','social_6','social_7','social_8'],
+      ['standart','large','incomplete','parent','hostel','relative','private'],
+      'more',
     ]
+    var fields = this.props.form.getFieldsValue();
     this.props.form.validateFieldsAndScroll(
-     fields[this.state.current].fieldList,
-      (err,values) => {
-      if(!err)
-      {
-        const current = this.state.current + 1;
-        this.setState({ current });
+      validation[this.state.current],
+      (err, values) => {
+        if (!err) {
+          const current = this.state.current + 1;
+          this.setState({ form: fields, current: current });
+          if(current === 5) this.setModalVisible(false);
+          console.log(fields);
+        }
       }
-  })
+    );
   }
 
   prev() {
@@ -102,28 +91,12 @@ class Group extends React.Component {
     this.setState({ current });
   }
 
-  onFacultyChange = value => {this.setState({faculty: value,}, console.log(`selected ${value}`))};
-  onGroupChange = value => {this.setState({group: value,})};
-  onCuratorChange = value => {this.setState({curator: value,})};
-  onPhoneChange = value => {this.setState({phone: value,})};
-
-  onTotalChange = value => {this.setState({total: value,})};
-  onWomenChange = value => {this.setState({women: value,})};
-  onMenChange = value => {this.setState({men: value,})};
-
-  onParentChange = value => {this.setState({parent: value,})};
-  onHostelChange = value => {this.setState({hostel: value,})};
-  onRelativeChange = value => {this.setState({relative: value,})};
-  onPrivateChange = value => {this.setState({privat: value,})};
-
-  onStandartChange = value => {this.setState({standart: value,})};
-  onLargeChange = value => {this.setState({large: value,})};
-  onIncompleteChange = value => {this.setState({incomplete: value,})};
-  
   getOrganisation() {
     const fieldName = [ 'brsm','profcom','other' ];
     const fieldText = [ 'БРСМ', 'Профком', 'Прочее'];
-    const { getFieldDecorator } = this.props.form;
+    const form = this.state.form;
+    const organisation = [form.brsm,form.profcom, form.other];
+    const { getFieldDecorator, getFieldValue } = this.props.form;
     const children = [];
     for (let i = 0; i < 3; i++) {
       children.push(
@@ -136,11 +109,12 @@ class Group extends React.Component {
             <div className={style.otherBox}>
             <Form.Item>
                 {getFieldDecorator(fieldName[i], {
+                  initialValue: organisation[i],
                 })(
                   <InputNumber 
                     className={style.border}
                     min={0}
-                    max={40}
+                    max={getFieldValue('total')}
                     placeholder="0" 
                 />)
                 }
@@ -156,7 +130,28 @@ class Group extends React.Component {
   getSocial(column) {
     const first = column ? 4 : 0;
     const last = column ? 8 : 4;
-    const { getFieldDecorator } = this.props.form;
+    const form = this.state.form;
+    const fieldName = [
+      form.social_0,
+      form.social_1,
+      form.social_2,
+      form.social_3,
+      form.social_4,
+      form.social_5,
+      form.social_6,
+      form.social_7,
+    ]
+    var text = [
+      {fieldText: "Дети-сироты", note: "(до 18 лет)"},
+      {fieldText: "Дети, оставшиеся без попечения родителей", note: "(до 18 лет)"},
+      {fieldText: "Дети, оставшиеся без попечения родителей", note: "(до 18 лет)"},
+      {fieldText: "Лица из числа детей-сирот и детей, оставшихся без попечения родителей", note: "(18-23 лет)"},
+      {fieldText: "Студенты с особенностями психофизического развития"},
+      {fieldText: "Имеющие родителей инвалидов 1, 2 группы"},
+      {fieldText: "Из регионов пострадавших от катастрофы на Чернобыльской АЭС"},
+      {fieldText: "Из семей, отселенных из зон радиоактивного загрязнения"}
+    ]
+    const { getFieldDecorator, getFieldValue } = this.props.form;
     const children = [];
     for (let i = first; i < last; i++) {
       children.push(
@@ -167,13 +162,14 @@ class Group extends React.Component {
             <h3>{text[i].fieldText}</h3>
             <h4>{text[i].note}</h4>
             </div>
-            {getFieldDecorator(`social-${i}`, {
+            {getFieldDecorator(`social_${i}`, {
+              initialValue: fieldName[i],
             })(
               <InputNumber 
                 className={style.border}
                 min={0}
-                max={40}
-                placeholder="0" 
+                max={getFieldValue('total')}
+                placeholder="0"
             />)
             }
           </Form.Item>
@@ -185,15 +181,15 @@ class Group extends React.Component {
   getFamilyComposition() {
     const fieldName = [ 'standart','large','incomplete' ];
     const fieldText = [ 'Cтандартная', 'Многодетная', 'Неполная'];
-    const total = this.state.total;
-    const value = [this.state.standart,this.state.large,this.state.incomplete]
+    const form = this.state.form;
+    const value = [form.standart,form.large,form.incomplete];
+    var change = [this.onStandartChange,this.onLargeChange,this.onIncompleteChange];
+    const { getFieldDecorator, getFieldValue } = this.props.form;
     const calc = [
-      this.state.large + this.state.incomplete,
-      this.state.standart + this.state.incomplete,
-      this.state.standart + this.state.large
+      getFieldValue(fieldName[1]) + getFieldValue(fieldName[2]),
+      getFieldValue(fieldName[0]) + getFieldValue(fieldName[2]),
+      getFieldValue(fieldName[0]) + getFieldValue(fieldName[1])
     ];
-    const change = [this.onStandartChange,this.onLargeChange,this.onIncompleteChange];
-    const { getFieldDecorator } = this.props.form;
     const children = [];
     for (let i = 0; i < 3; i++) {
       children.push(
@@ -213,15 +209,14 @@ class Group extends React.Component {
                     message: "Распределите всех"
                   },
                 ],
-                validateTrigger: "onBlur"
+                initialValue: value[i],
+                onChange: change[i],
                 })(
                   <InputNumber 
                     className={style.border}
                     min={0}
-                    max={convert(total,calc[i])}
-                    value={value[i]}
-                    onChange={change[i]}
-                    placeholder="0" 
+                    max={convert(getFieldValue('total'),calc[i])}
+                    placeholder="0"
                 />)
                 }
               </Form.Item>
@@ -233,18 +228,18 @@ class Group extends React.Component {
   }
 
   getPlace() {
-    const fieldName = [ 'parent', 'hostel', 'relative', 'privat' ];
-    const fieldText = [ 'С родителями', 'В общежитии', 'У родственников', 'На частной квартире'];
-    const total = this.state.total;
-    const value = [this.state.parent,this.state.hostel,this.state.relative,this.state.privat]
-    const calc = [
-      this.state.hostel + this.state.relative + this.state.privat,
-      this.state.parent + this.state.relative + this.state.privat,
-      this.state.parent + this.state.hostel + this.state.privat,
-      this.state.parent + this.state.hostel + this.state.relative
+    const { getFieldDecorator, getFieldValue } = this.props.form;
+    const fieldName = [ 'parent', 'hostel', 'relative', 'private' ];
+    var fieldText = [ 'С родителями', 'В общежитии', 'У родственников', 'На частной квартире'];
+    var form = this.state.form;
+    var value = [form.parent,form.hostel,form.relative,form.private];
+    var change = [this.onParentChange,this.onHostelChange,this.onRelativeChange,this.onPrivateChange];
+    var calc = [
+      getFieldValue(fieldName[1])+getFieldValue(fieldName[2])+getFieldValue(fieldName[3]),
+      getFieldValue(fieldName[0])+getFieldValue(fieldName[2])+getFieldValue(fieldName[3]),
+      getFieldValue(fieldName[0])+getFieldValue(fieldName[1])+getFieldValue(fieldName[3]),
+      getFieldValue(fieldName[0])+getFieldValue(fieldName[1])+getFieldValue(fieldName[2]) 
     ];
-    const change = [this.onParentChange,this.onHostelChange,this.onRelativeChange,this.onPrivateChange];
-    const { getFieldDecorator } = this.props.form;
     const children = [];
 
     for (let i = 0; i < 4; i++) {
@@ -256,7 +251,7 @@ class Group extends React.Component {
               >{fieldText[i]}</h2>
               <br/>
             </div>
-            <Form.Item className={style.correction}>  
+            <Form.Item className={style.correction}>
             <div className={style.row}>
                 {getFieldDecorator(fieldName[i], {
                   rules: [
@@ -264,23 +259,22 @@ class Group extends React.Component {
                     required: true,
                     message: "Не все участники группы распределены"
                   },
-                ],
-                validateTrigger: "onBlur"
-                })(
+                  ],
+                  initialValue: value[i],
+                  onChange: change[i]
+                  })(
                   <Slider
                       min={0}
-                      max={convert(total,calc[i])}
-                      onChange={change[i]}
-                      value={typeof value[i] === 'number' ? value[i] : 0}
+                      max={convert(getFieldValue('total'),calc[i])}
                     />)
                     }
                     <InputNumber
+                      value={getFieldValue(fieldName[i])}
+                      onChange={change[i]}
                       className={style.border}
                       min={0}
-                      max={convert(total,calc[i])}
+                      max={convert(getFieldValue('total'),calc[i])}
                       style={{ marginLeft: 16 }}
-                      value={value[i]}
-                      onChange={change[i]}
                     />
               </div>
               </Form.Item>
@@ -292,9 +286,7 @@ class Group extends React.Component {
 
   render() {
     const { current } = this.state;
-    const { faculty, group, curator, phone  } = this.state;
-    const { total, women, men } = this.state;
-    const { getFieldDecorator, getFieldsError } = this.props.form;
+    const { getFieldDecorator, getFieldValue } = this.props.form;
 
     const steps = [
       {
@@ -311,7 +303,7 @@ class Group extends React.Component {
                 message: "Пожалуйста выберите факультет"
               },
             ],
-            validateTrigger: "onBlur"
+            initialValue: this.state.form.faculty
           })(
           <Select
             className = {style.border}
@@ -319,13 +311,8 @@ class Group extends React.Component {
             showSearch
             placeholder="Факультет:"
             optionFilterProp="children"
-            onChange={this.onFacultyChange}
-            onFocus={onFocus}
-            onBlur={onBlur}
-            onSearch={onSearch}
             filterOption={(input, option) =>
             option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-            value={faculty}
             >
             <Option value="ФЭИС">ФЭИС</Option>
             <Option value="ФИСЭ">ФИСЭ</Option>
@@ -349,12 +336,10 @@ class Group extends React.Component {
                 message: "Пожалуйста укажите название группы"
               },
             ],
-            validateTrigger: "onBlur"
+            initialValue: this.state.form.group
           })(
               <Input
               className={style.border}
-              onChange={this.onGroupChange}
-              value={group}
               placeholder="Группа" 
               />)
           }
@@ -373,11 +358,9 @@ class Group extends React.Component {
                 message: "Пожалуйста укажите ФИО"
               },
             ],
-            validateTrigger: "onBlur" 
+            initialValue: this.state.form.curator
             })(
-              <Input 
-              value={curator}
-              onChange={this.onCuratorChange}
+              <Input
               className={style.border}
               placeholder="ФИО"
               />)
@@ -390,11 +373,11 @@ class Group extends React.Component {
               <Form.Item>
               <div className={style.row}>
                 <p className={style.phone}>+375</p>
-                {getFieldDecorator('phone')(
+                {getFieldDecorator('phone',{
+                  initialValue: this.state.form.phone
+                })(
                   <InputNumber
                     min={0}
-                    value={phone}
-                    onChange={this.onPhoneChange}
                     className={style.border}
                     style={{ width: '100%' }}
                   />)
@@ -407,38 +390,32 @@ class Group extends React.Component {
 
           
           <div className={style.colunm}>
-          <Form.Item>
             <h2>Количество человек<span className={style.red}>*</span></h2>
-            <div className={style.sliderBox}>
-              <div className={style.row}>
-              {getFieldDecorator('total', {
-                  rules: [
-                {
-                  required: true,
-                  message: "Пожалуйста укажите количество человек"
-                },
-                {
-                  validateTrigger: "onBlur"
-                }
-                ],
-                })(
-                <Slider
-                  min={0}
-                  max={40}
-                  onChange={this.onTotalChange}
-                  value={typeof total === 'number' ? total : 0}
-                />
-                )
-               }
-                  <InputNumber
-                  className={style.border}
-                  min={0}
-                  max={40}
-                  style={{ marginLeft: 16 }}
-                  value={total}
-                  onChange={this.onTotalChange}
-                />
-                </div>
+              <Form.Item>
+            <div className={style.row}>
+                 {getFieldDecorator('total', {
+                    rules: [
+                    {
+                      required: true,
+                      message: "Не все участники группы распределены"
+                    },
+                    ],
+                    initialValue: this.state.form.total,
+                    onChange: this.onTotalChange
+                    })(
+                  <Slider
+                      min={0}
+                      max={40}
+                    />)
+                    }
+                    <InputNumber
+                      className={style.border}
+                      onChange={this.onTotalChange}
+                      value={getFieldValue('total')}
+                      min={0}
+                      max={40}
+                      style={{ marginLeft: 16 }}
+                    />
               </div>
               </Form.Item>
           </div>
@@ -455,29 +432,28 @@ class Group extends React.Component {
             </div>
             <Form.Item>
             <div className={style.row}>
-                {getFieldDecorator('sex-w', {
-                  rules: [
-                  {
-                    required: true,
-                    message: "Не все участники группы распределены"
-                  },
-                ],
-                validateTrigger: "onBlur"
-                })(
+                 {getFieldDecorator('sex_w', {
+                    rules: [
+                    {
+                      required: true,
+                      message: "Не все участники группы распределены"
+                    },
+                    ],
+                    initialValue: this.state.form.sex_w,
+                    onChange: this.onWomenChange
+                    })(
                   <Slider
                       min={0}
-                      max={convert(total,men)}
-                      onChange={this.onWomenChange}
-                      value={typeof women === 'number' ? women : 0}
+                      max={convert(getFieldValue('total'),getFieldValue('sex_m'))}
                     />)
                     }
                     <InputNumber
                       className={style.border}
-                      min={0}
-                      max={convert(total,men)}
-                      style={{ marginLeft: 16 }}
-                      value={women}
                       onChange={this.onWomenChange}
+                      value={getFieldValue('sex_w')}
+                      min={0}
+                      max={convert(getFieldValue('total'),getFieldValue('sex_m'))}
+                      style={{ marginLeft: 16 }}
                     />
               </div>
               </Form.Item>
@@ -491,29 +467,28 @@ class Group extends React.Component {
             </div>
             <Form.Item>
             <div className={style.row}>
-                {getFieldDecorator('sex-m', {
-                  rules: [
-                  {
-                    required: true,
-                    message: "Не все участники группы распределены"
-                  },
-                ],
-                validateTrigger: "onBlur"
-                })(
+                    {getFieldDecorator('sex_m', {
+                    rules: [
+                    {
+                      required: true,
+                      message: "Не все участники группы распределены"
+                      },
+                    ],
+                    initialValue: this.state.form.sex_m,
+                    onChange: this.onMenChange
+                    })(
                   <Slider
                       min={0}
-                      max={convert(total,women)}
-                      onChange={this.onMenChange}
-                      value={typeof men === 'number' ? men : 0}
+                      max={convert(getFieldValue('total'),getFieldValue('sex_w'))}
                     />)
                     }
                     <InputNumber
                       className={style.border}
-                      min={0}
-                      max={convert(total,women)}
-                      style={{ marginLeft: 16 }}
-                      value={men}
                       onChange={this.onMenChange}
+                      value={getFieldValue('sex_m')}
+                      min={0}
+                      max={convert(getFieldValue('total'),getFieldValue('sex_w'))}
+                      style={{ marginLeft: 16 }}
                     />
               </div>
               </Form.Item>
@@ -580,12 +555,16 @@ class Group extends React.Component {
         content: (
           <div className={style.padding}>
               <h2>Другие сведения</h2>
-              {getFieldDecorator('more')(
+              <Form.Item>
+              {getFieldDecorator('more',{
+                initialValue: this.state.form.more
+              })(
                 <TextArea 
                   className={style.border}
                   style={{height:120}}
                   />)
                   }
+                </Form.Item>
             </div>
         )
       },
@@ -620,24 +599,13 @@ class Group extends React.Component {
               Назад
             </Button>
           )}
-            {current < 4 && (
               <Button 
               type="primary" 
               style={{ width: 100 }}
               className={style.primary}
-              disabled={hasErrors(getFieldsError())}
               onClick={() => this.next()}>
-                Далее
+                {current < 4 ? 'Далее' : 'Готово'}
               </Button>
-            )}
-            {current === 4 && (
-              <Button type="primary" 
-              style={{ width: 100 }}
-              className={style.primary}
-              onClick={() => this.setModalVisible(false)}>
-                Готово
-              </Button>
-            )}
             </div>
             </div>
           }
@@ -660,6 +628,6 @@ class Group extends React.Component {
   }
 }
 
-const WrappedGroup = Form.create({ name: "group" })(Group);
+const WrappedGroupForm = Form.create({ name: "group" })(GroupForm);
 
-export default WrappedGroup;
+export default WrappedGroupForm;
