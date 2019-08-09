@@ -11,6 +11,7 @@ import NotFound from "./views/404/404";
 
 import DemoLine from "./components/charts/DemoLine" 
 import ChartDate from "./components/charts/ChartDate"
+import VisitorsTemp from "./components/visitors/visitorsTemp/VisitorsTemp"
 
 import history from "./helper/history";
 import Analitic from "./helper/analitics";
@@ -65,18 +66,25 @@ class App extends React.Component {
             <PageWrapper {...props} component={Dashboard} Auth />
           )}
         />
-         <Route
+        <Route
           path="/chart"
           exact
           render={props => (
             <PageWrapper {...props} title="График" component={DemoLine} />
           )}
         />
-         <Route
+        <Route
           path="/charts"
           exact
           render={props => (
             <PageWrapper {...props} title="График" component={ChartDate} />
+          )}
+        />
+        <Route
+          path="/visit"
+          exact
+          render={props => (
+            <PageWrapper {...props} title="График" component={VisitorsTemp} />
           )}
         />
         <Route
