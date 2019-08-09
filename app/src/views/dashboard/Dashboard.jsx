@@ -9,7 +9,7 @@ import GroupLayout from "./groups";
 class Dashboard extends React.Component {
   render() {
     return (
-      <div style={{ display: "flex", height: "100%" }}>
+      <div style={{ display: "flex", height: "100%", flexGrow: 1 }}>
         <Menu />
         <Switch>
           <Route
