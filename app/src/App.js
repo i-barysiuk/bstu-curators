@@ -15,6 +15,8 @@ import ChartDate from "./components/charts/ChartDate";
 import VisitorsTemp from "./components/visitors/visitorsTemp/VisitorsTemp";
 import VisitorsHealth from "./components/visitors/visitorsHealth/VisitorsHealth";
 
+import Timeline from "./components/timeline/Timeline";
+
 import history from "./helper/history";
 import Analitic from "./helper/analitics";
 
@@ -64,9 +66,7 @@ class App extends React.Component {
         />
         <Route
           path="/dashboard"
-          render={props => (
-            <PageWrapper {...props} component={Dashboard}  />
-          )}
+          render={props => <PageWrapper {...props} component={Dashboard} />}
         />
         <Route
           path="/chart"
@@ -98,6 +98,13 @@ class App extends React.Component {
               title="Здоровье"
               component={VisitorsHealth}
             />
+          )}
+        />
+        <Route
+          path="/timeline"
+          exact
+          render={props => (
+            <PageWrapper {...props} title="Timeline" component={Timeline} />
           )}
         />
         <Route

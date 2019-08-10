@@ -2,7 +2,6 @@ import React from "react";
 import { Line } from "react-chartjs-2";
 import Card from "../../common/card/Card";
 import BigButton from "../../common/bigButton/BigButton";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import style from "./style.module.scss";
 

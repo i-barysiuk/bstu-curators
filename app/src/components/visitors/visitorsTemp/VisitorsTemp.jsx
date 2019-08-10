@@ -6,8 +6,7 @@ import {
   faThermometerQuarter,
   faThermometerHalf,
   faThermometerThreeQuarters,
-  faThermometerFull,
-  faPlus
+  faThermometerFull
 } from "@fortawesome/free-solid-svg-icons";
 import style from "./style.module.scss";
 

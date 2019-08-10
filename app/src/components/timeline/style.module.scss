@@ -1,0 +1,28 @@
+.container {
+  width: 100%;
+  padding: 100px;
+}
+
+.timeMarks {
+  position: relative;
+  bottom: 62px !important;
+}
+
+.icon {
+  position: relative;
+  color: white;
+  bottom: 24px;
+  height: 20px !important;
+  width: 20px !important;
+}
+
+.icon:hover {
+  icon: faDotCircle;
+}
+
+.activeIcon {
+  position: relative;
+  color: red;
+  height: 70px !important;
+  width: 70px !important;
+}
