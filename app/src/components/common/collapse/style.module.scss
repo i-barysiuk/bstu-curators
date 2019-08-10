@@ -1,0 +1,37 @@
+.container {
+  width: 100%;
+  transition: height 1.5s;
+  -webkit-transition: height 1.5s;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.content {
+  max-height: 0;
+  transition: max-height 0.25s ease-out;
+  overflow: hidden;
+  padding-left: 10px;
+}
+
+.expand {
+  max-height: 500px;
+  transition: max-height 0.5s ease-in;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+.header:hover {
+  color: #2d50e2;
+}
+
+.header div {
+  display: flex;
+  align-items: center;
+}
+
+.icons {
+  font-size: 13px;
+  margin: 7px;
+}
