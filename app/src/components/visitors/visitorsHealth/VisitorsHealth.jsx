@@ -1,6 +1,9 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
 import Card from "../../common/card/Card";
+import BigButton from "../../common/bigButton/BigButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import style from "./style.module.scss";
 
 var labels = [
@@ -49,7 +52,7 @@ const data = {
 export default props => {
   return (
     <div className={style.container}>
-      <Card title="Здоровье">
+      <Card title="Здоровье" buttons={<BigButton icon={faPlus} primary />}>
         <Line data={data} legend={false} />
       </Card>
     </div>

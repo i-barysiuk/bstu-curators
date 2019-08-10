@@ -1,6 +1,5 @@
 import React from "react";
 import Card from "../../common/card/Card";
-import BigButton from "../../common/bigButton/BigButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faThermometerEmpty,
@@ -46,7 +45,7 @@ var thermIcon = function() {
 export default props => {
   return (
     <div className={style.container}>
-      <Card title="Наглость" buttons={<BigButton icon={faPlus} primary />}>
+      <Card title="Наглость">
         <p />
         <div className={style.fblock}>
           <div className={style.temp} style={inlineStyle}>
