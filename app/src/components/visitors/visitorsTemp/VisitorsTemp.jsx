@@ -1,4 +1,5 @@
 import React from "react";
+import Card from "../../common/card/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faThermometerEmpty,
@@ -42,27 +43,28 @@ var thermIcon = function() {
 
 export default props => {
   return (
-    <div className={style.main}>
-      <div className={style.title}>Наглость</div>
-      <div className={style.fblock}>
-        <div className={style.temp} style={inlineStyle}>
-          {temp()}
+    <div className={style.container}>
+      <Card title="Наглость">
+        <div className={style.fblock}>
+          <div className={style.temp} style={inlineStyle}>
+            {temp()}
+          </div>
+          <div className={style.thermometer}>
+            <FontAwesomeIcon
+              className={style.icons}
+              icon={thermIcon()}
+              color={color()}
+              size={"3x"}
+            />
+          </div>
         </div>
-        <div className={style.thermometer}>
-          <FontAwesomeIcon
-            className={style.icons}
-            icon={thermIcon()}
-            color={color()}
-            size={"3x"}
-          />
+        <div className={style.sblock}>
+          <div className={style.count}>
+            {respectful}/{not_respectful}/{all}
+          </div>
+          <div className={style.expl}>Уважительно/Неуважительно/Всего</div>
         </div>
-      </div>
-      <div className={style.sblock}>
-        <div className={style.count}>
-          {respectful}/{not_respectful}/{all}
-        </div>
-        <div className={style.expl}>Уважительно/Неуважительно/Всего</div>
-      </div>
+      </Card>
     </div>
   );
 };

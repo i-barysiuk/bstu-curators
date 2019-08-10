@@ -1,5 +1,6 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
+import Card from "../../common/card/Card";
 import style from "./style.module.scss";
 
 var labels = [
@@ -47,17 +48,10 @@ const data = {
 
 export default props => {
   return (
-    <div className={style.main}>
-      <div className={style.title}>Здоровье</div>
-      <div className={style.charts}>
-        <Line
-          data={data}
-          width={380}
-          height={150}
-          className={style.chart}
-          legend={false}
-        />
-      </div>
+    <div className={style.container}>
+      <Card title="Здоровье">
+        <Line data={data} legend={false} />
+      </Card>
     </div>
   );
 };
