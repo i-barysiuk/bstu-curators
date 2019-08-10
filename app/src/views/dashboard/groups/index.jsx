@@ -10,7 +10,7 @@ import GroupStudentsList from "./studentsList/GroupStudentsList";
 class GroupsLayout extends React.Component {
   render() {
     return (
-      <div style={{ display: "flex", height: "100%" }}>
+      <div style={{ display: "flex", height: "100%", flexGrow: 1 }}>
         <GroupsMenu />
         <Switch>
           <Route

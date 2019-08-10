@@ -4,7 +4,6 @@ import {
   DatePicker,
   Input,
   Steps,
-  message,
   Radio,
   Button,
   Col,
@@ -137,6 +136,7 @@ class RegistrationForm extends React.Component {
                     whitespace: true
                   },
                   {
+                    // eslint-disable-next-line
                     pattern: /(^[А-я]{1,20}$)|(^[А-я]{1,20}\-([А-я]{1,16})$)/,
                     message: "Используйте только буквы русского алфавита"
                   }
@@ -155,6 +155,7 @@ class RegistrationForm extends React.Component {
                     whitespace: true
                   },
                   {
+                    // eslint-disable-next-line
                     pattern: /(^[А-я]{1,20}$)|(^[А-я]{1,20}\-([А-я]{1,16})$)/,
                     message: "Используйте только буквы русского алфавита"
                   }
