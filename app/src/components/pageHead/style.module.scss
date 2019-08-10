@@ -1,0 +1,21 @@
+$size-departmen: 30px;
+$size-sub-departmen: 15px;
+
+.container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header {
+  font-size: $size-departmen;
+  font-weight: 400;
+}
+
+.subHeader {
+  font-size: $size-sub-departmen;
+  font-weight: 200;
+}
