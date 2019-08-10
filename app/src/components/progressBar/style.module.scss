@@ -1,0 +1,14 @@
+.progressBar {
+  position: relative;
+  height: 20px;
+  width: 350px;
+  border-radius: 50px;
+  border: 1px;
+}
+
+.filler:hover {
+  background: lime;
+  height: 100%;
+  border-radius: inherit;
+  transition: width 1s ease-in;
+}

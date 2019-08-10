@@ -1,28 +1,39 @@
 .container {
+  display: flex;
+  padding: 20px;
+  width: 70%;
+  height: 100%;
+}
+
+.timeLine {
+  display: flex;
+  background-color: silver;
   width: 100%;
-  padding: 100px;
+  height: 50px;
+  border-radius: 100px;
 }
 
 .timeMarks {
-  position: relative;
-  bottom: 62px !important;
+  display: flex;
+  height: inherit;
+  width: inherit;
+  align-items: center;
 }
 
 .icon {
-  position: relative;
-  color: white;
-  bottom: 24px;
+  color: black;
   height: 20px !important;
   width: 20px !important;
 }
 
 .icon:hover {
-  icon: faDotCircle;
+  color: white;
+  height: 22px !important;
+  width: 22px !important;
 }
 
 .activeIcon {
-  position: relative;
-  color: red;
+  color: green;
   height: 70px !important;
   width: 70px !important;
 }

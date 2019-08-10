@@ -2,6 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faDotCircle } from "@fortawesome/free-solid-svg-icons";
 import { Popover } from "antd";
+import ProgressBar from "../progressBar/ProgressBar";
 import style from "../timeline/style.module.scss";
 
 let data = [
@@ -37,19 +38,22 @@ function positionGet(date) {
   var allSet = lDate - fDate;
   var curDate = date - fDate;
   var ret = (curDate / allSet) * 100;
-  ret = ret / 1.3;
   return ret.toString() + "%";
 }
 
 function styleGet(ind) {
-  var shift;
+  var shift = positionGet(data[ind].date);
   if (ind === 0) shift = 20;
-  else if (ind === data.length - 1) shift = "82.2%";
   else shift = positionGet(data[ind].date);
   var style = {
-    position: "relative",
+    position: "absolute",
     left: shift
   };
+  if (ind === data.length - 1)
+    style = {
+      position: "absolute",
+      right: 20
+    };
   return style;
 }
 
@@ -64,50 +68,54 @@ function Timeline() {
   return (
     <React.Fragment>
       <div className={style.container}>
-        <hr align="center" width="95.3%" size="50" color="lime" />
-        <div className={style.timeMarks}>
-          <Popover content={popoverGet(0).body} title={popoverGet(0).title}>
-            <FontAwesomeIcon
-              icon={faCircle}
-              className={style.icon}
-              style={styleGet(0)}
-            />
-          </Popover>
-          <Popover content={popoverGet(1).body} title={popoverGet(1).title}>
-            <FontAwesomeIcon
-              icon={faDotCircle}
-              className={style.activeIcon}
-              style={styleGet(1)}
-            />
-          </Popover>
-          <Popover content={popoverGet(2).body} title={popoverGet(2).title}>
-            <FontAwesomeIcon
-              icon={faCircle}
-              className={style.icon}
-              style={styleGet(2)}
-            />
-          </Popover>
-          <Popover content={popoverGet(3).body} title={popoverGet(3).title}>
-            <FontAwesomeIcon
-              icon={faCircle}
-              className={style.icon}
-              style={styleGet(3)}
-            />
-          </Popover>
-          <Popover content={popoverGet(4).body} title={popoverGet(4).title}>
-            <FontAwesomeIcon
-              icon={faCircle}
-              className={style.icon}
-              style={styleGet(4)}
-            />
-          </Popover>
-          <Popover content={popoverGet(5).body} title={popoverGet(5).title}>
-            <FontAwesomeIcon
-              icon={faCircle}
-              className={style.icon}
-              style={styleGet(5)}
-            />
-          </Popover>
+        <div className={style.timeLine}>
+          <div
+            className={style.timeMarks}
+            style={{ position: "relative", width: "100%" }}
+          >
+            <Popover content={popoverGet(0).body} title={popoverGet(0).title}>
+              <FontAwesomeIcon
+                icon={faCircle}
+                className={style.icon}
+                style={styleGet(0)}
+              />
+            </Popover>
+            <Popover content={popoverGet(1).body} title={popoverGet(1).title}>
+              <FontAwesomeIcon
+                icon={faDotCircle}
+                className={style.activeIcon}
+                style={styleGet(1)}
+              />
+            </Popover>
+            <Popover content={popoverGet(2).body} title={popoverGet(2).title}>
+              <FontAwesomeIcon
+                icon={faCircle}
+                className={style.icon}
+                style={styleGet(2)}
+              />
+            </Popover>
+            <Popover content={popoverGet(3).body} title={popoverGet(3).title}>
+              <FontAwesomeIcon
+                icon={faCircle}
+                className={style.icon}
+                style={styleGet(3)}
+              />
+            </Popover>
+            <Popover content={popoverGet(4).body} title={popoverGet(4).title}>
+              <FontAwesomeIcon
+                icon={faCircle}
+                className={style.icon}
+                style={styleGet(4)}
+              />
+            </Popover>
+            <Popover content={popoverGet(5).body} title={popoverGet(5).title}>
+              <FontAwesomeIcon
+                icon={faCircle}
+                className={style.icon}
+                style={styleGet(5)}
+              />
+            </Popover>
+          </div>
         </div>
       </div>
     </React.Fragment>
