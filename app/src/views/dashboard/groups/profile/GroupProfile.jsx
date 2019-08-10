@@ -2,7 +2,9 @@ import React from "react";
 import style from "./style.module.scss";
 import PageHead from "../../../../components/pageHead/PageHead";
 import BigButton from "../../../../components/common/bigButton/BigButton";
+import Card from "../../../../components/common/card/Card";
 import { faPen, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import { Row, Col } from "antd";
 
 export default props => {
   return (
@@ -14,6 +16,16 @@ export default props => {
         <BigButton icon={faPen} />
         <BigButton icon={faEllipsisH} />
       </PageHead>
+      <Row gutter={24}>
+        <Col span={8}>
+          <Card title="Наглость">123</Card>
+        </Col>
+        <Col span={16}>
+          <Card title="Здоровье" buttons={<BigButton icon={faPen} />}>
+            123
+          </Card>
+        </Col>
+      </Row>
     </div>
   );
 };
