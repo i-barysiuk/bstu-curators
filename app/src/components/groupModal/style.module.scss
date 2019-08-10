@@ -4,6 +4,7 @@
 
   .correction{
     width: 100%;
+    padding-left:20px;
   }
   
   .column{
@@ -94,7 +95,7 @@
   }
 
   div[class="ant-modal"]{
-    width:850px;
+    width: 850px;
   }
 
   div[class="steps-content"]{
@@ -147,16 +148,23 @@
 
 @media (max-width: 850px) {
   div[class="ant-modal"]{
-    width:100%;
+    width:740px;
   }
   div[class="ant-modal-content"]{
-    width:100%;
+    width:740px;
   }
   .dynamicText{
-    width:200px;
+    width:250px;
+    height: 27px;
   }
 }
 @media (max-width: 750px) {
+  div[class="ant-modal"]{
+    width:600px;
+  }
+  div[class="ant-modal-content"]{
+    width:600px;
+  }
   .container{
     width: 100%;
   }
@@ -178,9 +186,6 @@
   h2{
     font-size: 18x;
   }
-  .dynamicText{
-    width:100px;
-  }
   .text{
     width: 100%;
     h3{
@@ -190,9 +195,16 @@
 }
 
 @media (max-width: 610px) {
+  div[class="ant-modal"]{
+    width:470px;
+  }
+  div[class="ant-modal-content"]{
+    width:470px;
+  }
   
   .flex{
     flex-direction: column;
+    margin-bottom: -15px;
   }
   .row{
     h2{
@@ -218,16 +230,13 @@
   }
 }
 
-@media (max-width: 490px) {
-  .row{
-    h3{
-      font-size: 14px;
-      width: 55%;
-    }
-  }
-}
-
 @media (max-width: 480px){
+  div[class="ant-modal"]{
+    width:440px;
+  }
+  div[class="ant-modal-content"]{
+    width:440px;
+  }
   div[class="ant-steps ant-steps-horizontal ant-steps-label-horizontal"] {
     display: flex !important;
     div[class="ant-steps-item ant-steps-item-finish"]{
@@ -242,5 +251,25 @@
       div[class="ant-steps-item-tail"]{
         display: none !important;
       }
+  }
+
+  .row{
+    h3{
+      font-size: 14px;
+      width: 55%;
+    }
+  }
+
+  .otherBox{
+    margin-left:25px;
+  }
+}
+
+@media (max-width: 480px){
+  div[class="ant-modal"]{
+    width:100%;
+  }
+  div[class="ant-modal-content"]{
+    width:100%;
   }
 }

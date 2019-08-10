@@ -70,14 +70,15 @@ class GroupForm extends React.Component {
       ['brsm','profcom','other'],
       ['social_0','social_1','social_2','social_3','social_4','social_5','social_6','social_7','social_8'],
       ['standart','large','incomplete','parent','hostel','relative','private'],
-      'more',
+      ['more'],
     ]
-    var fields = this.props.form.getFieldsValue();
+    const fields = this.props.form.getFieldsValue();
     this.props.form.validateFieldsAndScroll(
       validation[this.state.current],
       (err, values) => {
         if (!err) {
           const current = this.state.current + 1;
+          console.log(current);
           this.setState({ form: fields, current: current });
           if(current === 5) this.setModalVisible(false);
           console.log(fields);
@@ -95,7 +96,7 @@ class GroupForm extends React.Component {
     const fieldName = [ 'brsm','profcom','other' ];
     const fieldText = [ 'БРСМ', 'Профком', 'Прочее'];
     const form = this.state.form;
-    const organisation = [form.brsm,form.profcom, form.other];
+    const value = [form.brsm,form.profcom, form.other];
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const children = [];
     for (let i = 0; i < 3; i++) {
@@ -109,7 +110,7 @@ class GroupForm extends React.Component {
             <div className={style.otherBox}>
             <Form.Item>
                 {getFieldDecorator(fieldName[i], {
-                  initialValue: organisation[i],
+                  initialValue: value[i],
                 })(
                   <InputNumber 
                     className={style.border}
@@ -193,39 +194,33 @@ class GroupForm extends React.Component {
     const children = [];
     for (let i = 0; i < 3; i++) {
       children.push(
+        <div className = {style.container}>
           <div className={style.row}>
-          <div className={style.dynamicText}>
               <h2
-              className={style.dynamicText}
+              style={{width:200}}
               >{fieldText[i]}</h2>
               <br/>
-            </div>
             <div className={style.otherBox}>
             <Form.Item>
                 {getFieldDecorator(fieldName[i], {
-                  rules: [
-                  {
-                    required: true,
-                    message: "Распределите всех"
-                  },
-                ],
-                initialValue: value[i],
-                onChange: change[i],
+                  initialValue: value[i],
+                  onChange: change[i],
                 })(
                   <InputNumber 
                     className={style.border}
                     min={0}
                     max={convert(getFieldValue('total'),calc[i])}
-                    placeholder="0"
+                    placeholder="0" 
                 />)
                 }
               </Form.Item>
             </div>
           </div>
+        </div>
           );
         }
         return children;
-  }
+    }
 
   getPlace() {
     const { getFieldDecorator, getFieldValue } = this.props.form;
@@ -244,7 +239,7 @@ class GroupForm extends React.Component {
 
     for (let i = 0; i < 4; i++) {
       children.push(
-          <div className={style.row}>
+          <div className={style.flex}>
           <div className={style.dynamicText}>
               <h2
               className={style.dynamicText}
@@ -282,6 +277,15 @@ class GroupForm extends React.Component {
           );
         }
         return children;
+  }
+
+  validTotal = (rule,value,callback) => {
+    debugger;
+    if(!value || value === 0){
+      callback('Пожалуйста укажите значение');
+    }else{
+      callback();
+    }
   }
 
   render() {
@@ -397,8 +401,8 @@ class GroupForm extends React.Component {
                     rules: [
                     {
                       required: true,
-                      message: "Не все участники группы распределены"
                     },
+                    {validator: this.validTotal}
                     ],
                     initialValue: this.state.form.total,
                     onChange: this.onTotalChange
@@ -423,12 +427,11 @@ class GroupForm extends React.Component {
           
           <div>
           <h2>Из них:</h2>
-          <div className={style.row}>
+          <div className={style.flex}>
           <div className={style.dynamicText}>
               <h2
               className={style.dynamicText}
               >Девушек<span className={style.red}>*</span></h2>
-              <br/>
             </div>
             <Form.Item>
             <div className={style.row}>
@@ -436,7 +439,6 @@ class GroupForm extends React.Component {
                     rules: [
                     {
                       required: true,
-                      message: "Не все участники группы распределены"
                     },
                     ],
                     initialValue: this.state.form.sex_w,
@@ -458,12 +460,11 @@ class GroupForm extends React.Component {
               </div>
               </Form.Item>
           </div>
-          <div className={style.row}>
+          <div className={style.flex}>
           <div className={style.dynamicText}>
               <h2
               className={style.dynamicText}
               >Юношей<span className={style.red}>*</span></h2>
-              <br/>
             </div>
             <Form.Item>
             <div className={style.row}>
@@ -471,7 +472,6 @@ class GroupForm extends React.Component {
                     rules: [
                     {
                       required: true,
-                      message: "Не все участники группы распределены"
                       },
                     ],
                     initialValue: this.state.form.sex_m,
@@ -585,6 +585,7 @@ class GroupForm extends React.Component {
           width = 'none'
           centered
           destroyOnClose = {true}
+          maskClosable = {false}
           footer = {
             <div className={style.flex}>
             <div style={{marginBottom:50}}>
