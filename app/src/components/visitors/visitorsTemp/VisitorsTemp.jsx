@@ -1,12 +1,14 @@
 import React from "react";
 import Card from "../../common/card/Card";
+import BigButton from "../../common/bigButton/BigButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faThermometerEmpty,
   faThermometerQuarter,
   faThermometerHalf,
   faThermometerThreeQuarters,
-  faThermometerFull
+  faThermometerFull,
+  faPlus
 } from "@fortawesome/free-solid-svg-icons";
 import style from "./style.module.scss";
 
@@ -44,7 +46,8 @@ var thermIcon = function() {
 export default props => {
   return (
     <div className={style.container}>
-      <Card title="Наглость">
+      <Card title="Наглость" buttons={<BigButton icon={faPlus} primary />}>
+        <p />
         <div className={style.fblock}>
           <div className={style.temp} style={inlineStyle}>
             {temp()}
@@ -58,6 +61,7 @@ export default props => {
             />
           </div>
         </div>
+        <p />
         <div className={style.sblock}>
           <div className={style.count}>
             {respectful}/{not_respectful}/{all}

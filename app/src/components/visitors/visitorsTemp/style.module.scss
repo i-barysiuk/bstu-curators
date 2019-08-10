@@ -1,5 +1,5 @@
 $width-elem: 210px;
-$height-elem: 180px;
+$height-elem: 210px;
 $text-dark-color: #65696c;
 
 .container {
@@ -8,7 +8,6 @@ $text-dark-color: #65696c;
   width: $width-elem;
   height: $height-elem;
   display: flex;
-  justify-content: space-around;
   align-items: center;
   border-radius: 7px;
   flex-direction: column;
