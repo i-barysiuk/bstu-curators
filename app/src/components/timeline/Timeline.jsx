@@ -2,33 +2,32 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faDotCircle } from "@fortawesome/free-solid-svg-icons";
 import { Popover } from "antd";
-import ProgressBar from "../progressBar/ProgressBar";
 import style from "../timeline/style.module.scss";
 
 let data = [
   {
     event: "Fuck this shit",
-    date: new Date("December 17, 2003 03:24:00")
+    date: new Date("December 17, 2015 03:24:00")
   },
   {
     event: "Really?",
-    date: new Date("January 23, 2005 03:24:00")
+    date: new Date("June 23, 2018 03:24:00")
   },
   {
     event: "2007 is returned.",
-    date: new Date("January 23, 2007 03:24:00")
+    date: new Date("January 23, 2017 03:24:00")
   },
   {
     event: "2010? Again?!",
-    date: new Date("January 23, 2010 03:24:00")
+    date: new Date("January 23, 2020 03:24:00")
   },
   {
     event: "...?",
-    date: new Date("July 30, 2018 03:24:00")
+    date: new Date("July 30, 2020 03:24:00")
   },
   {
     event: "It is coming!",
-    date: new Date("August 20, 2019 00:00:00")
+    date: new Date("August 20, 2021 00:00:00")
   }
 ];
 
@@ -60,8 +59,29 @@ function styleGet(ind) {
 function popoverGet(ind) {
   return {
     body: data[ind].event,
-    title: data[ind].event
+    title: data[ind].date.toString()
   };
+}
+
+function getClosest(ind) {
+  var today = new Date();
+  var closest = [];
+  for (var i = 0; i < data.length; i++) {
+    if (today - data[i].date < 0) closest[i] = Math.abs(today - data[i].date);
+    else closest[i] = 1e50;
+  }
+  var min = Math.min.apply(Math, closest);
+  i = closest.indexOf(min);
+  if (i === ind)
+    return {
+      icon: faDotCircle,
+      cName: style.activeIcon
+    };
+  else
+    return {
+      icon: faCircle,
+      cName: style.icon
+    };
 }
 
 function Timeline() {
@@ -75,43 +95,43 @@ function Timeline() {
           >
             <Popover content={popoverGet(0).body} title={popoverGet(0).title}>
               <FontAwesomeIcon
-                icon={faCircle}
-                className={style.icon}
+                icon={getClosest(0).icon}
+                className={getClosest(0).cName}
                 style={styleGet(0)}
               />
             </Popover>
             <Popover content={popoverGet(1).body} title={popoverGet(1).title}>
               <FontAwesomeIcon
-                icon={faDotCircle}
-                className={style.activeIcon}
+                icon={getClosest(1).icon}
+                className={getClosest(1).cName}
                 style={styleGet(1)}
               />
             </Popover>
             <Popover content={popoverGet(2).body} title={popoverGet(2).title}>
               <FontAwesomeIcon
-                icon={faCircle}
-                className={style.icon}
+                icon={getClosest(2).icon}
+                className={getClosest(2).cName}
                 style={styleGet(2)}
               />
             </Popover>
             <Popover content={popoverGet(3).body} title={popoverGet(3).title}>
               <FontAwesomeIcon
-                icon={faCircle}
-                className={style.icon}
+                icon={getClosest(3).icon}
+                className={getClosest(3).cName}
                 style={styleGet(3)}
               />
             </Popover>
             <Popover content={popoverGet(4).body} title={popoverGet(4).title}>
               <FontAwesomeIcon
-                icon={faCircle}
-                className={style.icon}
+                icon={getClosest(4).icon}
+                className={getClosest(4).cName}
                 style={styleGet(4)}
               />
             </Popover>
             <Popover content={popoverGet(5).body} title={popoverGet(5).title}>
               <FontAwesomeIcon
-                icon={faCircle}
-                className={style.icon}
+                icon={getClosest(5).icon}
+                className={getClosest(5).cName}
                 style={styleGet(5)}
               />
             </Popover>
