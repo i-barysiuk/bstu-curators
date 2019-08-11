@@ -10,9 +10,8 @@ import GroupModal from "../../components/groupModal/Group";
 class Dashboard extends React.Component {
   render() {
     return (
-      <div style={{ display: "flex", height: "100%" }}>
-        <Menu/>
-        <GroupModal/>
+      <div style={{ display: "flex", height: "100%", flexGrow: 1 }}>
+        <Menu />
         <Switch>
           <Route
             exec
