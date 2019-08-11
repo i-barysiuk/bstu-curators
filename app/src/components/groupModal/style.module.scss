@@ -2,6 +2,15 @@
     color: red;
   }
 
+  h2{
+    margin-bottom: 0;
+  }
+
+  label{
+    font-size: 18px !important;
+    font-weight: 600;
+  }
+
   .correction{
     width: 100%;
     padding-left:20px;
@@ -10,17 +19,10 @@
   .column{
     display: flex;
     flex-direction: column;
-    div[class="ant-slider"]{
-      width: 100%;
-    }
   }
   .row{
     display: flex;
     flex-direction: row;
-    h2{
-      margin-left: 30px;
-      margin-right: 50px;
-    }
     div[class="ant-slider"]{
       width: 300px;
     }
@@ -29,12 +31,28 @@
   .flex{
     display: flex;
     flex-direction: row;
+    div[class="ant-row ant-form-item"]{
+      margin-bottom: 20px;
+    }
+    div[class="ant-slider"]{
+      width: 300px;
+    }
   }
 
   .select{
     div>div{
     border-radius: 15px 15px 15px 15px;
     }
+  }
+
+  .social{
+    label{
+      font-size: 16px !important;
+      font-weight: 500;
+    }
+    margin-left: 30;
+    margin-bottom: 20;
+    padding-right: 30;
   }
 
   .phone{
@@ -46,7 +64,6 @@
   }
 
   .padding{
-    padding-right:25px;
     padding-bottom:25px;
   }
   
@@ -56,14 +73,9 @@
     padding-bottom:25px;
   }
 
-  .text{
-    line-height: 20px;
-    height: 90px;
-    width: 100%;
-  }
-
   .dynamicText{
-    width:350px;
+    width:200px;
+    margin-right: 15px;
   }
 
   .otherBox{
@@ -92,6 +104,7 @@
 
   div[class="ant-row ant-form-item"]{
     width:100%;
+    margin-bottom: 15px;
   }
 
   div[class="ant-modal"]{
@@ -153,10 +166,6 @@
   div[class="ant-modal-content"]{
     width:740px;
   }
-  .dynamicText{
-    width:250px;
-    height: 27px;
-  }
 }
 @media (max-width: 750px) {
   div[class="ant-modal"]{
@@ -173,24 +182,18 @@
     div[class="ant-slider"]{
       width:100%;
     }
-    h2{
-      margin-left: 0;
-      margin-right: 16px;
-      font-size: 16px;
-    }
-    h3{
-      font-size: 16px;
-    }
   }
 
-  h2{
-    font-size: 18x;
+  .flex{
+    flex-direction: column;
   }
+
   .text{
     width: 100%;
-    h3{
-      width: 80%;
-    }
+  }
+  .container{
+    padding-right:0;
+    padding-bottom:0;
   }
 }
 
@@ -200,33 +203,6 @@
   }
   div[class="ant-modal-content"]{
     width:470px;
-  }
-  
-  .flex{
-    flex-direction: column;
-    margin-bottom: -15px;
-  }
-  .row{
-    h2{
-      font-size: 14px;
-    }
-    h3{
-      font-size: 14px;
-    }
-  }
-
-  h2{
-    font-size: 18px;
-  }
-
-  .container{
-    padding-right:0;
-    padding-bottom:0;
-  }
-}
-.text{
-  h3{
-    width: 90% !important;
   }
 }
 
@@ -253,23 +229,21 @@
       }
   }
 
-  .row{
-    h3{
-      font-size: 14px;
-      width: 55%;
-    }
-  }
-
   .otherBox{
     margin-left:25px;
   }
 }
 
-@media (max-width: 480px){
+@media (max-width: 440px){
   div[class="ant-modal"]{
     width:100%;
   }
   div[class="ant-modal-content"]{
     width:100%;
+  }
+  .social{
+    margin-left: 0;
+    margin-bottom: 10;
+    padding-right: 20;
   }
 }

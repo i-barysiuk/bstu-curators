@@ -60,10 +60,12 @@ class GroupForm extends React.Component {
       (err, values) => {
         if (!err) {
           const current = this.state.current + 1;
-          console.log(current);
           this.setState({ form: fields, current: current });
           if(current === 5) this.setModalVisible(false);
+          console.log(current-1+'->'+current);
+          console.log('props');
           console.log(fields);
+          console.log('state');
           console.log(this.state.form);
         }
       }
@@ -73,6 +75,50 @@ class GroupForm extends React.Component {
   prev() {
     const current = this.state.current - 1;
     this.setState({ current });
+    console.log(current+1+'->'+current);
+    console.log('props');
+    console.log(this.state.form);
+    console.log('state');
+    console.log(this.state.form);
+  }
+
+  validTotal = (rule,value,callback) => {
+    debugger;
+    if(!value || value === 0){
+      callback('Пожалуйста укажите значение');
+    }else{
+      callback();
+    }
+  }
+
+  validSex = (rule,value,callback) => {
+    debugger;
+    const {getFieldValue} = this.props.form;
+    if(getFieldValue('sex_w') !== convert(getFieldValue('total'),getFieldValue('sex_m'))){
+      callback('Распределите всех!')
+    } else{
+      callback();
+    }
+  }
+
+  validComposition = (rule,value,callback) => {
+    debugger;
+    const {getFieldValue} = this.props.form;
+    if(getFieldValue('standart') !== convert(getFieldValue('total'),getFieldValue('large')+getFieldValue('incomplete'))){
+      callback('Распределите всех!')
+    } else{
+      callback();
+    }
+  }
+
+  validPlace = (rule,value,callback) => {
+    debugger;
+    const {getFieldValue} = this.props.form;
+    if(getFieldValue('parent') !== convert(getFieldValue('total'),getFieldValue('hostel')+getFieldValue('relative')+getFieldValue('private'))){
+      callback('Распределите всех!')
+    } else{
+      callback();
+    }
   }
 
   getOrganisation() {
@@ -84,14 +130,11 @@ class GroupForm extends React.Component {
     const children = [];
     for (let i = 0; i < 3; i++) {
       children.push(
-        <div className = {style.container}>
-          <div className={style.row}>
-              <h2
-              style={{width:100}}
-              >{fieldText[i]}</h2>
-              <br/>
-            <div className={style.otherBox}>
-            <Form.Item>
+        <Form.Item>
+        <div className={style.row}>
+        <div className={style.dynamicText}>
+        <label>{fieldText[i]}</label>
+        </div>
                 {getFieldDecorator(fieldName[i], {
                   initialValue: value[i],
                 })(
@@ -102,10 +145,8 @@ class GroupForm extends React.Component {
                     placeholder="0" 
                 />)
                 }
-              </Form.Item>
-            </div>
-          </div>
         </div>
+        </Form.Item>
           );
         }
         return children;
@@ -126,37 +167,35 @@ class GroupForm extends React.Component {
       form.social_7,
     ]
     var text = [
-      {fieldText: "Дети-сироты", note: "(до 18 лет)"},
-      {fieldText: "Дети, оставшиеся без попечения родителей", note: "(до 18 лет)"},
-      {fieldText: "Дети, оставшиеся без попечения родителей", note: "(до 18 лет)"},
-      {fieldText: "Лица из числа детей-сирот и детей, оставшихся без попечения родителей", note: "(18-23 лет)"},
-      {fieldText: "Студенты с особенностями психофизического развития"},
-      {fieldText: "Имеющие родителей инвалидов 1, 2 группы"},
-      {fieldText: "Из регионов пострадавших от катастрофы на Чернобыльской АЭС"},
-      {fieldText: "Из семей, отселенных из зон радиоактивного загрязнения"}
+      "Дети-сироты (до 18 лет)" ,
+      "Дети, оставшиеся без попечения родителей (до 18 лет)" ,
+      "Дети, оставшиеся без попечения родителей (до 18 лет)" ,
+      "Лица из числа детей-сирот и детей, оставшихся без попечения родителей (18-23 лет)" ,
+      "Студенты с особенностями психофизического развития" ,
+      "Имеющие родителей инвалидов 1, 2 группы" ,
+      "Из регионов пострадавших от катастрофы на Чернобыльской АЭС" ,
+      "Из семей, отселенных из зон радиоактивного загрязнения" 
     ]
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const children = [];
     for (let i = first; i < last; i++) {
       children.push(
-          <Form.Item
-          style={{marginLeft: 30}}
-          >
-            <div className={style.text}>
-            <h3>{text[i].fieldText}</h3>
-            <h4>{text[i].note}</h4>
-            </div>
-            {getFieldDecorator(`social_${i}`, {
-              initialValue: fieldName[i],
-            })(
-              <InputNumber 
-                className={style.border}
-                min={0}
-                max={getFieldValue('total')}
-                placeholder="0"
-            />)
-            }
-          </Form.Item>
+        <Form.Item
+        className={style.social}>
+        <div className={style.column}>
+        <label>{text[i]}</label>
+          {getFieldDecorator(`social_${i}`, {
+            initialValue: fieldName[i],
+          })(
+            <InputNumber 
+              className={style.border}
+              min={0}
+              max={getFieldValue('total')}
+              placeholder="0"
+          />)
+          }
+        </div>
+        </Form.Item>
       );
     }
     return children;
@@ -177,33 +216,35 @@ class GroupForm extends React.Component {
     const children = [];
     for (let i = 0; i < 3; i++) {
       children.push(
-        <div className = {style.container}>
-          <div className={style.row}>
-              <h2
-              style={{width:200}}
-              >{fieldText[i]}</h2>
-              <br/>
-            <div className={style.otherBox}>
-            <Form.Item>
-                {getFieldDecorator(fieldName[i], {
-                  initialValue: value[i],
-                  onChange: change[i],
-                })(
-                  <InputNumber 
-                    className={style.border}
-                    min={0}
-                    max={convert(getFieldValue('total'),calc[i])}
-                    placeholder="0" 
-                />)
-                }
-              </Form.Item>
-            </div>
-          </div>
+        <Form.Item>
+        <div className={style.row}>
+        <div className={style.dynamicText}>
+        <label>
+        <span className={style.red}>*</span>
+        {fieldText[i]}
+        </label>
         </div>
+                    {getFieldDecorator(fieldName[i], {
+                      rules:[
+                        {required: true},
+                        {validator:this.validComposition}
+                      ],
+                      initialValue: value[i],
+                      onChange: change[i],
+                    })(
+                      <InputNumber 
+                        className={style.border}
+                        min={0}
+                        max={convert(getFieldValue('total'),calc[i])}
+                        placeholder="0" 
+                    />)
+                    }
+          </div>
+          </Form.Item>
           );
         }
         return children;
-    }
+  }
 
   getPlace() {
     const { getFieldDecorator, getFieldValue } = this.props.form;
@@ -222,67 +263,58 @@ class GroupForm extends React.Component {
 
     for (let i = 0; i < 4; i++) {
       children.push(
-          <div className={style.flex}>
-          <div className={style.dynamicText}>
-              <h2
-              className={style.dynamicText}
-              >{fieldText[i]}</h2>
-              <br/>
-            </div>
-            <Form.Item className={style.correction}>
-            <div className={style.row}>
-                {getFieldDecorator(fieldName[i], {
-                  rules: [
-                  {
-                    required: true,
-                    message: "Не все участники группы распределены"
-                  },
-                  ],
-                  initialValue: value[i],
-                  onChange: change[i]
-                  })(
-                  <Slider
-                      min={0}
-                      max={convert(getFieldValue('total'),calc[i])}
-                    />)
-                    }
-                    <InputNumber
-                      value={getFieldValue(fieldName[i])}
-                      onChange={change[i]}
-                      className={style.border}
-                      min={0}
-                      max={convert(getFieldValue('total'),calc[i])}
-                      style={{ marginLeft: 16 }}
-                    />
-              </div>
-              </Form.Item>
+        <Form.Item>
+        <div className={style.flex}>
+        <div className={style.dynamicText}>
+        <label>
+        <span className={style.red}>*</span>
+        {fieldText[i]}
+        </label>
+        </div>
+        <div className={style.row}>
+            {getFieldDecorator(fieldName[i], {
+              rules: [
+              {
+                required: true,
+                message: "Не все участники группы распределены"
+              },
+              {validator:this.validPlace}
+              ],
+              initialValue: value[i],
+              onChange: change[i]
+              })(
+              <Slider
+                  min={0}
+                  max={convert(getFieldValue('total'),calc[i])}
+                />)
+                }
+                <InputNumber
+                  value={getFieldValue(fieldName[i])}
+                  onChange={this.onParentChange}
+                  className={style.border}
+                  min={0}
+                  max={convert(getFieldValue('total'),calc[i])}
+                  style={{ marginLeft: 16 }}
+                />
           </div>
+          </div>
+          </Form.Item>
           );
         }
         return children;
   }
 
-  validTotal = (rule,value,callback) => {
-    debugger;
-    if(!value || value === 0){
-      callback('Пожалуйста укажите значение');
-    }else{
-      callback();
-    }
-  }
-
   render() {
     const { current } = this.state;
     const { getFieldDecorator, getFieldValue } = this.props.form;
-
     const steps = [
       {
+        title: "group info",
         content: (
         <div>
         <div className={style.container}>
         <div className={style.select}>
-        <Form.Item>
-        <h2>Факультет:<span className={style.red}>*</span></h2>
+        <Form.Item label="Факультет">
         {getFieldDecorator('faculty', {
             rules: [
               {
@@ -314,8 +346,7 @@ class GroupForm extends React.Component {
           
 
           <div className={style.container}>
-          <Form.Item>
-          <h2>Название группы:<span className={style.red}>*</span></h2>
+          <Form.Item label="Название группы">
           {getFieldDecorator('group', {
             rules: [
               {
@@ -323,7 +354,7 @@ class GroupForm extends React.Component {
                 message: "Пожалуйста укажите название группы"
               },
               {
-                pattern: /(^[А-я]{1,6}-[0-9]{1,3}$)/,
+                pattern: /(^[А-Я]{1,1}[A-я]{1,6}-[0-9]{1,3}$)/,
                 message: "Неверный формат! Пример: AC-59"
               }
             ],
@@ -341,8 +372,7 @@ class GroupForm extends React.Component {
           
           <div className={style.flex}>
           <div className={style.container}> 
-            <h2>Куратор:<span className={style.red}>*</span></h2>
-            <Form.Item>
+            <Form.Item label="Куратор">
             {getFieldDecorator('curator', {
             rules: [
               {
@@ -350,7 +380,7 @@ class GroupForm extends React.Component {
                 message: "Пожалуйста укажите ФИО"
               },
               {
-                pattern: /(^[А-я]{1,20} [А-я]{1,20} [А-я]{1,20}$)|(^[А-я]{1,20}-[А-я]{1,16} [А-я]{1,20} [А-я]{1,20}$)/,
+                pattern: /(^[А-Я]{1,1}[а-я]{1,20} [А-Я]{1,1}[а-я]{1,20} [А-Я]{1,1}[а-я]{1,20}$)|(^[А-Я]{1,1}[а-я]{1,20}-[А-Я]{1,1}[а-я]{1,16} [А-Я]{1,1}[а-я]{1,20} [А-Я]{1,1}[а-я]{1,20}$)/,
                 message: "Неверный формат!"
               }
             ],
@@ -366,10 +396,9 @@ class GroupForm extends React.Component {
             </div>
             <div 
             className={style.container}>
-              <h2>Телефон куратора: </h2>
-              <Form.Item>
+              <Form.Item label="Номер телефона">
               <div className={style.row}>
-                <p className={style.phone}>+375</p>
+                <span className={style.phone}>+375</span>
                 {getFieldDecorator('phone',{
                   rules: [
                     {
@@ -394,8 +423,7 @@ class GroupForm extends React.Component {
 
           
           <div className={style.colunm}>
-            <h2>Количество человек<span className={style.red}>*</span></h2>
-              <Form.Item>
+              <Form.Item label="Количество человек">
             <div className={style.row}>
                  {getFieldDecorator('total', {
                     rules: [
@@ -428,18 +456,14 @@ class GroupForm extends React.Component {
           <div>
           <h2>Из них:</h2>
           <div className={style.flex}>
-          <div className={style.dynamicText}>
-              <h2
-              className={style.dynamicText}
-              >Девушек<span className={style.red}>*</span></h2>
-            </div>
-            <Form.Item>
+            <Form.Item label="Девушек">
             <div className={style.row}>
                  {getFieldDecorator('sex_w', {
                     rules: [
                     {
                       required: true,
                     },
+                    {validator: this.validSex}
                     ],
                     initialValue: this.state.form.sex_w,
                     onChange: this.onWomenChange
@@ -461,18 +485,14 @@ class GroupForm extends React.Component {
               </Form.Item>
           </div>
           <div className={style.flex}>
-          <div className={style.dynamicText}>
-              <h2
-              className={style.dynamicText}
-              >Юношей<span className={style.red}>*</span></h2>
-            </div>
-            <Form.Item>
+            <Form.Item label="Юношей">
             <div className={style.row}>
                     {getFieldDecorator('sex_m', {
                     rules: [
                     {
                       required: true,
                       },
+                      {validator: this.validSex}
                     ],
                     initialValue: this.state.form.sex_m,
                     onChange: this.onMenChange
@@ -498,6 +518,7 @@ class GroupForm extends React.Component {
           )
       },
       {
+        title: "organisations",
         content: (
           <div>
           <h2>Нахождение студентов в различных объединениях, сообществах и т.д.</h2>
@@ -506,6 +527,7 @@ class GroupForm extends React.Component {
         )
       },
       {
+        title: "social status",
         content: (
           <div className={style.padding}>
             <div className={style.row}>
@@ -517,12 +539,16 @@ class GroupForm extends React.Component {
               <Tabs tabPosition="bottom">
                 <TabPane tab="Часть 1" key="1">
                   <div className={style.column}>
-                    {this.getSocial(0)}
+                    
+                  {this.getSocial(0)}
+
                   </div>
                 </TabPane>
                 <TabPane tab="Часть 2" key="2">
                   <div className={style.column}>
-                    {this.getSocial(1)}
+                    
+                  {this.getSocial(1)}
+
                   </div>
                 </TabPane>
               </Tabs>
@@ -531,20 +557,25 @@ class GroupForm extends React.Component {
         )
       },
       {
+        title: "Place and Composition",
         content: (
           <div>
           <div className={style.padding}>
             <div className = {style.column}>
-            <h2>Состав семей:<span className={style.red}>*</span></h2>
+            <h2>Состав семей:</h2>
+
             {this.getFamilyComposition()}
+
             </div>
             </div>     
             
 
-            <div className={style.container}>
+            <div className={style.padding}>
             <div className = {style.column}>
-            <h2>Проживают:<span className={style.red}>*</span></h2>
+            <h2>Проживают:</h2>
+            
             {this.getPlace()}
+
             </div>
             </div>
 
@@ -552,6 +583,7 @@ class GroupForm extends React.Component {
         )
       },
       {
+        title: "more",
         content: (
           <div className={style.padding}>
               <h2>Другие сведения</h2>
