@@ -12,44 +12,26 @@ function convert(total,value){
   else return total - value;
 }
 
+const defState = {
+  total:0,sex_w:0,sex_m:0,
+  brsm:0,profcom:0,other:0,
+  social_0:0,social_1:0,social_2:0,social_3:0,
+  social_4:0,social_5:0,social_6:0,social_7:0,
+  standart:0,large:0,incomplete:0,
+  parent:0,hostel:0,relative:0,private:0,
+}
+
 class GroupForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       modalVisible: false,
       current:0,
-      form: {
-        total:0,
-        sex_w:0,
-        sex_m:0,
-        standart:0,
-        large:0,
-        incomplete:0,
-        parent:0,
-        hostel:0,
-        relative:0,
-        private:0,
-      },
+      form: defState,
     };
   }
 
-  setModalVisible(modalVisible) {
-    this.setState({ modalVisible, current: 0, form: {
-      total:0,
-      sex_w:0,
-      sex_m:0,
-      standart:0,
-      large:0,
-      incomplete:0,
-      parent:0,
-      hostel:0,
-      relative:0,
-      private:0
-    } 
-  });
-  }
-
-
+  setModalVisible(modalVisible) {this.setState({ modalVisible, current: 0, form: defState })}
 
   onTotalChange = (value) => {this.props.form.setFieldsValue({total: typeof value === 'number' ? value : 0})};
   onWomenChange = (value) => {this.props.form.setFieldsValue({sex_w: typeof value === 'number' ? value : 0})};
@@ -82,6 +64,7 @@ class GroupForm extends React.Component {
           this.setState({ form: fields, current: current });
           if(current === 5) this.setModalVisible(false);
           console.log(fields);
+          console.log(this.state.form);
         }
       }
     );
@@ -339,12 +322,17 @@ class GroupForm extends React.Component {
                 required: true,
                 message: "Пожалуйста укажите название группы"
               },
+              {
+                pattern: /(^[А-я]{1,6}-[0-9]{1,3}$)/,
+                message: "Неверный формат! Пример: AC-59"
+              }
             ],
+            validateTrigger: "onBlur",
             initialValue: this.state.form.group
           })(
               <Input
               className={style.border}
-              placeholder="Группа" 
+              placeholder="Группа"
               />)
           }
           </Form.Item>
@@ -361,7 +349,12 @@ class GroupForm extends React.Component {
                 required: true,
                 message: "Пожалуйста укажите ФИО"
               },
+              {
+                pattern: /(^[А-я]{1,20} [А-я]{1,20} [А-я]{1,20}$)|(^[А-я]{1,20}-[А-я]{1,16} [А-я]{1,20} [А-я]{1,20}$)/,
+                message: "Неверный формат!"
+              }
             ],
+            validateTrigger: "onBlur",
             initialValue: this.state.form.curator
             })(
               <Input
@@ -378,6 +371,13 @@ class GroupForm extends React.Component {
               <div className={style.row}>
                 <p className={style.phone}>+375</p>
                 {getFieldDecorator('phone',{
+                  rules: [
+                    {
+                    pattern: /(^[0-9]{7,9}$)/, 
+                    message: "Введите корректный номер телефона"
+                  },
+                  ],
+                  validateTrigger: "onBlur",
                   initialValue: this.state.form.phone
                 })(
                   <InputNumber
@@ -557,6 +557,12 @@ class GroupForm extends React.Component {
               <h2>Другие сведения</h2>
               <Form.Item>
               {getFieldDecorator('more',{
+                rules: [
+                  {
+                    pattern: /(^[^]{0,1000}$)/, 
+                    message: "Максимум 1000 символов!"
+                  },
+                ],
                 initialValue: this.state.form.more
               })(
                 <TextArea 
