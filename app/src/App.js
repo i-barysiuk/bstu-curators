@@ -12,9 +12,6 @@ import NotFound from "./views/404/404";
 import DemoLine from "./components/charts/DemoLine";
 import ChartDate from "./components/charts/ChartDate";
 
-import VisitorsTemp from "./components/visitors/visitorsTemp/VisitorsTemp";
-import VisitorsHealth from "./components/visitors/visitorsHealth/VisitorsHealth";
-
 import Timeline from "./components/timeline/Timeline";
 
 import history from "./helper/history";
@@ -83,28 +80,10 @@ class App extends React.Component {
           )}
         />
         <Route
-          path="/visit"
+          path="/sandbox"
           exact
           render={props => (
-            <PageWrapper {...props} title="Наглость" component={VisitorsTemp} />
-          )}
-        />
-        <Route
-          path="/health"
-          exact
-          render={props => (
-            <PageWrapper
-              {...props}
-              title="Здоровье"
-              component={VisitorsHealth}
-            />
-          )}
-        />
-        <Route
-          path="/timeline"
-          exact
-          render={props => (
-            <PageWrapper {...props} title="Timeline" component={Timeline} />
+            <PageWrapper {...props} title="График" component={Timeline} />
           )}
         />
         <Route
