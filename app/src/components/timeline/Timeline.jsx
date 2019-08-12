@@ -110,8 +110,7 @@ class TimelineComp extends React.Component {
             <div
               className={style.timeLine}
               style={{
-                width: `${this.state.timelineWidth}`,
-                transitionDelay: "1s"
+                width: `${this.state.timelineWidth}`
               }}
             />
             <div className={style.timeMarks}>
@@ -119,6 +118,7 @@ class TimelineComp extends React.Component {
                 <Popover
                   content={popoverGet(index).body}
                   title={popoverGet(index).title}
+                  key={element.event}
                 >
                   <FontAwesomeIcon
                     icon={getClosest(index).icon}
@@ -135,9 +135,11 @@ class TimelineComp extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({
-      timelineWidth: positionGet(new Date())
-    });
+    setTimeout(() => {
+      this.setState({
+        timelineWidth: positionGet(new Date())
+      });
+    }, 3000);
   }
 }
 
