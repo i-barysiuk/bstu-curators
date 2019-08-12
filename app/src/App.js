@@ -62,7 +62,6 @@ class App extends React.Component {
             <PageWrapper {...props} component={Dashboard} Auth />
           )}
         />
-        />
         <Route
           path="*"
           exact
