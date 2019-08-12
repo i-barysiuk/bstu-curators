@@ -48,14 +48,17 @@
 
 .marker {
   display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  width: 100%;
   position: relative;
   color: green;
-  left: 97%;
 }
 
 .markerIcon {
   display: flex;
   position: relative;
+  left: 45px;
   color: rgb(202, 29, 29);
   height: 70px !important;
   width: 70px !important;
