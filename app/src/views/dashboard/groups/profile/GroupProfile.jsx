@@ -8,6 +8,10 @@ import { Row, Col } from "antd";
 import GroupParams from "../../../../components/groupParams/GroupParams";
 import HealthTemp from "../../../../components/healthTemp/HealthTemp";
 import HealthMap from "../../../../components/healthMap/HealthMap";
+
+import AveragePoint from "../../../../components/averagePoint/AveragePoint";
+import AverageMap from "../../../../components/averageMap/AverageMap";
+
 import StudentTable from "../../../../components/studentTable/StudentTable";
 
 export default props => {
@@ -37,14 +41,12 @@ export default props => {
         </Col>
       </Row>
 
-      <Row gutter={24} style={{ marginBottom: "20px" }}>
-        <Col span={8}>
-          <Card title="Наглость">123</Card>
-        </Col>
+      <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
         <Col span={16}>
-          <Card title="Здоровье" buttons={<BigButton icon={faPen} />}>
-            123
-          </Card>
+          <AverageMap />
+        </Col>
+        <Col span={8}>
+          <AveragePoint />
         </Col>
       </Row>
 

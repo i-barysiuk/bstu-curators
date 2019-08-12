@@ -58,7 +58,10 @@ class App extends React.Component {
         />
         <Route
           path="/dashboard"
-          render={props => <PageWrapper {...props} component={Dashboard} />}
+          render={props => (
+            <PageWrapper {...props} component={Dashboard} Auth />
+          )}
+        />
         />
         <Route
           path="*"
