@@ -1,0 +1,20 @@
+.curator {
+  display: flex;
+  align-items: center;
+}
+
+.curator div {
+  font-weight: 500;
+  margin-left: 15px;
+  font-size: 18px;
+}
+
+.curator div span {
+  font-weight: 100;
+  font-size: 14px;
+}
+
+.firstRow {
+  width: 100%;
+  display: flex;
+}
