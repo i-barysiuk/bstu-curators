@@ -115,7 +115,7 @@ class GroupForm extends React.Component {
     debugger;
     const {getFieldValue} = this.props.form;
     if(getFieldValue('parent') !== convert(getFieldValue('total'),getFieldValue('hostel')+getFieldValue('relative')+getFieldValue('private'))){
-      callback('Распределите всех!')
+      callback('Не все участники группы распределены')
     } else{
       callback();
     }
@@ -250,10 +250,10 @@ class GroupForm extends React.Component {
     const { getFieldDecorator, getFieldValue } = this.props.form;
     const fieldName = [ 'parent', 'hostel', 'relative', 'private' ];
     var fieldText = [ 'С родителями', 'В общежитии', 'У родственников', 'На частной квартире'];
-    var form = this.state.form;
-    var value = [form.parent,form.hostel,form.relative,form.private];
-    var change = [this.onParentChange,this.onHostelChange,this.onRelativeChange,this.onPrivateChange];
-    var calc = [
+    const form = this.state.form;
+    const value = [form.parent,form.hostel,form.relative,form.private];
+    const change = [this.onParentChange,this.onHostelChange,this.onRelativeChange,this.onPrivateChange];
+    const calc = [
       getFieldValue(fieldName[1])+getFieldValue(fieldName[2])+getFieldValue(fieldName[3]),
       getFieldValue(fieldName[0])+getFieldValue(fieldName[2])+getFieldValue(fieldName[3]),
       getFieldValue(fieldName[0])+getFieldValue(fieldName[1])+getFieldValue(fieldName[3]),
@@ -263,7 +263,6 @@ class GroupForm extends React.Component {
 
     for (let i = 0; i < 4; i++) {
       children.push(
-        <Form.Item>
         <div className={style.flex}>
         <div className={style.dynamicText}>
         <label>
@@ -271,13 +270,10 @@ class GroupForm extends React.Component {
         {fieldText[i]}
         </label>
         </div>
+        <Form.Item>
         <div className={style.row}>
             {getFieldDecorator(fieldName[i], {
               rules: [
-              {
-                required: true,
-                message: "Не все участники группы распределены"
-              },
               {validator:this.validPlace}
               ],
               initialValue: value[i],
@@ -297,8 +293,8 @@ class GroupForm extends React.Component {
                   style={{ marginLeft: 16 }}
                 />
           </div>
-          </div>
           </Form.Item>
+          </div>
           );
         }
         return children;
@@ -456,8 +452,14 @@ class GroupForm extends React.Component {
           <div>
           <h2>Из них:</h2>
           <div className={style.flex}>
-            <Form.Item label="Девушек">
-            <div className={style.row}>
+          <div className={style.dynamicText + ' ' + style.sex}>
+          <label>
+          <span className={style.red}>*</span>
+          Девушек:
+          </label>
+          </div>
+          <Form.Item>
+          <div className={style.row}>
                  {getFieldDecorator('sex_w', {
                     rules: [
                     {
@@ -485,8 +487,14 @@ class GroupForm extends React.Component {
               </Form.Item>
           </div>
           <div className={style.flex}>
-            <Form.Item label="Юношей">
-            <div className={style.row}>
+          <div className={style.dynamicText + ' ' + style.sex}>
+          <label>
+          <span className={style.red}>*</span>
+          Юношей:
+          </label>
+          </div>
+          <Form.Item>
+          <div className={style.row}>
                     {getFieldDecorator('sex_m', {
                     rules: [
                     {

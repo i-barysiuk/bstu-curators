@@ -3,17 +3,13 @@
   }
 
   h2{
-    margin-bottom: 0;
+    margin-bottom: 30px;
   }
 
   label{
     font-size: 18px !important;
     font-weight: 600;
-  }
-
-  .correction{
-    width: 100%;
-    padding-left:20px;
+    color:black;
   }
   
   .column{
@@ -73,13 +69,14 @@
     padding-bottom:25px;
   }
 
-  .dynamicText{
-    width:200px;
-    margin-right: 15px;
+  .sex{
+    width: 200px !important;
   }
 
-  .otherBox{
-    margin-left:50px;
+  .dynamicText{
+    width: 250px;
+    margin-right: 15px;
+    margin-left: 25px;
   }
 
   .border{
@@ -103,7 +100,6 @@
   }
 
   div[class="ant-row ant-form-item"]{
-    width:100%;
     margin-bottom: 15px;
   }
 
@@ -188,9 +184,6 @@
     flex-direction: column;
   }
 
-  .text{
-    width: 100%;
-  }
   .container{
     padding-right:0;
     padding-bottom:0;
@@ -227,10 +220,6 @@
       div[class="ant-steps-item-tail"]{
         display: none !important;
       }
-  }
-
-  .otherBox{
-    margin-left:25px;
   }
 }
 
