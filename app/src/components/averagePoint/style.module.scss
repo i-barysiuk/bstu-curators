@@ -24,8 +24,7 @@ $slash-rotate: 45deg;
     width: $cont-width;
     border-radius: $cont-radius;   
     justify-content: flex-start;
-    align-items: center;  
-    
+    align-items: center; 
 }
 
 .title
@@ -44,8 +43,7 @@ $slash-rotate: 45deg;
     flex-direction: row;
     justify-content: center;
     align-items: center; 
-    font-weight: $num-weight;  
-    
+    font-weight: $num-weight; 
 }
 .h 
 {
@@ -59,9 +57,7 @@ $slash-rotate: 45deg;
 {
     font-size: $num-size;
     width: 30%;
-    height: 90px;  
-   
-
+    height: 90px; 
 }
 .number2
 {
@@ -69,8 +65,4 @@ $slash-rotate: 45deg;
     width: 25%;
     height: 90px;    
     justify-content: flex-end;
-  
-   
-    
-
 }
