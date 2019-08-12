@@ -1,6 +1,4 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle, faDotCircle } from "@fortawesome/free-solid-svg-icons";
 import { Popover } from "antd";
 import style from "../timeline/style.module.scss";
 
@@ -56,7 +54,7 @@ function positionGet(eventDate) {
 function styleGet(ind) {
   //To get styles of each dot
   var shift = positionGet(data[ind].eventDate);
-  if (ind === 0) shift = 20;
+  if (ind === 0) shift = 10;
   else shift = positionGet(data[ind].eventDate);
   var style = {
     position: "absolute",
@@ -65,82 +63,19 @@ function styleGet(ind) {
   if (ind === data.length - 1)
     style = {
       position: "absolute",
-      right: 20
+      right: 10
     };
   return style;
-}
-
-function popoverGet(ind) {
-  //Setup information in each popover
-  return {
-    body: data[ind].event,
-    title: data[ind].eventDate.toString()
-  };
 }
 
 class TimelineComp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      timelineWidth: "5%",
+      timelineWidth: "0%",
+      isVisible: false,
       data: data
     };
-  }
-
-  render() {
-    return (
-      <React.Fragment>
-        <div className={style.container}>
-          <div className={style.progress}>
-            <div
-              className={style.timeLine}
-              style={{
-                width: `${this.state.timelineWidth}`
-              }}
-            >
-              <div className={style.marker}>
-                <FontAwesomeIcon
-                  icon={faDotCircle}
-                  className={style.markerIcon}
-                />
-              </div>
-            </div>
-            <div className={style.timeMarks}>
-              {this.state.data.map((element, index) =>
-                data[index].isActive ? (
-                  <Popover
-                    content={popoverGet(index).body}
-                    title={popoverGet(index).title}
-                    key={element.event}
-                    visible={true}
-                    trigger={"hover"}
-                  >
-                    <FontAwesomeIcon
-                      icon={faCircle}
-                      className={style.icon}
-                      style={styleGet(index)}
-                    />
-                  </Popover>
-                ) : (
-                  <Popover
-                    content={popoverGet(index).body}
-                    title={popoverGet(index).title}
-                    key={element.event}
-                    trigger={"hover"}
-                  >
-                    <FontAwesomeIcon
-                      icon={faCircle}
-                      className={style.icon}
-                      style={styleGet(index)}
-                    />
-                  </Popover>
-                )
-              )}
-            </div>
-          </div>
-        </div>
-      </React.Fragment>
-    );
   }
 
   componentDidMount() {
@@ -148,7 +83,53 @@ class TimelineComp extends React.Component {
       this.setState({
         timelineWidth: positionGet(new Date())
       });
-    }, 3000);
+    }, 500);
+    setTimeout(() => {
+      this.setState({
+        isVisible: true
+      });
+    }, 2500);
+  }
+
+  render() {
+    return (
+      <div className={style.container}>
+        <div
+          className={style.timeLine}
+          style={{ width: this.state.timelineWidth }}
+        >
+          <div className={style.marker} />
+        </div>
+
+        <div className={style.timeMarks}>
+          {this.state.data.map((item, index) => {
+            if (item.isActive)
+              return (
+                <Popover
+                  content={item.event}
+                  key={index}
+                  trigger="hover"
+                  placement="bottom"
+                  visible={this.state.isVisible}
+                >
+                  <div className={style.icon} style={styleGet(index)} />
+                </Popover>
+              );
+            else
+              return (
+                <Popover
+                  content={item.event}
+                  key={index}
+                  trigger="hover"
+                  placement="bottom"
+                >
+                  <div className={style.icon} style={styleGet(index)} />
+                </Popover>
+              );
+          })}
+        </div>
+      </div>
+    );
   }
 }
 
