@@ -1,13 +1,12 @@
 import React from "react";
-import Card from "../../common/card/Card";
+import Card from "../common/card/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faThermometerEmpty,
   faThermometerQuarter,
   faThermometerHalf,
   faThermometerThreeQuarters,
-  faThermometerFull,
-  faPlus
+  faThermometerFull
 } from "@fortawesome/free-solid-svg-icons";
 import style from "./style.module.scss";
 
@@ -44,30 +43,26 @@ var thermIcon = function() {
 
 export default props => {
   return (
-    <div className={style.container}>
-      <Card title="Наглость">
-        <p />
-        <div className={style.fblock}>
-          <div className={style.temp} style={inlineStyle}>
-            {temp()}
-          </div>
-          <div className={style.thermometer}>
-            <FontAwesomeIcon
-              className={style.icons}
-              icon={thermIcon()}
-              color={color()}
-              size={"3x"}
-            />
-          </div>
+    <Card title="Наглость">
+      <div className={style.fblock}>
+        <div className={style.temp} style={inlineStyle}>
+          {temp()}
         </div>
-        <p />
-        <div className={style.sblock}>
-          <div className={style.count}>
-            {respectful}/{not_respectful}/{all}
-          </div>
-          <div className={style.expl}>Уважительно/Неуважительно/Всего</div>
+        <div className={style.thermometer}>
+          <FontAwesomeIcon
+            className={style.icons}
+            icon={thermIcon()}
+            color={color()}
+            size={"3x"}
+          />
         </div>
-      </Card>
-    </div>
+      </div>
+      <div className={style.sblock}>
+        <div className={style.count}>
+          {respectful}/{not_respectful}/{all}
+        </div>
+        <div className={style.expl}>Уважительно/Неуважительно/Всего</div>
+      </div>
+    </Card>
   );
 };

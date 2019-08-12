@@ -18,8 +18,11 @@ $text-dark-color: #65696c;
 .fblock {
   display: flex;
   width: 100%;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
   flex-direction: row;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .sblock {
@@ -34,8 +37,9 @@ $text-dark-color: #65696c;
 
 .temp {
   display: flex;
-  font-size: 35px;
+  font-size: 50px;
   font-weight: bold;
+  margin-right: 15px;
 }
 
 .title {
