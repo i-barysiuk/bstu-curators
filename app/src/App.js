@@ -11,7 +11,6 @@ import NotFound from "./views/404/404";
 
 import DemoLine from "./components/charts/DemoLine" 
 import ChartDate from "./components/charts/ChartDate"
-import AveragePoints from "./components/averageGraph/AverageGraph"
 
 import history from "./helper/history";
 import Analitic from "./helper/analitics";
@@ -78,13 +77,6 @@ class App extends React.Component {
           exact
           render={props => (
             <PageWrapper {...props} title="График" component={ChartDate} />
-          )}
-        />
-         <Route
-          path="/average"
-          exact
-          render={props => (
-            <PageWrapper {...props} title="press F" component={AveragePoints} />
           )}
         />
         <Route
