@@ -8,45 +8,49 @@ let data = [
   //Dataset
   {
     event: "Fuck this shit",
-    date: new Date("December 17, 2015 03:24:00")
+    eventDate: new Date("December 17, 2015 03:24:00")
   },
   {
     event: "Really?",
-    date: new Date("June 23, 2018 03:24:00")
+    eventDate: new Date("June 23, 2018 03:24:00")
   },
   {
     event: "2007 is returned.",
-    date: new Date("January 23, 2017 03:24:00")
+    eventDate: new Date("January 23, 2017 03:24:00")
   },
   {
     event: "2010? Again?!",
-    date: new Date("January 23, 2020 03:24:00")
+    eventDate: new Date("January 23, 2020 03:24:00")
+  },
+  {
+    event: "Right now!",
+    eventDate: new Date("August 12,  2019 18:00:00")
   },
   {
     event: "...?",
-    date: new Date("July 30, 2020 03:24:00")
+    eventDate: new Date("July 30, 2020 03:24:00")
   },
   {
     event: "It is coming!",
-    date: new Date("August 20, 2021 00:00:00")
+    eventDate: new Date("August 20, 2021 00:00:00")
   }
 ];
 
-function positionGet(date) {
+function positionGet(eventDate) {
   //To get dots shift from left side
-  var fDate = data[0].date;
-  var lDate = data[data.length - 1].date;
+  var fDate = data[0].eventDate;
+  var lDate = data[data.length - 1].eventDate;
   var allSet = lDate - fDate;
-  var curDate = date - fDate;
+  var curDate = eventDate - fDate;
   var ret = (curDate / allSet) * 100;
   return ret.toString() + "%";
 }
 
 function styleGet(ind) {
   //To get styles of each dot
-  var shift = positionGet(data[ind].date);
+  var shift = positionGet(data[ind].eventDate);
   if (ind === 0) shift = 20;
-  else shift = positionGet(data[ind].date);
+  else shift = positionGet(data[ind].eventDate);
   var style = {
     position: "absolute",
     left: shift
@@ -63,7 +67,7 @@ function popoverGet(ind) {
   //Setup information in each popover
   return {
     body: data[ind].event,
-    title: data[ind].date.toString()
+    title: data[ind].eventDate.toString()
   };
 }
 
@@ -72,7 +76,8 @@ function getClosest(ind) {
   var today = new Date();
   var closest = [];
   for (var i = 0; i < data.length; i++) {
-    if (today - data[i].date < 0) closest[i] = Math.abs(today - data[i].date);
+    if (today - data[i].eventDate < 0)
+      closest[i] = Math.abs(today - data[i].eventDate);
     else closest[i] = 1e50;
   }
   var min = Math.min.apply(Math, closest);
@@ -89,69 +94,51 @@ function getClosest(ind) {
     };
 }
 
-function progressSet() {
-  var progress = document.getElementsByClassName(style.timeLine);
-  var pos = positionGet(new Date());
-  progress[0].style.width = pos;
-}
+class TimelineComp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      timelineWidth: "0%"
+    };
+  }
 
-function Timeline() {
-  return (
-    <React.Fragment>
-      <div className={style.container}>
-        <div className={style.progress}>
-          <div className={style.timeLine} style={{ transitionDelay: "0s" }} />
-          <div
-            className={style.timeMarks}
-            style={{ position: "relative", width: "100%" }}
-          >
-            <Popover content={popoverGet(0).body} title={popoverGet(0).title}>
-              <FontAwesomeIcon
-                icon={getClosest(0).icon}
-                className={getClosest(0).cName}
-                style={styleGet(0)}
-              />
-            </Popover>
-            <Popover content={popoverGet(1).body} title={popoverGet(1).title}>
-              <FontAwesomeIcon
-                icon={getClosest(1).icon}
-                className={getClosest(1).cName}
-                style={styleGet(1)}
-              />
-            </Popover>
-            <Popover content={popoverGet(2).body} title={popoverGet(2).title}>
-              <FontAwesomeIcon
-                icon={getClosest(2).icon}
-                className={getClosest(2).cName}
-                style={styleGet(2)}
-              />
-            </Popover>
-            <Popover content={popoverGet(3).body} title={popoverGet(3).title}>
-              <FontAwesomeIcon
-                icon={getClosest(3).icon}
-                className={getClosest(3).cName}
-                style={styleGet(3)}
-              />
-            </Popover>
-            <Popover content={popoverGet(4).body} title={popoverGet(4).title}>
-              <FontAwesomeIcon
-                icon={getClosest(4).icon}
-                className={getClosest(4).cName}
-                style={styleGet(4)}
-              />
-            </Popover>
-            <Popover content={popoverGet(5).body} title={popoverGet(5).title}>
-              <FontAwesomeIcon
-                icon={getClosest(5).icon}
-                className={getClosest(5).cName}
-                style={styleGet(5)}
-              />
-            </Popover>
+  render() {
+    return (
+      <React.Fragment>
+        <div className={style.container}>
+          <div className={style.progress}>
+            <div
+              className={style.timeLine}
+              style={{
+                width: `${this.state.timelineWidth}`,
+                transitionDelay: "1s"
+              }}
+            />
+            <div className={style.timeMarks}>
+              {data.map((element, index) => (
+                <Popover
+                  content={popoverGet(index).body}
+                  title={popoverGet(index).title}
+                >
+                  <FontAwesomeIcon
+                    icon={getClosest(index).icon}
+                    className={getClosest(index).cName}
+                    style={styleGet(index)}
+                  />
+                </Popover>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </React.Fragment>
-  );
+      </React.Fragment>
+    );
+  }
+
+  componentDidMount() {
+    this.setState({
+      timelineWidth: positionGet(new Date())
+    });
+  }
 }
 
-export default Timeline;
+export default TimelineComp;

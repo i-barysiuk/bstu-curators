@@ -24,7 +24,7 @@
 }
 
 .timeMarks {
-  position: absolute;
+  position: relative;
   display: flex;
   height: 100%;
   width: 100%;
@@ -39,8 +39,8 @@
 
 .icon:hover {
   color: white;
-  height: 22px !important;
-  width: 22px !important;
+  height: 21px !important;
+  width: 21px !important;
 }
 
 .activeIcon {
