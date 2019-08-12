@@ -5,6 +5,7 @@ import BigButton from "../../../../components/common/bigButton/BigButton";
 import Card from "../../../../components/common/card/Card";
 import { faPen, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { Row, Col } from "antd";
+import GroupParams from "../../../../components/groupParams/GroupParams";
 
 export default props => {
   return (
@@ -16,6 +17,14 @@ export default props => {
         <BigButton icon={faPen} />
         <BigButton icon={faEllipsisH} />
       </PageHead>
+
+      <Row gutter={24} style={{ marginBottom: "20px" }}>
+        <Col span={14}>
+          <GroupParams />
+        </Col>
+        <Col span={8} />
+      </Row>
+
       <Row gutter={24}>
         <Col span={8}>
           <Card title="Наглость">123</Card>
