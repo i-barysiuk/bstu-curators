@@ -16,7 +16,6 @@ import VisitorsTemp from "./components/visitors/visitorsTemp/VisitorsTemp";
 import VisitorsHealth from "./components/visitors/visitorsHealth/VisitorsHealth";
 
 import Timeline from "./components/timeline/Timeline";
-import ProgressBar from "./components/progressBar/ProgressBar";
 
 import history from "./helper/history";
 import Analitic from "./helper/analitics";
@@ -98,17 +97,6 @@ class App extends React.Component {
               {...props}
               title="Здоровье"
               component={VisitorsHealth}
-            />
-          )}
-        />
-        <Route
-          path="/progress"
-          exact
-          render={props => (
-            <PageWrapper
-              {...props}
-              title="ProgressBar"
-              component={ProgressBar}
             />
           )}
         />

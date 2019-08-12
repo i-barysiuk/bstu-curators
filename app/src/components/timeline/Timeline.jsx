@@ -5,6 +5,7 @@ import { Popover } from "antd";
 import style from "../timeline/style.module.scss";
 
 let data = [
+  //Dataset
   {
     event: "Fuck this shit",
     date: new Date("December 17, 2015 03:24:00")
@@ -32,6 +33,7 @@ let data = [
 ];
 
 function positionGet(date) {
+  //To get dots shift from left side
   var fDate = data[0].date;
   var lDate = data[data.length - 1].date;
   var allSet = lDate - fDate;
@@ -41,6 +43,7 @@ function positionGet(date) {
 }
 
 function styleGet(ind) {
+  //To get styles of each dot
   var shift = positionGet(data[ind].date);
   if (ind === 0) shift = 20;
   else shift = positionGet(data[ind].date);
@@ -57,6 +60,7 @@ function styleGet(ind) {
 }
 
 function popoverGet(ind) {
+  //Setup information in each popover
   return {
     body: data[ind].event,
     title: data[ind].date.toString()
@@ -64,6 +68,7 @@ function popoverGet(ind) {
 }
 
 function getClosest(ind) {
+  //To get closest future event
   var today = new Date();
   var closest = [];
   for (var i = 0; i < data.length; i++) {
@@ -84,11 +89,18 @@ function getClosest(ind) {
     };
 }
 
+function progressSet() {
+  var progress = document.getElementsByClassName(style.timeLine);
+  var pos = positionGet(new Date());
+  progress[0].style.width = pos;
+}
+
 function Timeline() {
   return (
     <React.Fragment>
       <div className={style.container}>
-        <div className={style.timeLine}>
+        <div className={style.progress}>
+          <div className={style.timeLine} style={{ transitionDelay: "0s" }} />
           <div
             className={style.timeMarks}
             style={{ position: "relative", width: "100%" }}
