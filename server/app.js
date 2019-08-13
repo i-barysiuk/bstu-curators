@@ -40,6 +40,6 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", AuthController);
 app.use("/api/users", isAuth, UserController);
-app.use("/api/groups", GroupController);
+app.use("/api/groups", isAuth, GroupController);
 
 module.exports = app;
