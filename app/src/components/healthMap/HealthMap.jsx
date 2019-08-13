@@ -3,103 +3,96 @@ import { Line } from "react-chartjs-2";
 import Card from "../common/card/Card";
 import BigButton from "../common/bigButton/BigButton";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Button, Checkbox } from "antd";
+import { Radio, Checkbox } from "antd";
+import HealthMapService from "../../services/HealthMapService";
 
-const labels = [
-  [
-    "01",
-    "02",
-    "03",
-    "04",
-    "05",
-    "06",
-    "07",
-    "08",
-    "09",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14",
-    "15",
-    "16",
-    "17",
-    "18",
-    "19",
-    "20",
-    "21",
-    "22",
-    "23",
-    "24",
-    "25",
-    "26",
-    "27",
-    "28",
-    "29",
-    "30",
-    "31"
-  ],
-  ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
-  ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
-  ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"]
-];
+var data = HealthMapService.getLooses();
+var labels = [];
+var looses = [[], [], [], []];
 
-const looses = [
-  [
-    [0, 100, 150, 130, 0, 180, 190, 400, 0, 25],
-    [100, 0, 150, 130, 202, 180, 190, 400, 300, 25],
-    [200, 921, 231, 832, 128, 532, 216, 374, 146, 635],
-    [300, 236, 2984, 9847, 4758, 3458, 2346, 5679, 2346, 883]
-  ],
-  [
-    [302, 100, 150, 300, 202, 180, 190, 400, 300, 25],
-    [302, 150, 150, 130, 202, 180, 190, 400, 300, 25],
-    [102, 921, 231, 832, 128, 532, 216, 374, 146, 635],
-    [2587, 2386, 2984, 987, 4758, 3458, 2346, 569, 2346, 8583]
-  ],
-  [
-    [302, 100, 150, 130, 202, 180, 190, 400, 300, 150],
-    [302, 300, 150, 130, 202, 180, 190, 400, 300, 25],
-    [102, 921, 2310, 832, 128, 532, 216, 374, 1460, 635],
-    [2587, 286, 2984, 9847, 4758, 3458, 2346, 569, 2346, 8583]
-  ],
-  [
-    [909, 606, 112, 2346, 2245, 326, 873, 800, 900, 850],
-    [502, 600, 450, 330, 502, 680, 490, 800, 600, 625],
-    [1102, 1921, 3310, 1832, 1128, 1532, 1216, 1374, 2460, 1635],
-    [12587, 1286, 12984, 19847, 14758, 13458, 12346, 1569, 12346, 18583]
-  ]
-];
+labels[0] = data.byDays.map(index => {
+  return index.period.split(".")[0];
+});
+labels[1] = data.byWeeks.map(index => {
+  return index.period.toString();
+});
+labels[2] = data.byMonths.map(index => {
+  return index.period.toString();
+});
+labels[3] = data.bySems.map(index => {
+  return index.period.toString();
+});
+
+looses[0][0] = data.byDays.map(index => {
+  return index.respect;
+});
+looses[0][1] = data.byDays.map(index => {
+  return index.nonrespect;
+});
+looses[0][2] = data.byDays.map(index => {
+  return index.total;
+});
+
+looses[1][0] = data.byWeeks.map(index => {
+  return index.respect;
+});
+looses[1][1] = data.byWeeks.map(index => {
+  return index.nonrespect;
+});
+looses[1][2] = data.byWeeks.map(index => {
+  return index.total;
+});
+
+looses[2][0] = data.byMonths.map(index => {
+  return index.respect;
+});
+looses[2][1] = data.byMonths.map(index => {
+  return index.nonrespect;
+});
+looses[2][2] = data.byMonths.map(index => {
+  return index.total;
+});
+
+looses[3][0] = data.bySems.map(index => {
+  return index.respect;
+});
+looses[3][1] = data.bySems.map(index => {
+  return index.nonrespect;
+});
+looses[3][2] = data.bySems.map(index => {
+  return index.total;
+});
 
 class HealthMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       choosed: null,
-      hurts: null,
       respectful: null,
       notrespectful: null,
-      all: null
+      all: true
     };
   }
 
   onChange = e => {
-    if (e.target.value === "a") this.setState({ choosed: 0 });
-    else if (e.target.value === "b") this.setState({ choosed: 1 });
-    else if (e.target.value === "c") this.setState({ choosed: 2 });
-    else this.setState({ choosed: 3 });
+    if (e.target.value === 0) this.setState({ choosed: e.target.value });
+    else if (e.target.value === 1) this.setState({ choosed: e.target.value });
+    else if (e.target.value === 2) this.setState({ choosed: e.target.value });
+    else this.setState({ choosed: e.target.value });
   };
 
   onCheck = e => {
-    if (e.target.value === "a") this.setState({ hurts: e.target.checked });
-    else if (e.target.value === "b")
-      this.setState({ respectful: e.target.checked });
-    else if (e.target.value === "c")
+    if (e.target.value === 0) this.setState({ respectful: e.target.checked });
+    else if (e.target.value === 1)
       this.setState({ notrespectful: e.target.checked });
     else this.setState({ all: e.target.checked });
   };
 
   render() {
+    console.log(this.state.choosed);
+    console.log(looses[0][1]);
+    console.log(looses[1][1]);
+    console.log(looses[2][1]);
     return (
       <Card
         title="Здоровье"
@@ -110,43 +103,38 @@ class HealthMap extends React.Component {
             dropdown
             content={
               <div>
-                <Button value="a" onClick={this.onChange}>
-                  По дням
-                </Button>
-                <Button value="b" onClick={this.onChange}>
-                  По неделям
-                </Button>
-                <Button value="c" onClick={this.onChange}>
-                  По месяцам
-                </Button>
-                <Button value="d" onClick={this.onChange}>
-                  По семестрам
-                </Button>
+                <Radio.Group onChange={this.onChange} defaultValue={0}>
+                  <Radio.Button value={0} onClick={this.onChange}>
+                    По дням
+                  </Radio.Button>
+                  <Radio.Button value={1} onClick={this.onChange}>
+                    По неделям
+                  </Radio.Button>
+                  <Radio.Button value={2} onClick={this.onChange}>
+                    По месяцам
+                  </Radio.Button>
+                  <Radio.Button value={3} onClick={this.onChange}>
+                    По семестрам
+                  </Radio.Button>
+                </Radio.Group>
                 <p />
                 <Checkbox
                   disabled={this.state.choosed === null}
-                  value="a"
-                  onChange={this.onCheck}
-                >
-                  По болезни
-                </Checkbox>
-                <Checkbox
-                  disabled={this.state.choosed === null}
-                  value="b"
+                  value={0}
                   onChange={this.onCheck}
                 >
                   По уважительной
                 </Checkbox>
                 <Checkbox
                   disabled={this.state.choosed === null}
-                  value="c"
+                  value={1}
                   onChange={this.onCheck}
                 >
                   По неуважительной
                 </Checkbox>
                 <Checkbox
                   disabled={this.state.choosed === null}
-                  value="d"
+                  value={2}
                   onChange={this.onCheck}
                 >
                   Всего
@@ -158,20 +146,9 @@ class HealthMap extends React.Component {
       >
         <Line
           data={{
-            labels: labels[this.state.choosed],
+            labels:
+              labels[this.state.choosed === null ? 1 : this.state.choosed],
             datasets: [
-              {
-                label: "По болезни",
-                showLine: this.state.hurts,
-                pointRadius: this.state.hurts,
-                pointHitRadius: 10,
-                fill: false,
-                lineTension: 0.1,
-                borderColor: "blue",
-                borderCapStyle: "butt",
-                borderJoinStyle: "miter",
-                data: looses[0][this.state.choosed]
-              },
               {
                 label: "По уважительной",
                 showLine: this.state.respectful,
@@ -182,7 +159,12 @@ class HealthMap extends React.Component {
                 borderColor: "green",
                 borderCapStyle: "butt",
                 borderJoinStyle: "miter",
-                data: looses[1][this.state.choosed]
+                data:
+                  this.state.choosed === null
+                    ? Array.from({ length: 40 }, () =>
+                        Math.floor(Math.random() * 40)
+                      )
+                    : looses[this.state.choosed][0]
               },
               {
                 label: "По неуважительной",
@@ -194,7 +176,12 @@ class HealthMap extends React.Component {
                 borderColor: "red",
                 borderCapStyle: "butt",
                 borderJoinStyle: "miter",
-                data: looses[2][this.state.choosed]
+                data:
+                  this.state.choosed === null
+                    ? Array.from({ length: 40 }, () =>
+                        Math.floor(Math.random() * 40)
+                      )
+                    : looses[this.state.choosed][1]
               },
               {
                 label: "Всего",
@@ -206,7 +193,12 @@ class HealthMap extends React.Component {
                 borderColor: "orange",
                 borderCapStyle: "butt",
                 borderJoinStyle: "miter",
-                data: looses[3][this.state.choosed]
+                data:
+                  this.state.choosed === null
+                    ? Array.from({ length: 40 }, () =>
+                        Math.floor(Math.random() * 40)
+                      )
+                    : looses[this.state.choosed][2]
               }
             ]
           }}
@@ -215,12 +207,6 @@ class HealthMap extends React.Component {
         />
       </Card>
     );
-  }
-
-  componentDidMount() {
-    this.setState({
-      choosed: this.state.choosed
-    });
   }
 }
 
