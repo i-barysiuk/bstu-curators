@@ -67,7 +67,7 @@ class Tables extends React.Component {
 const data = [
   {
     key: "1",
-    first_name: "sadasdsss`",
+    first_name: "aadasdsss`",
     last_name: "Aleks",
     f_name: "amaksimkovich",
     sex: "woman",
@@ -77,9 +77,9 @@ const data = [
   },
   {
     key: "2",
-    first_name: "jendaadaadya",
-    last_name: "Jsafokew",
-    f_name: "wmaksimkovich",
+    first_name: "bendaadaadya",
+    last_name: "bsafokew",
+    f_name: "bmaksimkovich",
     sex: "man",
     birthday: "15/20/2000",
     phone: "+375298411425",
@@ -87,9 +87,29 @@ const data = [
   },
   {
     key: "3",
-    first_name: "mam",
-    last_name: "sfsafsafasfasfasBrown",
-    f_name: "smaksimkovich",
+    first_name: "cam",
+    last_name: "cfsafsafasfasfasBrown",
+    f_name: "cmaksimkovich",
+    sex: "man",
+    birthday: "15/20/2000",
+    phone: "+375298411425",
+    email: "eawfasf@mail.ru"
+  },
+  {
+    key: "4",
+    first_name: "dam",
+    last_name: "dfsafsafasfasfasBrown",
+    f_name: "dmaksimkovich",
+    sex: "man",
+    birthday: "15/20/2000",
+    phone: "+375298411425",
+    email: "eawfasf@mail.ru"
+  },
+  {
+    key: "5",
+    first_name: "eam",
+    last_name: "efsafsafasfasfasBrown",
+    f_name: "emaksimkovich",
     sex: "man",
     birthday: "15/20/2000",
     phone: "+375298411425",
@@ -103,7 +123,10 @@ const columns = [
     ...this.getColumnSearchProps('по фамилии'),
     onFilter: (value, record) => record.last_name.indexOf(value) === 0,
     defaultSortOrder: 'descend',
-    sorter: (a, b) => a.last_name.length - b.last_name.length,
+    sorter: (a, b) =>   {
+      if(a.f_name < b.f_name) { return -1; }
+      if(a.f_name > b.f_name) { return 1; }
+      return 0;}
   },
   {
     title: "Имя",
@@ -111,13 +134,20 @@ const columns = [
     ...this.getColumnSearchProps('по имени'),
     onFilter: (value, record) => record.first_name.indexOf(value) === 0,
     defaultSortOrder: 'descend',
-    sorter: (a, b) => a.first_name.length - b.first_name.length ,
+    sorter: (a, b) =>   {
+      if(a.f_name < b.f_name) { return -1; }
+      if(a.f_name > b.f_name) { return 1; }
+      return 0;}
   },
   {
     title: "Отчетсво",
     dataIndex: "f_name",
     defaultSortOrder: 'descend',
-    sorter: (a, b) => a.f_name.length - b.f_name.length ,
+    sorter: (a, b) => 
+   {
+    if(a.f_name < b.f_name) { return -1; }
+    if(a.f_name > b.f_name) { return 1; }
+    return 0;}
   },
   {
     title: "Пол",
