@@ -49,7 +49,7 @@ module.exports = {
           {
             type: Sequelize.BOOLEAN,
             allowNull: true,
-            defaultValue: 1
+            defaultValue: false
           },
           { transaction: t }
         ),
