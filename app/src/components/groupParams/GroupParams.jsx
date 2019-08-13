@@ -8,7 +8,49 @@ import { Pie } from "react-chartjs-2";
 
 const { Panel } = Collapse;
 
-export default props => {
+const getDate = (ids, data) => {
+  return data ? ids.map(id => data[id]) : [];
+};
+
+const config = [
+  {
+    label: "gender",
+    labels: ["Юноши", "Девушки"],
+    labelsIds: ["men", "women"],
+    backgroundColor: ["#00BFFF", "pink"],
+    text: "Гендерный состав"
+  },
+  {
+    label: "community",
+    labels: ["БРСМ", "ПРОФКОМ", "Белая русь", "Прочая"],
+    labelsIds: ["brsm", "profkom", "whiterus", "other"],
+    backgroundColor: ["red", "blue", "yellow", "green"],
+    text: "Общественные организации"
+  },
+  {
+    label: "family",
+    labels: ["Полная", "Не полная", "Многодетные", "Сироты"],
+    labelsIds: ["full", "notfull", "manychild", "orphan"],
+    backgroundColor: ["red", "blue", "yellow", "green"],
+    text: "Состав семьи"
+  },
+  {
+    label: "geography",
+    labels: ["Местный", "Иногородний", "Иностранный"],
+    labelsIds: ["local", "nonresident", "foreign"],
+    backgroundColor: ["red", "blue", "yellow"],
+    text: "География"
+  },
+  {
+    label: "living",
+    labels: ["Родители", "Родственники", "Самостоятельно", "Общежитие"],
+    labelsIds: ["parents", "relatives", "independent", "hostel"],
+    backgroundColor: ["red", "blue", "yellow", "green"],
+    text: "Проживание"
+  }
+];
+
+export default ({ data }) => {
   return (
     <Card
       title="Характеристика"
@@ -23,140 +65,33 @@ export default props => {
       </div>
 
       <div className={style.firstRow}>
-        <div style={{ width: "50%" }}>
-          <Pie
-            data={{
-              labels: ["Юноши", "Девушки"],
+        {data.gender &&
+          config.map(element => (
+            <div style={{ width: "50%" }} key={element.label}>
+              <Pie
+                data={{
+                  labels: element.labels,
 
-              datasets: [
-                {
-                  data: [80, 20],
-                  backgroundColor: ["#00BFFF", "pink"]
-                }
-              ]
-            }}
-            options={{
-              title: {
-                display: true,
-                text: "Гендерный состав",
-                fontSize: 14
-              },
-              legend: {
-                display: false
-              }
-            }}
-          />
-        </div>
-        <div style={{ width: "50%" }}>
-          <Pie
-            data={{
-              labels: ["БРСМ", "ПРОФКОМ", "Белая русь", "Прочая"],
-
-              datasets: [
-                {
-                  label: "Поинты",
-                  data: [80, 20, 30, 25],
-                  backgroundColor: ["red", "blue", "yellow", "green"]
-                }
-              ]
-            }}
-            options={{
-              title: {
-                display: true,
-                text: "Общественные организации",
-                fontSize: 14
-              },
-              legend: {
-                display: false
-              }
-            }}
-          />
-        </div>
-      </div>
-      <div className={style.firstRow}>
-        <div style={{ width: "33%" }}>
-          <Pie
-            data={{
-              labels: ["Полная", "Не полная", "Многодетные", "Сироты"],
-
-              datasets: [
-                {
-                  label: "Поинты",
-                  data: [60, 30, 15, 5],
-                  backgroundColor: ["red", "blue", "yellow", "green"]
-                }
-              ]
-            }}
-            options={{
-              title: {
-                display: true,
-                position: "bottom",
-                text: "Состав семьи",
-                fontSize: 12
-              },
-              legend: {
-                display: false
-              }
-            }}
-          />
-        </div>
-        <div style={{ width: "33%" }}>
-          <Pie
-            data={{
-              labels: ["Местный", "Иногородний", "Иностранный"],
-
-              datasets: [
-                {
-                  label: "Поинты",
-                  data: [80, 20, 30],
-                  backgroundColor: ["red", "blue", "yellow", "green"]
-                }
-              ]
-            }}
-            options={{
-              title: {
-                display: true,
-                position: "bottom",
-                text: "География",
-                fontSize: 12
-              },
-              legend: {
-                display: false
-              }
-            }}
-          />
-        </div>
-        <div style={{ width: "33%" }}>
-          <Pie
-            data={{
-              labels: [
-                "Родители",
-                "Родственники",
-                "Самостоятельно",
-                "Общежитие"
-              ],
-
-              datasets: [
-                {
-                  label: "Поинты",
-                  data: [20, 60, 10, 55],
-                  backgroundColor: ["red", "blue", "yellow", "green"]
-                }
-              ]
-            }}
-            options={{
-              title: {
-                display: true,
-                position: "bottom",
-                text: "Проживание",
-                fontSize: 12
-              },
-              legend: {
-                display: false
-              }
-            }}
-          />
-        </div>
+                  datasets: [
+                    {
+                      data: getDate(element.labelsIds, data[element.label]),
+                      backgroundColor: element.backgroundColor
+                    }
+                  ]
+                }}
+                options={{
+                  title: {
+                    display: true,
+                    text: element.text,
+                    fontSize: 14
+                  },
+                  legend: {
+                    display: false
+                  }
+                }}
+              />
+            </div>
+          ))}
       </div>
 
       <Collapse bordered={false}>
@@ -164,7 +99,7 @@ export default props => {
           123
         </Panel>
         <Panel header="Прочее" key="2">
-          456
+          {data.others}
         </Panel>
       </Collapse>
     </Card>

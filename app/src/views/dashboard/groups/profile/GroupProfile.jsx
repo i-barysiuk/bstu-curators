@@ -33,6 +33,15 @@ export default class GroupProfile extends React.Component {
   };
 
   render() {
+    const {
+      gender,
+      community,
+      family,
+      geography,
+      living,
+      social,
+      others
+    } = this.props.group;
     return (
       <div className={style.container}>
         <PageHead
@@ -51,7 +60,17 @@ export default class GroupProfile extends React.Component {
 
         <Row gutter={24} style={{ marginBottom: "20px" }}>
           <Col span={14}>
-            <GroupParams />
+            <GroupParams
+              data={{
+                gender,
+                community,
+                family,
+                geography,
+                living,
+                social,
+                others
+              }}
+            />
           </Col>
           <Col span={8} />
         </Row>
