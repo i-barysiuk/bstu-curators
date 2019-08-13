@@ -16,53 +16,55 @@ import AverageMap from "../../../../components/averageMap/AverageMap";
 
 import StudentTable from "../../../../components/studentTable/StudentTable";
 
-export default props => {
-  return (
-    <div className={style.container}>
-      <PageHead
-        title="Мелиарация и водное хозяйство - 146"
-        subtitle="Факультет Инженерных Сетей и Экологии / Кафедра природоохранной деятельности"
-      >
-        <BigButton icon={faPen} />
-        <BigButton icon={faEllipsisH} />
-      </PageHead>
+export default class GroupProfile extends React.Component {
+  render() {
+    return (
+      <div className={style.container}>
+        <PageHead
+          title="Мелиарация и водное хозяйство - 146"
+          subtitle="Факультет Инженерных Сетей и Экологии / Кафедра природоохранной деятельности"
+        >
+          <BigButton icon={faPen} />
+          <BigButton icon={faEllipsisH} />
+        </PageHead>
 
-      <Row>
-        <Col>
-          <Timeline />
-        </Col>
-      </Row>
+        <Row>
+          <Col>
+            <Timeline />
+          </Col>
+        </Row>
 
-      <Row gutter={24} style={{ marginBottom: "20px" }}>
-        <Col span={14}>
-          <GroupParams />
-        </Col>
-        <Col span={8} />
-      </Row>
+        <Row gutter={24} style={{ marginBottom: "20px" }}>
+          <Col span={14}>
+            <GroupParams />
+          </Col>
+          <Col span={8} />
+        </Row>
 
-      <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
-        <Col span={8}>
-          <HealthTemp />
-        </Col>
-        <Col span={16}>
-          <HealthMap />
-        </Col>
-      </Row>
+        <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
+          <Col span={8}>
+            <HealthTemp />
+          </Col>
+          <Col span={16}>
+            <HealthMap />
+          </Col>
+        </Row>
 
-      <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
-        <Col span={16}>
-          <AverageMap />
-        </Col>
-        <Col span={8}>
-          <AveragePoint />
-        </Col>
-      </Row>
+        <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
+          <Col span={16}>
+            <AverageMap />
+          </Col>
+          <Col span={8}>
+            <AveragePoint />
+          </Col>
+        </Row>
 
-      <Row style={{ marginBottom: "20px" }}>
-        <Col>
-          <StudentTable />
-        </Col>
-      </Row>
-    </div>
-  );
-};
+        <Row style={{ marginBottom: "20px" }}>
+          <Col>
+            <StudentTable />
+          </Col>
+        </Row>
+      </div>
+    );
+  }
+}

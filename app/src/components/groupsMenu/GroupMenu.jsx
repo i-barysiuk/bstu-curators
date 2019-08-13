@@ -44,7 +44,10 @@ class GroupCard extends React.Component {
           </Collapse>
 
           <Collapse icon={faUniversity} title="Все группы">
-            <GroupsCard group={"МС-4"} course={"2"} />
+            {this.props.groups.map(group => (
+              <GroupsCard group={group.name} course={"2"} />
+            ))}
+            {/* <GroupsCard group={"МС-4"} course={"2"} />
             <GroupsCard group={"МС-4"} course={"2"} />
             <GroupsCard group={"МС-4"} course={"2"} />
             <GroupsCard group={"МС-4"} course={"2"} />
@@ -53,7 +56,7 @@ class GroupCard extends React.Component {
               <GroupsCard group={"МС-4"} course={"2"} />
               <GroupsCard group={"МС-4"} course={"2"} />
               <GroupsCard group={"МС-4"} course={"2"} />
-            </Collapse>
+            </Collapse> */}
           </Collapse>
 
           <Collapse icon={faArchive} title="Архив">
