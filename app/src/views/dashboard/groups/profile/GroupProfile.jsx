@@ -5,6 +5,8 @@ import BigButton from "../../../../components/common/bigButton/BigButton";
 import Card from "../../../../components/common/card/Card";
 import { faPen, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { Row, Col } from "antd";
+
+import Timeline from "../../../../components/timeline/Timeline";
 import GroupParams from "../../../../components/groupParams/GroupParams";
 import HealthTemp from "../../../../components/healthTemp/HealthTemp";
 import HealthMap from "../../../../components/healthMap/HealthMap";
@@ -24,6 +26,12 @@ export default props => {
         <BigButton icon={faPen} />
         <BigButton icon={faEllipsisH} />
       </PageHead>
+
+      <Row>
+        <Col>
+          <Timeline />
+        </Col>
+      </Row>
 
       <Row gutter={24} style={{ marginBottom: "20px" }}>
         <Col span={14}>

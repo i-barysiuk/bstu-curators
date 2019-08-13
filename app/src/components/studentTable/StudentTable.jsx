@@ -1,8 +1,10 @@
 import React from "react";
 import Card from "../common/card/Card";
 import BigButton from "../common/bigButton/BigButton";
-import { Table, Button, Popover, Icon } from "antd";
-import { faPlus, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Table, Button, Popover, } from "antd";
+import style from "./style.module.scss";
+import { faPlus, faEllipsisH, faFemale, faMale} from "@fortawesome/free-solid-svg-icons";
 
 const data = [
   {
@@ -10,17 +12,17 @@ const data = [
     first_name: "sadasd`",
     last_name: "Brown",
     f_name: "maksimkovich",
-    sex: "man",
+    sex: "woman",
     birthday: "15/20/2000",
     phone: "+375298411425",
-    email: "eawfasf@mail.ru"
+    email: "sssssssss@mail.ru"
   },
   {
     key: "2",
     first_name: "maksim",
     last_name: "Brown",
     f_name: "maksimkovich",
-    sex: "woman",
+    sex: "man",
     birthday: "15/20/2000",
     phone: "+375298411425",
     email: "eawfasf@mail.ru"
@@ -44,10 +46,13 @@ const columns = [
     dataIndex: "sex",
     align: "center",
     render: data => {
-      if (data.sex === "woman") {
-        return <Icon type="woman" />;
+      if (data === "woman") {
+        return (
+        <FontAwesomeIcon icon={faFemale} 
+        className={style.woman}/>);
       } else {
-        return <Icon type="man" />;
+        return <FontAwesomeIcon icon={faMale}
+        className={style.man} />   ;
       }
     }
   },
