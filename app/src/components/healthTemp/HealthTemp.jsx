@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "../common/card/Card";
+import Color from "../common/color/Color";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faThermometerEmpty,
@@ -10,22 +11,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import style from "./style.module.scss";
 
-var not_respectful = 308;
-var respectful = 200;
+var not_respectful = 10;
+var respectful = 30;
 var all = 1000;
 var percent = (not_respectful + respectful * 0.5) / all;
-
-var color = function() {
-  var ret = "green";
-  if (percent <= 1) ret = "red";
-  if (percent <= 0.66) ret = "orange";
-  if (percent <= 0.33) ret = "green";
-  return ret;
-};
-
-var inlineStyle = {
-  color: color()
-};
 
 var temp = function() {
   return (percent * 4.4 + 36.6).toFixed(1);
@@ -44,19 +33,18 @@ var thermIcon = function() {
 export default props => {
   return (
     <Card title="Наглость">
-      <div className={style.fblock}>
-        <div className={style.temp} style={inlineStyle}>
-          {temp()}
+      <Color percentage={1 - percent} hue0={0} hue1={120}>
+        <div className={style.fblock}>
+          <div className={style.temp}>{temp()}</div>
+          <div className={style.thermometer}>
+            <FontAwesomeIcon
+              className={style.icons}
+              icon={thermIcon()}
+              size={"3x"}
+            />
+          </div>
         </div>
-        <div className={style.thermometer}>
-          <FontAwesomeIcon
-            className={style.icons}
-            icon={thermIcon()}
-            color={color()}
-            size={"3x"}
-          />
-        </div>
-      </div>
+      </Color>
       <div className={style.sblock}>
         <div className={style.count}>
           {respectful}/{not_respectful}/{all}

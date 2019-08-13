@@ -1,9 +1,9 @@
-// conteiner 
-$cont-width: 210px;
-$cont-height: 210px;
+// conteiner
+$cont-width: 200px;
+$cont-height: 200px;
 $cont-padding: 10px;
-$cont-radius: 7px;
-// title 
+$cont-radius: 20px;
+// title
 $tit-size: 20px;
 // font num
 $num-weight: 900;
@@ -12,59 +12,53 @@ $num-size: 35px;
 $slash-height: 100px;
 $slash-rotate: 45deg;
 
-.conteiner, .title, .number2
-{
-    display: flex;
-    flex-direction: column;  
+.conteiner,
+.title,
+.number2 {
+  display: flex;
+  flex-direction: column;
 }
-.conteiner
-{  
-    margin: 50px;
-    padding: $cont-padding;
-    height: $cont-height;
-    width: $cont-width;
-    border-radius: $cont-radius;   
-    justify-content: flex-start;
-    align-items: center; 
+.conteiner {
+  padding: $cont-padding;
+  height: $cont-height;
+  width: $cont-width;
+  border-radius: $cont-radius;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-.title
-{
-    height: 20%;
-    width: 100%;   
-    justify-content: center;
-    align-items: flex-start; 
-    font-size: $tit-size;
-    font-weight: 500;
+.title {
+  height: 20%;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  font-size: $tit-size;
 }
-.body
-{
-    height: 80%;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center; 
-    font-weight: $num-weight; 
+.body {
+  height: 80%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-weight: $num-weight;
 }
-.h 
-{
-    height: $slash-height;
-    -webkit-transform: rotate($slash-rotate);      
-    -moz-transform: rotate($slash-rotate);       
-    -ms-transform: rotate($slash-rotate);        
-    -o-transform: rotate($slash-rotate);
+.h {
+  height: $slash-height;
+  -webkit-transform: rotate($slash-rotate);
+  -moz-transform: rotate($slash-rotate);
+  -ms-transform: rotate($slash-rotate);
+  -o-transform: rotate($slash-rotate);
 }
-.number1
-{
-    font-size: $num-size;
-    width: 30%;
-    height: 90px; 
+.number1 {
+  font-size: $num-size;
+  width: 30%;
+  height: 90px;
+  -webkit-text-stroke: 1px rgba($color: #000000, $alpha: 0.3);
 }
-.number2
-{
-    font-size: $num-size;
-    width: 25%;
-    height: 90px;    
-    justify-content: flex-end;
+.number2 {
+  font-size: $num-size;
+  width: 25%;
+  height: 90px;
+  justify-content: flex-end;
 }
