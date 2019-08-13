@@ -17,7 +17,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      faculty: {
+      course: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      group: {
         type: Sequelize.ENUM(
           "ФЭИС",
           "ЭФ ",
@@ -29,7 +33,19 @@ module.exports = {
         ),
         allowNull: false
       },
+      faculty: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      cathedra: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       name: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      full_name: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -70,6 +86,18 @@ module.exports = {
       others: {
         type: Sequelize.TEXT,
         allowNull: true
+      },
+      status: {
+        type: Sequelize.ENUM(
+          "Active",
+          "Arhive"
+        ),
+        allowNull: false
+      },
+      studyProcess: {
+        type: Sequelize.JSON,
+        allowNull: false,
+        defaultValue: {}
       }
     });
   },
