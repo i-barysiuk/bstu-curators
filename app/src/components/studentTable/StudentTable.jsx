@@ -6,6 +6,39 @@ import { Table, Button, Popover, Icon, Input } from "antd";
 import style from "./style.module.scss";
 import { faPlus, faEllipsisH, faFemale, faMale} from "@fortawesome/free-solid-svg-icons";
 
+const data = [
+  {
+    key: "1",
+    first_name: "aadasdsss`",
+    last_name: "Aleks",
+    f_name: "amaksimkovich",
+    sex: "woman",
+    birthday: "15.20.2000",
+    phone: "+375298411252",
+    email: "sssssssss@mail.ru",
+  },
+  {
+    key: "2",
+    first_name: "bendaadaadya",
+    last_name: "bsafokew",
+    f_name: "bmaksimkovich",
+    sex: "man",
+    birthday: "15.20.2000",
+    phone: "+375298411478",
+    email: "eawfasf@mail.ru",
+  },
+  {
+    key: "3",
+    first_name: "cam",
+    last_name: "cfsafsafasfasfasBrown",
+    f_name: "cmaksimkovich",
+    sex: "man",
+    birthday: "15.20.2000",
+    phone: "+375298411490",
+    email: "eawfasf@mail.ru",
+  },
+];
+
 class Tables extends React.Component {
   state = {
     searchText: '',
@@ -64,45 +97,16 @@ class Tables extends React.Component {
   };
 
   render() {
-const data = [
-  {
-    key: "1",
-    first_name: "aadasdsss`",
-    last_name: "Aleks",
-    f_name: "amaksimkovich",
-    sex: "woman",
-    birthday: "15/20/2000",
-    phone: "+375298411425",
-    email: "sssssssss@mail.ru"
-  },
-  {
-    key: "2",
-    first_name: "bendaadaadya",
-    last_name: "bsafokew",
-    f_name: "bmaksimkovich",
-    sex: "man",
-    birthday: "15/20/2000",
-    phone: "+375298411425",
-    email: "eawfasf@mail.ru"
-  },
-  {
-    key: "3",
-    first_name: "cam",
-    last_name: "cfsafsafasfasfasBrown",
-    f_name: "cmaksimkovich",
-    sex: "man",
-    birthday: "15/20/2000",
-    phone: "+375298411425",
-    email: "eawfasf@mail.ru"
-  },
-];
+
 const columns = [
   {
     title: "Фамилия",
     dataIndex: "last_name",
     ...this.getColumnSearchProps('по фамилии'),
-    onFilter: (value, record) => record.last_name.indexOf(value) === 0,
-    defaultSortOrder: 'descend',
+    onFilter: (value, record) => record.last_name
+     .toString()
+    .toLowerCase()
+    .includes(value.toLowerCase()),
     sorter: (a, b) =>   {
       if(a.last_name < b.last_name) { return -1; }
       if(a.last_name > b.last_name) { return 1; }
@@ -112,8 +116,10 @@ const columns = [
     title: "Имя",
     dataIndex: "first_name",
     ...this.getColumnSearchProps('по имени'),
-    onFilter: (value, record) => record.first_name.indexOf(value) === 0,
-    defaultSortOrder: 'descend',
+    onFilter: (value, record) => record.first_name
+    .toString()
+   .toLowerCase()
+   .includes(value.toLowerCase()),
     sorter: (a, b) =>   {
       if(a.first_name < b.first_name) { return -1; }
       if(a.first_name > b.first_name) { return 1; }
@@ -122,7 +128,6 @@ const columns = [
   {
     title: "Отчетсво",
     dataIndex: "f_name",
-    defaultSortOrder: 'descend',
     sorter: (a, b) => 
    {
     if(a.f_name < b.f_name) { return -1; }
@@ -148,13 +153,18 @@ const columns = [
   },
   {
     title: "Дата рождения",
-    dataIndex: "birthday"
+    dataIndex: "birthday",
+    align: "center",
   },
   {
     title: "Телефон",
     dataIndex: "phone",
+    align: "center",
     ...this.getColumnSearchProps('по телефону'),
-    onFilter: (value, record) => record.phone.indexOf(value) === 0,
+    onFilter: (value, record) => record.phone
+    .toString()
+   .toLowerCase()
+   .includes(value.toLowerCase()),
   },
   {
     title: "Электронная почта",
