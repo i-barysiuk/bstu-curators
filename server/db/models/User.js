@@ -72,6 +72,16 @@ var User = sequelize.define(
     title: {
       type: Sequelize.STRING,
       allowNull: true
+    },
+    favoriteGroups: {
+      type: Sequelize.JSON,
+      defaultValue: [],
+      allowNull: false
+    },
+    favoriteStudents: {
+      type: Sequelize.JSON,
+      defaultValue: [],
+      allowNull: false
     }
   },
   {

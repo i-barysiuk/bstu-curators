@@ -1,4 +1,5 @@
 const Group = require("../db/models/Group");
+const _ = require("lodash");
 
 class GroupService {
   get(id) {
@@ -6,6 +7,39 @@ class GroupService {
       where: {
         id
       }
+    });
+  }
+
+  getActive() {
+    return new Promise((resolve, reject) => {
+      Group.findAll({
+        attributes: ["id", "name", "course", "group"],
+        where: { isActive: true }
+      })
+        .then(data => {
+          resolve(_.groupBy(data, "group"));
+        })
+        .catch(err => reject(err));
+    });
+  }
+
+  getArchive() {
+    return new Promise((resolve, reject) => {
+      Group.findAll({
+        attributes: ["id", "name", "course", "group"],
+        where: { isActive: false }
+      })
+        .then(data => {
+          resolve(_.groupBy(data, "group"));
+        })
+        .catch(err => reject(err));
+    });
+  }
+
+  select(where) {
+    return Group.findAll({
+      attributes: ["id", "name", "course", "group"],
+      where: where
     });
   }
 
@@ -20,7 +54,12 @@ class GroupService {
       },
       defaults: {
         curatorId: body.curatorId,
-        faculty: body.faculty,
+        group: body.group,
+        fullName: body.fullName,
+        course: body.course,
+        department: body.department,
+        cathedra: body.cathedra,
+        studyProcess: body.studyProcess,
         totalStudents: body.totalStudents,
         gender: body.gender,
         community: body.community,
