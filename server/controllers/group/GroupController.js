@@ -2,9 +2,31 @@ const express = require("express");
 const router = express.Router();
 
 const GroupService = require("../../services/GroupService");
+const UserService = require("../../services/UserService");
 
 router.get("/", (req, res) => {
-  GroupService.getAll()
+  UserService.get(req.user.id)
+    .then(user => {
+      return Promise.all([
+        GroupService.select({
+          id: user.favoriteGroups,
+          isActive: true
+        }),
+        GroupService.select({ curatorId: user.id, isActive: true })
+      ]);
+    })
+    .then(data => res.status(200).json({ favorite: data[0], my: data[1] }))
+    .catch(err => res.status(500).json(err));
+});
+
+router.get("/all", (req, res) => {
+  GroupService.getActive()
+    .then(data => res.status(200).json(data))
+    .catch(err => res.status(500).json(err));
+});
+
+router.get("/archive", (req, res) => {
+  GroupService.getArchive()
     .then(data => res.status(200).json(data))
     .catch(err => res.status(500).json(err));
 });
