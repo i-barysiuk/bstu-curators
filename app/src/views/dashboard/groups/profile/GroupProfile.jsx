@@ -2,9 +2,10 @@ import React from "react";
 import style from "./style.module.scss";
 import PageHead from "../../../../components/pageHead/PageHead";
 import BigButton from "../../../../components/common/bigButton/BigButton";
-import Card from "../../../../components/common/card/Card";
 import { faPen, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { Row, Col } from "antd";
+
+import Timeline from "../../../../components/timeline/Timeline";
 import GroupParams from "../../../../components/groupParams/GroupParams";
 import HealthTemp from "../../../../components/healthTemp/HealthTemp";
 import HealthMap from "../../../../components/healthMap/HealthMap";
@@ -13,6 +14,8 @@ import AveragePoint from "../../../../components/averagePoint/AveragePoint";
 import AverageMap from "../../../../components/averageMap/AverageMap";
 
 import StudentTable from "../../../../components/studentTable/StudentTable";
+
+import GroupModal from "../../../../components/groupModal/GroupModal";
 
 export default props => {
   return (
@@ -24,6 +27,12 @@ export default props => {
         <BigButton icon={faPen} />
         <BigButton icon={faEllipsisH} />
       </PageHead>
+
+      <Row>
+        <Col>
+          <Timeline />
+        </Col>
+      </Row>
 
       <Row gutter={24} style={{ marginBottom: "20px" }}>
         <Col span={14}>

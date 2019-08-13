@@ -5,7 +5,8 @@ import Request from "../../components/request/Request";
 import NotFound from "../404/404";
 import PageWrapper from "../../containers/pageWrapper/PageWrapper";
 import GroupLayout from "./groups";
-import GroupModal from "../../components/groupModal/Group";
+
+import GroupModal from "../../components/groupModal/GroupModal";
 
 class Dashboard extends React.Component {
   render() {
@@ -42,6 +43,7 @@ class Dashboard extends React.Component {
             )}
           />
         </Switch>
+        <GroupModal />
       </div>
     );
   }
