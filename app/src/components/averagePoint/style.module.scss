@@ -1,8 +1,8 @@
 // conteiner 
-$cont-width: 200px;
-$cont-height: 200px;
+$cont-width: 210px;
+$cont-height: 210px;
 $cont-padding: 10px;
-$cont-radius: 20px;
+$cont-radius: 7px;
 // title 
 $tit-size: 20px;
 // font num
@@ -18,13 +18,15 @@ $slash-rotate: 45deg;
     flex-direction: column;  
 }
 .conteiner
-{
+{  
+    margin: 50px;
     padding: $cont-padding;
     height: $cont-height;
     width: $cont-width;
     border-radius: $cont-radius;   
     justify-content: flex-start;
     align-items: center;  
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.4);
     
 }
 
@@ -35,6 +37,7 @@ $slash-rotate: 45deg;
     justify-content: center;
     align-items: flex-start; 
     font-size: $tit-size;
+    font-weight: 500;
 }
 .body
 {
