@@ -51,6 +51,16 @@ var User = sequelize.define(
       defaultValue: "user",
       allowNull: false
     },
+    favoriteGroup: {
+      type: Sequelize.JSON,
+      defaultValue: {},
+      allowNull: false
+    },
+    favoriteStudents: {
+      type: Sequelize.JSON,
+      defaultValue: {},
+      allowNull: false
+    },
     isActive: {
       type: Sequelize.BOOLEAN,
       defaultValue: false,
