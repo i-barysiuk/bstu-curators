@@ -21,30 +21,30 @@ import {
 
 export default props=>
 {
-  var icons = [
-    {id: 'Аттестация'                      , value: faDraftingCompass  },
-    {id: 'Каникулы'                        , value: faUmbrellaBeach    },
-    {id: 'Экзамен'                         , value: faMeteor           },
-    {id: 'Зачисление студента'             , value: faUserPlus         },
-    {id: 'Отчисление студента'             , value: faUserTimes        },
-    {id: 'Культурно-массовое мероприятие'  , value: faTheaterMasks     },
-    {id: 'Донорство'                       , value: faHeartbeat        },
-    {id: 'Спортивное мероприятие'          , value: faTableTennis      },
-    {id: 'Субботник'                       , value: faSnowplow         },
-    {id: 'Отработка'                       , value: faChalkboardTeacher},
-    {id: 'Пересдача экзамена'              , value: faAtlas            },
-    {id: 'Линейка'                         , value: faChild            },
-    {id: 'Собрание'                        , value: faUsers            },
-    {id: 'Кураторский час'                 , value: faSchool           },
-    {id: 'Военный праздник'                , value: faMeteor           },
-   ];
-  var icon = icons.find(item => item.id === props.event);
+  const icons = {
+    'Аттестация'                    : faDraftingCompass ,
+    'Каникулы'                      : faUmbrellaBeach   ,
+    'Экзамен'                       : faMeteor          ,
+    'Зачисление студента'           : faUserPlus        ,
+    'Отчисление студента'           : faUserTimes       ,
+    'Культурно-массовое мероприятие': faTheaterMasks    ,
+    'Донорство'                     : faHeartbeat       ,
+    'Спортивное мероприятие'        : faTableTennis     ,
+    'Субботник'                     : faSnowplow        ,
+    'Отработка'                     : faChalkboardTeacher,
+    'Пересдача экзамена'            : faAtlas           ,
+    'Линейка'                       : faChild           ,
+    'Собрание'                      : faUsers           ,
+    'Кураторский час'               : faSchool          ,
+    'Военный праздник'              : faMeteor          ,
+  };
+  var icon = icons[props.event];
   return ( 
     <div className={style.container} 
         onClick={() => {
         if (props.onClick) props.onClick();
         }}>
-        <FontAwesomeIcon icon={icon.value} className={style.icon} />
+        <FontAwesomeIcon icon={icon} className={style.icon} />
         <div className={style.time}>
           <div className={style.clock}>{props.time.hours}:{props.time.mins}</div>
           <div className={style.day}>{props.time.day}  {props.time.month}</div>
@@ -57,3 +57,5 @@ export default props=>
     </div>
    );
 }
+
+
