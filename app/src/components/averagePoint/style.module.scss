@@ -1,48 +1,23 @@
 // conteiner
-$cont-width: 200px;
-$cont-height: 200px;
+$cont-width: 350px;
 $cont-padding: 10px;
-$cont-radius: 20px;
-// title
-$tit-size: 20px;
 // font num
-$num-weight: 900;
-$num-size: 35px;
+$num-weight: 700;
+$num-size: 50px;
 // slash
-$slash-height: 100px;
+$slash-height: 150px;
 $slash-rotate: 45deg;
 
-.conteiner,
-.title,
-.number2 {
-  display: flex;
-  flex-direction: column;
-}
-.conteiner {
-  padding: $cont-padding;
-  height: $cont-height;
+.conteiner{
+  height: 100%;
   width: $cont-width;
-  border-radius: $cont-radius;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.title {
-  height: 20%;
-  width: 100%;
-  justify-content: center;
-  align-items: flex-start;
-  font-size: $tit-size;
-}
-.body {
-  height: 80%;
-  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  font-weight: $num-weight;
+  font-weight: $num-weight;  
 }
+
 .h {
   height: $slash-height;
   -webkit-transform: rotate($slash-rotate);
@@ -50,15 +25,37 @@ $slash-rotate: 45deg;
   -ms-transform: rotate($slash-rotate);
   -o-transform: rotate($slash-rotate);
 }
+
 .number1 {
   font-size: $num-size;
+  display: flex;
+  flex-direction: row;
   width: 30%;
-  height: 90px;
-  -webkit-text-stroke: 1px rgba($color: #000000, $alpha: 0.3);
+  height: 150px;
+  align-items: flex-start;
+  -webkit-text-stroke: 1px rgba($color: rgba(0, 0, 0, 0.4), $alpha: 0.3);   
 }
+
 .number2 {
-  font-size: $num-size;
-  width: 25%;
-  height: 90px;
-  justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
+    font-size: $num-size;
+    width: 30%;
+    height: 150px;
+    justify-content: flex-end;      
+}
+
+.integer
+{
+    font-size: $num-size;     
+}
+
+.float
+{
+    height: 70px;
+    font-size: 35px;
+    display: flex;
+    flex-direction: column;
+    align-content: center; 
+    justify-content: flex-end; 
 }
