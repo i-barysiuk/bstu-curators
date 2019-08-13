@@ -7,24 +7,18 @@ import GroupsMenu from "../../../components/groupsMenu/GroupMenu";
 import Groups from "./home/Grops";
 import GroupProfile from "./profile/GroupProfile";
 import GroupStudentsList from "./studentsList/GroupStudentsList";
-import { fetchGroups } from "../../../redux/actions/groups";
+import { fetchGroups, fetchActiveGroup } from "../../../redux/actions/groups";
 
 class GroupsLayout extends React.Component {
   componentDidMount() {
-    const {
-      history: {
-        location: { pathname }
-      }
-    } = this.props;
-    const currentGroup = pathname.replace("/dashboard/groups", "");
-    this.props.fetchGroups({ currentGroup });
-    // console.log(currentGroup);
+    this.props.fetchGroups();
   }
 
   render() {
+    const { fetchActiveGroup, groups, history } = this.props;
     return (
       <div style={{ display: "flex", height: "100%", flexGrow: 1 }}>
-        <GroupsMenu groups={this.props.groups} />
+        <GroupsMenu groups={groups} history={history} />
         <Switch>
           <Route
             exec
@@ -42,6 +36,8 @@ class GroupsLayout extends React.Component {
             render={props => (
               <PageWrapper
                 {...props}
+                fetchGroup={fetchActiveGroup}
+                group={groups.active}
                 title="Студенты"
                 component={GroupProfile}
               />
@@ -69,11 +65,12 @@ class GroupsLayout extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  groups: state.groups.all
+  groups: state.groups
 });
 
 const mapDispatchToProps = {
-  fetchGroups
+  fetchGroups,
+  fetchActiveGroup
 };
 
 export default connect(

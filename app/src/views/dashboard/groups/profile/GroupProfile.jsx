@@ -2,7 +2,7 @@ import React from "react";
 import style from "./style.module.scss";
 import PageHead from "../../../../components/pageHead/PageHead";
 import BigButton from "../../../../components/common/bigButton/BigButton";
-import Card from "../../../../components/common/card/Card";
+// import Card from "../../../../components/common/card/Card";
 import { faPen, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { Row, Col } from "antd";
 
@@ -17,6 +17,21 @@ import AverageMap from "../../../../components/averageMap/AverageMap";
 import StudentTable from "../../../../components/studentTable/StudentTable";
 
 export default class GroupProfile extends React.Component {
+  componentDidMount() {
+    this.activeGroupRequest();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+      this.activeGroupRequest();
+    }
+  }
+
+  activeGroupRequest = () => {
+    const { id } = this.props.match.params;
+    this.props.fetchGroup({ id });
+  };
+
   render() {
     return (
       <div className={style.container}>
