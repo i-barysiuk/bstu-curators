@@ -95,26 +95,6 @@ const data = [
     phone: "+375298411425",
     email: "eawfasf@mail.ru"
   },
-  {
-    key: "4",
-    first_name: "dam",
-    last_name: "dfsafsafasfasfasBrown",
-    f_name: "dmaksimkovich",
-    sex: "man",
-    birthday: "15/20/2000",
-    phone: "+375298411425",
-    email: "eawfasf@mail.ru"
-  },
-  {
-    key: "5",
-    first_name: "eam",
-    last_name: "efsafsafasfasfasBrown",
-    f_name: "emaksimkovich",
-    sex: "man",
-    birthday: "15/20/2000",
-    phone: "+375298411425",
-    email: "eawfasf@mail.ru"
-  }
 ];
 const columns = [
   {
@@ -124,8 +104,8 @@ const columns = [
     onFilter: (value, record) => record.last_name.indexOf(value) === 0,
     defaultSortOrder: 'descend',
     sorter: (a, b) =>   {
-      if(a.f_name < b.f_name) { return -1; }
-      if(a.f_name > b.f_name) { return 1; }
+      if(a.last_name < b.last_name) { return -1; }
+      if(a.last_name > b.last_name) { return 1; }
       return 0;}
   },
   {
@@ -135,8 +115,8 @@ const columns = [
     onFilter: (value, record) => record.first_name.indexOf(value) === 0,
     defaultSortOrder: 'descend',
     sorter: (a, b) =>   {
-      if(a.f_name < b.f_name) { return -1; }
-      if(a.f_name > b.f_name) { return 1; }
+      if(a.first_name < b.first_name) { return -1; }
+      if(a.first_name > b.first_name) { return 1; }
       return 0;}
   },
   {
