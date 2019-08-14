@@ -22,8 +22,6 @@ class AveragePoint extends React.Component {
     const position = newString.indexOf(".", 0);
     const integer = newString.slice(0, position);
     const float = newString.slice(position);
-    console.log(integer);
-    console.log(float);
     return (
       <Card title="Средний балл">
         <div className={style.conteiner}>
