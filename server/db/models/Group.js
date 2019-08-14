@@ -13,7 +13,7 @@ var Group = sequelize.define(
       type: Sequelize.UUID,
       allowNull: false
     },
-    faculty: {
+    group: {
       type: Sequelize.ENUM(
         "ФЭИС",
         "ЭФ ",
@@ -29,6 +29,28 @@ var Group = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false
     },
+    fullName: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    course: {
+      type: Sequelize.INTEGER,
+      allowNull: true
+    },
+    department: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    cathedra: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    isActive: {
+      type: Sequelize.BOOLEAN,
+      allowNull: true,
+      defaultValue: 1
+    },
+
     totalStudents: {
       type: Sequelize.INTEGER,
       allowNull: false
@@ -66,6 +88,11 @@ var Group = sequelize.define(
     others: {
       type: Sequelize.TEXT,
       allowNull: true
+    },
+    studyProcess: {
+      type: Sequelize.JSON,
+      allowNull: true,
+      defaultValue: {}
     }
   },
   {

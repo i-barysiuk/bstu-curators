@@ -1,0 +1,61 @@
+// conteiner
+$cont-width: 350px;
+$cont-padding: 10px;
+// font num
+$num-weight: 700;
+$num-size: 50px;
+// slash
+$slash-height: 150px;
+$slash-rotate: 45deg;
+
+.conteiner{
+  height: 100%;
+  width: $cont-width;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-weight: $num-weight;  
+}
+
+.h {
+  height: $slash-height;
+  -webkit-transform: rotate($slash-rotate);
+  -moz-transform: rotate($slash-rotate);
+  -ms-transform: rotate($slash-rotate);
+  -o-transform: rotate($slash-rotate);
+}
+
+.number1 {
+  font-size: $num-size;
+  display: flex;
+  flex-direction: row;
+  width: 30%;
+  height: 150px;
+  align-items: flex-start;
+  -webkit-text-stroke: 1px rgba($color: rgba(0, 0, 0, 0.4), $alpha: 0.3);   
+}
+
+.number2 {
+    display: flex;
+    flex-direction: column;
+    font-size: $num-size;
+    width: 30%;
+    height: 150px;
+    justify-content: flex-end;      
+}
+
+.integer
+{
+    font-size: $num-size;     
+}
+
+.float
+{
+    height: 70px;
+    font-size: 35px;
+    display: flex;
+    flex-direction: column;
+    align-content: center; 
+    justify-content: flex-end; 
+}

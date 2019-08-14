@@ -100,7 +100,7 @@ router.post("/info", (req, res) => {
       });
     })
     .catch(err => {
-      res.status(401).json(err.message);
+      res.status(400).json(err.message);
     });
 });
 

@@ -1,0 +1,17 @@
+$width-elem: 400px;
+$height-elem: 220px;
+$text-dark-color: #65696c;
+
+.container {
+  margin: 5px;
+  padding: 3px;
+  width: $width-elem;
+  height: $height-elem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 7px;
+  flex-direction: column;
+  text-align: start;
+  color: $text-dark-color;
+}

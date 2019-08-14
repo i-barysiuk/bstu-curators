@@ -5,7 +5,16 @@ import BigButton from "../../../../components/common/bigButton/BigButton";
 import Card from "../../../../components/common/card/Card";
 import { faPen, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { Row, Col } from "antd";
+
+import Timeline from "../../../../components/timeline/Timeline";
 import GroupParams from "../../../../components/groupParams/GroupParams";
+import HealthTemp from "../../../../components/healthTemp/HealthTemp";
+import HealthMap from "../../../../components/healthMap/HealthMap";
+
+import AveragePoint from "../../../../components/averagePoint/AveragePoint";
+import AverageMap from "../../../../components/averageMap/AverageMap";
+
+import StudentTable from "../../../../components/studentTable/StudentTable";
 
 export default props => {
   return (
@@ -18,6 +27,12 @@ export default props => {
         <BigButton icon={faEllipsisH} />
       </PageHead>
 
+      <Row>
+        <Col>
+          <Timeline />
+        </Col>
+      </Row>
+
       <Row gutter={24} style={{ marginBottom: "20px" }}>
         <Col span={14}>
           <GroupParams />
@@ -25,14 +40,27 @@ export default props => {
         <Col span={8} />
       </Row>
 
-      <Row gutter={24}>
+      <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
         <Col span={8}>
-          <Card title="Наглость">123</Card>
+          <HealthTemp />
         </Col>
         <Col span={16}>
-          <Card title="Здоровье" buttons={<BigButton icon={faPen} />}>
-            123
-          </Card>
+          <HealthMap />
+        </Col>
+      </Row>
+
+      <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
+        <Col span={16}>
+          <AverageMap />
+        </Col>
+        <Col span={8}>
+          <AveragePoint />
+        </Col>
+      </Row>
+
+      <Row style={{ marginBottom: "20px" }}>
+        <Col>
+          <StudentTable />
         </Col>
       </Row>
     </div>
