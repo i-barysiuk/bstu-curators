@@ -1,8 +1,20 @@
 import healthMap from "../helper/healthMap";
 
 class HealthMapService {
-  getLooses() {
-    return healthMap();
+  byDays() {
+    return healthMap().byDays;
+  }
+
+  byWeeks() {
+    return healthMap().byWeeks;
+  }
+
+  byMonths() {
+    return healthMap().byMonths;
+  }
+
+  bySems() {
+    return healthMap().bySems;
   }
 }
 

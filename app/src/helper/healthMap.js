@@ -12,249 +12,87 @@ const healthMap = () => {
     byDays: [
       {
         period: "15.04.2019",
-        respect: Math.random() * 40,
-        nonrespect: Math.random() * 40,
-        total: Math.random() * 40
+        respect: 5,
+        nonrespect: 6,
+        total: 11
       },
       {
         period: "16.04.2019",
-        respect: Math.random() * 40,
-        nonrespect: Math.random() * 40,
-        total: Math.random() * 40
+        respect: 2,
+        nonrespect: 4,
+        total: 6
       },
       {
         period: "17.04.2019",
-        respect: Math.random() * 40,
-        nonrespect: Math.random() * 40,
-        total: Math.random() * 40
-      },
-      {
-        period: "18.04.2019",
-        respect: Math.random() * 40,
-        nonrespect: Math.random() * 40,
-        total: Math.random() * 40
-      },
-      {
-        period: "19.04.2019",
-        respect: Math.random() * 40,
-        nonrespect: Math.random() * 40,
-        total: Math.random() * 40
-      },
-      {
-        period: "20.04.2019",
-        respect: Math.random() * 40,
-        nonrespect: Math.random() * 40,
-        total: Math.random() * 40
-      },
-      {
-        period: "21.04.2019",
-        respect: Math.random() * 40,
-        nonrespect: Math.random() * 40,
-        total: Math.random() * 40
-      },
-      {
-        period: "22.04.2019",
-        respect: Math.random() * 40,
-        nonrespect: Math.random() * 40,
-        total: Math.random() * 40
-      },
-      {
-        period: "23.04.2019",
-        respect: Math.random() * 40,
-        nonrespect: Math.random() * 40,
-        total: Math.random() * 40
-      },
-      {
-        period: "24.04.2019",
-        respect: Math.random() * 40,
-        nonrespect: Math.random() * 40,
-        total: Math.random() * 40
+        respect: 4,
+        nonrespect: 3,
+        total: 7
       }
     ],
     byWeeks: [
       {
         period: 1,
-        respect: Math.random() * 400,
-        nonrespect: Math.random() * 400,
-        total: Math.random() * 400
+        respect: 13,
+        nonrespect: 11,
+        total: 24
       },
       {
         period: 2,
-        respect: Math.random() * 400,
-        nonrespect: Math.random() * 400,
-        total: Math.random() * 400
+        respect: 32,
+        nonrespect: 14,
+        total: 46
       },
       {
         period: 3,
-        respect: Math.random() * 400,
-        nonrespect: Math.random() * 400,
-        total: Math.random() * 400
-      },
-      {
-        period: 4,
-        respect: Math.random() * 400,
-        nonrespect: Math.random() * 400,
-        total: Math.random() * 400
-      },
-      {
-        period: 5,
-        respect: Math.random() * 400,
-        nonrespect: Math.random() * 400,
-        total: Math.random() * 400
-      },
-      {
-        period: 6,
-        respect: Math.random() * 400,
-        nonrespect: Math.random() * 400,
-        total: Math.random() * 400
-      },
-      {
-        period: 7,
-        respect: Math.random() * 400,
-        nonrespect: Math.random() * 400,
-        total: Math.random() * 400
-      },
-      {
-        period: 8,
-        respect: Math.random() * 400,
-        nonrespect: Math.random() * 400,
-        total: Math.random() * 400
+        respect: 11,
+        nonrespect: 15,
+        total: 26
       }
     ],
     byMonths: [
       {
         period: 1,
-        respect: Math.random() * 800,
-        nonrespect: Math.random() * 800,
-        total: Math.random() * 800
+        respect: 51,
+        nonrespect: 38,
+        total: 89
       },
       {
         period: 2,
-        respect: Math.random() * 800,
-        nonrespect: Math.random() * 800,
-        total: Math.random() * 800
+        respect: 48,
+        nonrespect: 32,
+        total: 80
       },
       {
         period: 3,
-        respect: Math.random() * 800,
-        nonrespect: Math.random() * 800,
-        total: Math.random() * 800
+        respect: 20,
+        nonrespect: 24,
+        total: 48
       },
       {
         period: 4,
-        respect: Math.random() * 800,
-        nonrespect: Math.random() * 800,
-        total: Math.random() * 800
-      },
-      {
-        period: 5,
-        respect: Math.random() * 800,
-        nonrespect: Math.random() * 800,
-        total: Math.random() * 800
-      },
-      {
-        period: 6,
-        respect: Math.random() * 800,
-        nonrespect: Math.random() * 800,
-        total: Math.random() * 800
-      },
-      {
-        period: 7,
-        respect: Math.random() * 800,
-        nonrespect: Math.random() * 800,
-        total: Math.random() * 800
-      },
-      {
-        period: 8,
-        respect: Math.random() * 800,
-        nonrespect: Math.random() * 800,
-        total: Math.random() * 800
-      },
-      {
-        period: 9,
-        respect: Math.random() * 800,
-        nonrespect: Math.random() * 800,
-        total: Math.random() * 800
-      },
-      {
-        period: 10,
-        respect: Math.random() * 800,
-        nonrespect: Math.random() * 800,
-        total: Math.random() * 800
-      },
-      {
-        period: 11,
-        respect: Math.random() * 800,
-        nonrespect: Math.random() * 800,
-        total: Math.random() * 800
-      },
-      {
-        period: 12,
-        respect: Math.random() * 800,
-        nonrespect: Math.random() * 800,
-        total: Math.random() * 800
+        respect: 40,
+        nonrespect: 38,
+        total: 78
       }
     ],
     bySems: [
       {
         period: "I",
-        respect: Math.random() * 2000,
-        nonrespect: Math.random() * 2000,
-        total: Math.random() * 2000
+        respect: 102,
+        nonrespect: 203,
+        total: 305
       },
       {
         period: "II",
-        respect: Math.random() * 2000,
-        nonrespect: Math.random() * 2000,
-        total: Math.random() * 2000
+        respect: 301,
+        nonrespect: 105,
+        total: 406
       },
       {
         period: "III",
-        respect: Math.random() * 2000,
-        nonrespect: Math.random() * 2000,
-        total: Math.random() * 2000
-      },
-      {
-        period: "IV",
-        respect: Math.random() * 2000,
-        nonrespect: Math.random() * 2000,
-        total: Math.random() * 2000
-      },
-      {
-        period: "V",
-        respect: Math.random() * 2000,
-        nonrespect: Math.random() * 2000,
-        total: Math.random() * 2000
-      },
-      {
-        period: "VI",
-        respect: Math.random() * 2000,
-        nonrespect: Math.random() * 2000,
-        total: Math.random() * 2000
-      },
-      {
-        period: "VII",
-        respect: Math.random() * 2000,
-        nonrespect: Math.random() * 2000,
-        total: Math.random() * 2000
-      },
-      {
-        period: "VIII",
-        respect: Math.random() * 2000,
-        nonrespect: Math.random() * 2000,
-        total: Math.random() * 2000
-      },
-      {
-        period: "IX",
-        respect: Math.random() * 2000,
-        nonrespect: Math.random() * 2000,
-        total: Math.random() * 2000
-      },
-      {
-        period: "X",
-        respect: Math.random() * 2000,
-        nonrespect: Math.random() * 2000,
-        total: Math.random() * 2000
+        respect: 223,
+        nonrespect: 110,
+        total: 333
       }
     ]
   };
