@@ -9,12 +9,15 @@ import HealthMapService from "../../services/HealthMapService";
 class HealthMap extends React.Component {
   constructor(props) {
     super(props);
+    this.changed = true;
     this.state = {
-      labels: [],
-      respectfulLooses: [],
-      nonrespectfulLooses: [],
-      totalLooses: [],
-      time: null,
+      all: [],
+      data: {
+        labels: [],
+        respectfulLooses: [],
+        nonrespectfulLooses: [],
+        totalLooses: []
+      },
       respectfulVis: true,
       nonrespectfulVis: true,
       totalVis: true
@@ -22,20 +25,41 @@ class HealthMap extends React.Component {
   }
 
   onChange = e => {
+    if (e.target.value === 0)
+      this.setState({
+        all: HealthMapService.byDays()
+      });
+    else if (e.target.value === 1)
+      this.setState({
+        all: HealthMapService.byWeeks()
+      });
+    else if (e.target.value === 2)
+      this.setState({
+        all: HealthMapService.byMonths()
+      });
+    else
+      this.setState({
+        all: HealthMapService.bySems()
+      });
+    this.changed = true;
+  };
+
+  dataUpdate = () => {
     this.setState({
-      time: e.target.value,
-      labels: e.target.value.map(value => {
-        return value.period.toString().split(".")[0];
-      }),
-      respectfulLooses: e.target.value.map(value => {
-        return value.respect;
-      }),
-      nonrespectfulLooses: e.target.value.map(value => {
-        return value.nonrespect;
-      }),
-      totalLooses: e.target.value.map(value => {
-        return value.total;
-      })
+      data: {
+        labels: this.state.all.map(item => {
+          return item.period.toString().split(".")[0];
+        }),
+        respectfulLooses: this.state.all.map(item => {
+          return item.respect;
+        }),
+        nonrespectfulLooses: this.state.all.map(item => {
+          return item.nonrespect;
+        }),
+        totalLooses: this.state.all.map(item => {
+          return item.total;
+        })
+      }
     });
   };
 
@@ -49,20 +73,13 @@ class HealthMap extends React.Component {
 
   componentDidMount() {
     this.setState({
-      time: HealthMapService.byWeeks(),
-      labels: HealthMapService.byWeeks().map(value => {
-        return value.period.toString().split(".")[0];
-      }),
-      respectfulLooses: HealthMapService.byWeeks().map(value => {
-        return value.respect;
-      }),
-      nonrespectfulLooses: HealthMapService.byWeeks().map(value => {
-        return value.nonrespect;
-      }),
-      totalLooses: HealthMapService.byWeeks().map(value => {
-        return value.total;
-      })
+      all: HealthMapService.byWeeks()
     });
+  }
+
+  componentDidUpdate() {
+    if (this.changed === true) this.dataUpdate();
+    this.changed = false;
   }
 
   render() {
@@ -76,22 +93,11 @@ class HealthMap extends React.Component {
             dropdown
             content={
               <div>
-                <Radio.Group
-                  onChange={this.onChange}
-                  defaultValue={HealthMapService.byWeeks()}
-                >
-                  <Radio.Button value={HealthMapService.byDays()}>
-                    По дням
-                  </Radio.Button>
-                  <Radio.Button value={HealthMapService.byWeeks()}>
-                    По неделям
-                  </Radio.Button>
-                  <Radio.Button value={HealthMapService.byMonths()}>
-                    По месяцам
-                  </Radio.Button>
-                  <Radio.Button value={HealthMapService.bySems()}>
-                    По семестрам
-                  </Radio.Button>
+                <Radio.Group onChange={this.onChange} defaultValue={1}>
+                  <Radio.Button value={0}>По дням</Radio.Button>
+                  <Radio.Button value={1}>По неделям</Radio.Button>
+                  <Radio.Button value={2}>По месяцам</Radio.Button>
+                  <Radio.Button value={3}>По семестрам</Radio.Button>
                 </Radio.Group>
                 <p />
                 <Checkbox value={0} onChange={this.onCheck}>
@@ -110,7 +116,7 @@ class HealthMap extends React.Component {
       >
         <Line
           data={{
-            labels: this.state.labels,
+            labels: this.state.data.labels,
             datasets: [
               {
                 label: "По уважительной",
@@ -122,7 +128,7 @@ class HealthMap extends React.Component {
                 borderColor: "green",
                 borderCapStyle: "butt",
                 borderJoinStyle: "miter",
-                data: this.state.respectfulLooses
+                data: this.state.data.respectfulLooses
               },
               {
                 label: "По неуважительной",
@@ -134,7 +140,7 @@ class HealthMap extends React.Component {
                 borderColor: "red",
                 borderCapStyle: "butt",
                 borderJoinStyle: "miter",
-                data: this.state.nonrespectfulLooses
+                data: this.state.data.nonrespectfulLooses
               },
               {
                 label: "Всего",
@@ -146,7 +152,7 @@ class HealthMap extends React.Component {
                 borderColor: "orange",
                 borderCapStyle: "butt",
                 borderJoinStyle: "miter",
-                data: this.state.totalLooses
+                data: this.state.data.totalLooses
               }
             ]
           }}

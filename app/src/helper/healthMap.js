@@ -7,7 +7,7 @@ if (process.env.REACT_APP_ENV === "test")
 if (process.env.REACT_APP_ENV === "development")
   axios.defaults.baseURL = "http://localhost:8000/api/";
 
-const healthMap = () => {
+const healthMap = (type = "WEEK") => {
   return {
     byDays: [
       {
