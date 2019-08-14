@@ -4,60 +4,35 @@ import EventCard from "../eventCard/EventCard";
 import Card from '../common/card/Card';
 import BigButton from '../common/bigButton/BigButton';
 import { faPlus , faFilter } from "@fortawesome/free-solid-svg-icons";
+import 'moment/locale/ru';
+const moment = require('moment');
 
 var data = [
   {
-    head: 'Аттестация 1',
-    sHead:' Fucking attestation',
+    title: 'Аттестация 1',
+    subTitle:' First attestation',
     icon: 'Аттестация',
-    time:
-      {
-        hours: 12 ,
-        mins: 20 ,
-        day: 22 ,
-        month: "СЕН",
-        Month: "СЕНЯБРЬ"
-      }
+    utc: '2019-9-22 12:20',
   },
   {
-    head: 'Аттестация 2',
-    sHead:' Fucking attestation',
+    title: 'Аттестация 2',
+    subTitle:' Second attestation',
     icon: 'Аттестация',
-    time:
-      {
-        hours: 16 ,
-        mins: 40 ,
-        day: 23 ,
-        month: "СЕН",
-        Month: "СЕНЯБРЬ"
-      }
+    utc: '2019-9-23 16:40',
   },
   {
-    head: 'Донорство',
-    sHead:'Здохни нахуй',
+    title: 'Донорство',
+    subTitle:'Мне не жалко)',
     icon: 'Донорство',
-    time:
-      {
-        hours: 15 ,
-        mins: "00" ,
-        day: 26 ,
-        month: "СЕН",
-        Month: "СЕНЯБРЬ"
-      }
+    utc: '2019-9-26 15:00',
   },
   {
-    head: 'Зачисление студента',
-    sHead:'welcom нахуй',
+    title: 'Зачисление студента',
+    subTitle:'welcome',
     icon: 'Зачисление студента',
-    time:
-      {
-        hours: 12 ,
-        mins: 30 ,
-        day: 2 ,
-        month: "ОКТ",
-        Month: "ОКТЯБРЬ"
-      }
-  }
+    utc: '2019-10-2 12:30',
+  },
+  
 ];
 
 function EventList(props)
@@ -67,60 +42,38 @@ function EventList(props)
         <Card 
         title={'События'}
         buttons={[
-        <BigButton icon={faFilter} default onClick={props.onClick}/>, 
+        <BigButton icon={faFilter}  onClick={props.onClick}/>, 
         <BigButton icon={faPlus}   primary onClick={props.onClick}/>]}
         >
         <div className={style.cards}>
             {
               data.map((item , index) => 
               {
-                if((index + 1 !== data.length ) && (item.time.month === data[index + 1].time.month))
-                  return (
-                  <div key={item.id} className = {style.item}>  
-                    <EventCard 
-                    event ={item.icon} 
-                    header={item.head} 
-                    subHeader={item.sHead}
-                    time={
-                      {hours:  item.time.hours,
-                        mins:  item.time.mins,
-                        day:   item.time.day,
-                        month: item.time.month
-                      }} 
-                    />  
-                  </div>);
-                else if(index + 1 !== data.length )
+                item.utc = moment(item.utc);
+                data[index].utc = moment(data[index].utc);
+                if(index === 0 || item.utc.format('M') !== data[index - 1].utc.format('M'))
                   return (
                     <div className={style.itemX2}>
+                      <div className = {style.month}> {data[index].utc.format('MMMM')} </div>
                       <div key={item.id} className = {style.item}>  
                         <EventCard 
                         event ={item.icon} 
-                        header={item.head} 
-                        subHeader={item.sHead}
-                        time={
-                          {hours:  item.time.hours,
-                            mins:  item.time.mins,
-                            day:   item.time.day,
-                            month: item.time.month
-                          }} 
+                        title={item.title} 
+                        subTitle={item.subTitle}
+                        utc= {item.utc}
                         />  
                       </div>  
-                      <div className = {style.month}> {data[index + 1].time.Month} </div>
-                    </div>);  
-                    else  return (
-                      <div key={item.id} className = {style.item}>  
-                        <EventCard 
-                        event ={item.icon} 
-                        header={item.head} 
-                        subHeader={item.sHead}
-                        time={
-                          {hours:  item.time.hours,
-                            mins:  item.time.mins,
-                            day:   item.time.day,
-                            month: item.time.month
-                          }} 
-                        />  
-                      </div>);
+                    </div>);
+                else 
+                  return (
+                    <div key={item.id} className = {style.item}>  
+                      <EventCard 
+                      event ={item.icon} 
+                      title={item.title} 
+                      subTitle={item.subTitle}
+                      utc= {item.utc}
+                      />  
+                    </div>);
               })
             }
           </div>

@@ -40,6 +40,11 @@ $font-size: 11px;
     font-size: $font-size - 2px;
 }
 
+.day
+{
+    text-transform: uppercase;
+}
+
 .info
 {
     width: 50%;
