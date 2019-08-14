@@ -90,13 +90,25 @@ class HealthMap extends React.Component {
                   </Radio.Button>
                 </Radio.Group>
                 <p />
-                <Checkbox value={0} onChange={this.onCheck}>
+                <Checkbox
+                  value={0}
+                  onChange={this.onCheck}
+                  defaultChecked={true}
+                >
                   По уважительной
                 </Checkbox>
-                <Checkbox value={1} onChange={this.onCheck}>
+                <Checkbox
+                  value={1}
+                  onChange={this.onCheck}
+                  defaultChecked={true}
+                >
                   По неуважительной
                 </Checkbox>
-                <Checkbox value={2} onChange={this.onCheck}>
+                <Checkbox
+                  value={2}
+                  onChange={this.onCheck}
+                  defaultChecked={true}
+                >
                   Всего
                 </Checkbox>
               </div>
