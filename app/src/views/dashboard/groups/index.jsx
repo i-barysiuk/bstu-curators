@@ -7,18 +7,34 @@ import GroupsMenu from "../../../components/groupsMenu/GroupMenu";
 import Groups from "./home/Grops";
 import GroupProfile from "./profile/GroupProfile";
 import GroupStudentsList from "./studentsList/GroupStudentsList";
-import { fetchGroups, fetchActiveGroup } from "../../../redux/actions/groups";
+import {
+  fetchMyAndFavGroups,
+  fetchActiveGroup,
+  fetchAllGroups,
+  fetchArchiveGroups
+} from "../../../redux/actions/groups";
 
 class GroupsLayout extends React.Component {
   componentDidMount() {
-    this.props.fetchGroups();
+    this.props.fetchMyAndFavGroups();
   }
 
   render() {
-    const { fetchActiveGroup, groups, history } = this.props;
+    const {
+      fetchActiveGroup,
+      fetchAllGroups,
+      fetchArchiveGroups,
+      groups,
+      history
+    } = this.props;
     return (
       <div style={{ display: "flex", height: "100%", flexGrow: 1 }}>
-        <GroupsMenu groups={groups} history={history} />
+        <GroupsMenu
+          groups={groups}
+          fetchAll={fetchAllGroups}
+          fetchArchive={fetchArchiveGroups}
+          history={history}
+        />
         <Switch>
           <Route
             exec
@@ -69,8 +85,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  fetchGroups,
-  fetchActiveGroup
+  fetchMyAndFavGroups,
+  fetchActiveGroup,
+  fetchAllGroups,
+  fetchArchiveGroups
 };
 
 export default connect(

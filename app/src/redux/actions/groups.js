@@ -4,15 +4,37 @@ import {
   GROUPS_FAILED,
   GROUPS__ACTIVE_REQUEST,
   GROUPS__ACTIVE_SUCCESS,
-  GROUPS__ACTIVE_FAILED
+  GROUPS__ACTIVE_FAILED,
+  GROUPS__ALL_REQUEST,
+  GROUPS__ALL_SUCCESS,
+  GROUPS__ARCHIVE_REQUEST,
+  GROUPS__ARCHIVE_SUCCESS
 } from "../actionsTypes/groups";
 
-export const fetchGroups = () => ({
+export const fetchMyAndFavGroups = () => ({
   type: GROUPS_REQUEST
 });
 
 export const fetchGroupsSuccess = ({ groups }) => ({
   type: GROUPS_SUCCESS,
+  payload: groups
+});
+
+export const fetchAllGroups = () => ({
+  type: GROUPS__ALL_REQUEST
+});
+
+export const fetchAllGroupsSuccess = ({ groups }) => ({
+  type: GROUPS__ALL_SUCCESS,
+  payload: groups
+});
+
+export const fetchArchiveGroups = () => ({
+  type: GROUPS__ARCHIVE_REQUEST
+});
+
+export const fetchArchiveGroupsSuccess = ({ groups }) => ({
+  type: GROUPS__ARCHIVE_SUCCESS,
   payload: groups
 });
 

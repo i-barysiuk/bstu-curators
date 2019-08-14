@@ -17,7 +17,9 @@ class GroupCard extends React.Component {
 
   render() {
     const {
-      groups: { favorite, my, all, archive }
+      groups: { favorite, my, all, archive },
+      fetchAll,
+      fetchArchive
     } = this.props;
     return (
       <div className={style.container}>
@@ -56,21 +58,29 @@ class GroupCard extends React.Component {
             ))}
           </Collapse>
 
-          <Collapse icon={faUniversity} title="Все группы">
+          <Collapse icon={faUniversity} fetch={fetchAll} title="Все группы">
             {Object.keys(all).map(keyName => (
-              <Collapse icon={faHeart} title={keyName}>
+              <Collapse icon={faHeart} key={keyName} title={keyName}>
                 {all[keyName].map(group => (
-                  <GroupsCard group={group.name} course={group.course} />
+                  <GroupsCard
+                    key={group.name}
+                    group={group.name}
+                    course={group.course}
+                  />
                 ))}
               </Collapse>
             ))}
           </Collapse>
 
-          <Collapse icon={faArchive} title="Архив">
+          <Collapse icon={faArchive} fetch={fetchArchive} title="Архив">
             {Object.keys(archive).map(keyName => (
-              <Collapse icon={faHeart} title={keyName}>
+              <Collapse icon={faHeart} key={keyName} title={keyName}>
                 {all[keyName].map(group => (
-                  <GroupsCard group={group.name} course={group.course} />
+                  <GroupsCard
+                    key={group.name}
+                    group={group.name}
+                    course={group.course}
+                  />
                 ))}
               </Collapse>
             ))}
