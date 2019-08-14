@@ -63,17 +63,29 @@ class HealthMap extends React.Component {
             dropdown
             content={
               <div>
-                <Radio.Group>
-                  <Radio.Button onClick={() => this.getData("DAY")}>
+                <Radio.Group defaultValue={"WEEK"}>
+                  <Radio.Button
+                    value={"DAY"}
+                    onClick={() => this.getData("DAY")}
+                  >
                     По дням
                   </Radio.Button>
-                  <Radio.Button onClick={() => this.getData("WEEK")}>
+                  <Radio.Button
+                    value={"WEEK"}
+                    onClick={() => this.getData("WEEK")}
+                  >
                     По неделям
                   </Radio.Button>
-                  <Radio.Button onClick={() => this.getData("MONTH")}>
+                  <Radio.Button
+                    value={"MONTH"}
+                    onClick={() => this.getData("MONTH")}
+                  >
                     По месяцам
                   </Radio.Button>
-                  <Radio.Button onClick={() => this.getData("SEM")}>
+                  <Radio.Button
+                    value={"SEM"}
+                    onClick={() => this.getData("SEM")}
+                  >
                     По семестрам
                   </Radio.Button>
                 </Radio.Group>
