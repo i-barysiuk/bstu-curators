@@ -20,13 +20,13 @@ class HealthMap extends React.Component {
     };
   }
 
-  getDatа = data => {
-    var data = HealthMapService.getData(data),
+  getData = data => {
+    var all = HealthMapService.getData(data),
       label = [],
       respect = [],
       nonrespect = [],
       total = [];
-    data.map(item => {
+    all.map(item => {
       label.push(item.period.toString().split(".")[0]);
       respect.push(item.respect);
       nonrespect.push(item.nonrespect);
@@ -48,7 +48,9 @@ class HealthMap extends React.Component {
     else this.setState({ totalVis: e.target.checked });
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.getData("WEEK");
+  }
 
   render() {
     return (
