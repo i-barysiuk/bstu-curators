@@ -22,8 +22,8 @@ const config = [
   },
   {
     label: "community",
-    labels: ["БРСМ", "ПРОФКОМ", "Белая русь", "Прочая"],
-    labelsIds: ["brsm", "profkom", "whiterus", "other"],
+    labels: ["БРСМ", "ПРОФКОМ", "Студсовет", "Прочая"],
+    labelsIds: ["brsm", "profkom", "studsovet", "others"],
     backgroundColor: ["red", "blue", "yellow", "green"],
     text: "Общественные организации"
   },
