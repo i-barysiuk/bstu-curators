@@ -3,7 +3,7 @@ import { Line } from "react-chartjs-2";
 import Card from "../common/card/Card";
 import BigButton from "../common/bigButton/BigButton";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Radio, Checkbox } from "antd";
+import { Radio, Checkbox, Button } from "antd";
 import HealthMapService from "../../services/HealthMapService";
 
 class HealthMap extends React.Component {
@@ -14,7 +14,7 @@ class HealthMap extends React.Component {
       respectfulLooses: [],
       nonrespectfulLooses: [],
       totalLooses: [],
-      time: HealthMapService.byWeeks(),
+      time: null,
       respectfulVis: true,
       nonrespectfulVis: true,
       totalVis: true
@@ -23,19 +23,17 @@ class HealthMap extends React.Component {
 
   onChange = e => {
     this.setState({
-      time: e.target.value
-    });
-    this.setState({
-      labels: this.state.time.map(value => {
+      time: e.target.value,
+      labels: e.target.value.map(value => {
         return value.period.toString().split(".")[0];
       }),
-      respectfulLooses: this.state.time.map(value => {
+      respectfulLooses: e.target.value.map(value => {
         return value.respect;
       }),
-      nonrespectfulLooses: this.state.time.map(value => {
+      nonrespectfulLooses: e.target.value.map(value => {
         return value.nonrespect;
       }),
-      totalLooses: this.state.time.map(value => {
+      totalLooses: e.target.value.map(value => {
         return value.total;
       })
     });
@@ -51,12 +49,23 @@ class HealthMap extends React.Component {
 
   componentDidMount() {
     this.setState({
-      time: this.state.time
+      time: HealthMapService.byWeeks(),
+      labels: HealthMapService.byWeeks().map(value => {
+        return value.period.toString().split(".")[0];
+      }),
+      respectfulLooses: HealthMapService.byWeeks().map(value => {
+        return value.respect;
+      }),
+      nonrespectfulLooses: HealthMapService.byWeeks().map(value => {
+        return value.nonrespect;
+      }),
+      totalLooses: HealthMapService.byWeeks().map(value => {
+        return value.total;
+      })
     });
   }
 
   render() {
-    console.log(this.state.time);
     return (
       <Card
         title="Здоровье"
@@ -67,29 +76,20 @@ class HealthMap extends React.Component {
             dropdown
             content={
               <div>
-                <Radio.Group onChange={this.onChange} defaultValue={0}>
-                  <Radio.Button
-                    value={HealthMapService.byDays()}
-                    onClick={this.onChange}
-                  >
+                <Radio.Group
+                  onChange={this.onChange}
+                  defaultValue={HealthMapService.byWeeks()}
+                >
+                  <Radio.Button value={HealthMapService.byDays()}>
                     По дням
                   </Radio.Button>
-                  <Radio.Button
-                    value={HealthMapService.byWeeks()}
-                    onClick={this.onChange}
-                  >
+                  <Radio.Button value={HealthMapService.byWeeks()}>
                     По неделям
                   </Radio.Button>
-                  <Radio.Button
-                    value={HealthMapService.byMonths()}
-                    onClick={this.onChange}
-                  >
+                  <Radio.Button value={HealthMapService.byMonths()}>
                     По месяцам
                   </Radio.Button>
-                  <Radio.Button
-                    value={HealthMapService.bySems()}
-                    onClick={this.onChange}
-                  >
+                  <Radio.Button value={HealthMapService.bySems()}>
                     По семестрам
                   </Radio.Button>
                 </Radio.Group>
@@ -114,8 +114,8 @@ class HealthMap extends React.Component {
             datasets: [
               {
                 label: "По уважительной",
-                showLine: this.state.respectful,
-                pointRadius: this.state.respectful,
+                showLine: this.state.respectfulVis,
+                pointRadius: this.state.respectfulVis,
                 pointHitRadius: 10,
                 fill: false,
                 lineTension: 0.1,
@@ -126,8 +126,8 @@ class HealthMap extends React.Component {
               },
               {
                 label: "По неуважительной",
-                showLine: this.state.notrespectful,
-                pointRadius: this.state.notrespectful,
+                showLine: this.state.nonrespectfulVis,
+                pointRadius: this.state.nonrespectfulVis,
                 pointHitRadius: 10,
                 fill: false,
                 lineTension: 0.1,
@@ -138,8 +138,8 @@ class HealthMap extends React.Component {
               },
               {
                 label: "Всего",
-                showLine: this.state.total,
-                pointRadius: this.state.total,
+                showLine: this.state.totalVis,
+                pointRadius: this.state.totalVis,
                 pointHitRadius: 10,
                 fill: false,
                 lineTension: 0.1,
