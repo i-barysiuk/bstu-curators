@@ -10,27 +10,27 @@ const moment = require('moment');
 var data = [
   {
     title: 'Аттестация 1',
-    subTitle:' First attestation',
+    subTitle:' Первая аттестация',
     icon: 'Аттестация',
-    utc: '2019-9-22 12:20',
+    utc: moment('2019-9-22 12:20'),
   },
   {
     title: 'Аттестация 2',
-    subTitle:' Second attestation',
+    subTitle:' Вторая аттестация',
     icon: 'Аттестация',
-    utc: '2019-9-23 16:40',
+    utc: moment('2019-9-23 16:40'),
   },
   {
     title: 'Донорство',
     subTitle:'Мне не жалко)',
     icon: 'Донорство',
-    utc: '2019-9-26 15:00',
+    utc: moment('2019-9-26 15:00'),
   },
   {
     title: 'Зачисление студента',
-    subTitle:'welcome',
+    subTitle:'Добро пожаловать',
     icon: 'Зачисление студента',
-    utc: '2019-10-2 12:30',
+    utc: moment('2019-10-2 12:30'),
   },
   
 ];
@@ -48,12 +48,10 @@ function EventList(props)
         <div className={style.cards}>
             {
               data.map((item , index) => 
-              {
-                item.utc = moment(item.utc);
-                data[index].utc = moment(data[index].utc);
+               {
                 if(index === 0 || item.utc.format('M') !== data[index - 1].utc.format('M'))
                   return (
-                    <div className={style.itemX2}>
+                    <div className={style.itemX2} key={index.toString()}>
                       <div className = {style.month}> {data[index].utc.format('MMMM')} </div>
                       <div key={item.id} className = {style.item}>  
                         <EventCard 
@@ -66,7 +64,7 @@ function EventList(props)
                     </div>);
                 else 
                   return (
-                    <div key={item.id} className = {style.item}>  
+                    <div className = {style.item} key={index.toString()}>  
                       <EventCard 
                       event ={item.icon} 
                       title={item.title} 
