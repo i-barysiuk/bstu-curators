@@ -15,55 +15,89 @@ import AverageMap from "../../../../components/averageMap/AverageMap";
 
 import StudentTable from "../../../../components/studentTable/StudentTable";
 
-import GroupModal from "../../../../components/groupModal/GroupModal";
+export default class GroupProfile extends React.Component {
+  componentDidMount() {
+    this.activeGroupRequest();
+  }
 
-export default props => {
-  return (
-    <div className={style.container}>
-      <PageHead
-        title="Мелиарация и водное хозяйство - 146"
-        subtitle="Факультет Инженерных Сетей и Экологии / Кафедра природоохранной деятельности"
-      >
-        <BigButton icon={faPen} />
-        <BigButton icon={faEllipsisH} />
-      </PageHead>
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+      this.activeGroupRequest();
+    }
+  }
 
-      <Row>
-        <Col>
-          <Timeline />
-        </Col>
-      </Row>
+  activeGroupRequest = () => {
+    const { id } = this.props.match.params;
+    this.props.fetchGroup({ id });
+  };
 
-      <Row gutter={24} style={{ marginBottom: "20px" }}>
-        <Col span={14}>
-          <GroupParams />
-        </Col>
-        <Col span={8} />
-      </Row>
+  render() {
+    const {
+      gender,
+      community,
+      family,
+      geography,
+      living,
+      social,
+      others
+    } = this.props.group;
+    return (
+      <div className={style.container}>
+        <PageHead
+          title="Мелиарация и водное хозяйство - 146"
+          subtitle="Факультет Инженерных Сетей и Экологии / Кафедра природоохранной деятельности"
+        >
+          <BigButton icon={faPen} />
+          <BigButton icon={faEllipsisH} />
+        </PageHead>
 
-      <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
-        <Col span={8}>
-          <HealthTemp />
-        </Col>
-        <Col span={16}>
-          <HealthMap />
-        </Col>
-      </Row>
+        <Row>
+          <Col>
+            <Timeline />
+          </Col>
+        </Row>
 
-      <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
-        <Col span={16}>
-          <AverageMap />
-        </Col>
-        <Col span={8}>
-          <AveragePoint />
-        </Col>
-      </Row>
+        <Row gutter={24} style={{ marginBottom: "20px" }}>
+          <Col span={14}>
+            <GroupParams
+              data={{
+                gender,
+                community,
+                family,
+                geography,
+                living,
+                social,
+                others
+              }}
+            />
+          </Col>
+          <Col span={8} />
+        </Row>
 
-      <Row style={{ marginBottom: "20px" }}>
-        <Col>
-          <StudentTable />
-        </Col>
-      </Row>
-    </div>
-  );
-};
+        <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
+          <Col span={8}>
+            <HealthTemp />
+          </Col>
+          <Col span={16}>
+            <HealthMap />
+          </Col>
+        </Row>
+
+        <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
+          <Col span={16}>
+            <AverageMap />
+          </Col>
+          <Col span={8}>
+            <AveragePoint />
+          </Col>
+        </Row>
+
+        <Row style={{ marginBottom: "20px" }}>
+          <Col>
+            <StudentTable />
+          </Col>
+        </Row>
+      </div>
+    );
+  }
+}

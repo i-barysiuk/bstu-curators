@@ -11,15 +11,17 @@ export default class Colapse extends React.Component {
     };
   }
 
+  onToggle = () => {
+    if (!this.state.isContenShow && this.props.fetch) {
+      this.props.fetch();
+    }
+    this.setState({ isContenShow: !this.state.isContenShow });
+  };
+
   render() {
     return (
       <div className={style.container}>
-        <div
-          className={style.header}
-          onClick={() => {
-            this.setState({ isContenShow: !this.state.isContenShow });
-          }}
-        >
+        <div className={style.header} onClick={this.onToggle}>
           <div>
             <FontAwesomeIcon className={style.icons} icon={this.props.icon} />
             {this.props.title}
