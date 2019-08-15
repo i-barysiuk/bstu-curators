@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import iconConfig from '../../const/iconConfig';
 import 'moment/locale/ru';
+const moment = require('moment');
 
 export default props=>
 {
@@ -15,8 +16,8 @@ export default props=>
         }}>
         <FontAwesomeIcon icon={icon} className={style.icon} />
         <div className={style.time}>
-          <div className={style.clock}>{props.utc.format('HH:mm')}</div>
-          <div className={style.day}>{props.utc.format('D MMM')}</div>
+          <div className={style.clock}>{moment(props.utc).format('HH:mm')}</div>
+          <div className={style.day}>{moment(props.utc).format('D MMM')}</div>
         </div>
         <div className={style.info}>
           <div className={style.header}>{props.title}</div>

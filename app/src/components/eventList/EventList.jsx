@@ -12,25 +12,25 @@ var data = [
     title: 'Аттестация 1',
     subTitle:' Первая аттестация',
     icon: 'Аттестация',
-    utc: moment('2019-9-22 12:20'),
+    utc: '2019-9-22 12:20',
   },
   {
     title: 'Аттестация 2',
     subTitle:' Вторая аттестация',
     icon: 'Аттестация',
-    utc: moment('2019-9-23 16:40'),
+    utc: '2019-9-23 16:40',
   },
   {
     title: 'Донорство',
     subTitle:'Мне не жалко)',
     icon: 'Донорство',
-    utc: moment('2019-9-26 15:00'),
+    utc: '2019-9-26 15:00',
   },
   {
     title: 'Зачисление студента',
     subTitle:'Добро пожаловать',
     icon: 'Зачисление студента',
-    utc: moment('2019-10-2 12:30'),
+    utc: '2019-10-2 12:30',
   },
   
 ];
@@ -49,10 +49,11 @@ function EventList(props)
             {
               data.map((item , index) => 
                {
-                if(index === 0 || item.utc.format('M') !== data[index - 1].utc.format('M'))
+                 const utc = moment(item.utc);
+                if(index === 0 || utc.format('M') !== moment(data[index - 1].utc).format('M'))
                   return (
                     <div className={style.itemX2} key={index.toString()}>
-                      <div className = {style.month}> {data[index].utc.format('MMMM')} </div>
+                      <div className = {style.month}> {utc.format('MMMM')} </div>
                       <div key={item.id} className = {style.item}>  
                         <EventCard 
                         event ={item.icon} 
