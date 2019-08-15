@@ -109,20 +109,20 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
         allowNull: false
-      },      
+      },
       position: {
         type: Sequelize.STRING,
         allowNull: false
-      },  
+      },
       representatives: {
         type: Sequelize.STRING,
         allowNull: false
-      },        
+      },
       isActive: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false
-      },
+      }
     });
   },
   down: (queryInterface, Sequelize) => {
