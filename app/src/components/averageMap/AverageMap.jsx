@@ -3,7 +3,6 @@ import { Line } from "react-chartjs-2";
 import Card from "../common/card/Card";
 import BigButton from "../common/bigButton/BigButton";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import style from "./style.module.scss";
 
 var labels = [
   "01",
@@ -51,7 +50,7 @@ const data = {
 export default props => {
   return (
     <Card title="Успеваемость" buttons={<BigButton icon={faPlus} primary />}>
-      <Line data={data} legend={false} height={80} />
+      <Line data={data} height={80} />
     </Card>
   );
 };

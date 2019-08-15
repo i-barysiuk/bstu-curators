@@ -13,7 +13,7 @@ class AveragePoint extends React.Component {
   }
   
   render() {
-    const newString = (this.data.toFixed(1)).toString();  
+    const newString = this.data.toFixed(1).toString();
     const position = newString.indexOf(".", 0);
     const integer = newString.slice(0, position);
     const float = newString.slice(position);
@@ -21,9 +21,9 @@ class AveragePoint extends React.Component {
       <Card title="Средний балл">
         <div className={style.conteiner}>
           <Color percentage={this.data / 10} hue0={0} hue1={120}>
-            <div className={style.number1} style={{ color: this.state.ret }}>              
-              <div className ={style.integer}>{integer} </div>
-              <div className = {style.float}>{float}</div>
+            <div className={style.number1} style={{ color: this.state.ret }}>
+              <div className={style.integer}>{integer} </div>
+              <div className={style.float}>{float}</div>
             </div>
           </Color>
           <hr className={style.h} />
