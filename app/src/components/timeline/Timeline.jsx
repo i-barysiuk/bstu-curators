@@ -140,6 +140,7 @@ class TimelineComp extends React.Component {
             else
               return (
                 <Popover
+                  getPopupContainer={trigger => trigger.parentNode}
                   content={item.event}
                   key={index}
                   trigger="hover"
