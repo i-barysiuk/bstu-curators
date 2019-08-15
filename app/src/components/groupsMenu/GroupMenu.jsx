@@ -64,6 +64,7 @@ class GroupCard extends React.Component {
                 {all[keyName].map(group => (
                   <GroupsCard
                     key={group.name}
+                    onClick={() => this.onGroupClick(group.id)}
                     group={group.name}
                     course={group.course}
                   />
@@ -78,6 +79,7 @@ class GroupCard extends React.Component {
                 {all[keyName].map(group => (
                   <GroupsCard
                     key={group.name}
+                    onClick={() => this.onGroupClick(group.id)}
                     group={group.name}
                     course={group.course}
                   />
