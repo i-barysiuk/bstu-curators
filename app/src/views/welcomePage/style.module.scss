@@ -1,0 +1,137 @@
+
+
+.container
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-decoration: none;
+    width: 100%;
+}
+.header
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    width: 100%;
+    padding: 10px;
+    border-bottom: 1px solid;
+    position: fixed;
+    text-decoration: none;
+    background: white;
+}
+.logo
+{
+    width: 50px;
+}
+.logoName{
+    display: flex;
+    flex-direction: row;   
+    align-items: center;
+    justify-content: space-between;
+    width: 200px;
+    height: 100%;
+    padding-left: 10px;
+}
+.headline{
+    font-size: 24px;
+    padding-left: 10px;
+    color: black;
+}
+.linksInHeader{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content: space-around;
+    height: 100%;
+    width: 400px;
+    font-size: 18px;
+}
+.icons{
+    font-size: 25px;
+    color: #2d50ec;
+    padding-right: 5px;
+}
+.icons2{
+    color: #2d50ec;
+    font-size: 35px;
+}
+.body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;;
+    margin-top: 140px;
+    width: 100%;
+    height: 100%;
+    font-size: 18px;
+    color: black;
+}
+.bstuCuratorIs{
+    width: 100%;
+    height: 768px;
+    padding-left: 50px;
+
+}
+.welcomeTo{
+    border-left: 10px solid #2d50ec;
+    width: 50%;
+    font-size: 128px;
+    padding-left: 50px;
+    margin-bottom: 100px;
+    text-transform: uppercase;
+}
+.helperText{
+    font-size: 24px;
+
+}
+.footer{
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid;
+    align-items: center;
+    color: black;
+    padding: 25px;
+    width: 100%;
+}
+.description{
+    padding-left: 50px;
+    margin-bottom: 50px;
+}
+.whenever{
+    width:100%;
+    height: 300px;
+    background: #aab8f7;
+}
+.everLine{
+    width:100%;
+    height: 70px;
+    text-align: center;
+    padding-top: 20px;
+    font-size: 32px;
+    font-weight: bold;
+}
+.threePoints{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 50px;
+}
+.point{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 300px;
+
+}
+.pointHeadline{
+    font-weight: bold;
+    font-size: 22px;
+}
+.pointDescription{
+    color: white;
+}
