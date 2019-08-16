@@ -115,8 +115,9 @@ module.exports = {
         allowNull: false
       },
       representatives: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.JSON,
+        defaultValue: {},
+        allowNull: true
       },
       isActive: {
         type: Sequelize.BOOLEAN,

@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../");
 
-var Group = sequelize.define(
+var Student = sequelize.define(
   "students",
   {
     id: {
@@ -130,4 +130,4 @@ var Group = sequelize.define(
   }
 );
 
-module.exports = Group;
+module.exports = Student;
