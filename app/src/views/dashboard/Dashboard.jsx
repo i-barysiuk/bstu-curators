@@ -6,17 +6,12 @@ import NotFound from "../404/404";
 import PageWrapper from "../../containers/pageWrapper/PageWrapper";
 import GroupLayout from "./groups";
 
+import GroupModal from "../../components/groupModal/GroupModal";
+
 class Dashboard extends React.Component {
   render() {
     return (
-      <div
-        style={{
-          display: "flex",
-          height: "100%",
-          flexGrow: 1,
-          backgroundColor: "#f3f4f8"
-        }}
-      >
+      <div style={{ display: "flex", height: "100%", flexGrow: 1 }}>
         <Menu />
         <Switch>
           <Route
@@ -48,6 +43,7 @@ class Dashboard extends React.Component {
             )}
           />
         </Switch>
+        <GroupModal />
       </div>
     );
   }

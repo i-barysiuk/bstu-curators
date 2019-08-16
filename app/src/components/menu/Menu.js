@@ -19,6 +19,7 @@ import { Popover, Badge, Avatar, Button } from "antd";
 class Menu extends React.Component {
   render() {
     return (
+      <div>
       <div className={style.container}>
         <div className={style.upMenu}>
           <NavLink to="/dashboard">
@@ -83,6 +84,7 @@ class Menu extends React.Component {
             <Avatar icon="user" className={style.avatar} />
           </Popover>
         </div>
+      </div>
       </div>
     );
   }
