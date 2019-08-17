@@ -16,6 +16,7 @@ import AveragePoint from "../../../../components/averagePoint/AveragePoint";
 import AverageMap from "../../../../components/averageMap/AverageMap";
 
 import StudentTable from "../../../../components/studentTable/StudentTable";
+import StudentSelector from "../../../../components/studentSelector/StudentSelector";
 
 export default class GroupProfile extends React.Component {
   componentDidMount() {
@@ -56,6 +57,12 @@ export default class GroupProfile extends React.Component {
         <Row>
           <Col>
             <Timeline />
+          </Col>
+        </Row>
+
+        <Row style={{ marginBottom: "20px" }}>
+          <Col>
+            <StudentSelector />
           </Col>
         </Row>
 
