@@ -2,7 +2,6 @@ import React from "react";
 import style from "./style.module.scss";
 import PageHead from "../../../../components/pageHead/PageHead";
 import BigButton from "../../../../components/common/bigButton/BigButton";
-// import Card from "../../../../components/common/card/Card";
 import { faPen, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { Row, Col } from "antd";
 
