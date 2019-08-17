@@ -1,8 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Pie } from "react-chartjs-2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFemale, faMale } from "@fortawesome/free-solid-svg-icons";
-
 import {
   Form,
   Modal,
@@ -17,6 +17,8 @@ import {
   Collapse,
   DatePicker
 } from "antd";
+import { getGroupData } from "../../helper/group";
+import GroupsService from "../../services/GroupsService";
 
 const { TabPane } = Tabs;
 const { Option } = Select;
@@ -39,8 +41,19 @@ class GroupForm extends React.Component {
   };
 
   save = () => {
-    this.props.form.validateFieldsAndScroll((err, values) => {});
-    console.log("12");
+    this.props.form.validateFieldsAndScroll(async (err, values) => {
+      if (err) {
+        return;
+      }
+      let group = getGroupData(values);
+      group.curatorId = this.props.profileId;
+      try {
+        await GroupsService.addGroup(group);
+        this.setState({ modalVisible: false });
+      } catch (e) {
+        console.log(e);
+      }
+    });
   };
 
   render() {
@@ -63,7 +76,7 @@ class GroupForm extends React.Component {
         centered
         destroyOnClose={true}
         maskClosable={false}
-        onCancel={() => this.setModalVisible(false)}
+        onCancel={() => this.setState({ modalVisible: false })}
         visible={this.state.modalVisible}
         okText={"Сохранить"}
         cancelText={"Отмена"}
@@ -1148,4 +1161,8 @@ class GroupForm extends React.Component {
 
 const WrappedGroupForm = Form.create({ name: "group" })(GroupForm);
 
-export default WrappedGroupForm;
+const mapStateToProps = state => ({
+  profileId: state.users.profile.id
+});
+
+export default connect(mapStateToProps)(WrappedGroupForm);
