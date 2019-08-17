@@ -44,6 +44,10 @@ class GroupForm extends React.Component {
     console.log("12");
   };
 
+  normalize = value => {
+    return value && value.replace(/s+/g, "").trim();
+  };
+
   render() {
     const {
       getFieldDecorator,
@@ -87,10 +91,11 @@ class GroupForm extends React.Component {
                           message: "Пожалуйста укажите название группы"
                         },
                         {
-                          pattern: /(^[А-Я]{1,1}[A-я]{1,6}-[0-9]{1,3}$)/,
+                          pattern: /(^[А-Я]{1,6}-[0-9]{1,3}$)/,
                           message: "Неверный формат! Пример: AC-59"
                         }
                       ],
+                      normalize: this.normalize,
                       validateTrigger: "onBlur",
                       initialValue: this.state.form.name
                     })(<Input placeholder="Группа" />)}
@@ -105,9 +110,9 @@ class GroupForm extends React.Component {
                           message: "Пожалуйста укажите название группы"
                         },
                         {
-                          pattern: /(^[А-Я]{1,1}[A-я]{1,6}-[0-9]{1,3}$)/,
+                          pattern: /((^[А-Я]{1,1}[\sA-я]{1,50}-[0-9]{1,3}$))/,
                           message:
-                            "Неверный формат! Пример: Aвтоматизированные системы обработки информации - 59"
+                            "Неверный формат! Пример: Aвтоматизированные системы обработки информации-59"
                         }
                       ],
                       validateTrigger: "onBlur",
@@ -164,7 +169,7 @@ class GroupForm extends React.Component {
                     )}
                   </Form.Item>
                 </Col>
-                <Col span={6}>
+                {/* <Col span={6}>
                   <Form.Item label="Курс">
                     {getFieldDecorator("course", {
                       rules: [
@@ -177,6 +182,28 @@ class GroupForm extends React.Component {
                       initialValue: this.state.form.course,
                       validateTrigger: "onChange"
                     })(<Input placeholder="Введите курс" />)}
+                  </Form.Item>
+                </Col> */}
+                <Col span={6}>
+                  <Form.Item label="Курс">
+                    <Select
+                       showSearch
+                       placeholder="Курс:"
+                       defaultValue="1"
+                       optionFilterProp="children"
+                       filterOption={(input, option) =>
+                         option.props.children
+                           .toLowerCase()
+                           .indexOf(input.toLowerCase()) >= 0
+                       }
+                     >
+                       <Option value="1">1</Option>
+                       <Option value="2">2</Option>
+                       <Option value="3">3</Option>
+                       <Option value="4">4</Option>
+                       <Option value="5">5</Option>
+                       <Option value="6">6</Option>
+                    </Select>
                   </Form.Item>
                 </Col>
               </Row>
@@ -853,7 +880,7 @@ class GroupForm extends React.Component {
                             }
                           ],
                           initialValue: this.state.form.total || 0
-                        })(<Slider min={0} max={getFieldValue("total")} />)}
+                        })(<Slider min={0} max={getFieldValue("total") - getFieldValue("parents")} />)}
                       </Col>
                       <Col span={4}>
                         {getFieldDecorator("relatives", {
@@ -864,7 +891,7 @@ class GroupForm extends React.Component {
                           ],
                           initialValue: this.state.form.total || 0
                         })(
-                          <InputNumber min={0} max={getFieldValue("total")} />
+                          <InputNumber min={0} max={getFieldValue("total") - getFieldValue("parents")} />
                         )}
                       </Col>
                     </Row>
@@ -879,7 +906,10 @@ class GroupForm extends React.Component {
                             }
                           ],
                           initialValue: this.state.form.total || 0
-                        })(<Slider min={0} max={getFieldValue("total")} />)}
+                        })(<Slider min={0}
+                            max={getFieldValue("total") -
+                              getFieldValue("parents") -
+                              getFieldValue("relatives") } />)}
                       </Col>
                       <Col span={4}>
                         {getFieldDecorator("independent", {
@@ -890,7 +920,10 @@ class GroupForm extends React.Component {
                           ],
                           initialValue: this.state.form.total || 0
                         })(
-                          <InputNumber min={0} max={getFieldValue("total")} />
+                          <InputNumber min={0} 
+                          max={getFieldValue("total") -
+                            getFieldValue("parents") -
+                            getFieldValue("relatives") } />
                         )}
                       </Col>
                     </Row>
@@ -904,7 +937,11 @@ class GroupForm extends React.Component {
                             }
                           ],
                           initialValue: this.state.form.total || 0
-                        })(<Slider min={0} max={getFieldValue("total")} />)}
+                        })(<Slider min={0} 
+                          max={getFieldValue("total") -
+                            getFieldValue("parents") -
+                            getFieldValue("relatives") -
+                            getFieldValue("independent")} />)}
                       </Col>
                       <Col span={4}>
                         {getFieldDecorator("hostel", {
@@ -915,7 +952,11 @@ class GroupForm extends React.Component {
                           ],
                           initialValue: this.state.form.total || 0
                         })(
-                          <InputNumber min={0} max={getFieldValue("total")} />
+                          <InputNumber min={0}
+                          max={getFieldValue("total") -
+                            getFieldValue("parents") -
+                            getFieldValue("relatives") -
+                            getFieldValue("independent")} />
                         )}
                       </Col>
                     </Row>

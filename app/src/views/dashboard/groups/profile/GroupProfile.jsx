@@ -7,6 +7,7 @@ import { Row, Col } from "antd";
 
 import Timeline from "../../../../components/timeline/Timeline";
 import GroupParams from "../../../../components/groupParams/GroupParams";
+import EventList from "../../../../components/eventList/EventList";
 import HealthTemp from "../../../../components/healthTemp/HealthTemp";
 import HealthMap from "../../../../components/healthMap/HealthMap";
 
@@ -71,7 +72,9 @@ export default class GroupProfile extends React.Component {
               }}
             />
           </Col>
-          <Col span={8} />
+          <Col span={8}>
+            <EventList />
+          </Col>
         </Row>
 
         <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
