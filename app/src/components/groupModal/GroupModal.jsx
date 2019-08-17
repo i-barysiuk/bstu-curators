@@ -2,6 +2,7 @@ import React from "react";
 import { Pie } from "react-chartjs-2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFemale, faMale } from "@fortawesome/free-solid-svg-icons";
+import locale from 'antd/es/date-picker/locale/ru_RU';
 
 import {
   Form,
@@ -56,7 +57,7 @@ class GroupForm extends React.Component {
 
     var study = [];
 
-    for (var i = 1; i <= getFieldValue("totalCourse"); i++) {
+    for (var i = 1; i <= getFieldValue("totalCourse") && i <= 6; i++) {
       study.push(i);
     }
 
@@ -1048,7 +1049,7 @@ class GroupForm extends React.Component {
                         }
                       ],
                       initialValue: this.state.form.studyPeriod || 0
-                    })(<RangePicker />)}
+                    })(<RangePicker locale={locale} />)}
                   </Form.Item>
                 </Col>
               </Row>
@@ -1066,7 +1067,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               initialValue: this.state.form.studyPeriod || 0
-                            })(<RangePicker />)}
+                            })(<RangePicker locale={locale} />)}
                           </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -1078,7 +1079,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               initialValue: this.state.form.studyPeriod || 0
-                            })(<RangePicker />)}
+                            })(<RangePicker locale={locale} />)}
                           </Form.Item>
                         </Col>
                       </Row>
@@ -1092,7 +1093,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               initialValue: this.state.form.studyPeriod || 0
-                            })(<RangePicker />)}
+                            })(<RangePicker locale={locale} />)}
                           </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -1104,7 +1105,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               initialValue: this.state.form.studyPeriod || 0
-                            })(<RangePicker />)}
+                            })(<RangePicker locale={locale} />)}
                           </Form.Item>
                         </Col>
                       </Row>
@@ -1118,7 +1119,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               initialValue: this.state.form.studyPeriod || 0
-                            })(<RangePicker />)}
+                            })(<RangePicker locale={locale} />)}
                           </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -1130,7 +1131,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               initialValue: this.state.form.studyPeriod || 0
-                            })(<RangePicker />)}
+                            })(<RangePicker locale={locale} />)}
                           </Form.Item>
                         </Col>
                       </Row>
@@ -1144,7 +1145,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               initialValue: this.state.form.studyPeriod || 0
-                            })(<RangePicker />)}
+                            })(<RangePicker locale={locale} />)}
                           </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -1156,7 +1157,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               initialValue: this.state.form.studyPeriod || 0
-                            })(<RangePicker />)}
+                            })(<RangePicker locale={locale} />)}
                           </Form.Item>
                         </Col>
                       </Row>
