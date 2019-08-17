@@ -20,6 +20,7 @@ const groupConfig = [
 
 export const getGroupData = data => {
   const newData = { ...data };
+  // eslint-disable-next-line array-callback-return
   groupConfig.map(item => {
     newData[item.name] = item.data.reduce((object, item) => {
       object[item] = newData[item];

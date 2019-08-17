@@ -3,15 +3,10 @@ import { connect } from "react-redux";
 import { Pie } from "react-chartjs-2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFemale, faMale } from "@fortawesome/free-solid-svg-icons";
-<<<<<<< HEAD
-=======
 import locale from 'antd/es/date-picker/locale/ru_RU';
-
->>>>>>> b34bbc9df9b0cadbcf068cd7fbdc07ce936357dd
 import {
   Form,
   Modal,
-  Button,
   Tabs,
   Row,
   Col,
@@ -68,7 +63,6 @@ class GroupForm extends React.Component {
   render() {
     const {
       getFieldDecorator,
-      getFieldsError,
       getFieldValue
     } = this.props.form;
 
@@ -186,7 +180,7 @@ class GroupForm extends React.Component {
                     )}
                   </Form.Item>
                 </Col>
-                {/* <Col span={6}>
+                <Col span={6}>
                   <Form.Item label="Курс">
                     {getFieldDecorator("course", {
                       rules: [
@@ -196,31 +190,25 @@ class GroupForm extends React.Component {
                           whitespace: true
                         }
                       ],
-                      initialValue: this.state.form.course,
+                      initialValue: "1",
                       validateTrigger: "onChange"
-                    })(<Input placeholder="Введите курс" />)}
-                  </Form.Item>
-                </Col> */}
-                <Col span={6}>
-                  <Form.Item label="Курс">
-                    <Select
-                       showSearch
-                       placeholder="Курс:"
-                       defaultValue="1"
-                       optionFilterProp="children"
-                       filterOption={(input, option) =>
-                         option.props.children
-                           .toLowerCase()
-                           .indexOf(input.toLowerCase()) >= 0
-                       }
-                     >
-                       <Option value="1">1</Option>
-                       <Option value="2">2</Option>
-                       <Option value="3">3</Option>
-                       <Option value="4">4</Option>
-                       <Option value="5">5</Option>
-                       <Option value="6">6</Option>
-                    </Select>
+                    })(<Select
+                      showSearch
+                      placeholder="Курс:"
+                      optionFilterProp="children"
+                      filterOption={(input, option) =>
+                        option.props.children
+                          .toLowerCase()
+                          .indexOf(input.toLowerCase()) >= 0
+                      }
+                    >
+                      <Option value="1">1</Option>
+                      <Option value="2">2</Option>
+                      <Option value="3">3</Option>
+                      <Option value="4">4</Option>
+                      <Option value="5">5</Option>
+                      <Option value="6">6</Option>
+                   </Select>)}
                   </Form.Item>
                 </Col>
               </Row>
