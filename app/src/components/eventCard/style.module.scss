@@ -1,0 +1,54 @@
+$cont-width:250px;
+$cont-height: 40px;
+$cont-radius: 7px;
+$cont-padding: 7px;
+$cont-line-height: 1.1;
+$cont-bg:#F0EEEE;
+$font-size: 11px;
+
+.container
+{
+    padding: $cont-padding;
+    width: $cont-width;
+    height: $cont-height;
+    box-shadow: 0 2px 3px 0 #c7c7c7;
+    border-radius: $cont-radius;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    line-height: $cont-line-height;
+    background: $cont-bg;
+    cursor: pointer;
+}
+
+.time
+{
+    width: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.clock , .header
+{
+    font-size: $font-size;
+}
+
+.day , .subHeader
+{
+    font-size: $font-size - 2px;
+}
+
+.day
+{
+    text-transform: uppercase;
+}
+
+.info
+{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}

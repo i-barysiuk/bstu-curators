@@ -127,6 +127,7 @@ class TimelineComp extends React.Component {
             if (item.isActive)
               return (
                 <Popover
+                  getPopupContainer={trigger => trigger.parentNode}
                   content={item.event}
                   key={index}
                   trigger="hover"
