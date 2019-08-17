@@ -7,6 +7,7 @@ import { Row, Col } from "antd";
 
 import Timeline from "../../../../components/timeline/Timeline";
 import GroupParams from "../../../../components/groupParams/GroupParams";
+import EventList from "../../../../components/eventList/EventList";
 import HealthTemp from "../../../../components/healthTemp/HealthTemp";
 import HealthMap from "../../../../components/healthMap/HealthMap";
 
@@ -14,6 +15,7 @@ import AveragePoint from "../../../../components/averagePoint/AveragePoint";
 import AverageMap from "../../../../components/averageMap/AverageMap";
 
 import StudentTable from "../../../../components/studentTable/StudentTable";
+import StudentSelector from "../../../../components/studentSelector/StudentSelector";
 
 export default class GroupProfile extends React.Component {
   componentDidMount() {
@@ -57,6 +59,12 @@ export default class GroupProfile extends React.Component {
           </Col>
         </Row>
 
+        <Row style={{ marginBottom: "20px" }}>
+          <Col>
+            <StudentSelector />
+          </Col>
+        </Row>
+
         <Row gutter={24} style={{ marginBottom: "20px" }}>
           <Col span={14}>
             <GroupParams
@@ -71,7 +79,9 @@ export default class GroupProfile extends React.Component {
               }}
             />
           </Col>
-          <Col span={8} />
+          <Col span={8}>
+            <EventList />
+          </Col>
         </Row>
 
         <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
