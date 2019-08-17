@@ -64,6 +64,12 @@ class StudentService {
     });
   }
 
+  select(where) {
+    return Student.findAll({
+      where: where
+    });
+  }
+
   update(body, id) {
     return Student.update(body, {
       where: {

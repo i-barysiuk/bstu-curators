@@ -49,7 +49,10 @@ router.delete("/:id", (req, res) => {
     });
 });
 
-//TODO:
-//More interactions with students
+router.get("/select", (req, res) => {
+  StudentService.select(req.body)
+    .then(data => res.status(200).json(data))
+    .catch(err => res.status(500).json(err));
+});
 
 module.exports = router;
