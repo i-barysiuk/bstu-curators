@@ -68,8 +68,8 @@ class StudentSelector extends React.Component {
           return (
             <Option key={index}>
               <Avatar size={25}>{item.initials}</Avatar>
-              {item.first_name} {item.last_name} {item.f_name}, группа:{" "}
-              {item.group}
+              {item.first_name + " " + item.last_name} {item.f_name}{" "}
+              {"группа " + item.group}
             </Option>
           );
         })}
