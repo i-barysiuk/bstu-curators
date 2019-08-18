@@ -7,14 +7,14 @@ if (process.env.REACT_APP_ENV === "test")
 if (process.env.REACT_APP_ENV === "development")
   axios.defaults.baseURL = "http://localhost:8000/api/";
 
-const studentsGet = () => {
+const curatorsGet = () => {
   return [
     {
       first_name: "Roberth",
       last_name: "Willson",
       f_name: null,
       initials: "RW",
-      group: "MS-3",
+      cathedra: "MS-3",
       phone: "123"
     },
     {
@@ -22,7 +22,7 @@ const studentsGet = () => {
       last_name: "Milligan",
       f_name: "Batskavich",
       initials: "BMB",
-      group: "ASOI-34",
+      cathedra: "ASOI-34",
       phone: "345"
     },
     {
@@ -30,7 +30,7 @@ const studentsGet = () => {
       last_name: "Coahen",
       f_name: "Batskavna",
       initials: "LCB",
-      group: "LOL-KEK",
+      cathedra: "LOL-KEK",
       phone: "567"
     },
     {
@@ -38,7 +38,7 @@ const studentsGet = () => {
       last_name: "Lincoln",
       f_name: "Zombievich",
       initials: "ALZ",
-      group: "CHEBUREK",
+      cathedra: "CHEBUREK",
       phone: null
     },
     {
@@ -46,16 +46,16 @@ const studentsGet = () => {
       last_name: "Gurira",
       f_name: "Nigretosovna",
       initials: "DGN",
-      group: "SAS"
+      cathedra: "SAS"
     },
     {
       first_name: "Chandler",
       last_name: "Riggs",
       f_name: "Pogib",
       initials: "CRP",
-      group: "PUP"
+      cathedra: "PUP"
     }
   ];
 };
 
-export default studentsGet;
+export default curatorsGet;
