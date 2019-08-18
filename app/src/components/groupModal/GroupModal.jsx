@@ -32,7 +32,7 @@ class GroupForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalVisible: true,
+      modalVisible: false,
       current: "1",
       form: {}
     };
@@ -51,7 +51,7 @@ class GroupForm extends React.Component {
       group.curatorId = this.props.profileId;
       try {
         await GroupsService.addGroup(group);
-        this.setState({ modalVisible: false });
+        this.setState({ modalVisible: false, current: "1" });
       } catch (e) {
         console.log(e);
       }
@@ -92,7 +92,7 @@ class GroupForm extends React.Component {
         className={style.modal}
         destroyOnClose={true}
         maskClosable={false}
-        onCancel={() => closeModal()}
+        onCancel={() => closeModal()|this.setState({current:"1"})}
         visible={isOpen}
         okText={"Сохранить"}
         cancelText={"Отмена"}
