@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Pie } from "react-chartjs-2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFemale, faMale } from "@fortawesome/free-solid-svg-icons";
-import locale from 'antd/es/date-picker/locale/ru_RU';
+import locale from "antd/es/date-picker/locale/ru_RU";
 import {
   Form,
   Modal,
@@ -19,6 +19,7 @@ import {
 } from "antd";
 import { getGroupData } from "../../helper/group";
 import GroupsService from "../../services/GroupsService";
+import {closeModal} from "../../redux/actions/modal"
 import style from "./style.module.scss"
 
 const { TabPane } = Tabs;
@@ -72,9 +73,10 @@ class GroupForm extends React.Component {
 
   render() {
     const {
-      getFieldDecorator,
-      getFieldValue
-    } = this.props.form;
+      form: { getFieldDecorator, getFieldValue },
+      isOpen,
+      closeModal
+    } = this.props;
 
     var study = [];
 
@@ -90,8 +92,8 @@ class GroupForm extends React.Component {
         className={style.modal}
         destroyOnClose={true}
         maskClosable={false}
-        onCancel={() => this.setState({ modalVisible: false })}
-        visible={this.state.modalVisible}
+        onCancel={() => closeModal()}
+        visible={isOpen}
         okText={"Сохранить"}
         cancelText={"Отмена"}
         onOk={this.save}
@@ -202,7 +204,8 @@ class GroupForm extends React.Component {
                       ],
                       initialValue: "1",
                       validateTrigger: "onChange"
-                    })(<Select
+                    })(
+                      <Select
                       dropdownClassName={style.select}
                       showSearch
                       placeholder="Курс:"
@@ -219,7 +222,8 @@ class GroupForm extends React.Component {
                       <Option value="4">4</Option>
                       <Option value="5">5</Option>
                       <Option value="6">6</Option>
-                   </Select>)}
+                   </Select>
+                   )}
                   </Form.Item>
                 </Col>
               </Row>
@@ -949,7 +953,14 @@ class GroupForm extends React.Component {
                             }
                           ],
                           initialValue: this.state.form.total || 0
-                        })(<Slider min={0} max={getFieldValue("total") - getFieldValue("parents")} />)}
+                        })(
+                          <Slider
+                            min={0}
+                            max={
+                              getFieldValue("total") - getFieldValue("parents")
+                            }
+                          />
+                        )}
                       </Col>
                       <Col span={4}>
                         {getFieldDecorator("relatives", {
@@ -960,7 +971,12 @@ class GroupForm extends React.Component {
                           ],
                           initialValue: this.state.form.total || 0
                         })(
-                          <InputNumber min={0} max={getFieldValue("total") - getFieldValue("parents")} />
+                          <InputNumber
+                            min={0}
+                            max={
+                              getFieldValue("total") - getFieldValue("parents")
+                            }
+                          />
                         )}
                       </Col>
                     </Row>
@@ -975,10 +991,16 @@ class GroupForm extends React.Component {
                             }
                           ],
                           initialValue: this.state.form.total || 0
-                        })(<Slider min={0}
-                            max={getFieldValue("total") -
+                        })(
+                          <Slider
+                            min={0}
+                            max={
+                              getFieldValue("total") -
                               getFieldValue("parents") -
-                              getFieldValue("relatives") } />)}
+                              getFieldValue("relatives")
+                            }
+                          />
+                        )}
                       </Col>
                       <Col span={4}>
                         {getFieldDecorator("independent", {
@@ -989,10 +1011,14 @@ class GroupForm extends React.Component {
                           ],
                           initialValue: this.state.form.total || 0
                         })(
-                          <InputNumber min={0} 
-                          max={getFieldValue("total") -
-                            getFieldValue("parents") -
-                            getFieldValue("relatives") } />
+                          <InputNumber
+                            min={0}
+                            max={
+                              getFieldValue("total") -
+                              getFieldValue("parents") -
+                              getFieldValue("relatives")
+                            }
+                          />
                         )}
                       </Col>
                     </Row>
@@ -1006,11 +1032,17 @@ class GroupForm extends React.Component {
                             }
                           ],
                           initialValue: this.state.form.total || 0
-                        })(<Slider min={0} 
-                          max={getFieldValue("total") -
-                            getFieldValue("parents") -
-                            getFieldValue("relatives") -
-                            getFieldValue("independent")} />)}
+                        })(
+                          <Slider
+                            min={0}
+                            max={
+                              getFieldValue("total") -
+                              getFieldValue("parents") -
+                              getFieldValue("relatives") -
+                              getFieldValue("independent")
+                            }
+                          />
+                        )}
                       </Col>
                       <Col span={4}>
                         {getFieldDecorator("hostel", {
@@ -1021,11 +1053,15 @@ class GroupForm extends React.Component {
                           ],
                           initialValue: this.state.form.total || 0
                         })(
-                          <InputNumber min={0}
-                          max={getFieldValue("total") -
-                            getFieldValue("parents") -
-                            getFieldValue("relatives") -
-                            getFieldValue("independent")} />
+                          <InputNumber
+                            min={0}
+                            max={
+                              getFieldValue("total") -
+                              getFieldValue("parents") -
+                              getFieldValue("relatives") -
+                              getFieldValue("independent")
+                            }
+                          />
                         )}
                       </Col>
                     </Row>
@@ -1260,7 +1296,12 @@ class GroupForm extends React.Component {
 const WrappedGroupForm = Form.create({ name: "group" })(GroupForm);
 
 const mapStateToProps = state => ({
-  profileId: state.users.profile.id
+  profileId: state.users.profile.id,
+  isOpen: state.modal.isOpen
 });
 
-export default connect(mapStateToProps)(WrappedGroupForm);
+const mapDispatchToProps = {
+  closeModal,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WrappedGroupForm);

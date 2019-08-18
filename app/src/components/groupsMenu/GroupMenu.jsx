@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import style from "./style.module.scss";
 import BigButton from "../common/bigButton/BigButton";
 import GroupsCard from "../groupItem/GroupItem";
@@ -11,6 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Input, Icon } from "antd";
 import Collapse from "../common/collapse/Collapse";
+import { openModal } from "../../redux/actions/modal";
 
 class GroupCard extends React.Component {
   onGroupClick = id => this.props.history.push(`/dashboard/groups/${id}`);
@@ -19,14 +21,15 @@ class GroupCard extends React.Component {
     const {
       groups: { favorite, my, all, archive },
       fetchAll,
-      fetchArchive
+      fetchArchive,
+      openModal
     } = this.props;
     return (
       <div className={style.container}>
         <div className={style.head}>
           <div className={style.headerRow}>
             <span className={style.header}>Группы</span>
-            <BigButton icon={faPlus} primary />
+            <BigButton icon={faPlus} onClick={openModal} primary />
           </div>
 
           <Input
@@ -93,4 +96,11 @@ class GroupCard extends React.Component {
   }
 }
 
-export default GroupCard;
+const mapDispatchToProps = {
+  openModal
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(GroupCard);
