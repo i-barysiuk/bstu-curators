@@ -3,7 +3,7 @@ import { Line } from "react-chartjs-2";
 import Card from "../common/card/Card";
 import BigButton from "../common/bigButton/BigButton";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Radio, Checkbox, Button } from "antd";
+import { Radio, Checkbox } from "antd";
 import HealthMapService from "../../services/HealthMapService";
 
 class HealthMap extends React.Component {
@@ -26,6 +26,7 @@ class HealthMap extends React.Component {
       respect = [],
       nonrespect = [],
       total = [];
+    // eslint-disable-next-line array-callback-return
     all.map(item => {
       label.push(item.period.toString().split(".")[0]);
       respect.push(item.respect);

@@ -11,6 +11,8 @@ class HealthMapService {
         return healthMap().byMonths;
       case "SEM":
         return healthMap().bySems;
+      default:
+        return healthMap().byWeeks;
     }
   }
 }

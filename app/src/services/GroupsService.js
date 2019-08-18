@@ -19,6 +19,12 @@ class Groups {
     const response = await api(`/groups/${id}`);
     return response.data;
   }
+
+  async addGroup(data) {
+    console.log(data);
+    const response = await api(`/groups/`, "POST", data);
+    return response.data;
+  }
 }
 
 export default new Groups();

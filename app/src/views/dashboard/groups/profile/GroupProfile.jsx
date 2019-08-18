@@ -2,7 +2,6 @@ import React from "react";
 import style from "./style.module.scss";
 import PageHead from "../../../../components/pageHead/PageHead";
 import BigButton from "../../../../components/common/bigButton/BigButton";
-// import Card from "../../../../components/common/card/Card";
 import { faPen, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { Row, Col } from "antd";
 
@@ -59,7 +58,7 @@ export default class GroupProfile extends React.Component {
           </Col>
         </Row>
 
-        <Row gutter={24} style={{ marginBottom: "20px" }}>
+        <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
           <Col span={14}>
             <GroupParams
               data={{
@@ -73,7 +72,7 @@ export default class GroupProfile extends React.Component {
               }}
             />
           </Col>
-          <Col span={8}>
+          <Col span={10}>
             <EventList />
           </Col>
         </Row>

@@ -11,11 +11,7 @@ class AveragePoint extends React.Component {
       ret: null
     };
   }
-
-  Size() {
-    return;
-  }
-
+  
   render() {
     const newString = this.data.toFixed(1).toString();
     const position = newString.indexOf(".", 0);
