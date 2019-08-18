@@ -5,7 +5,7 @@ import { Route, Switch } from "react-router-dom";
 
 import Login from "./views/login/Login";
 import Register from "./views/register/Register";
-import Welcom from "./views/dashboard/Dashboard";
+import Welcome from "./views/welcomePage/WelcomePage";
 import Dashboard from "./views/dashboard/Dashboard";
 import NotFound from "./views/404/404";
 
@@ -37,7 +37,7 @@ class App extends React.Component {
           exact
           path="/"
           render={props => (
-            <PageWrapper {...props} title="Главная" component={Welcom} />
+            <PageWrapper {...props} title="Главная" component={Welcome}  />
           )}
         />
         <Route
@@ -67,7 +67,7 @@ class App extends React.Component {
         <Route
           path="/dashboard"
           render={props => (
-            <PageWrapper {...props} component={Dashboard} Auth />
+            <PageWrapper {...props} component={Dashboard} />
           )}
         />
         <Route
