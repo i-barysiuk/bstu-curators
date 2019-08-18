@@ -83,7 +83,7 @@ class GroupForm extends React.Component {
     for (var i = 1; i <= getFieldValue("totalCourse") && i <= 6; i++) {
       study.push(i);
     }
-
+    
     return (
       <Modal
         width={"70%"}
