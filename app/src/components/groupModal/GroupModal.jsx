@@ -19,6 +19,7 @@ import {
 } from "antd";
 import { getGroupData } from "../../helper/group";
 import GroupsService from "../../services/GroupsService";
+import style from "./style.module.scss"
 
 const { TabPane } = Tabs;
 const { Option } = Select;
@@ -60,6 +61,15 @@ class GroupForm extends React.Component {
     return value && value.replace(/s+/g, "").trim();
   };
 
+  validTotal = (rule, value, callback) => {
+    debugger;
+    if (!value || value === 0) {
+      callback("Пожалуйста укажите значение");
+    } else {
+      callback();
+    }
+  };
+
   render() {
     const {
       getFieldDecorator,
@@ -77,6 +87,7 @@ class GroupForm extends React.Component {
         width={"70%"}
         title="Добавление группы"
         centered
+        className={style.modal}
         destroyOnClose={true}
         maskClosable={false}
         onCancel={() => this.setState({ modalVisible: false })}
@@ -154,7 +165,7 @@ class GroupForm extends React.Component {
                       rules: [
                         {
                           required: true,
-                          message: "Поле фамилия должно быть заполнено!",
+                          message: "Поле раздел должно быть заполнено!",
                           whitespace: true
                         }
                       ],
@@ -162,6 +173,7 @@ class GroupForm extends React.Component {
                       validateTrigger: "onChange"
                     })(
                       <Select
+                        dropdownClassName={style.select}
                         showSearch
                         placeholder="Факультет:"
                         optionFilterProp="children"
@@ -186,13 +198,12 @@ class GroupForm extends React.Component {
                       rules: [
                         {
                           required: true,
-                          message: "Поле фамилия должно быть заполнено!",
-                          whitespace: true
                         }
                       ],
                       initialValue: "1",
                       validateTrigger: "onChange"
                     })(<Select
+                      dropdownClassName={style.select}
                       showSearch
                       placeholder="Курс:"
                       optionFilterProp="children"
@@ -219,7 +230,7 @@ class GroupForm extends React.Component {
                       rules: [
                         {
                           required: true,
-                          message: "Поле фамилия должно быть заполнено!",
+                          message: "Выберите значение!",
                           whitespace: true
                         }
                       ],
@@ -227,6 +238,7 @@ class GroupForm extends React.Component {
                       validateTrigger: "onChange"
                     })(
                       <Select
+                        dropdownClassName={style.select}
                         showSearch
                         placeholder="Факультет:"
                         optionFilterProp="children"
@@ -251,28 +263,71 @@ class GroupForm extends React.Component {
                       rules: [
                         {
                           required: true,
-                          message: "Пожалуйста укажите название группы"
+                          message: "Пожалуйста выберите кафедру"
                         }
                       ],
                       validateTrigger: "onBlur",
                       initialValue: this.state.form.cathedra
-                    })(<Input placeholder="Кафедра" />)}
+                    })(
+                      <Select
+                        dropdownClassName={style.select}
+                        showSearch
+                        placeholder="Начните вводить..."
+                        optionFilterProp="children"
+                        filterOption={(input, option) =>
+                          option.props.children
+                            .toLowerCase()
+                            .indexOf(input.toLowerCase()) >= 0
+                        }
+                      >
+                        <Option value="АТПиП">Кафедра автоматизации технологических процессов и производств</Option>
+                        <Option value="архитектуры">Кафедра архитектуры</Option>
+                        <Option value="БУАиА">Кафедра бухгалтерского учета, анализа и аудита</Option>
+                        <Option value="ВВиОВР">Кафедра водоснабжения, водоотведения и охраны водных ресурсов</Option>
+                        <Option value="высшей математики">Кафедра высшей математики</Option>
+                        <Option value="ГН">Кафедра гуманитарных наук</Option>
+                        <Option value="ГТК">Кафедра геотехники и транспортных коммуникаций</Option>
+                        <Option value="ИЭиХ">Кафедра инженерной экологии и химии</Option>
+                        <Option value="ИЯ">Кафедра иностранных языков</Option>
+                        <Option value="ИИТ">Кафедра интеллектуальных информационных технологий</Option>
+                        <Option value="ИиПМ">Кафедра информатики и прикладной математики</Option>
+                        <Option value="машиноведения">Кафедра машиноведения</Option>
+                        <Option value="МЭА">Кафедра машиностроения и эксплуатации автомобилей</Option>
+                        <Option value="менеджмента">Кафедра менеджмента</Option>
+                        <Option value="МЭМИ">Кафедра мировой экономики, маркетинга, инвестиций</Option>
+                        <Option value="НГиИГ">Кафедра начертательной геометрии и инженерной графики</Option>
+                        <Option value="ПМ">Кафедра прикладной механики</Option>
+                        <Option value="природообустройства">Кафедра природообустройства</Option>
+                        <Option value="СК">Кафедра строительных конструкций</Option>
+                        <Option value="ТГВ">Кафедра теплогазоснабжения и вентиляции</Option>
+                        <Option value="ТБиСМ">Кафедра технологии бетона и строительных материалов</Option>
+                        <Option value="ТСП">Кафедра технологии строительного производства</Option>
+                        <Option value="УЭиФ">Кафедра управления, экономики и финансов</Option>
+                        <Option value="физики">Кафедра физики</Option>
+                        <Option value="ФВиС">Кафедра физического воспитания и спорта</Option>
+                        <Option value="ФиК">Кафедра философии и культурологии</Option>
+                        <Option value="ЭВМиС">Кафедра ЭВМ и систем</Option>
+                        <Option value="ЭиОС">Кафедра экономики и организации строительства</Option>
+                        <Option value="ЭТЛ">Кафедра экономической теории и логистики</Option>
+                      </Select>
+                      )}
                   </Form.Item>
                 </Col>
               </Row>
             </TabPane>
 
             <TabPane tab="Состав" key="2">
-              <Row type="flex" gutter={20}>
+              <Row type="flex">
                 <Col span={14}>
                   <Form.Item label="Количество человек">
-                    <Row>
+                    <Row gutter={16}>
                       <Col span={20}>
                         {getFieldDecorator("total", {
                           rules: [
                             {
                               required: true
-                            }
+                            },
+                            {validator:this.validTotal}
                           ],
                           initialValue: this.state.form.total || 0
                         })(<Slider min={0} max={40} />)}
@@ -282,7 +337,8 @@ class GroupForm extends React.Component {
                           rules: [
                             {
                               required: true
-                            }
+                            },
+                            {validator:this.validTotal}
                           ],
                           initialValue: this.state.form.total || 0
                         })(<InputNumber min={0} max={40} />)}
@@ -290,7 +346,7 @@ class GroupForm extends React.Component {
                     </Row>
                   </Form.Item>
                   <Form.Item label="Гендерный состав">
-                    <Row>
+                    <Row gutter={20}>
                       <Col span={1}>
                         <FontAwesomeIcon
                           icon={faFemale}
@@ -318,7 +374,9 @@ class GroupForm extends React.Component {
                   <Form.Item label="Общественные организации">
                     <Row>
                       <Col span={6}>
+                        <div className={style.organisations}>
                         <span>БРСМ</span>
+                        </div>
                         {getFieldDecorator("brsm", {
                           rules: [
                             {
@@ -329,7 +387,9 @@ class GroupForm extends React.Component {
                         })(<InputNumber min={0} max={40} />)}
                       </Col>
                       <Col span={6}>
+                        <div className={style.organisations}>
                         <span>Профком</span>
+                        </div>
                         {getFieldDecorator("profkom", {
                           rules: [
                             {
@@ -340,7 +400,9 @@ class GroupForm extends React.Component {
                         })(<InputNumber min={0} max={40} />)}
                       </Col>
                       <Col span={6}>
+                        <div className={style.organisations}>
                         <span>Студсовет</span>
+                        </div>
                         {getFieldDecorator("studsovet", {
                           rules: [
                             {
@@ -351,7 +413,9 @@ class GroupForm extends React.Component {
                         })(<InputNumber min={0} max={40} />)}
                       </Col>
                       <Col span={6}>
+                        <div className={style.organisations}>
                         <span>Другие</span>
+                        </div>
                         {getFieldDecorator("others", {
                           rules: [
                             {
@@ -427,7 +491,7 @@ class GroupForm extends React.Component {
                 <Col span={14}>
                   <Form.Item label="Состав семьи">
                     <span>Полная</span>
-                    <Row>
+                    <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("full", {
                           rules: [
@@ -453,7 +517,7 @@ class GroupForm extends React.Component {
                     </Row>
 
                     <span>Неполная</span>
-                    <Row>
+                    <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("notfull", {
                           rules: [
@@ -487,7 +551,7 @@ class GroupForm extends React.Component {
                     </Row>
 
                     <span>Многодетная</span>
-                    <Row>
+                    <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("manychild", {
                           rules: [
@@ -528,7 +592,7 @@ class GroupForm extends React.Component {
                       </Col>
                     </Row>
                     <span>Сироты</span>
-                    <Row>
+                    <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("orphan", {
                           rules: [
@@ -743,7 +807,7 @@ class GroupForm extends React.Component {
                 <Col span={14}>
                   <Form.Item label="География">
                     <span>Местные</span>
-                    <Row>
+                    <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("local", {
                           rules: [
@@ -769,7 +833,7 @@ class GroupForm extends React.Component {
                     </Row>
 
                     <span>Иногородние</span>
-                    <Row>
+                    <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("nonresident", {
                           rules: [
@@ -807,7 +871,7 @@ class GroupForm extends React.Component {
                     </Row>
 
                     <span>Иностранные</span>
-                    <Row>
+                    <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("foreign", {
                           rules: [
@@ -850,7 +914,7 @@ class GroupForm extends React.Component {
                   </Form.Item>
                   <Form.Item label="Проживание">
                     <span>С родителями</span>
-                    <Row>
+                    <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("parents", {
                           rules: [
@@ -876,7 +940,7 @@ class GroupForm extends React.Component {
                     </Row>
 
                     <span>С родственниками</span>
-                    <Row>
+                    <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("relatives", {
                           rules: [
@@ -902,7 +966,7 @@ class GroupForm extends React.Component {
                     </Row>
 
                     <span>Самостоятельно</span>
-                    <Row>
+                    <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("independent", {
                           rules: [
@@ -933,7 +997,7 @@ class GroupForm extends React.Component {
                       </Col>
                     </Row>
                     <span>В общежитии</span>
-                    <Row>
+                    <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("hostel", {
                           rules: [
@@ -1032,7 +1096,7 @@ class GroupForm extends React.Component {
               </Row>
             </TabPane>
             <TabPane tab="Учеба" key="5">
-              <Row>
+              <Row gutter={20}>
                 <Col span={10}>
                   <Form.Item label="Продолжительность обучения:">
                     {getFieldDecorator("totalCourse", {
@@ -1054,11 +1118,11 @@ class GroupForm extends React.Component {
                         }
                       ],
                       initialValue: this.state.form.studyPeriod || 0
-                    })(<RangePicker locale={locale} />)}
+                    })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                   </Form.Item>
                 </Col>
               </Row>
-              <Collapse>
+              <Collapse className={style.collapse}>
                 {study.map(item => {
                   return (
                     <Panel header={item + " курс"} key={item}>
@@ -1072,7 +1136,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               initialValue: this.state.form.studyPeriod || 0
-                            })(<RangePicker locale={locale} />)}
+                            })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -1084,7 +1148,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               initialValue: this.state.form.studyPeriod || 0
-                            })(<RangePicker locale={locale} />)}
+                            })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
                       </Row>
@@ -1098,7 +1162,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               initialValue: this.state.form.studyPeriod || 0
-                            })(<RangePicker locale={locale} />)}
+                            })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -1110,7 +1174,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               initialValue: this.state.form.studyPeriod || 0
-                            })(<RangePicker locale={locale} />)}
+                            })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
                       </Row>
@@ -1124,7 +1188,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               initialValue: this.state.form.studyPeriod || 0
-                            })(<RangePicker locale={locale} />)}
+                            })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -1136,7 +1200,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               initialValue: this.state.form.studyPeriod || 0
-                            })(<RangePicker locale={locale} />)}
+                            })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
                       </Row>
@@ -1150,7 +1214,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               initialValue: this.state.form.studyPeriod || 0
-                            })(<RangePicker locale={locale} />)}
+                            })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -1162,7 +1226,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               initialValue: this.state.form.studyPeriod || 0
-                            })(<RangePicker locale={locale} />)}
+                            })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
                       </Row>

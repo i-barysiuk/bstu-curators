@@ -1,238 +1,62 @@
-  .red{
-    color: red;
-  }
+.modal>div{
+    border-radius: 15px;
 
-  h2{
-    margin-bottom: 30px;
-  }
-
-  label{
-    font-size: 18px !important;
-    font-weight: 600;
-    color:black;
-  }
-  
-  .column{
-    display: flex;
-    flex-direction: column;
-  }
-  .row{
-    display: flex;
-    flex-direction: row;
-    div[class="ant-slider"]{
-      width: 300px;
+    >button:first-of-type{//close button
+        span{
+            color: white;
+        }
     }
-  }
 
-  .flex{
-    display: flex;
-    flex-direction: row;
-    div[class="ant-row ant-form-item"]{
-      margin-bottom: 20px;
+    >div:first-of-type{//header
+        border-radius:15px 15px 0 0;
+        background: #2D50EC;
+        div{
+            color: white;
+            font-size: 22px;
+            line-height: 26px;
+        }
     }
-    div[class="ant-slider"]{
-      width: 300px;
+
+    >div:last-of-type{//footer
     }
-  }
 
-  .select{
-    div>div{
-    border-radius: 15px 15px 15px 15px;
-    }
-  }
-
-  .social{
-    label{
-      font-size: 16px !important;
-      font-weight: 500;
-    }
-    margin-left: 30;
-    margin-bottom: 20;
-    padding-right: 30;
-  }
-
-  .phone{
-    padding: 5px;
-    font-size: 18px;
-    line-height: 20px;
-
-    color: #000000;
-  }
-
-  .padding{
-    padding-bottom:25px;
-  }
-  
-  .container{
-    width:400px;
-    padding-right:25px;
-    padding-bottom:25px;
-  }
-
-  .sex{
-    width: 200px !important;
-  }
-
-  .dynamicText{
-    width: 250px;
-    margin-right: 15px;
-    margin-left: 25px;
-  }
-
-  .border{
-    border-radius: 15px 15px 15px 15px;
-  }
-
-  .footerButton{
-    position: absolute;
-    right: 20px;
-    bottom: 10px;
     button{
-      border-radius: 15px 15px 15px 15px;
+        border-radius: 15px;
     }
-  }
 
-  .primary{
-    background: #2D50EC !important;
-      span{
-        color: white;
-      }
-  }
-
-  div[class="ant-row ant-form-item"]{
-    margin-bottom: 15px;
-  }
-
-  div[class="ant-modal"]{
-    width: 850px;
-  }
-
-  div[class="steps-content"]{
-    padding-top: 25px;
-  }
-
-  div[class="ant-modal-body"]{
-    height: 800px;
-  }
-
-  div[class="ant-input-number-handler-wrap"]{
-    display: none;
-  }
-
-  div[class="ant-steps-item ant-steps-item-process"]{
-    div[class="ant-steps-item-icon"]{
-    background: #2D50EC !important;
+    input{//default input
+        border-radius: 15px;
     }
-  }
 
-  div[class="ant-select"]{
-    border-radius: 15px 15px 15px 15px;
-  }
-
-  div[class="ant-modal-content"]{
-    width:850px;
-    border-radius: 15px 15px 15px 15px;
-  }
-
-  div[class="ant-modal-header"]{
-    background: #2D50EC;
-    border-radius: 15px 15px 0px 0px;
-  }
-
-  div[class="ant-modal-title"]{
-    font-style: normal;
-    font-weight: normal;
-    font-size: 24px;
-    line-height: 26px;
-
-    color: #FFFDFD;
-  }
-
-  span[class="ant-modal-close-x"]{
-    font-size: 20px;
-    color: #FFFDFD;
-  }
-
-  //adaptation
-
-@media (max-width: 850px) {
-  div[class="ant-modal"]{
-    width:740px;
-  }
-  div[class="ant-modal-content"]{
-    width:740px;
-  }
-}
-@media (max-width: 750px) {
-  div[class="ant-modal"]{
-    width:600px;
-  }
-  div[class="ant-modal-content"]{
-    width:600px;
-  }
-  .container{
-    width: 100%;
-  }
-  
-  .row{
-    div[class="ant-slider"]{
-      width:100%;
+    span{//select and number input
+        border-radius: 15px;
+        div{
+            border-radius: 15px;
+        }
     }
-  }
 
-  .flex{
-    flex-direction: column;
-  }
-
-  .container{
-    padding-right:0;
-    padding-bottom:0;
-  }
+    textarea{
+        border-radius: 15px;
+    }
 }
 
-@media (max-width: 610px) {
-  div[class="ant-modal"]{
-    width:470px;
-  }
-  div[class="ant-modal-content"]{
-    width:470px;
-  }
+.rangePicker>div{
+    border-radius: 15px;
+    td{
+        div{border-radius: 15px;}
+        a{border-radius: 15px;}
+    }
 }
 
-@media (max-width: 480px){
-  div[class="ant-modal"]{
-    width:440px;
-  }
-  div[class="ant-modal-content"]{
-    width:440px;
-  }
-  div[class="ant-steps ant-steps-horizontal ant-steps-label-horizontal"] {
-    display: flex !important;
-    div[class="ant-steps-item ant-steps-item-finish"]{
-      overflow: hidden !important;
-      }
-      div[class="ant-steps-item ant-steps-item-process"]{
-        overflow: hidden !important;
-      }
-      div[class="ant-steps-item ant-steps-item-wait"]{
-        overflow: hidden !important;
-      }
-      div[class="ant-steps-item-tail"]{
-        display: none !important;
-      }
-  }
+.collapse{
+    border-radius: 15px;
 }
 
-@media (max-width: 440px){
-  div[class="ant-modal"]{
-    width:100%;
-  }
-  div[class="ant-modal-content"]{
-    width:100%;
-  }
-  .social{
-    margin-left: 0;
-    margin-bottom: 10;
-    padding-right: 20;
-  }
+.select{
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.organisations{
+    width:65px;
 }
