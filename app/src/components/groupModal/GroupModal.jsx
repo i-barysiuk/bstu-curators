@@ -357,7 +357,7 @@ class GroupForm extends React.Component {
                           style={{ color: "pink" }}
                         />
                       </Col>
-                      <Col span={22}>
+                      <Col span={20}>
                         {getFieldDecorator("women", {
                           rules: [
                             {
@@ -388,7 +388,7 @@ class GroupForm extends React.Component {
                             }
                           ],
                           initialValue: this.state.form.total || 0
-                        })(<InputNumber min={0} max={40} />)}
+                        })(<InputNumber min={0} max={getFieldValue("total")} />)}
                       </Col>
                       <Col span={6}>
                         <div className={style.organisations}>
@@ -401,7 +401,7 @@ class GroupForm extends React.Component {
                             }
                           ],
                           initialValue: this.state.form.total || 0
-                        })(<InputNumber min={0} max={40} />)}
+                        })(<InputNumber min={0} max={getFieldValue("total")} />)}
                       </Col>
                       <Col span={6}>
                         <div className={style.organisations}>
@@ -414,7 +414,7 @@ class GroupForm extends React.Component {
                             }
                           ],
                           initialValue: this.state.form.total || 0
-                        })(<InputNumber min={0} max={40} />)}
+                        })(<InputNumber min={0} max={getFieldValue("total")} />)}
                       </Col>
                       <Col span={6}>
                         <div className={style.organisations}>
@@ -427,7 +427,7 @@ class GroupForm extends React.Component {
                             }
                           ],
                           initialValue: this.state.form.total || 0
-                        })(<InputNumber min={0} max={40} />)}
+                        })(<InputNumber min={0} max={getFieldValue("total")} />)}
                       </Col>
                     </Row>
                   </Form.Item>
