@@ -15,7 +15,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: 80px;
+    height: 60px;
     width: 100%;
     padding: 10px;
     border-bottom: 1px solid;
@@ -41,6 +41,12 @@
     padding-left: 10px;
     color: black;
 }
+.headline2{
+    font-size: 28px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 30px;
+}
 .linksInHeader{
     display: flex;
     flex-direction: row;
@@ -49,6 +55,7 @@
     height: 100%;
     width: 400px;
     font-size: 18px;
+
 }
 .icons{
     font-size: 25px;
@@ -74,18 +81,23 @@
     width: 100%;
     height: 768px;
     padding-left: 50px;
-
+    background-image: url("../../assets/images/backgrounds/bstucircle.png");
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-position: top right;
 }
 .welcomeTo{
     border-left: 10px solid #2d50ec;
     width: 50%;
     font-size: 128px;
     padding-left: 50px;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
     text-transform: uppercase;
+    font-weight: lighter;
 }
 .helperText{
-    font-size: 24px;
+    font-size: 36px;
+    width: 50%;
 
 }
 .footer{
@@ -97,14 +109,23 @@
     padding: 25px;
     width: 100%;
 }
-.description{
-    padding-left: 50px;
+.mainDescription{
+    width: 100%;
+    text-align: center;
+    font-size: 22px;
     margin-bottom: 50px;
+}
+.description{
+    text-align: center;
+    color: #777777;
+    width: 300px;
+    margin-bottom: 20px;
 }
 .whenever{
     width:100%;
     height: 300px;
     background: #aab8f7;
+    margin-bottom: 100px;
 }
 .everLine{
     width:100%;
@@ -114,11 +135,47 @@
     font-size: 32px;
     font-weight: bold;
 }
+.everLine2{
+    width:100%;
+    height: 70px;
+    text-align: center;
+    padding-top: 20px;
+    font-size: 30px;
+}
+.whyWe{
+    width:100%;
+    display:flex;
+    flex-direction: column;
+    margin-bottom: 100px;
+}
+.reasons{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.reason{
+    width: 50%;
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #fcfcfc;
+    margin: 20px;
+}
+.lastReason{
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #fcfcfc;
+    margin: 20px;
+}
 .threePoints{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    align-items: center;
+    align-items: flex-start;
     padding: 50px;
 }
 .point{
@@ -134,4 +191,59 @@
 }
 .pointDescription{
     color: white;
+}
+.whatCanWeDo{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 700px;
+    margin-bottom: 100px;
+}
+.bar{
+    display: flex;
+    height: 800px;
+    width: 50%;
+    background-image: url("../../assets/images/backgrounds/welcomePage.jpg");
+    background-size:contain;
+    background-repeat: no-repeat;
+}
+.whatCanList{
+    width: 60%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 80px;
+}
+.screensOfApp{
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    margin-bottom: 100px;
+}
+.firstScreens{
+    display:flex;
+    flex-direction: column;
+    align-self: center;
+    width: 50%;
+}
+.secondScreens{
+    display:flex;
+    flex-direction: column;
+    align-self: center;
+    width: 50%;
+}
+.screens {
+    max-width: 100%;
+    align-self: center;
+    padding-bottom: 20px;
+}
+
+li {
+    list-style-type: none; 
+    margin-bottom: 10px;
+}
+ul {
+    margin-left: 0; 
+    padding-left: 0; 
 }
