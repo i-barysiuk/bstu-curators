@@ -37,7 +37,7 @@ class App extends React.Component {
           exact
           path="/"
           render={props => (
-            <PageWrapper {...props} title="Главная" component={Welcome}  />
+            <PageWrapper {...props} title="Главная" component={Welcome} />
           )}
         />
         <Route
