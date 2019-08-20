@@ -398,6 +398,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
+                          normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(<InputNumber min={0} max={40} />)}
                       </Col>
@@ -411,6 +412,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
+                          normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(<InputNumber min={0} max={40} />)}
                       </Col>
@@ -424,6 +426,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
+                          normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(<InputNumber min={0} max={40} />)}
                       </Col>
@@ -437,6 +440,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
+                          normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(<InputNumber min={0} max={40} />)}
                       </Col>
@@ -666,6 +670,7 @@ class GroupForm extends React.Component {
                                   required: true
                                 }
                               ],
+                              normalize: this.normalizeNumber,
                               initialValue: this.state.form.socOrphan18 || 0
                             })(
                               <InputNumber
@@ -684,8 +689,8 @@ class GroupForm extends React.Component {
                                   required: true
                                 }
                               ],
-                              initialValue:
-                                this.state.form.socWithoutParents18 || 0
+                              normalize: this.normalizeNumber,
+                              initialValue: this.state.form.socWithoutParents18 || 0
                             })(
                               <InputNumber
                                 min={0}
@@ -703,6 +708,7 @@ class GroupForm extends React.Component {
                                   required: true
                                 }
                               ],
+                              normalize: this.normalizeNumber,
                               initialValue: this.state.form.socOrphans || 0
                             })(
                               <InputNumber
@@ -721,6 +727,7 @@ class GroupForm extends React.Component {
                                   required: true
                                 }
                               ],
+                              normalize: this.normalizeNumber,
                               initialValue: this.state.form.socFeature || 0
                             })(
                               <InputNumber
@@ -739,8 +746,8 @@ class GroupForm extends React.Component {
                                   required: true
                                 }
                               ],
-                              initialValue:
-                                this.state.form.socParentsInvalid || 0
+                              normalize: this.normalizeNumber,
+                              initialValue:this.state.form.socParentsInvalid || 0
                             })(
                               <InputNumber
                                 min={0}
@@ -758,6 +765,7 @@ class GroupForm extends React.Component {
                                   required: true
                                 }
                               ],
+                              normalize: this.normalizeNumber,
                               initialValue: this.state.form.socCHAES || 0
                             })(
                               <InputNumber
@@ -776,6 +784,7 @@ class GroupForm extends React.Component {
                                   required: true
                                 }
                               ],
+                              normalize: this.normalizeNumber,
                               initialValue: this.state.form.socCHAESRegion || 0
                             })(
                               <InputNumber
