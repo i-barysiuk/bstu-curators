@@ -73,13 +73,59 @@ class GroupForm extends React.Component {
   }
 
   validTotal = (rule, value, callback) => {
-    if (!value) {
-      callback("Пожалуйста укажите значение");
-    } 
-    else {
-      callback();
-    }
+    if (!value) callback("Пожалуйста укажите значение");
+    else callback();
   };
+
+  validFamily = (rule, value, callback) => {
+    const {getFieldValue} = this.props.form;
+    if
+    (
+      getFieldValue('total') !==
+        (
+          getFieldValue('full') +
+          getFieldValue('notfull') +
+          getFieldValue('manychild') +
+          getFieldValue('orphan')
+        )
+    )
+        callback("Распределите всех!");
+    else
+        callback();  
+  }
+
+  validGeography = (rule, value, callback) => {
+    const {getFieldValue} = this.props.form;
+    if
+    (
+      getFieldValue('total') !==
+        (
+          getFieldValue('local') +
+          getFieldValue('nonresident') +
+          getFieldValue('foreign')
+        )
+    )
+        callback("Распределите всех!");
+    else
+        callback();  
+  }
+
+  validLocation = (rule, value, callback) => {
+    const {getFieldValue} = this.props.form;
+    if
+    (
+      getFieldValue('total') !==
+        (
+          getFieldValue('parents') +
+          getFieldValue('relatives') +
+          getFieldValue('independent') +
+          getFieldValue('hostel')
+        )
+    )
+        callback("Распределите всех!");
+    else
+        callback();  
+  }
 
   render() {
     const {
@@ -144,9 +190,9 @@ class GroupForm extends React.Component {
                           message: "Пожалуйста укажите название группы"
                         },
                         {
-                          pattern: /((^[А-Я]{1,1}[\sA-я]{1,50}-[0-9]{1,3}$))/,
+                          pattern: /((^[А-Я]{1,1}[\sA-я]{1,50} [0-9]{1,3}$))/,
                           message:
-                            "Неверный формат! Пример: Aвтоматизированные системы обработки информации-59"
+                            "Неверный формат! Пример: Aвтоматизированные системы обработки информации 59"
                         }
                       ],
                       validateTrigger: "onBlur",
@@ -187,7 +233,7 @@ class GroupForm extends React.Component {
                       <Select
                         dropdownClassName={style.select}
                         showSearch
-                        placeholder="Факультет:"
+                        placeholder="Выберите..."
                         optionFilterProp="children"
                         filterOption={(input, option) =>
                           option.props.children
@@ -210,15 +256,15 @@ class GroupForm extends React.Component {
                       rules: [
                         {
                           required: true,
+                          message: "Выберите курс",
                         }
                       ],
-                      initialValue: "1",
                       validateTrigger: "onChange"
                     })(
                       <Select
                       dropdownClassName={style.select}
                       showSearch
-                      placeholder="Курс:"
+                      placeholder="Выберите..."
                       optionFilterProp="children"
                       filterOption={(input, option) =>
                         option.props.children
@@ -244,7 +290,7 @@ class GroupForm extends React.Component {
                       rules: [
                         {
                           required: true,
-                          message: "Выберите значение!",
+                          message: "Выберите факультет",
                           whitespace: true
                         }
                       ],
@@ -254,7 +300,7 @@ class GroupForm extends React.Component {
                       <Select
                         dropdownClassName={style.select}
                         showSearch
-                        placeholder="Факультет:"
+                        placeholder="Выберите..."
                         optionFilterProp="children"
                         filterOption={(input, option) =>
                           option.props.children
@@ -526,7 +572,8 @@ class GroupForm extends React.Component {
                           rules: [
                             {
                               required: true
-                            }
+                            },
+                            {validator: this.validFamily}
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
@@ -558,7 +605,8 @@ class GroupForm extends React.Component {
                           rules: [
                             {
                               required: true
-                            }
+                            },
+                            {validator: this.validFamily}
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
@@ -597,7 +645,8 @@ class GroupForm extends React.Component {
                           rules: [
                             {
                               required: true
-                            }
+                            },
+                            {validator: this.validFamily}
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
@@ -660,7 +709,7 @@ class GroupForm extends React.Component {
                   </Form.Item>
                   <Collapse bordered={false}>
                     <Panel header="Социальный статус">
-                      <Form.Item label="Социальное">
+                      <Form.Item label="Льготники:">
                         <Row>
                           <Col span={19}>Дети сироты (до 18 лет)</Col>
                           <Col span={4}>
@@ -851,7 +900,8 @@ class GroupForm extends React.Component {
                           rules: [
                             {
                               required: true
-                            }
+                            },
+                            {validator:this.validGeography}
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
@@ -885,7 +935,8 @@ class GroupForm extends React.Component {
                           rules: [
                             {
                               required: true
-                            }
+                            },
+                            {validator:this.validGeography}
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
@@ -926,7 +977,8 @@ class GroupForm extends React.Component {
                           rules: [
                             {
                               required: true
-                            }
+                            },
+                            {validator:this.validGeography}
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
@@ -961,7 +1013,8 @@ class GroupForm extends React.Component {
                           rules: [
                             {
                               required: true
-                            }
+                            },
+                            {validator:this.validLocation}
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
@@ -995,7 +1048,8 @@ class GroupForm extends React.Component {
                           rules: [
                             {
                               required: true
-                            }
+                            },
+                            {validator:this.validLocation}
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
@@ -1036,7 +1090,8 @@ class GroupForm extends React.Component {
                           rules: [
                             {
                               required: true
-                            }
+                            },
+                            {validator:this.validLocation}
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
@@ -1079,7 +1134,8 @@ class GroupForm extends React.Component {
                           rules: [
                             {
                               required: true
-                            }
+                            },
+                            {validator:this.validLocation}
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
@@ -1314,7 +1370,7 @@ class GroupForm extends React.Component {
                       }
                     ],
                     initialValue: this.state.form.more
-                  })(<TextArea />)}
+                  })(<TextArea autosize={{minRows: 6, maxRows: 9}}/>)}
                 </Form.Item>
               </Form.Item>
             </TabPane>
