@@ -2,6 +2,7 @@ import React from "react";
 import { Select, Avatar } from "antd";
 import StudentService from "../../services/StudentService";
 import UserService from "../../services/UsersService";
+import style from "./style.module.scss";
 
 const { Option } = Select;
 
@@ -32,6 +33,7 @@ export default class Selector extends React.Component {
     return (
       <Select
         size={"large"}
+        className={style.selector}
         showSearch
         style={{ width: "100%" }}
         placeholder={
