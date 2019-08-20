@@ -62,9 +62,19 @@ class GroupForm extends React.Component {
     return value && value.replace(/s+/g, "").trim();
   };
 
+  normalizeNumber = value => {
+    if(!value || value < 0) return 0;
+    else return value;
+  }
+
+  normalizeCourse = value => {
+    if(!value || value < 1) return 1;
+    else return value;
+  }
+
   validTotal = (rule, value, callback) => {
     debugger;
-    if (!value || value === 0) {
+    if (!value) {
       callback("Пожалуйста укажите значение");
     } else {
       callback();
@@ -344,6 +354,7 @@ class GroupForm extends React.Component {
                             },
                             {validator:this.validTotal}
                           ],
+                          normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(<InputNumber min={0} max={40} />)}
                       </Col>
@@ -513,6 +524,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
+                          normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(
                           <InputNumber min={0} max={getFieldValue("total")} />
@@ -544,6 +556,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
+                          normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(
                           <InputNumber
@@ -582,6 +595,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
+                          normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(
                           <InputNumber
@@ -624,6 +638,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
+                          normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(
                           <InputNumber
@@ -829,6 +844,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
+                          normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(
                           <InputNumber min={0} max={getFieldValue("total")} />
@@ -862,6 +878,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
+                          normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(
                           <InputNumber
@@ -902,6 +919,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
+                          normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(
                           <InputNumber
@@ -936,6 +954,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
+                          normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(
                           <InputNumber min={0} max={getFieldValue("total")} />
@@ -969,6 +988,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
+                          normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(
                           <InputNumber
@@ -1009,6 +1029,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
+                          normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(
                           <InputNumber
@@ -1051,6 +1072,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
+                          normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(
                           <InputNumber
@@ -1141,6 +1163,7 @@ class GroupForm extends React.Component {
                           required: true
                         }
                       ],
+                      normalize: this.normalizeCourse,
                       initialValue: this.state.form.total || 1
                     })(<InputNumber min={1} max={6} />)}
                   </Form.Item>
