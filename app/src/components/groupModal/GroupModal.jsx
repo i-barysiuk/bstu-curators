@@ -153,6 +153,7 @@ class GroupForm extends React.Component {
         okText={"Сохранить"}
         cancelText={"Отмена"}
         onOk={this.save}
+        zIndex={1030}
       >
         <Form>
           <Tabs
