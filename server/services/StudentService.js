@@ -23,6 +23,10 @@ class StudentService {
     return Student.findAll({});
   }
 
+  getSex()
+
+  get
+
   create(body) {
     return Student.findOrCreate({
       where: {
@@ -57,6 +61,12 @@ class StudentService {
         representatives: body.representatives,
         isActive: body.isActive
       }
+    });
+  }
+
+  select(where) {
+    return Student.findAll({
+      where: where
     });
   }
 

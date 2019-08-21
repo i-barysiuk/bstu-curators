@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../");
 
-var Group = sequelize.define(
+var Student = sequelize.define(
   "students",
   {
     id: {
@@ -14,10 +14,6 @@ var Group = sequelize.define(
     },
     updatedAt: {
       type: Sequelize.DATE
-    },
-    onlineAt: {
-      type: Sequelize.DATE,
-      allowNull: true
     },
     studentId: {
       type: Sequelize.STRING,
@@ -116,8 +112,9 @@ var Group = sequelize.define(
       allowNull: false
     },
     representatives: {
-      type: Sequelize.STRING,
-      allowNull: false
+      type: Sequelize.JSON,
+      defaultValue: {},
+      allowNull: true
     },
     isActive: {
       type: Sequelize.BOOLEAN,
@@ -130,4 +127,4 @@ var Group = sequelize.define(
   }
 );
 
-module.exports = Group;
+module.exports = Student;

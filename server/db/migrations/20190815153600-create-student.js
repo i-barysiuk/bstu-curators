@@ -14,10 +14,6 @@ module.exports = {
       updatedAt: {
         type: Sequelize.DATE
       },
-      onlineAt: {
-        type: Sequelize.DATE,
-        allowNull: true
-      },
       studentId: {
         type: Sequelize.STRING,
         allowNull: false
@@ -109,20 +105,21 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
         allowNull: false
-      },      
+      },
       position: {
         type: Sequelize.STRING,
         allowNull: false
-      },  
+      },
       representatives: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },        
+        type: Sequelize.JSON,
+        defaultValue: {},
+        allowNull: true
+      },
       isActive: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false
-      },
+      }
     });
   },
   down: (queryInterface, Sequelize) => {
