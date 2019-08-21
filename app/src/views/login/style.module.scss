@@ -1,7 +1,5 @@
-$bar-width: 40%;
-$main-width: 60%;
-$logo-width: 200px;
-$logo-width-mobile: 130px;
+
+@import "../../variables/Size.scss" ;
 
 .container {
   display: flex;

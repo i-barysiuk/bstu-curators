@@ -1,17 +1,4 @@
-//midle text
-$text-size: 30px;
-$text-color: Black;
-$text-width: 430px;
-$text-weight: 700;
-$text-top: 150px;
-$text-top-mobile: 60px;
-// #404
-$size404: 40px;
-// oops
-$oops-size: 150px;
-$oops-color: white;
-//buttons
-$margin-to-buttons: 50px;
+@import "../../variables/Size.scss" , "../../variables/Colors.scss";
 
 .container {
   height: 100%;

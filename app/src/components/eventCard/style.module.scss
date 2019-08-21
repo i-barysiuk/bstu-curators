@@ -1,10 +1,4 @@
-$cont-width:250px;
-$cont-height: 40px;
-$cont-radius: 7px;
-$cont-padding: 7px;
-$cont-line-height: 1.1;
-$cont-bg:#F0EEEE;
-$font-size: 11px;
+@import "../../variables/Size.scss" , "../../variables/Colors.scss";
 
 .container
 {

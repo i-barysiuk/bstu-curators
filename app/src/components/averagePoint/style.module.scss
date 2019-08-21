@@ -1,12 +1,4 @@
-// conteiner
-$cont-width: 350px;
-$cont-padding: 10px;
-// font num
-$num-weight: 700;
-$num-size: 50px;
-// slash
-$slash-height: 150px;
-$slash-rotate: 45deg;
+@import "../../variables/Size.scss";
 
 .conteiner{
   height: 100%;

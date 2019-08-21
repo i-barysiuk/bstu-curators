@@ -1,6 +1,4 @@
-$width-elem: 210px;
-$height-elem: 210px;
-$text-dark-color: #65696c;
+@import "../../variables/Size.scss" , "../../variables/Colors.scss";
 
 .container {
   margin: 5px;

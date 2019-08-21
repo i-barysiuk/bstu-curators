@@ -1,7 +1,4 @@
-//container
-$con-width: 350px;
-$all-field: 200px;
-$gray-color: #65696c;
+@import "../../variables/Size.scss" , "../../variables/Colors.scss";
 
 .container {
   width: $con-width;
