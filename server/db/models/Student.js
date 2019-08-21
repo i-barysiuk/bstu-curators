@@ -15,10 +15,6 @@ var Student = sequelize.define(
     updatedAt: {
       type: Sequelize.DATE
     },
-    onlineAt: {
-      type: Sequelize.DATE,
-      allowNull: true
-    },
     studentId: {
       type: Sequelize.STRING,
       allowNull: false
