@@ -32,6 +32,7 @@ export default class Selector extends React.Component {
     console.log(this.state.data);
     return (
       <Select
+        getPopupContainer={trigger => trigger.parentNode}
         size={"large"}
         className={style.selector}
         showSearch
