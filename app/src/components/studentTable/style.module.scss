@@ -1,8 +1,4 @@
-//container
-$cardCompwidth: 916px;
-$cardCompheight: 389px;
-$all-field: 200px;
-$gray-color:  #65696C;
+@import "../../variables/Size.scss" , "../../variables/Colors.scss";
 
 .container
 {
