@@ -1,22 +1,4 @@
-//container
-$bg-menu: #2d50ec;
-$width-menu: 55px;
-
-//Icons_menu
-$width-icon: 20px;
-$height-icon: 20px;
-$color-icons: white;
-
-//logo
-$width-logo: 35px;
-$margin-top: 20px;
-
-//Hover
-$hover-width: 40px;
-$hover-height: 40px;
-
-//Down menu
-$margin-bottom: 15px;
+@import "../../index.scss";
 
 .container {
   display: flex;
