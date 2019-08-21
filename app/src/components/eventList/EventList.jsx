@@ -31,13 +31,68 @@ var data = [
     subTitle: "Добро пожаловать",
     icon: "Зачисление студента",
     utc: "2019-10-2 12:30"
+  },
+  {
+    title: "Донорство",
+    subTitle: "Мне не жалко)",
+    icon: "Донорство",
+    utc: "2019-9-26 15:00"
+  },
+  {
+    title: "Донорство",
+    subTitle: "Мне не жалко)",
+    icon: "Донорство",
+    utc: "2019-9-26 15:00"
+  },
+  {
+    title: "Донорство",
+    subTitle: "Мне не жалко)",
+    icon: "Донорство",
+    utc: "2019-9-26 15:00"
+  },
+  {
+    title: "Донорство",
+    subTitle: "Мне не жалко)",
+    icon: "Донорство",
+    utc: "2019-9-26 15:00"
+  },
+  {
+    title: "Донорство",
+    subTitle: "Мне не жалко)",
+    icon: "Донорство",
+    utc: "2019-9-26 15:00"
+  },
+  {
+    title: "Донорство",
+    subTitle: "Мне не жалко)",
+    icon: "Донорство",
+    utc: "2019-9-26 15:00"
+  },
+  {
+    title: "Донорство",
+    subTitle: "Мне не жалко)",
+    icon: "Донорство",
+    utc: "2019-9-26 15:00"
+  },
+  {
+    title: "Донорство",
+    subTitle: "Мне не жалко)",
+    icon: "Донорство",
+    utc: "2019-9-26 15:00"
+  },
+  {
+    title: "Донорство",
+    subTitle: "Мне не жалко)",
+    icon: "Донорство",
+    utc: "2019-9-26 15:00"
   }
 ];
 
 function EventList(props) {
   return (
     <div className={style.container}>
-      <Card
+      <Card 
+        style={{height: "500px"}}
         title={"События"}
         buttons={[
           <BigButton icon={faFilter} onClick={props.onClick} />,
