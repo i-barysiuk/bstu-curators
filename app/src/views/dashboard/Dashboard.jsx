@@ -5,6 +5,7 @@ import Request from "../../components/request/Request";
 import NotFound from "../404/404";
 import PageWrapper from "../../containers/pageWrapper/PageWrapper";
 import GroupLayout from "./groups";
+import StudentLayout from "./students";
 
 import GroupModal from "../../components/groupModal/GroupModal"
 
@@ -25,7 +26,7 @@ class Dashboard extends React.Component {
             exec
             path="/dashboard/students"
             render={props => (
-              <PageWrapper {...props} title="Студенты" component={Request} />
+              <PageWrapper {...props} title="Студенты" component={StudentLayout} />
             )}
           />
           <Route
