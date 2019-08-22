@@ -5,8 +5,9 @@ class UserService {
     return api("/users/me");
   }
 
-  getAllCurators() {
-    return api("/users");
+  getAllLike(like) {
+    console.log(like);
+    return api("/users/like", "POST", { value: like });
   }
 }
 

@@ -1,6 +1,5 @@
 import React from "react";
-import { Select, Avatar, Spin } from "antd";
-import StudentService from "../../services/StudentService";
+import { Select, Avatar } from "antd";
 import UserService from "../../services/UsersService";
 import style from "./style.module.scss";
 import debounce from "lodash/debounce";
@@ -12,23 +11,24 @@ export default class Selector extends React.Component {
     super(props);
     this.fetchUser = debounce(this.fetchUser, 1000);
     this.state = {
-      value: [],
       data: [],
       fetching: false
     };
   }
 
   fetchUser = value => {
-    console.log("fetching user ", value);
-    this.setState({ data: [], fetching: true });
-    UserService.getAllCurators().then(res => {
-      this.setState({ data: res.data, fetching: false });
-    });
+    value = value.replace(/(^\s*)|(\s*)$/g, "");
+    if (value !== "") {
+      console.log("fetching user ", value);
+      this.setState({ data: [], fetching: true });
+      UserService.getAllLike(value).then(res => {
+        this.setState({ data: res.data, fetching: false });
+      });
+    }
   };
 
   handleChange = value => {
     this.setState({
-      value,
       data: [],
       fetching: false
     });
@@ -42,9 +42,9 @@ export default class Selector extends React.Component {
         size={"large"}
         className={style.selector}
         showSearch
-        notFoundContent={this.state.fetching ? <Spin size="small" /> : null}
         onSearch={this.fetchUser}
         onChange={this.handleChange}
+        loading={this.state.fetching}
         style={{ width: "100%" }}
         placeholder={
           this.props.isStudent
