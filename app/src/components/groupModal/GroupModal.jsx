@@ -7,7 +7,6 @@ import locale from "antd/es/date-picker/locale/ru_RU";
 import {
   Form,
   Modal,
-  Tabs,
   Row,
   Col,
   Input,
@@ -15,14 +14,16 @@ import {
   InputNumber,
   Slider,
   Collapse,
-  DatePicker
+  Steps,
+  DatePicker,
+  Alert
 } from "antd";
 import { getGroupData } from "../../helper/group";
 import GroupsService from "../../services/GroupsService";
 import {closeModal} from "../../redux/actions/modal"
 import style from "./style.module.scss"
 
-const { TabPane } = Tabs;
+const { Step } = Steps;
 const { Option } = Select;
 const { TextArea } = Input;
 const { Panel } = Collapse;
@@ -32,8 +33,7 @@ class GroupForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalVisible: false,
-      current: "1",
+      current: 0,
       form: {}
     };
   }
@@ -51,7 +51,8 @@ class GroupForm extends React.Component {
       group.curatorId = this.props.profileId;
       try {
         await GroupsService.addGroup(group);
-        this.setState({ modalVisible: false, current: "1" });
+        closeModal();
+        this.setState({current: 0 });
       } catch (e) {
         console.log(e);
       }
@@ -77,7 +78,7 @@ class GroupForm extends React.Component {
     else callback();
   };
 
-  validFamily = (rule, value, callback) => {
+  validFamily = () => {
     const {getFieldValue} = this.props.form;
     if
     (
@@ -89,12 +90,12 @@ class GroupForm extends React.Component {
           getFieldValue('orphan')
         )
     )
-        callback("Распределите всех!");
+      return 'warning'
     else
-        callback();  
+      return 'success'
   }
 
-  validGeography = (rule, value, callback) => {
+  validGeography = () => {
     const {getFieldValue} = this.props.form;
     if
     (
@@ -105,12 +106,12 @@ class GroupForm extends React.Component {
           getFieldValue('foreign')
         )
     )
-        callback("Распределите всех!");
+      return 'warning'
     else
-        callback();  
+      return 'success' 
   }
 
-  validLocation = (rule, value, callback) => {
+  validLocation = () => {
     const {getFieldValue} = this.props.form;
     if
     (
@@ -122,9 +123,9 @@ class GroupForm extends React.Component {
           getFieldValue('hostel')
         )
     )
-        callback("Распределите всех!");
+      return 'warning'
     else
-        callback();  
+      return 'success'
   }
 
   render() {
@@ -133,6 +134,8 @@ class GroupForm extends React.Component {
       isOpen,
       closeModal
     } = this.props;
+
+    const current = this.state.current;
 
     var study = [];
 
@@ -148,7 +151,7 @@ class GroupForm extends React.Component {
         className={style.modal}
         destroyOnClose={true}
         maskClosable={false}
-        onCancel={() => closeModal()|this.setState({current:"1"})}
+        onCancel={() => closeModal()|this.setState({current: 0})}
         visible={isOpen}
         okText={"Сохранить"}
         cancelText={"Отмена"}
@@ -156,12 +159,16 @@ class GroupForm extends React.Component {
         zIndex={1030}
       >
         <Form>
-          <Tabs
-            tabPosition="left"
-            activeKey={this.state.current}
-            onTabClick={this.changeStep}
-          >
-            <TabPane tab="Основное" key="1">
+        <Steps current={current} onChange={this.changeStep} style={{paddingBottom:20}}>
+            <Step /><Step /><Step />
+            <Step /><Step /><Step />
+          </Steps>
+        <Collapse 
+        className={style.collapsePanel}
+        bordered={false}
+        activeKey = {`${current+1}`}
+        >
+            <Panel key="1">
               <Row type="flex" gutter={20}>
                 <Col span={8}>
                   <Form.Item label="Название группы (краткое)">
@@ -191,9 +198,9 @@ class GroupForm extends React.Component {
                           message: "Пожалуйста укажите название группы"
                         },
                         {
-                          pattern: /((^[А-Я]{1,1}[\sA-я]{1,50} [0-9]{1,3}$))/,
+                          pattern: /((^[А-Я]{1,1}[\sA-я]{1,50}-[0-9]{1,3}$))/,
                           message:
-                            "Неверный формат! Пример: Aвтоматизированные системы обработки информации 59"
+                            "Неверный формат! Пример: Aвтоматизированные системы обработки информации-59"
                         }
                       ],
                       validateTrigger: "onBlur",
@@ -375,9 +382,8 @@ class GroupForm extends React.Component {
                   </Form.Item>
                 </Col>
               </Row>
-            </TabPane>
-
-            <TabPane tab="Состав" key="2">
+            </Panel>
+            <Panel key="2">
               <Row type="flex">
                 <Col span={14}>
                   <Form.Item label="Количество человек">
@@ -550,13 +556,15 @@ class GroupForm extends React.Component {
                   />
                 </Col>
               </Row>
-            </TabPane>
-
-            <TabPane tab="Социальное" key="3">
+            </Panel>
+            <Panel key="3">
               <Row type="flex" gutter={20}>
                 <Col span={14}>
-                  <Form.Item label="Состав семьи">
-                    <span>Полная</span>
+                <span>Состав семьи</span>
+                <Form.Item 
+                label="Полная" 
+                validateStatus={this.validFamily()}
+                >
                     <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("full", {
@@ -574,17 +582,20 @@ class GroupForm extends React.Component {
                             {
                               required: true
                             },
-                            {validator: this.validFamily}
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(
-                          <InputNumber min={0} max={getFieldValue("total")} />
+                          <InputNumber min={0} max={getFieldValue("total")}/>
                         )}
                       </Col>
                     </Row>
+                    </Form.Item>
 
-                    <span>Неполная</span>
+                    <Form.Item 
+                    label="Неполная"
+                    validateStatus={this.validFamily()}
+                    >
                     <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("notfull", {
@@ -607,7 +618,6 @@ class GroupForm extends React.Component {
                             {
                               required: true
                             },
-                            {validator: this.validFamily}
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
@@ -619,8 +629,12 @@ class GroupForm extends React.Component {
                         )}
                       </Col>
                     </Row>
+                    </Form.Item>
 
-                    <span>Многодетная</span>
+                    <Form.Item 
+                    label="Многодетная"
+                    validateStatus={this.validFamily()}
+                    >
                     <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("manychild", {
@@ -647,7 +661,6 @@ class GroupForm extends React.Component {
                             {
                               required: true
                             },
-                            {validator: this.validFamily}
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
@@ -663,7 +676,12 @@ class GroupForm extends React.Component {
                         )}
                       </Col>
                     </Row>
-                    <span>Сироты</span>
+                    </Form.Item>
+
+                    <Form.Item 
+                    label="Сироты"
+                    validateStatus={this.validFamily()}
+                    >
                     <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("orphan", {
@@ -690,7 +708,7 @@ class GroupForm extends React.Component {
                           rules: [
                             {
                               required: true
-                            }
+                            },
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
@@ -707,7 +725,20 @@ class GroupForm extends React.Component {
                         )}
                       </Col>
                     </Row>
-                  </Form.Item>
+                  </Form.Item> 
+                  <Collapse 
+                  className={style.collapsePanel}
+                  bordered={false}
+                  activeKey = {this.validFamily()==='warning'?"1":null}
+                  >
+                  <Panel key="1">
+                   <Alert 
+                      style={{borderRadius:15}} 
+                      message="(распределите всех)" 
+                      type="warning" showIcon />
+                  </Panel>
+                  </Collapse>
+                  
                   <Collapse bordered={false}>
                     <Panel header="Социальный статус">
                       <Form.Item label="Льготники:">
@@ -879,12 +910,15 @@ class GroupForm extends React.Component {
                   />
                 </Col>
               </Row>
-            </TabPane>
-            <TabPane tab="География" key="4">
+            </Panel>
+            <Panel key="4">
               <Row type="flex" gutter={20}>
                 <Col span={14}>
-                  <Form.Item label="География">
-                    <span>Местные</span>
+                <span>География</span>
+                <Form.Item 
+                    label="Местные"
+                    validateStatus={this.validGeography()}
+                    >
                     <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("local", {
@@ -902,7 +936,6 @@ class GroupForm extends React.Component {
                             {
                               required: true
                             },
-                            {validator:this.validGeography}
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
@@ -911,8 +944,12 @@ class GroupForm extends React.Component {
                         )}
                       </Col>
                     </Row>
+                    </Form.Item>
 
-                    <span>Иногородние</span>
+                    <Form.Item 
+                    label="Иногородние"
+                    validateStatus={this.validGeography()}
+                    >
                     <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("nonresident", {
@@ -936,8 +973,7 @@ class GroupForm extends React.Component {
                           rules: [
                             {
                               required: true
-                            },
-                            {validator:this.validGeography}
+                            }
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
@@ -951,8 +987,12 @@ class GroupForm extends React.Component {
                         )}
                       </Col>
                     </Row>
+                    </Form.Item>
 
-                    <span>Иностранные</span>
+                    <Form.Item 
+                    label="Иностранцы"
+                    validateStatus={this.validGeography()}
+                    >
                     <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("foreign", {
@@ -978,8 +1018,7 @@ class GroupForm extends React.Component {
                           rules: [
                             {
                               required: true
-                            },
-                            {validator:this.validGeography}
+                            }
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
@@ -996,8 +1035,24 @@ class GroupForm extends React.Component {
                       </Col>
                     </Row>
                   </Form.Item>
-                  <Form.Item label="Проживание">
-                    <span>С родителями</span>
+                  <Collapse 
+                  className={style.collapsePanel}
+                  bordered={false}
+                  activeKey = {this.validGeography()==='warning'?"1":null}
+                  >
+                  <Panel key="1">
+                   <Alert 
+                      style={{borderRadius:15}} 
+                      message="(распределите всех)" 
+                      type="warning" showIcon />
+                  </Panel>
+                  </Collapse>
+
+                  <span>Проживание</span>
+                  <Form.Item 
+                    label="С родителями"
+                    validateStatus={this.validLocation()}
+                    >
                     <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("parents", {
@@ -1015,7 +1070,6 @@ class GroupForm extends React.Component {
                             {
                               required: true
                             },
-                            {validator:this.validLocation}
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
@@ -1024,8 +1078,12 @@ class GroupForm extends React.Component {
                         )}
                       </Col>
                     </Row>
+                    </Form.Item>
 
-                    <span>С родственниками</span>
+                    <Form.Item 
+                    label="С родственниками"
+                    validateStatus={this.validLocation()}
+                    >
                     <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("relatives", {
@@ -1064,8 +1122,12 @@ class GroupForm extends React.Component {
                         )}
                       </Col>
                     </Row>
+                    </Form.Item>
 
-                    <span>Самостоятельно</span>
+                    <Form.Item 
+                    label="Самостоятельно"
+                    validateStatus={this.validLocation()}
+                    >
                     <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("independent", {
@@ -1092,7 +1154,6 @@ class GroupForm extends React.Component {
                             {
                               required: true
                             },
-                            {validator:this.validLocation}
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
@@ -1108,7 +1169,12 @@ class GroupForm extends React.Component {
                         )}
                       </Col>
                     </Row>
-                    <span>В общежитии</span>
+                    </Form.Item>
+
+                    <Form.Item 
+                    label="В общежитии"
+                    validateStatus={this.validLocation()}
+                    >
                     <Row gutter={20}>
                       <Col span={20}>
                         {getFieldDecorator("hostel", {
@@ -1154,7 +1220,22 @@ class GroupForm extends React.Component {
                       </Col>
                     </Row>
                   </Form.Item>
+
+                  <Collapse 
+                  className={style.collapsePanel}
+                  bordered={false}
+                  activeKey = {this.validLocation()==='warning'?"1":null}
+                  >
+                  <Panel key="1">
+                   <Alert 
+                      style={{borderRadius:15}} 
+                      message="(распределите всех)" 
+                      type="warning" showIcon />
+                  </Panel>
+                  </Collapse>
+
                 </Col>
+
                 <Col span={10}>
                   <Pie
                     data={{
@@ -1218,8 +1299,8 @@ class GroupForm extends React.Component {
                   />
                 </Col>
               </Row>
-            </TabPane>
-            <TabPane tab="Учеба" key="5">
+            </Panel>
+            <Panel key="5">
               <Row gutter={20}>
                 <Col span={10}>
                   <Form.Item label="Продолжительность обучения:">
@@ -1359,8 +1440,8 @@ class GroupForm extends React.Component {
                   );
                 })}
               </Collapse>
-            </TabPane>
-            <TabPane tab="Прочее" key="6">
+            </Panel>
+            <Panel key="6">
               <Form.Item label="Прочие сведения">
                 <Form.Item>
                   {getFieldDecorator("more", {
@@ -1374,8 +1455,8 @@ class GroupForm extends React.Component {
                   })(<TextArea autosize={{minRows: 6, maxRows: 9}}/>)}
                 </Form.Item>
               </Form.Item>
-            </TabPane>
-          </Tabs>
+            </Panel>
+          </Collapse>
         </Form>
       </Modal>
     );

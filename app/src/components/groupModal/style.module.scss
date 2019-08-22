@@ -40,6 +40,14 @@
     }
 }
 
+.collapsePanel
+>div{
+    border-bottom: none !important;
+    >div:first-of-type{
+        display: none;
+    }
+}
+
 .rangePicker>div{
     border-radius: 15px;
     td{
