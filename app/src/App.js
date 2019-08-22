@@ -18,6 +18,8 @@ import { logout } from "./redux/actions/auth";
 import { whoAmI } from "./redux/actions/users";
 import EventList from "./components/eventList/EventList";
 
+import Selector from "./components/selector/Selector";
+
 history.listen(location => {
   Analitic.pageview(location.pathname);
 });
@@ -49,7 +51,12 @@ class App extends React.Component {
           exact
           path="/asd"
           render={props => (
-            <PageWrapper {...props} title="Главная" component={EventList} />
+            <PageWrapper
+              {...props}
+              title="Главная"
+              component={Selector}
+              isStudent
+            />
           )}
         />
         <Route
