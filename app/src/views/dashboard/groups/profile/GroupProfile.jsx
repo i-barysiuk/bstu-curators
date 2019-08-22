@@ -16,8 +16,6 @@ import AverageMap from "../../../../components/averageMap/AverageMap";
 
 import StudentTable from "../../../../components/studentTable/StudentTable";
 
-import Selector from "../../../../components/selector/Selector";
-
 export default class GroupProfile extends React.Component {
   componentDidMount() {
     this.activeGroupRequest();
@@ -57,18 +55,6 @@ export default class GroupProfile extends React.Component {
         <Row>
           <Col>
             <Timeline />
-          </Col>
-        </Row>
-
-        <Row style={{ marginBottom: "20px" }}>
-          <Col>
-            <Selector isStudent={true} />
-          </Col>
-        </Row>
-
-        <Row style={{ marginBottom: "20px" }}>
-          <Col>
-            <Selector />
           </Col>
         </Row>
 

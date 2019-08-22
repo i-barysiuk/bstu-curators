@@ -23,6 +23,45 @@ class UserService {
     return User.findAll({});
   }
 
+  getAllLike(pattern) {
+    return User.findAll({
+      where: {
+        [Op.or]: [
+          {
+            first_name: {
+              [Op.iLike]: `%${pattern}%`
+            }
+          },
+          {
+            last_name: {
+              [Op.iLike]: `%${pattern}%`
+            }
+          },
+          {
+            f_name: {
+              [Op.iLike]: `%${pattern}%`
+            }
+          },
+          {
+            phone: {
+              [Op.iLike]: `%${pattern}%`
+            }
+          },
+          {
+            department: {
+              [Op.iLike]: `%${pattern}%`
+            }
+          },
+          {
+            email: {
+              [Op.iLike]: `%${pattern}%`
+            }
+          }
+        ]
+      }
+    });
+  }
+
   create(body) {
     return User.findOrCreate({
       where: {
