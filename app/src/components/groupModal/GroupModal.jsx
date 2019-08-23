@@ -43,20 +43,22 @@ class GroupForm extends React.Component {
   };
 
   save = () => {
+    var valid = false;
     this.props.form.validateFieldsAndScroll(async (err, values) => {
       if (err) {
-        return false;
+        return;
       }
       let group = getGroupData(values);
       group.curatorId = this.props.profileId;
+      valid = true;
       try {
         await GroupsService.addGroup(group);
         this.setState({current: 0 });
-        return true;
       } catch (e) {
         console.log(e);
       }
-    });
+    })
+    return valid;
   };
 
   normalize = value => {
@@ -90,7 +92,9 @@ class GroupForm extends React.Component {
           getFieldValue('orphan')
         )
     )
+    {
       return 'warning'
+    }
     else
       return 'validating'
   }
