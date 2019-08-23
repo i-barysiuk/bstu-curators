@@ -19,11 +19,10 @@ class LoginForm extends React.Component {
       user: {}
     };
   }
-  
   onclick () {
-    window.location.assign('http://localhost:3000/');
+    window.location.assign('/');
   }
-
+  
   checkUser = (rule, value, callback) => {
     AuthService.info(value)
       .then(res => {
