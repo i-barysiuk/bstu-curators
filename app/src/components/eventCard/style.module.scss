@@ -1,48 +1,44 @@
-@import "../../variables/Size.scss" , "../../variables/Colors.scss";
+@import "../../variables/Size.scss", "../../variables/Colors.scss";
 
-.container
-{
-    padding: $cont-padding;
-    width: $cont-width;
-    height: $cont-height;
-    box-shadow: 0 2px 3px 0 #c7c7c7;
-    border-radius: $cont-radius;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    line-height: $cont-line-height;
-    background: $cont-bg;
-    cursor: pointer;
+.container {
+  padding: $cont-padding;
+  width: 100%;
+  height: $cont-height;
+  box-shadow: 0 2px 3px 0 #c7c7c7;
+  border-radius: $cont-radius;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  line-height: $cont-line-height;
+  background: $cont-bg;
+  cursor: pointer;
 }
 
-.time
-{
-    width: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.time {
+  width: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.clock , .header
-{
-    font-size: $font-size;
+.clock,
+.header {
+  font-size: $font-size;
 }
 
-.day , .subHeader
-{
-    font-size: $font-size - 2px;
+.day,
+.subHeader {
+  font-size: $font-size - 2px;
 }
 
-.day
-{
-    text-transform: uppercase;
+.day {
+  text-transform: uppercase;
 }
 
-.info
-{
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+.info {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }

@@ -27,6 +27,13 @@ router.post("/", (req, res) => {
     .catch(err => console.error(err));
 });
 
+router.post("/like", (req, res) => {
+  console.log(req.body.value);
+  UserService.getAllLike(req.body.value)
+    .then(data => res.status(200).json(data))
+    .catch(err => console.error(err));
+});
+
 router.put("/:id", (req, res) => {
   UserService.update(req.body, req.params.id)
     .then(updatedRecord => {

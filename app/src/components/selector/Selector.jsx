@@ -1,32 +1,38 @@
 import React from "react";
 import { Select, Avatar } from "antd";
-import StudentService from "../../services/StudentService";
 import UserService from "../../services/UsersService";
 import style from "./style.module.scss";
+import debounce from "lodash/debounce";
 
 const { Option } = Select;
 
 export default class Selector extends React.Component {
   constructor(props) {
     super(props);
+    this.fetchUser = debounce(this.fetchUser, 1000);
     this.state = {
-      data: []
+      data: [],
+      fetching: false
     };
   }
 
-  chooseData() {
-    this.props.isStudent
-      ? this.setState({ data: StudentService.getAll() })
-      : UserService.getAllCurators().then(res => {
-          this.setState({
-            data: res.data
-          });
-        });
-  }
+  fetchUser = value => {
+    value = value.replace(/(^\s*)|(\s*)$/g, "");
+    if (value !== "") {
+      console.log("fetching user ", value);
+      this.setState({ data: [], fetching: true });
+      UserService.getAllLike(value).then(res => {
+        this.setState({ data: res.data, fetching: false });
+      });
+    }
+  };
 
-  componentDidMount() {
-    this.chooseData();
-  }
+  handleChange = value => {
+    this.setState({
+      data: [],
+      fetching: false
+    });
+  };
 
   render() {
     console.log(this.state.data);
@@ -36,6 +42,9 @@ export default class Selector extends React.Component {
         size={"large"}
         className={style.selector}
         showSearch
+        onSearch={this.fetchUser}
+        onChange={this.handleChange}
+        loading={this.state.fetching}
         style={{ width: "100%" }}
         placeholder={
           this.props.isStudent
@@ -54,7 +63,7 @@ export default class Selector extends React.Component {
               <br />
               {this.props.isStudent
                 ? "Группа " + item.group
-                : "Кафедра: " + item.cathedra}
+                : "Кафедра: " + item.department}
               <br />
               {item.phone ? "Телефон: " + item.phone : null}
             </Option>

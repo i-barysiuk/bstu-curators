@@ -16,8 +16,6 @@ import AverageMap from "../../../../components/averageMap/AverageMap";
 
 import StudentTable from "../../../../components/studentTable/StudentTable";
 
-import Selector from "../../../../components/selector/Selector";
-
 export default class GroupProfile extends React.Component {
   componentDidMount() {
     this.activeGroupRequest();
@@ -48,7 +46,13 @@ export default class GroupProfile extends React.Component {
       <div className={style.container}>
         <PageHead
           title={this.props.group.fullName}
+<<<<<<< HEAD
           subtitle= {this.props.group.department + "/" + this.props.group.cathedra}
+=======
+          subtitle={
+            this.props.group.department + " / " + this.props.group.cathedra
+          }
+>>>>>>> 647f93b307b33e560704fad2d8f8dca427d438c6
         >
           <BigButton icon={faPen} />
           <BigButton icon={faEllipsisH} />
@@ -57,18 +61,6 @@ export default class GroupProfile extends React.Component {
         <Row>
           <Col>
             <Timeline />
-          </Col>
-        </Row>
-
-        <Row style={{ marginBottom: "20px" }}>
-          <Col>
-            <Selector isStudent={true} />
-          </Col>
-        </Row>
-
-        <Row style={{ marginBottom: "20px" }}>
-          <Col>
-            <Selector />
           </Col>
         </Row>
 

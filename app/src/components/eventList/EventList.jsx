@@ -9,24 +9,28 @@ const moment = require("moment");
 
 var data = [
   {
+    id: "1",
     title: "Аттестация 1",
     subTitle: " Первая аттестация",
     icon: "Аттестация",
     utc: "2019-9-22 12:20"
   },
   {
+    id: "2",
     title: "Аттестация 2",
     subTitle: " Вторая аттестация",
     icon: "Аттестация",
     utc: "2019-9-23 16:40"
   },
   {
+    id: "3",
     title: "Донорство",
     subTitle: "Мне не жалко)",
     icon: "Донорство",
     utc: "2019-9-26 15:00"
   },
   {
+    id: "4",
     title: "Зачисление студента",
     subTitle: "Добро пожаловать",
     icon: "Зачисление студента",
@@ -36,50 +40,35 @@ var data = [
 
 function EventList(props) {
   return (
-    <div className={style.container}>
-      <Card
-        title={"События"}
-        buttons={[
-          <BigButton icon={faFilter} onClick={props.onClick} />,
-          <BigButton icon={faPlus} primary onClick={props.onClick} />
-        ]}
-        contentCenter
-      >
-        <div className={style.cards}>
-          {data.map((item, index) => {
-            const utc = moment(item.utc);
-            if (
-              index === 0 ||
-              utc.format("M") !== moment(data[index - 1].utc).format("M")
-            )
-              return (
-                <div className={style.itemX2} key={index.toString()}>
+    <Card
+      title={"События"}
+      buttons={[
+        <BigButton icon={faFilter} onClick={props.onClick} />,
+        <BigButton icon={faPlus} primary onClick={props.onClick} />
+      ]}
+      contentCenter
+    >
+      <div className={style.cards}>
+        {data.map((item, index) => {
+          var utc = moment(item.utc);
+          return (
+            <div className={style.item} key={item.id}>
+              {index === 0 ||
+                (utc.format("M") !==
+                  moment(data[index - 1].utc).format("M") && (
                   <div className={style.month}> {utc.format("MMMM")} </div>
-                  <div key={item.id} className={style.item}>
-                    <EventCard
-                      event={item.icon}
-                      title={item.title}
-                      subTitle={item.subTitle}
-                      utc={item.utc}
-                    />
-                  </div>
-                </div>
-              );
-            else
-              return (
-                <div className={style.item} key={index.toString()}>
-                  <EventCard
-                    event={item.icon}
-                    title={item.title}
-                    subTitle={item.subTitle}
-                    utc={item.utc}
-                  />
-                </div>
-              );
-          })}
-        </div>
-      </Card>
-    </div>
+                ))}
+              <EventCard
+                event={item.icon}
+                title={item.title}
+                subTitle={item.subTitle}
+                utc={item.utc}
+              />
+            </div>
+          );
+        })}
+      </div>
+    </Card>
   );
 }
 

@@ -16,7 +16,8 @@ import PageWrapper from "./containers/pageWrapper/PageWrapper";
 
 import { logout } from "./redux/actions/auth";
 import { whoAmI } from "./redux/actions/users";
-import EventList from "./components/eventList/EventList";
+
+import Sandbox from "./views/sandbox/Sandbox";
 
 history.listen(location => {
   Analitic.pageview(location.pathname);
@@ -37,19 +38,7 @@ class App extends React.Component {
           exact
           path="/"
           render={props => (
-            <PageWrapper
-              {...props}
-              title="Главная"
-              component={Welcome}
-              notAuth
-            />
-          )}
-        />
-        <Route
-          exact
-          path="/asd"
-          render={props => (
-            <PageWrapper {...props} title="Главная" component={EventList} />
+            <PageWrapper {...props} title="Главная" component={Welcome} />
           )}
         />
         <Route
@@ -71,7 +60,16 @@ class App extends React.Component {
         />
         <Route
           path="/dashboard"
-          render={props => <PageWrapper {...props} component={Dashboard} />}
+          render={props => (
+            <PageWrapper {...props} component={Dashboard} Auth />
+          )}
+        />
+        <Route
+          exact
+          path="/sandbox"
+          render={props => (
+            <PageWrapper {...props} title="Песочница" component={Sandbox} />
+          )}
         />
         <Route
           path="*"
