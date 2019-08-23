@@ -1,249 +1,239 @@
+@import "../../variables/Colors.scss";
 
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
 
-.container
-{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    text-decoration: none;
-    width: 100%;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+  width: 100%;
+  padding: 15px;
+  padding-left: 60px;
+  padding-right: 60px;
+  position: fixed;
+  transition: background-color 200ms linear;
 }
-.header
-{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    height: 60px;
-    width: 100%;
-    padding: 10px;
-    border-bottom: 1px solid;
-    position: fixed;
-    text-decoration: none;
-    background: white;
-}
-.logo
-{
-    width: 50px;
-}
-.logoName{
-    display: flex;
-    flex-direction: row;   
-    align-items: center;
-    justify-content: space-between;
-    width: 200px;
-    height: 100%;
-    padding-left: 10px;
-}
-.headline{
-    font-size: 24px;
-    padding-left: 10px;
-    color: black;
-}
-.headline2{
-    font-size: 28px;
-    font-weight: bold;
-    color: black;
-    margin-bottom: 30px;
-}
-.linksInHeader{
-    display: flex;
-    flex-direction: row;
-    align-items:center;
-    justify-content: space-around;
-    height: 100%;
-    width: 400px;
-    font-size: 18px;
 
+.color {
+  background: white;
 }
-.icons{
-    font-size: 25px;
-    color: #2d50ec;
-    padding-right: 5px;
-}
-.icons2{
-    color: #2d50ec;
-    font-size: 35px;
-}
-.body{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;;
-    margin-top: 140px;
-    width: 100%;
-    height: 100%;
-    font-size: 18px;
-    color: black;
-}
-.bstuCuratorIs{
-    width: 100%;
-    height: 768px;
-    padding-left: 50px;
-    background-image: url("../../assets/images/backgrounds/bstucircle.png");
-    background-size: auto;
-    background-repeat: no-repeat;
-    background-position: top right;
-}
-.welcomeTo{
-    border-left: 10px solid #2d50ec;
-    width: 50%;
-    font-size: 128px;
-    padding-left: 50px;
-    margin-bottom: 50px;
-    text-transform: uppercase;
-    font-weight: lighter;
-}
-.helperText{
-    font-size: 36px;
-    width: 50%;
 
+.logo {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  font-size: 24px;
 }
-.footer{
-    display: flex;
-    justify-content: flex-end;
-    border-top: 1px solid;
-    align-items: center;
-    color: black;
-    padding: 25px;
-    width: 100%;
+.logo span {
+  padding-left: 10px;
 }
-.mainDescription{
-    width: 100%;
-    text-align: center;
-    font-size: 22px;
-    margin-bottom: 50px;
+.logo img {
+  width: 30px;
 }
-.description{
-    text-align: center;
-    color: #777777;
-    width: 300px;
-    margin-bottom: 20px;
-}
-.whenever{
-    width:100%;
-    height: 300px;
-    background: #aab8f7;
-    margin-bottom: 100px;
-}
-.everLine{
-    width:100%;
-    height: 70px;
-    text-align: center;
-    padding-top: 20px;
-    font-size: 32px;
-    font-weight: bold;
-}
-.everLine2{
-    width:100%;
-    height: 70px;
-    text-align: center;
-    padding-top: 20px;
-    font-size: 30px;
-}
-.whyWe{
-    width:100%;
-    display:flex;
-    flex-direction: column;
-    margin-bottom: 100px;
-}
-.reasons{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-}
-.reason{
-    width: 50%;
-    display:flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    background-color: #fcfcfc;
-    margin: 20px;
-}
-.lastReason{
-    width: 100%;
-    display:flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    background-color: #fcfcfc;
-    margin: 20px;
-}
-.threePoints{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: flex-start;
-    padding: 50px;
-}
-.point{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    width: 300px;
 
+.headline2 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 30px;
 }
-.pointHeadline{
-    font-weight: bold;
-    font-size: 22px;
+
+.menu {
+  font-size: 16px;
 }
-.pointDescription{
-    color: white;
+
+.menu a {
+  padding-left: 15px;
 }
-.whatCanWeDo{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: 700px;
-    margin-bottom: 100px;
+
+.icons {
+  font-size: 25px;
+  color: #2d50ec;
+  padding-right: 5px;
 }
-.bar{
-    display: flex;
-    height: 800px;
-    width: 50%;
-    background-image: url("../../assets/images/backgrounds/welcomePage.jpg");
-    background-size:contain;
-    background-repeat: no-repeat;
+.icons2 {
+  color: #2d50ec;
+  font-size: 35px;
+  margin-right: 10px;
 }
-.whatCanList{
-    width: 60%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    padding-left: 80px;
+.body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 140px;
+  width: 100%;
+  height: 100%;
+  font-size: 18px;
+  color: black;
 }
-.screensOfApp{
-    width:100%;
-    display: flex;
-    flex-direction: row;
-    padding: 20px;
-    margin-bottom: 100px;
+.bstuCuratorIs {
+  width: 100%;
+  height: 768px;
+  padding-left: 50px;
+  background-image: url("../../assets/images/backgrounds/bstucircle.png");
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-position: top right;
 }
-.firstScreens{
-    display:flex;
-    flex-direction: column;
-    align-self: center;
-    width: 50%;
+.welcomeTo {
+  border-left: 10px solid #2d50ec;
+  width: 50%;
+  font-size: 128px;
+  padding-left: 50px;
+  margin-bottom: 50px;
+  text-transform: uppercase;
+  font-weight: lighter;
 }
-.secondScreens{
-    display:flex;
-    flex-direction: column;
-    align-self: center;
-    width: 50%;
+.helperText {
+  font-size: 36px;
+  width: 50%;
+}
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid;
+  align-items: center;
+  color: black;
+  padding: 25px;
+  width: 100%;
+}
+.mainDescription {
+  width: 100%;
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 50px;
+}
+.description {
+  text-align: center;
+  color: #777777;
+  width: 300px;
+  margin-bottom: 20px;
+}
+.whenever {
+  width: 100%;
+  height: 300px;
+  background: #aab8f7;
+  margin-bottom: 100px;
+}
+.everLine {
+  width: 100%;
+  height: 70px;
+  text-align: center;
+  padding-top: 20px;
+  font-size: 32px;
+  font-weight: bold;
+}
+.everLine2 {
+  width: 100%;
+  height: 70px;
+  text-align: center;
+  padding-top: 20px;
+  font-size: 30px;
+}
+.whyWe {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 100px;
+}
+.reasons {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.reason {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #fcfcfc;
+  margin: 20px;
+}
+.lastReason {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #fcfcfc;
+  margin: 20px;
+}
+.threePoints {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding: 50px;
+}
+.point {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 300px;
+}
+.pointHeadline {
+  font-weight: bold;
+  font-size: 22px;
+}
+.pointDescription {
+  color: white;
+}
+.whatCanWeDo {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 25px;
+}
+.bar {
+  width: 50%;
+  background-image: url("../../assets/images/backgrounds/welcomePage.jpg");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.whatCanList {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  padding-left: 80px;
+}
+.screensOfApp {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  margin-bottom: 100px;
+}
+.firstScreens {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  width: 50%;
+}
+.secondScreens {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  width: 50%;
 }
 .screens {
-    max-width: 100%;
-    align-self: center;
-    padding-bottom: 20px;
+  max-width: 100%;
+  align-self: center;
+  padding-bottom: 20px;
 }
 
 li {
-    list-style-type: none; 
-    margin-bottom: 10px;
+  list-style-type: none;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
 }
 ul {
-    margin-left: 0; 
-    padding-left: 0; 
+  margin-left: 0;
+  padding-left: 0;
 }
