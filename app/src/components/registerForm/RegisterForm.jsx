@@ -92,7 +92,7 @@ class RegistrationForm extends React.Component {
   };
 
   normalize = value => {
-    return value && value.replace(/s+/g, "").trim();
+    return value && value.replace(/ /g, "").trim();
   };
 
   prev() {
