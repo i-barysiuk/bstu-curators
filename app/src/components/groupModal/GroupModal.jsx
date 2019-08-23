@@ -43,20 +43,22 @@ class GroupForm extends React.Component {
   };
 
   save = () => {
+    var valid = false;
     this.props.form.validateFieldsAndScroll(async (err, values) => {
       if (err) {
         return;
       }
       let group = getGroupData(values);
       group.curatorId = this.props.profileId;
+      valid = true;
       try {
         await GroupsService.addGroup(group);
-        closeModal();
         this.setState({current: 0 });
       } catch (e) {
         console.log(e);
       }
-    });
+    })
+    return valid;
   };
 
   normalize = value => {
@@ -90,9 +92,11 @@ class GroupForm extends React.Component {
           getFieldValue('orphan')
         )
     )
+    {
       return 'warning'
+    }
     else
-      return 'success'
+      return 'validating'
   }
 
   validGeography = () => {
@@ -155,14 +159,15 @@ class GroupForm extends React.Component {
         visible={isOpen}
         okText={"Сохранить"}
         cancelText={"Отмена"}
-        onOk={this.save}
+        onOk={() => this.save() ? closeModal() : null}
         zIndex={1030}
       >
-        <Form>
         <Steps current={current} onChange={this.changeStep} style={{paddingBottom:20}}>
             <Step /><Step /><Step />
             <Step /><Step /><Step />
+            <Step />
           </Steps>
+        <Form>
         <Collapse 
         className={style.collapsePanel}
         bordered={false}
@@ -562,7 +567,7 @@ class GroupForm extends React.Component {
                 <Col span={14}>
                 <span>Состав семьи</span>
                 <Form.Item 
-                label="Полная" 
+                label="Полная"
                 validateStatus={this.validFamily()}
                 >
                     <Row gutter={20}>
@@ -1047,7 +1052,42 @@ class GroupForm extends React.Component {
                       type="warning" showIcon />
                   </Panel>
                   </Collapse>
+                </Col>
 
+                <Col span={10}>
+                  <Pie
+                    data={{
+                      labels: ["Местные", "Иногородние", "Иностранные"],
+
+                      datasets: [
+                        {
+                          label: "Поинты",
+                          data: [
+                            getFieldValue("local"),
+                            getFieldValue("nonresident"),
+                            getFieldValue("foreign")
+                          ],
+                          backgroundColor: ["red", "blue", "yellow"]
+                        }
+                      ]
+                    }}
+                    options={{
+                      title: {
+                        display: true,
+                        text: "География",
+                        fontSize: 14
+                      },
+                      legend: {
+                        display: false
+                      }
+                    }}
+                  />
+                </Col>
+              </Row>
+            </Panel>
+            <Panel key="5">
+              <Row type="flex" gutter={20}>
+                <Col span={14}>
                   <span>Проживание</span>
                   <Form.Item 
                     label="С родителями"
@@ -1108,7 +1148,6 @@ class GroupForm extends React.Component {
                             {
                               required: true
                             },
-                            {validator:this.validLocation}
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
@@ -1202,7 +1241,6 @@ class GroupForm extends React.Component {
                             {
                               required: true
                             },
-                            {validator:this.validLocation}
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
@@ -1239,33 +1277,6 @@ class GroupForm extends React.Component {
                 <Col span={10}>
                   <Pie
                     data={{
-                      labels: ["Местные", "Иногородние", "Иностранные"],
-
-                      datasets: [
-                        {
-                          label: "Поинты",
-                          data: [
-                            getFieldValue("local"),
-                            getFieldValue("nonresident"),
-                            getFieldValue("foreign")
-                          ],
-                          backgroundColor: ["red", "blue", "yellow"]
-                        }
-                      ]
-                    }}
-                    options={{
-                      title: {
-                        display: true,
-                        text: "География",
-                        fontSize: 14
-                      },
-                      legend: {
-                        display: false
-                      }
-                    }}
-                  />
-                  <Pie
-                    data={{
                       labels: [
                         "С родителями",
                         "С родственниками",
@@ -1300,7 +1311,7 @@ class GroupForm extends React.Component {
                 </Col>
               </Row>
             </Panel>
-            <Panel key="5">
+            <Panel key="6">
               <Row gutter={20}>
                 <Col span={10}>
                   <Form.Item label="Продолжительность обучения:">
@@ -1441,7 +1452,7 @@ class GroupForm extends React.Component {
                 })}
               </Collapse>
             </Panel>
-            <Panel key="6">
+            <Panel key="7">
               <Form.Item label="Прочие сведения">
                 <Form.Item>
                   {getFieldDecorator("more", {
@@ -1457,7 +1468,7 @@ class GroupForm extends React.Component {
               </Form.Item>
             </Panel>
           </Collapse>
-        </Form>
+          </Form>
       </Modal>
     );
   }
