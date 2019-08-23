@@ -7,7 +7,9 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  font-weight: $num-weight;  
+  font-weight: $num-weight;
+  padding-left: 3vw;  
+  padding-top: 2vw;
 }
 
 .h {
@@ -19,7 +21,6 @@
 }
 
 .number1 {
-  font-size: $num-size;
   display: flex;
   flex-direction: row;
   width: 30%;
@@ -29,25 +30,124 @@
 }
 
 .number2 {
-    display: flex;
-    flex-direction: column;
-    font-size: $num-size;
-    width: 30%;
-    height: 150px;
-    justify-content: flex-end;      
+  display: flex;
+  flex-direction: column;
+  font-size: $num-size;
+  width: 30%;
+  height: 150px;
+  justify-content: flex-end;      
 }
 
 .integer
 {
-    font-size: $num-size;     
+  font-size: $num-size;     
 }
 
 .float
 {
-    height: 70px;
-    font-size: 35px;
-    display: flex;
-    flex-direction: column;
-    align-content: center; 
-    justify-content: flex-end; 
+  height: 70px;
+  font-size: 35px;
+  display: flex;
+  flex-direction: column;
+  align-content: center; 
+  justify-content: flex-end; 
+}
+
+@media screen and (min-width : 1000px)
+{
+  .conteiner
+  {
+    padding-left: 2vw;
+  }
+}
+
+@media screen and (min-width : 1400px)
+{
+  .number2 
+  {
+    font-size: 60px; 
+    height: 160px;  
+  }
+
+  .integer
+  {
+    font-size: 60px;    
+  }
+  
+  .float
+  {
+    font-size: 50px;
+    height: 85px;
+  }
+}
+
+
+@media screen and (min-width : 1600px)
+{
+  .number1
+  {
+    height: 180px;
+  }
+
+  .number2 
+  {
+    font-size: 70px; 
+    height: 180px;  
+  }
+
+  .integer
+  {
+    font-size: 80px;    
+  }
+  
+  .float
+  {
+    font-size: 70px;
+    height: 115px;
+    width: 75px;
+  }
+
+  .h 
+  {
+    height: $slash-height + 30px;
+  }
+}
+
+@media screen and (min-width : 1920px)
+{
+  .conteiner
+  {
+    padding-left: 3vw;
+  }
+}
+
+@media screen and (min-width : 2560px)
+{
+  .conteiner
+  {
+    padding-top: 2vw;
+  }
+
+  .number2 
+  {
+    font-size: 100px; 
+    height: 220px;  
+  }
+
+  .integer  
+  {
+    font-size: 100px;    
+  }
+  
+  .float
+  {
+    font-size: 80px;
+    height: 140px;
+    width: 90px;
+  }
+
+  .h 
+  {
+    height: $slash-height +50px;
+  }
 }
