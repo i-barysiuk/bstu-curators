@@ -19,6 +19,10 @@ class LoginForm extends React.Component {
       user: {}
     };
   }
+  
+  onclick () {
+    window.location.assign('http://localhost:3000/');
+  }
 
   checkUser = (rule, value, callback) => {
     AuthService.info(value)
@@ -97,6 +101,7 @@ class LoginForm extends React.Component {
               className={style.loginButton}
               disabled={hasErrors(getFieldsError())}
               loading={this.props.auth.loading}
+              onClick={(e) => this.onclick(e)}
             >
               Войти
             </Button>
