@@ -49,7 +49,6 @@ export default class GroupProfile extends React.Component {
         <PageHead
           title={this.props.group.fullName}
           subtitle= {this.props.group.department + "/" + this.props.group.cathedra}
-          // "Факультет Инженерных Сетей и Экологии / Кафедра природоохранной деятельности"
         >
           <BigButton icon={faPen} />
           <BigButton icon={faEllipsisH} />
