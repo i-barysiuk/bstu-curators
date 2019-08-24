@@ -22,7 +22,6 @@ import { getGroupData } from "../../helper/group";
 import GroupsService from "../../services/GroupsService";
 import {closeModal} from "../../redux/actions/modal"
 import style from "./style.module.scss"
-import { func } from "prop-types";
 
 const { Step } = Steps;
 const { Option } = Select;
