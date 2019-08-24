@@ -16,7 +16,7 @@ var Group = sequelize.define(
     group: {
       type: Sequelize.ENUM(
         "ФЭИС",
-        "ЭФ ",
+        "ЭФ",
         "СФ",
         "МСФ",
         "ФИСЭ",

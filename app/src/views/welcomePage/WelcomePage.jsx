@@ -35,6 +35,10 @@ class WelcomePage extends React.Component {
   componentDidMount() {
     window.addEventListener("scroll", this.listenScrollEvent);
   }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.listenScrollEvent);
+  }
   render() {
     return (
       <div className={style.container}>
