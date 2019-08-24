@@ -194,7 +194,6 @@ const rowSelection = {
       }
     >
       <Table size="middle" 
-       pagination = {false} 
        rowSelection={rowSelection}
        columns={columns}
        dataSource={data} 
