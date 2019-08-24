@@ -57,6 +57,34 @@ router.put("/:id", (req, res) => {
     });
 });
 
+router.put("/:id/add_favorite", (req, res) => {
+  UserService.get(req.user.id)
+    .then(user => {
+      var favorite = user.favoriteGroups.push(req.params.id);
+      return UserService.update({ favoriteGroups: favorite }, req.user.id);
+    })
+    .then(data => {
+      res.status(200).json(data);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+router.put("/:id/remove_favorite", (req, res) => {
+  UserService.get(req.user.id)
+    .then(user => {
+      var favorite = user.favoriteGroups.filter(item => item !== req.params.id);
+      return UserService.update({ favoriteGroups: favorite }, req.user.id);
+    })
+    .then(data => {
+      res.status(200).json(data);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
 router.delete("/:id", (req, res) => {
   GroupService.delete(req.params.id)
     .then(deletedRecordCount => {
