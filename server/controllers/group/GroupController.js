@@ -60,7 +60,8 @@ router.put("/:id", (req, res) => {
 router.put("/:id/add_favorite", (req, res) => {
   UserService.get(req.user.id)
     .then(user => {
-      var favorite = user.favoriteGroups.push(req.params.id);
+      var favorite = user.favoriteGroups;
+      favorite.push(req.params.id);
       return UserService.update({ favoriteGroups: favorite }, req.user.id);
     })
     .then(data => {
