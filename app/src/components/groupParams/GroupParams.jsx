@@ -3,10 +3,15 @@ import style from "./style.module.scss";
 import Card from "../common/card/Card";
 import BigButton from "../common/bigButton/BigButton";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { Avatar, Collapse } from "antd";
+import { 
+  Avatar,
+  Collapse,
+  Select,
+  } from "antd";
 import { Pie } from "react-chartjs-2";
 
 const { Panel } = Collapse;
+const { Option } = Select;
 
 const getDate = (ids, data) => {
   return data ? ids.map(id => data[id]) : [];
@@ -96,7 +101,26 @@ export default ({ data }) => {
 
       <Collapse bordered={false}>
         <Panel header="Социальный статус" key="1">
-          123
+                      <Select
+                        style={{ width: '100%' }}
+                        dropdownClassName={style.select}
+                        showSearch
+                        placeholder="Выберите социальный статус"
+                        optionFilterProp="children"
+                        filterOption={(input, option) =>
+                          option.props.children
+                            .toLowerCase()
+                            .indexOf(input.toLowerCase()) >= 0
+                        }
+                      > 
+                        <Option value="socOrphan18">Дети сироты (до 18 лет)</Option>
+                        <Option value="socWithoutParents18">Дети без родителей (до 18 лет)</Option>
+                        <Option value="socOrphans">Сироты и без родителей (18-23)</Option>
+                        <Option value="socFeature">Особенности развития</Option>
+                        <Option value="socParentsInvalid">Родители инвалиды</Option>
+                        <Option value="socCHAES">Регионы ЧАЭС</Option>
+                        <Option value="socCHAESRegion">Семьи из зоны загрязнения</Option>
+                      </Select>
         </Panel>
         <Panel header="Прочее" key="2">
           {data.others}
