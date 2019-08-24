@@ -1,9 +1,11 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest, select } from "redux-saga/effects";
 import {
   GROUPS_REQUEST,
   GROUPS__ACTIVE_REQUEST,
   GROUPS__ALL_REQUEST,
-  GROUPS__ARCHIVE_REQUEST
+  GROUPS__ARCHIVE_REQUEST,
+  GROUPS__FAVORITE_ADD_REQUEST,
+  GROUPS__FAVORITE_REMOVE_REQUEST
 } from "../actionsTypes/groups";
 import {
   fetchGroupsSuccess,
@@ -11,7 +13,9 @@ import {
   fetchActiveGroupSuccess,
   fetchActiveGroupFailed,
   fetchAllGroupsSuccess,
-  fetchArchiveGroupsSuccess
+  fetchArchiveGroupsSuccess,
+  pushGroupToFavourite,
+  popGroupFromFavourite
 } from "../actions/groups";
 import GroupsService from "../../services/GroupsService";
 
@@ -57,9 +61,36 @@ function* fetchActiveGroup({ payload }) {
   }
 }
 
+function* addFavoriteGroup({ payload }) {
+  try {
+    console.log(payload);
+    yield call(() => GroupsService.addFavoriteGroup({ id: payload.id }));
+    yield put(pushGroupToFavourite({ group: payload }));
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function* removeFavoriteGroup({ payload }) {
+  const selectFavorite = state => state.groups.favorite;
+
+  const favorite = yield select(selectFavorite);
+  const index = favorite.indexOf(payload);
+  favorite.splice(index, 1);
+  try {
+    console.log(payload);
+    yield call(() => GroupsService.removeFavoriteGroup({ id: payload.id }));
+    yield put(popGroupFromFavourite({ favorite }));
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export default function*() {
   yield takeLatest(GROUPS_REQUEST, fetchGroups);
   yield takeLatest(GROUPS__ACTIVE_REQUEST, fetchActiveGroup);
   yield takeLatest(GROUPS__ALL_REQUEST, fetchAllGroups);
   yield takeLatest(GROUPS__ARCHIVE_REQUEST, fetchArchiveGroups);
+  yield takeLatest(GROUPS__FAVORITE_ADD_REQUEST, addFavoriteGroup);
+  yield takeLatest(GROUPS__FAVORITE_REMOVE_REQUEST, removeFavoriteGroup);
 }

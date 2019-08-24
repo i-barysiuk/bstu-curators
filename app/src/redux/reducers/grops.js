@@ -4,7 +4,9 @@ import {
   GROUPS__ACTIVE_SUCCESS,
   GROUPS__ACTIVE_FAILED,
   GROUPS__ALL_SUCCESS,
-  GROUPS__ARCHIVE_SUCCESS
+  GROUPS__ARCHIVE_SUCCESS,
+  GROUPS__FAVORITE_ADD_SUCCESS,
+  GROUPS__FAVORITE_REMOVE_SUCCESS
 } from "../actionsTypes/groups";
 
 export const defaultGroupsState = {
@@ -28,6 +30,12 @@ export default (state = defaultGroupsState, action) => {
 
     case GROUPS__ARCHIVE_SUCCESS:
       return { ...state, archive: action.payload };
+
+    case GROUPS__FAVORITE_ADD_SUCCESS:
+      return { ...state, favorite: [...state.favorite, action.payload] };
+
+    case GROUPS__FAVORITE_REMOVE_SUCCESS:
+      return { ...state, favorite: action.payload };
 
     case GROUPS_FAILED:
     case GROUPS__ACTIVE_FAILED:
