@@ -1,0 +1,86 @@
+.modal>div{
+    border-radius: 15px;
+
+    >button:first-of-type{//close button
+        span{
+            color: white;
+        }
+    }
+
+    >div:first-of-type{//header
+        border-radius:15px 15px 0 0;
+        background: #2D50EC;
+        div{
+            color: white;
+            font-size: 22px;
+            line-height: 26px;
+        }
+    }
+
+    >div:last-of-type{//footer
+    }
+
+    button{
+        border-radius: 15px;
+    }
+
+    input{//default input
+        border-radius: 15px;
+    }
+
+    span{//select and number input
+        border-radius: 15px;
+        div{
+            border-radius: 15px;
+        }
+    }
+
+    textarea{
+        border-radius: 15px;
+    }
+}
+
+.datePickerDD>div{
+    border-radius: 15px;
+    td{
+        div{border-radius: 15px;}
+        a{border-radius: 15px;}
+    }
+}
+
+.datePicker{
+    width: 100%;
+}
+
+.collapse{
+    border-radius: 15px;
+}
+
+.radio{
+    label:first-of-type{
+        border-radius: 15px 15px 0 15px;
+    }
+    label:last-of-type{
+        border-radius: 0 15px 15px 15px;
+    }
+}
+
+.select{
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.collapsePanel
+>div{
+    border-bottom: none !important;
+    >div:first-of-type{
+        display: none;
+    }
+}
+
+.tags>div{
+    border-radius: 15px;
+    li{
+        border-radius: 15px !important;
+    }
+}
