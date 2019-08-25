@@ -15,7 +15,8 @@ import Collapse from "../common/collapse/Collapse";
 import { openModal } from "../../redux/actions/modal";
 import {
   addGroupToFavouriteRequest,
-  removeGroupFromFavouriteRequest
+  removeGroupFromFavouriteRequest,
+  editGroupRequest
 } from "../../redux/actions/groups";
 
 class GroupCard extends React.Component {
@@ -48,7 +49,8 @@ class GroupCard extends React.Component {
       groups: { favorite, my, all, archive },
       fetchAll,
       fetchArchive,
-      openModal
+      openModal,
+      editGroupRequest
     } = this.props;
     return (
       <div className={style.container}>
@@ -73,6 +75,7 @@ class GroupCard extends React.Component {
                     key={group.id}
                     group={group.name}
                     onStarClick={() => this.removeFavorite(group)}
+                    onEditClick={() => editGroupRequest({ id: group.id })}
                     onClick={() => this.onGroupClick(group.id)}
                     course={group.course}
                   />
@@ -135,7 +138,8 @@ class GroupCard extends React.Component {
 const mapDispatchToProps = {
   openModal,
   addGroupToFavouriteRequest,
-  removeGroupFromFavouriteRequest
+  removeGroupFromFavouriteRequest,
+  editGroupRequest
 };
 
 export default connect(

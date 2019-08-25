@@ -15,8 +15,13 @@ class Groups {
     return response.data;
   }
 
-  async getActiveGroup({ id }) {
+  async getGroup({ id }) {
     const response = await api(`/groups/${id}`);
+    return response.data;
+  }
+
+  async editGroup({ data, id }) {
+    const response = await api(`/groups/${id}`, "PUT", data);
     return response.data;
   }
 

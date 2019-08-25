@@ -6,30 +6,20 @@ import {
   GROUPS__ALL_SUCCESS,
   GROUPS__ARCHIVE_SUCCESS,
   GROUPS__FAVORITE_ADD_SUCCESS,
-  GROUPS__FAVORITE_REMOVE_SUCCESS
+  GROUPS__FAVORITE_REMOVE_SUCCESS,
+  GROUPS__EDIT_SUCCESS,
+  GROUPS__EDIT_END
 } from "../actionsTypes/groups";
 
-const mockedGroup = {
-  id: "e9956415-faaf-4fc0-98f1-08740b476425",
-  curatorId: "e15f3949-ac4a-4374-9b2e-8e0b88f4ee56",
-  group: "ФЭИС",
-  name: "Э-33",
-  fullName: "Эконом - 33",
-  course: 4,
-  department: "Факультет электронно-информационных систем",
-  cathedra: "Кафедра ЭВМ и систем",
-  isActive: true,
-  totalStudents: 27,
-  gender: { men: 25, women: 2 },
-  community: { brsm: 15, profkom: 10, studsovet: 0, others: 2 },
-  family: { full: 18, notfull: 2, manychild: 5, orphan: 2 },
-  geography: { local: 18, nonresident: 2, foreign: 5 },
-  living: { parents: 18, relatives: 2, independent: 5, hostel: 2 },
-  social: { test1: 18, test2: 5, test3: 2 },
-  others: "ПРОЧАЯ ИНФОРМАЦИЯ О ГРУППЕ",
+const defaultEdit = {
+  gender: {},
+  community: {},
+  family: {},
+  geography: {},
+  living: {},
+  social: {},
   studyProcess: {},
-  createdAt: "2019-08-15T11:50:43.677Z",
-  updatedAt: "2019-08-15T11:50:43.677Z"
+  isEditing: false
 };
 
 export const defaultGroupsState = {
@@ -37,7 +27,7 @@ export const defaultGroupsState = {
   all: {},
   archive: {},
   my: [],
-  editing: mockedGroup,
+  editing: defaultEdit,
   favorite: []
 };
 
@@ -60,6 +50,12 @@ export default (state = defaultGroupsState, action) => {
 
     case GROUPS__FAVORITE_REMOVE_SUCCESS:
       return { ...state, favorite: action.payload };
+
+    case GROUPS__EDIT_SUCCESS:
+      return { ...state, editing: { ...action.payload, isEditing: true } };
+
+    case GROUPS__EDIT_END:
+      return { ...state, editing: defaultEdit };
 
     case GROUPS_FAILED:
     case GROUPS__ACTIVE_FAILED:

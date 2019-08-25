@@ -21,6 +21,7 @@ import {
 import { getGroupData } from "../../helper/group";
 import GroupsService from "../../services/GroupsService";
 import {closeModal} from "../../redux/actions/modal"
+import {editGroupEnd} from "../../redux/actions/groups"
 import style from "./style.module.scss"
 
 const { Step } = Steps;
@@ -52,8 +53,14 @@ class GroupForm extends React.Component {
       group.curatorId = this.props.profileId;
       valid = true;
       try {
-        await GroupsService.addGroup(group);
+        if(this.props.group.isEditing){
+          await GroupsService.editGroup({data: group, id: this.props.group.id});
+        }
+        else {
+          await GroupsService.addGroup(group);
+        }
         this.setState({current: 0 });
+        this.props.editGroupEnd()
       } catch (e) {
         console.log(e);
       }
@@ -132,6 +139,13 @@ class GroupForm extends React.Component {
       return 'success'
   }
 
+  onCancel = () => {
+    const {closeModal, editGroupEnd} = this.props
+    closeModal()
+    editGroupEnd()
+    this.setState({current: 0})
+  }
+
   render() {
     const {
       form: { getFieldDecorator, getFieldValue },
@@ -156,7 +170,7 @@ class GroupForm extends React.Component {
         className={style.modal}
         destroyOnClose={true}
         maskClosable={false}
-        onCancel={() => closeModal()|this.setState({current: 0})}
+        onCancel={this.onCancel}
         visible={isOpen}
         okText={"Сохранить"}
         cancelText={"Отмена"}
@@ -759,7 +773,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               normalize: this.normalizeNumber,
-                              initialValue: group.socOrphan18 || 0
+                              initialValue: group.social.socOrphan18 || 0
                             })(
                               <InputNumber
                                 min={0}
@@ -778,7 +792,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               normalize: this.normalizeNumber,
-                              initialValue: group.socWithoutParents18 || 0
+                              initialValue: group.social.socWithoutParents18 || 0
                             })(
                               <InputNumber
                                 min={0}
@@ -797,7 +811,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               normalize: this.normalizeNumber,
-                              initialValue: group.socOrphans || 0
+                              initialValue: group.social.socOrphans || 0
                             })(
                               <InputNumber
                                 min={0}
@@ -816,7 +830,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               normalize: this.normalizeNumber,
-                              initialValue: group.socFeature || 0
+                              initialValue: group.social.socFeature || 0
                             })(
                               <InputNumber
                                 min={0}
@@ -835,7 +849,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               normalize: this.normalizeNumber,
-                              initialValue:group.socParentsInvalid || 0
+                              initialValue:group.social.socParentsInvalid || 0
                             })(
                               <InputNumber
                                 min={0}
@@ -854,7 +868,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               normalize: this.normalizeNumber,
-                              initialValue: group.socCHAES || 0
+                              initialValue: group.social.socCHAES || 0
                             })(
                               <InputNumber
                                 min={0}
@@ -873,7 +887,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               normalize: this.normalizeNumber,
-                              initialValue: group.socCHAESRegion || 0
+                              initialValue: group.social.socCHAESRegion || 0
                             })(
                               <InputNumber
                                 min={0}
@@ -934,7 +948,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: group.total || 0
+                          initialValue: group.geography.local || 0
                         })(<Slider min={0} max={getFieldValue("total")} />)}
                       </Col>
                       <Col span={4}>
@@ -945,7 +959,7 @@ class GroupForm extends React.Component {
                             },
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: group.total || 0
+                          initialValue: group.geography.local || 0
                         })(
                           <InputNumber min={0} max={getFieldValue("total")} />
                         )}
@@ -965,7 +979,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: group.total || 0
+                          initialValue: group.geography.nonresident || 0
                         })(
                           <Slider
                             min={0}
@@ -983,7 +997,7 @@ class GroupForm extends React.Component {
                             }
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: group.total || 0
+                          initialValue: group.geography.nonresident || 0
                         })(
                           <InputNumber
                             min={0}
@@ -1008,7 +1022,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: group.total || 0
+                          initialValue: group.geography.foreign || 0
                         })(
                           <Slider
                             min={0}
@@ -1028,7 +1042,7 @@ class GroupForm extends React.Component {
                             }
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: group.total || 0
+                          initialValue: group.geography.foreign || 0
                         })(
                           <InputNumber
                             min={0}
@@ -1103,7 +1117,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: group.total || 0
+                          initialValue: group.living.parents || 0
                         })(<Slider min={0} max={getFieldValue("total")} />)}
                       </Col>
                       <Col span={4}>
@@ -1114,7 +1128,7 @@ class GroupForm extends React.Component {
                             },
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: group.total || 0
+                          initialValue: group.living.parents || 0
                         })(
                           <InputNumber min={0} max={getFieldValue("total")} />
                         )}
@@ -1134,7 +1148,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: group.total || 0
+                          initialValue: group.living.relatives || 0
                         })(
                           <Slider
                             min={0}
@@ -1152,7 +1166,7 @@ class GroupForm extends React.Component {
                             },
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: group.total || 0
+                          initialValue: group.living.relatives || 0
                         })(
                           <InputNumber
                             min={0}
@@ -1177,7 +1191,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: group.total || 0
+                          initialValue: group.living.independent || 0
                         })(
                           <Slider
                             min={0}
@@ -1197,7 +1211,7 @@ class GroupForm extends React.Component {
                             },
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: group.total || 0
+                          initialValue: group.living.independent || 0
                         })(
                           <InputNumber
                             min={0}
@@ -1224,7 +1238,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: group.total || 0
+                          initialValue: group.living.hostel || 0
                         })(
                           <Slider
                             min={0}
@@ -1245,7 +1259,7 @@ class GroupForm extends React.Component {
                             },
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: group.total || 0
+                          initialValue: group.living.hostel || 0
                         })(
                           <InputNumber
                             min={0}
@@ -1464,7 +1478,7 @@ class GroupForm extends React.Component {
                         message: "Максимум 1000 символов!"
                       }
                     ],
-                    initialValue: group.more
+                    initialValue: group.others
                   })(<TextArea autosize={{minRows: 6, maxRows: 9}}/>)}
                 </Form.Item>
               </Form.Item>
@@ -1486,6 +1500,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   closeModal,
+  editGroupEnd
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WrappedGroupForm);

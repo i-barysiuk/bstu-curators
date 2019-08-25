@@ -12,7 +12,10 @@ import {
   GROUPS__FAVORITE_ADD_REQUEST,
   GROUPS__FAVORITE_ADD_SUCCESS,
   GROUPS__FAVORITE_REMOVE_REQUEST,
-  GROUPS__FAVORITE_REMOVE_SUCCESS
+  GROUPS__FAVORITE_REMOVE_SUCCESS,
+  GROUPS__EDIT_REQUEST,
+  GROUPS__EDIT_SUCCESS,
+  GROUPS__EDIT_END
 } from "../actionsTypes/groups";
 
 export const fetchMyAndFavGroups = () => ({
@@ -78,4 +81,18 @@ export const removeGroupFromFavouriteRequest = ({ group }) => ({
 export const popGroupFromFavourite = ({ favorite }) => ({
   type: GROUPS__FAVORITE_REMOVE_SUCCESS,
   payload: favorite
+});
+
+export const editGroupRequest = ({ id }) => ({
+  type: GROUPS__EDIT_REQUEST,
+  payload: id
+});
+
+export const editGroupSucces = ({ group }) => ({
+  type: GROUPS__EDIT_SUCCESS,
+  payload: group
+});
+
+export const editGroupEnd = () => ({
+  type: GROUPS__EDIT_END
 });
