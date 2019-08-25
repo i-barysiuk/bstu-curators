@@ -294,11 +294,8 @@ class GroupForm extends React.Component {
                             .indexOf(input.toLowerCase()) >= 0
                         }
                       >
-                        <Option value="ФЭИС">ФЭИС</Option>
-                        <Option value="ФИСЭ">ФИСЭ</Option>
-                        <Option value="СФ">СФ</Option>
-                        <Option value="ЭФ">ЭФ</Option>
-                        <Option value="МСФ">МСФ</Option>
+                        <Option value="default">обычная группа</Option>
+                        <Option value="foreign">иностранная группа</Option>
                       </Select>
                     )}
                   </Form.Item>
