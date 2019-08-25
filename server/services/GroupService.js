@@ -73,7 +73,7 @@ class GroupService {
   }
 
   update(body, id) {
-    return User.update(body, {
+    return Group.update(body, {
       where: {
         id
       },
@@ -82,7 +82,7 @@ class GroupService {
   }
 
   delete(id) {
-    return User.destroy({
+    return Group.destroy({
       where: {
         id
       }
