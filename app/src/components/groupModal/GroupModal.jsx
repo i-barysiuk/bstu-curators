@@ -136,7 +136,8 @@ class GroupForm extends React.Component {
     const {
       form: { getFieldDecorator, getFieldValue },
       isOpen,
-      closeModal
+      closeModal,
+      group
     } = this.props;
 
     const current = this.state.current;
@@ -190,7 +191,7 @@ class GroupForm extends React.Component {
                       ],
                       normalize: this.normalize,
                       validateTrigger: "onBlur",
-                      initialValue: this.state.form.name
+                      initialValue: group.name
                     })(<Input placeholder="Группа" />)}
                   </Form.Item>
                 </Col>
@@ -209,7 +210,7 @@ class GroupForm extends React.Component {
                         }
                       ],
                       validateTrigger: "onBlur",
-                      initialValue: this.state.form.fullName
+                      initialValue: group.fullName
                     })(<Input placeholder="Группа" />)}
                   </Form.Item>
                 </Col>
@@ -240,7 +241,7 @@ class GroupForm extends React.Component {
                           whitespace: true
                         }
                       ],
-                      initialValue: this.state.form.group,
+                      initialValue: group.group,
                       validateTrigger: "onChange"
                     })(
                       <Select
@@ -272,6 +273,7 @@ class GroupForm extends React.Component {
                           message: "Выберите курс",
                         }
                       ],
+                      initialValue: group.course,
                       validateTrigger: "onChange"
                     })(
                       <Select
@@ -307,7 +309,7 @@ class GroupForm extends React.Component {
                           whitespace: true
                         }
                       ],
-                      initialValue: this.state.form.department,
+                      initialValue: group.department,
                       validateTrigger: "onChange"
                     })(
                       <Select
@@ -340,7 +342,7 @@ class GroupForm extends React.Component {
                         }
                       ],
                       validateTrigger: "onBlur",
-                      initialValue: this.state.form.cathedra
+                      initialValue: group.cathedra
                     })(
                       <Select
                         dropdownClassName={style.select}
@@ -401,7 +403,7 @@ class GroupForm extends React.Component {
                             },
                             {validator:this.validTotal}
                           ],
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.totalStudents || 0
                         })(<Slider min={0} max={40} />)}
                       </Col>
                       <Col span={4}>
@@ -413,7 +415,7 @@ class GroupForm extends React.Component {
                             {validator:this.validTotal}
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.totalStudents || 0
                         })(<InputNumber min={0} max={40} />)}
                       </Col>
                     </Row>
@@ -433,7 +435,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.women || 0
+                          initialValue: group.gender.women || 0
                         })(<Slider min={0} max={getFieldValue("total")} />)}
                       </Col>
                       <Col span={1}>
@@ -457,7 +459,7 @@ class GroupForm extends React.Component {
                             }
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.community.brsm || 0
                         })(<InputNumber min={0} max={getFieldValue("total")} />)}
                       </Col>
                       <Col span={6}>
@@ -471,7 +473,7 @@ class GroupForm extends React.Component {
                             }
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.community.profkom || 0
                         })(<InputNumber min={0} max={getFieldValue("total")} />)}
                       </Col>
                       <Col span={6}>
@@ -485,7 +487,7 @@ class GroupForm extends React.Component {
                             }
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.community.studsovet || 0
                         })(<InputNumber min={0} max={getFieldValue("total")} />)}
                       </Col>
                       <Col span={6}>
@@ -499,7 +501,7 @@ class GroupForm extends React.Component {
                             }
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.community.others || 0
                         })(<InputNumber min={0} max={getFieldValue("total")} />)}
                       </Col>
                     </Row>
@@ -578,7 +580,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.family.full || 0
                         })(<Slider min={0} max={getFieldValue("total")} />)}
                       </Col>
                       <Col span={4}>
@@ -589,7 +591,7 @@ class GroupForm extends React.Component {
                             },
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.family.full || 0
                         })(
                           <InputNumber min={0} max={getFieldValue("total")}/>
                         )}
@@ -609,7 +611,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.family.notfull || 0
                         })(
                           <Slider
                             min={0}
@@ -625,7 +627,7 @@ class GroupForm extends React.Component {
                             },
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.family.notfull || 0
                         })(
                           <InputNumber
                             min={0}
@@ -648,7 +650,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.family.manychild || 0
                         })(
                           <Slider
                             min={0}
@@ -668,7 +670,7 @@ class GroupForm extends React.Component {
                             },
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.family.manychild || 0
                         })(
                           <InputNumber
                             min={0}
@@ -695,7 +697,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.family.orphan || 0
                         })(
                           <Slider
                             min={0}
@@ -716,7 +718,7 @@ class GroupForm extends React.Component {
                             },
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.family.orphan || 0
                         })(
                           <InputNumber
                             min={0}
@@ -757,7 +759,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               normalize: this.normalizeNumber,
-                              initialValue: this.state.form.socOrphan18 || 0
+                              initialValue: group.socOrphan18 || 0
                             })(
                               <InputNumber
                                 min={0}
@@ -776,7 +778,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               normalize: this.normalizeNumber,
-                              initialValue: this.state.form.socWithoutParents18 || 0
+                              initialValue: group.socWithoutParents18 || 0
                             })(
                               <InputNumber
                                 min={0}
@@ -795,7 +797,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               normalize: this.normalizeNumber,
-                              initialValue: this.state.form.socOrphans || 0
+                              initialValue: group.socOrphans || 0
                             })(
                               <InputNumber
                                 min={0}
@@ -814,7 +816,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               normalize: this.normalizeNumber,
-                              initialValue: this.state.form.socFeature || 0
+                              initialValue: group.socFeature || 0
                             })(
                               <InputNumber
                                 min={0}
@@ -833,7 +835,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               normalize: this.normalizeNumber,
-                              initialValue:this.state.form.socParentsInvalid || 0
+                              initialValue:group.socParentsInvalid || 0
                             })(
                               <InputNumber
                                 min={0}
@@ -852,7 +854,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               normalize: this.normalizeNumber,
-                              initialValue: this.state.form.socCHAES || 0
+                              initialValue: group.socCHAES || 0
                             })(
                               <InputNumber
                                 min={0}
@@ -871,7 +873,7 @@ class GroupForm extends React.Component {
                                 }
                               ],
                               normalize: this.normalizeNumber,
-                              initialValue: this.state.form.socCHAESRegion || 0
+                              initialValue: group.socCHAESRegion || 0
                             })(
                               <InputNumber
                                 min={0}
@@ -932,7 +934,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.total || 0
                         })(<Slider min={0} max={getFieldValue("total")} />)}
                       </Col>
                       <Col span={4}>
@@ -943,7 +945,7 @@ class GroupForm extends React.Component {
                             },
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.total || 0
                         })(
                           <InputNumber min={0} max={getFieldValue("total")} />
                         )}
@@ -963,7 +965,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.total || 0
                         })(
                           <Slider
                             min={0}
@@ -981,7 +983,7 @@ class GroupForm extends React.Component {
                             }
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.total || 0
                         })(
                           <InputNumber
                             min={0}
@@ -1006,7 +1008,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.total || 0
                         })(
                           <Slider
                             min={0}
@@ -1026,7 +1028,7 @@ class GroupForm extends React.Component {
                             }
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.total || 0
                         })(
                           <InputNumber
                             min={0}
@@ -1101,7 +1103,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.total || 0
                         })(<Slider min={0} max={getFieldValue("total")} />)}
                       </Col>
                       <Col span={4}>
@@ -1112,7 +1114,7 @@ class GroupForm extends React.Component {
                             },
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.total || 0
                         })(
                           <InputNumber min={0} max={getFieldValue("total")} />
                         )}
@@ -1132,7 +1134,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.total || 0
                         })(
                           <Slider
                             min={0}
@@ -1150,7 +1152,7 @@ class GroupForm extends React.Component {
                             },
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.total || 0
                         })(
                           <InputNumber
                             min={0}
@@ -1175,7 +1177,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.total || 0
                         })(
                           <Slider
                             min={0}
@@ -1195,7 +1197,7 @@ class GroupForm extends React.Component {
                             },
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.total || 0
                         })(
                           <InputNumber
                             min={0}
@@ -1222,7 +1224,7 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.total || 0
                         })(
                           <Slider
                             min={0}
@@ -1243,7 +1245,7 @@ class GroupForm extends React.Component {
                             },
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: group.total || 0
                         })(
                           <InputNumber
                             min={0}
@@ -1322,7 +1324,7 @@ class GroupForm extends React.Component {
                         }
                       ],
                       normalize: this.normalizeCourse,
-                      initialValue: this.state.form.total || 1
+                      initialValue: group.total || 1
                     })(<InputNumber min={1} max={6} />)}
                   </Form.Item>
                 </Col>
@@ -1334,7 +1336,7 @@ class GroupForm extends React.Component {
                           required: true
                         }
                       ],
-                      initialValue: this.state.form.studyPeriod || 0
+                      initialValue: group.studyPeriod || 0
                     })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                   </Form.Item>
                 </Col>
@@ -1352,7 +1354,7 @@ class GroupForm extends React.Component {
                                   required: true
                                 }
                               ],
-                              initialValue: this.state.form.studyPeriod || 0
+                              initialValue: group.studyPeriod || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
@@ -1364,7 +1366,7 @@ class GroupForm extends React.Component {
                                   required: true
                                 }
                               ],
-                              initialValue: this.state.form.studyPeriod || 0
+                              initialValue: group.studyPeriod || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
@@ -1378,7 +1380,7 @@ class GroupForm extends React.Component {
                                   required: true
                                 }
                               ],
-                              initialValue: this.state.form.studyPeriod || 0
+                              initialValue: group.studyPeriod || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
@@ -1390,7 +1392,7 @@ class GroupForm extends React.Component {
                                   required: true
                                 }
                               ],
-                              initialValue: this.state.form.studyPeriod || 0
+                              initialValue: group.studyPeriod || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
@@ -1404,7 +1406,7 @@ class GroupForm extends React.Component {
                                   required: true
                                 }
                               ],
-                              initialValue: this.state.form.studyPeriod || 0
+                              initialValue: group.studyPeriod || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
@@ -1416,7 +1418,7 @@ class GroupForm extends React.Component {
                                   required: true
                                 }
                               ],
-                              initialValue: this.state.form.studyPeriod || 0
+                              initialValue: group.studyPeriod || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
@@ -1430,7 +1432,7 @@ class GroupForm extends React.Component {
                                   required: true
                                 }
                               ],
-                              initialValue: this.state.form.studyPeriod || 0
+                              initialValue: group.studyPeriod || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
@@ -1442,7 +1444,7 @@ class GroupForm extends React.Component {
                                   required: true
                                 }
                               ],
-                              initialValue: this.state.form.studyPeriod || 0
+                              initialValue: group.studyPeriod || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
@@ -1462,7 +1464,7 @@ class GroupForm extends React.Component {
                         message: "Максимум 1000 символов!"
                       }
                     ],
-                    initialValue: this.state.form.more
+                    initialValue: group.more
                   })(<TextArea autosize={{minRows: 6, maxRows: 9}}/>)}
                 </Form.Item>
               </Form.Item>
@@ -1478,7 +1480,8 @@ const WrappedGroupForm = Form.create({ name: "group" })(GroupForm);
 
 const mapStateToProps = state => ({
   profileId: state.users.profile.id,
-  isOpen: state.modal.isOpen
+  isOpen: state.modal.isOpen,
+  group: state.groups.editing
 });
 
 const mapDispatchToProps = {
