@@ -5,7 +5,6 @@ import Request from "../../components/request/Request";
 import NotFound from "../404/404";
 import PageWrapper from "../../containers/pageWrapper/PageWrapper";
 import GroupLayout from "./groups";
-import StudentLayout from "./students";
 
 import GroupModal from "../../components/groupModal/GroupModal"
 import StudentModal from "../../components/studentModal/StudentModal"
@@ -46,7 +45,6 @@ class Dashboard extends React.Component {
           />
         </Switch>
         <GroupModal />
-        <StudentModal />
       </div>
     );
   }
