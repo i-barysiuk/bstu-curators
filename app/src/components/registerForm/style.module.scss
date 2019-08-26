@@ -8,6 +8,14 @@
   margin-top: 24px;
 }
 
+.collapsePanel
+>div{
+    border-bottom: none !important;
+    >div:first-of-type{
+        display: none;
+    }
+}
+
 @media screen and (max-width: 700px) {
   .steps {
     display: none !important;
