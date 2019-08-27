@@ -341,12 +341,12 @@ class GroupForm extends React.Component {
                             .indexOf(input.toLowerCase()) >= 0
                         }
                       >
-                        <Option value="Факультет электронно-информационных систем">ФЭИС</Option>
-                        <Option value="Факультет инженерных систем и экологии">ФИСЭ</Option>
-                        <Option value="Строительный факультет">СФ</Option>
-                        <Option value="Экономический факультет">ЭФ</Option>
-                        <Option value="Машиностроительный факультет">МСФ</Option>
-                        <Option value="Заочные">Заочные</Option>
+                        <Option value="ФЭИС">ФЭИС</Option>
+                        <Option value="ФИСЭ">ФИСЭ</Option>
+                        <Option value="СФ">СФ</Option>
+                        <Option value="ЭФ">ЭФ</Option>
+                        <Option value="МСФ">МСФ</Option>
+                        <Option value="Заочное">Заочное</Option>
                         <Option value="Иностранные">Иностранные</Option>
                       </Select>
                     )}
