@@ -99,17 +99,38 @@ class TimelineComp extends React.Component {
     };
   }
 
+  dataToDates() {
+    var dates = [
+      {
+        event: "Начало года",
+        dateStart: new Date(this.props.data.coursePeriodStart),
+        dateEnd: new Date(this.props.data.coursePeriodEnd),
+        isActive: false
+      },
+      {
+        event: "Зимняя сессия",
+        dateStart: new Date(this.props.data.winterSessionStart),
+        dateEnd: new Date(this.props.data.winterSessionEnd),
+        isActive: false
+      }
+    ];
+    this.setState({ data: dates });
+  }
+
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        timelineWidth: positionGet(new Date()) + "%"
-      });
-    }, 500);
-    setTimeout(() => {
-      this.setState({
-        isVisible: true
-      });
-    }, 2500);
+    if (data !== undefined) {
+      setTimeout(() => {
+        this.setState({
+          timelineWidth: positionGet(new Date()) + "%"
+        });
+      }, 500);
+      setTimeout(() => {
+        this.setState({
+          isVisible: true
+        });
+        this.dataToDates();
+      }, 2500);
+    }
   }
 
   render() {

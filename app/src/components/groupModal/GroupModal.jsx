@@ -147,13 +147,7 @@ class GroupForm extends React.Component {
       study.push(i);
     }
 
-    var steps = [];
-
-    for (let i = 0; i < 7; i++){
-      steps.push(i);
-    }
-
-    const stepName = [
+    const steps = [
       'Основное',
       'Состав',
       'Социальное',
@@ -245,11 +239,12 @@ class GroupForm extends React.Component {
         zIndex={1030}
       >
         <Steps current={current} onChange={this.changeStep} style={{paddingBottom:20}} labelPlacement='vertical'>
-        {steps.map(item => {
+        {steps.map((item, index) => {
                   return (
                     <Step 
-                    status={item === current ? 'process' : validStep[item].valid ? 'error' : 'wait'} 
-                    title={stepName[item]}
+                    key={index}
+                    status={index === current ? 'process' : validStep[index].valid ? 'error' : 'wait'} 
+                    title={item}
                     />
                   );
                 })}
