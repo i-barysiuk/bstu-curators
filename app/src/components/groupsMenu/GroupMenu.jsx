@@ -89,6 +89,7 @@ class GroupCard extends React.Component {
                   <GroupsCard
                     favorite={this.isFavorite(group.id)}
                     onStarClick={() => this.onStarClick(group)}
+                    onEditClick={() => editGroupRequest({ id: group.id })}
                     key={group.id}
                     group={group.name}
                     onClick={() => this.onGroupClick(group.id)}
@@ -104,6 +105,7 @@ class GroupCard extends React.Component {
                 {all[keyName].map(group => (
                   <GroupsCard
                     onStarClick={() => this.onStarClick(group)}
+                    onEditClick={() => editGroupRequest({ id: group.id })}
                     key={group.name}
                     onClick={() => this.onGroupClick(group.id)}
                     group={group.name}
@@ -120,6 +122,7 @@ class GroupCard extends React.Component {
                 {archive[keyName].map(group => (
                   <GroupsCard
                     onStarClick={() => this.onStarClick(group)}
+                    onEditClick={() => editGroupRequest({ id: group.id })}
                     key={group.name}
                     onClick={() => this.onGroupClick(group.id)}
                     group={group.name}
