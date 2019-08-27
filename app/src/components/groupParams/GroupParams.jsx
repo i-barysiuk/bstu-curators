@@ -6,12 +6,13 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { 
   Avatar,
   Collapse,
-  Select,
+  Input,
+  Row,
+  Col,
   } from "antd";
 import { Pie } from "react-chartjs-2";
 
 const { Panel } = Collapse;
-const { Option } = Select;
 
 const getDate = (ids, data) => {
   return data ? ids.map(id => data[id]) : [];
@@ -54,7 +55,6 @@ const config = [
     text: "Проживание"
   }
 ];
-
 export default ({ data }) => {
   return (
     <Card
@@ -98,31 +98,61 @@ export default ({ data }) => {
             </div>
           ))}
       </div>
-
       <Collapse bordered={false}>
-        <Panel header="Социальный статус" key="1">
-                      <Select
-                        style={{ width: '100%' }}
-                        dropdownClassName={style.select}
-                        showSearch
-                        placeholder="Выберите социальный статус"
-                        optionFilterProp="children"
-                        filterOption={(input, option) =>
-                          option.props.children
-                            .toLowerCase()
-                            .indexOf(input.toLowerCase()) >= 0
-                        }
-                      > 
-                        <Option value="socOrphan18">Дети сироты (до 18 лет)</Option>
-                        <Option value="socWithoutParents18">Дети без родителей (до 18 лет)</Option>
-                        <Option value="socOrphans">Сироты и без родителей (18-23)</Option>
-                        <Option value="socFeature">Особенности развития</Option>
-                        <Option value="socParentsInvalid">Родители инвалиды</Option>
-                        <Option value="socCHAES">Регионы ЧАЭС</Option>
-                        <Option value="socCHAESRegion">Семьи из зоны загрязнения</Option>
-                      </Select>
+        <Panel  header = "Социальный статус" key="1">
+        <Row gutter={30} >
+                        <Row>
+                          <Col span={10}>Дети сироты (до 18 лет)  </Col>
+                          <Col span={4}>
+                              <Input className={style.InputValue} value = {data.socOrphan18}
+                              />
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col span={10}>Дети без родителей (до 18 лет) </Col>
+                          <Col span={4}>
+                              <Input className={style.InputValue} value = {data.socWithoutParents18}
+                              />
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col span={10}>Сироты и без родителей (18-23)  </Col>
+                          <Col span={4}>
+                              <Input className={style.InputValue} value = {data.socOrphans}
+                              />
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col span={10}>Особенности развития </Col>
+                          <Col span={4}>
+                              <Input className={style.InputValue} value = {data.socFeature}
+                              />
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col span={10}>Родители инвалиды  </Col>
+                          <Col span={4}>
+                              <Input className={style.InputValue} value = {data.socParentsInvalid}
+                              />
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col span={10}>Регионы ЧАЭС  </Col>
+                          <Col span={4}>
+                              <Input className={style.InputValue}  value = {data.socCHAES}
+                              />
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col span={10}>Семьи из зоны загрязнения  </Col>
+                          <Col span={4}>
+                              <Input className={style.InputValue} value = {data.socCHAESRegion}
+                              />
+                          </Col>
+                        </Row>
+                      </Row>
         </Panel>
-        <Panel header="Прочее" key="2">
+        <Panel header= " Прочее " key=" 2 ">
           {data.others}
         </Panel>
       </Collapse>
