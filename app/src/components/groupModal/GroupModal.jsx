@@ -22,6 +22,7 @@ import { getGroupData } from "../../helper/group";
 import GroupsService from "../../services/GroupsService";
 import {closeModal} from "../../redux/actions/modal"
 import style from "./style.module.scss"
+import debounce from "lodash/debounce";
 
 const { Step } = Steps;
 const { Option } = Select;
@@ -37,6 +38,7 @@ function is_valid(diff){
 class GroupForm extends React.Component {
   constructor(props) {
     super(props);
+    this.closingAfterSave=debounce(this.closingAfterSave,10);
     this.state = {
       current: 0,
       validStatus: false,
@@ -63,6 +65,11 @@ class GroupForm extends React.Component {
       this.setState({current: 0, validStatus: true });
     });
   };
+
+  closingAfterSave = () => {
+    this.setState({validStatus:false});
+    this.props.closeModal();
+  }
 
   normalize = value => {
     return value && value.replace(/ /g, "").trim();
@@ -158,10 +165,7 @@ class GroupForm extends React.Component {
     
     //from validate
 
-    if(this.state.validStatus) {
-      this.setState({validStatus:false});
-      closeModal();
-    }
+    if(this.state.validStatus) this.closingAfterSave();
 
     var validStep = [
       {
@@ -337,12 +341,12 @@ class GroupForm extends React.Component {
                             .indexOf(input.toLowerCase()) >= 0
                         }
                       >
-                        <Option value="Факультет электронно-информационных систем">ФЭИС</Option>
-                        <Option value="Факультет инженерных систем и экологии">ФИСЭ</Option>
-                        <Option value="Строительный факультет">СФ</Option>
-                        <Option value="Экономический факультет">ЭФ</Option>
-                        <Option value="Машиностроительный факультет">МСФ</Option>
-                        <Option value="Заочные">Заочные</Option>
+                        <Option value="ФЭИС">ФЭИС</Option>
+                        <Option value="ФИСЭ">ФИСЭ</Option>
+                        <Option value="СФ">СФ</Option>
+                        <Option value="ЭФ">ЭФ</Option>
+                        <Option value="МСФ">МСФ</Option>
+                        <Option value="Заочное">Заочное</Option>
                         <Option value="Иностранные">Иностранные</Option>
                       </Select>
                     )}
