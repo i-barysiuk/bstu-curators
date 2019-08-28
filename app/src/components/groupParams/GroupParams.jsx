@@ -3,15 +3,10 @@ import style from "./style.module.scss";
 import Card from "../common/card/Card";
 import BigButton from "../common/bigButton/BigButton";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { 
-  Avatar,
-  Collapse,
-  Select,
-  } from "antd";
+import { Avatar, Collapse, Row, Col } from "antd";
 import { Pie } from "react-chartjs-2";
 
 const { Panel } = Collapse;
-const { Option } = Select;
 
 const getDate = (ids, data) => {
   return data ? ids.map(id => data[id]) : [];
@@ -22,50 +17,63 @@ const config = [
     label: "gender",
     labels: ["Юноши", "Девушки"],
     labelsIds: ["men", "women"],
-    backgroundColor: ["#00BFFF", "pink"],
+    backgroundColor: ["#00BFFF", "#FF6384"],
     text: "Гендерный состав"
   },
   {
     label: "community",
     labels: ["БРСМ", "ПРОФКОМ", "Студсовет", "Прочая"],
     labelsIds: ["brsm", "profkom", "studsovet", "others"],
-    backgroundColor: ["red", "blue", "yellow", "green"],
+    backgroundColor: ["#FF6384", "#FFCD56", "#36A2EB", "#C9CBCF"],
     text: "Общественные организации"
   },
   {
     label: "family",
     labels: ["Полная", "Не полная", "Многодетные", "Сироты"],
     labelsIds: ["full", "notfull", "manychild", "orphan"],
-    backgroundColor: ["red", "blue", "yellow", "green"],
+    backgroundColor: ["#4BC0C0", "#FF9F40", "#9966FF", "#FF6384"],
     text: "Состав семьи"
   },
   {
     label: "geography",
     labels: ["Местный", "Иногородний", "Иностранный"],
     labelsIds: ["local", "nonresident", "foreign"],
-    backgroundColor: ["red", "blue", "yellow"],
+    backgroundColor: ["#36A2EB", "#FFCD56", "#FF6384"],
     text: "География"
   },
   {
     label: "living",
     labels: ["Родители", "Родственники", "Самостоятельно", "Общежитие"],
     labelsIds: ["parents", "relatives", "independent", "hostel"],
-    backgroundColor: ["red", "blue", "yellow", "green"],
+    backgroundColor: ["#9966FF", "#36A2EB", "#FF6384", "#4BC0C0"],
     text: "Проживание"
   }
 ];
 
 export default ({ data }) => {
+  var curatorName =
+    data.user &&
+    data.user.first_name +
+      " " +
+      (data.user.f_name !== null ? data.user.f_name : "") +
+      " " +
+      data.user.last_name;
+  var curatorInitials =
+    data.user &&
+    data.user.last_name[0] +
+      data.user.first_name[0] +
+      (data.user.f_name !== null ? data.user.f_name[0] : "");
+
   return (
     <Card
       title="Характеристика"
       buttons={<BigButton icon={faPen} onClick={() => {}} />}
     >
       <div className={style.curator}>
-        <Avatar size={64}>КМС</Avatar>
+        <Avatar size={64}>{curatorInitials}</Avatar>
         <div>
-          Краснова Мария Степановна
-          <br /> <span>Кафедра гуманитарных наук</span>
+          {curatorName}
+          <br /> <span>{data.user && data.user.department}</span>
         </div>
       </div>
 
@@ -101,26 +109,38 @@ export default ({ data }) => {
 
       <Collapse bordered={false}>
         <Panel header="Социальный статус" key="1">
-                      <Select
-                        style={{ width: '100%' }}
-                        dropdownClassName={style.select}
-                        showSearch
-                        placeholder="Выберите социальный статус"
-                        optionFilterProp="children"
-                        filterOption={(input, option) =>
-                          option.props.children
-                            .toLowerCase()
-                            .indexOf(input.toLowerCase()) >= 0
-                        }
-                      > 
-                        <Option value="socOrphan18">Дети сироты (до 18 лет)</Option>
-                        <Option value="socWithoutParents18">Дети без родителей (до 18 лет)</Option>
-                        <Option value="socOrphans">Сироты и без родителей (18-23)</Option>
-                        <Option value="socFeature">Особенности развития</Option>
-                        <Option value="socParentsInvalid">Родители инвалиды</Option>
-                        <Option value="socCHAES">Регионы ЧАЭС</Option>
-                        <Option value="socCHAESRegion">Семьи из зоны загрязнения</Option>
-                      </Select>
+          {data.social && (
+            <React.Fragment>
+              <Row>
+                <Col span={20}>Дети сироты (до 18 лет)</Col>
+                <Col span={4}>{data.social.socOrphan18 || " - "}</Col>
+              </Row>
+              <Row>
+                <Col span={20}>Дети без родителей (до 18 лет)</Col>
+                <Col span={4}>{data.social.socWithoutParents18 || " - "}</Col>
+              </Row>
+              <Row>
+                <Col span={20}>Сироты и без родителей (18-23)</Col>
+                <Col span={4}>{data.social.socOrphans || " - "}</Col>
+              </Row>
+              <Row>
+                <Col span={20}>Особенности развития </Col>
+                <Col span={4}>{data.social.socFeature || " - "}</Col>
+              </Row>
+              <Row>
+                <Col span={20}>Родители инвалиды </Col>
+                <Col span={4}>{data.social.socParentsInvalid || " - "}</Col>
+              </Row>
+              <Row>
+                <Col span={20}>Регионы ЧАЭС </Col>
+                <Col span={4}>{data.social.socCHAES || " - "}</Col>
+              </Row>
+              <Row>
+                <Col span={20}>Семьи из зоны загрязнения </Col>
+                <Col span={4}>{data.social.socCHAESRegion || " - "}</Col>
+              </Row>
+            </React.Fragment>
+          )}
         </Panel>
         <Panel header="Прочее" key="2">
           {data.others}

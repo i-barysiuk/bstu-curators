@@ -561,7 +561,7 @@ class GroupForm extends React.Component {
                         <div className={style.organisations}>
                         <span>Другие</span>
                         </div>
-                        {getFieldDecorator("others", {
+                        {getFieldDecorator("othersOO", {
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(<InputNumber min={0} max={getFieldValue("total")} />)}
@@ -580,7 +580,7 @@ class GroupForm extends React.Component {
                             getFieldValue("total") - getFieldValue("women"),
                             getFieldValue("women")
                           ],
-                          backgroundColor: ["#00BFFF", "pink"]
+                          backgroundColor: ["#00BFFF", "#FF6384"]
                         }
                       ]
                     }}
@@ -606,9 +606,9 @@ class GroupForm extends React.Component {
                             getFieldValue("brsm"),
                             getFieldValue("profkom"),
                             getFieldValue("studsovet"),
-                            getFieldValue("others")
+                            getFieldValue("othersOO")
                           ],
-                          backgroundColor: ["red", "blue", "yellow", "green"]
+                          backgroundColor: ["#FF6384", "#FFCD56", "#36A2EB", "#C9CBCF"]
                         }
                       ]
                     }}
@@ -957,7 +957,7 @@ class GroupForm extends React.Component {
                             getFieldValue("manychild"),
                             getFieldValue("orphan")
                           ],
-                          backgroundColor: ["red", "blue", "yellow", "green"]
+                          backgroundColor: ["#4BC0C0", "#FF9F40", "#9966FF", "#FF6384"]
                         }
                       ]
                     }}
@@ -1119,7 +1119,7 @@ class GroupForm extends React.Component {
                             getFieldValue("nonresident"),
                             getFieldValue("foreign")
                           ],
-                          backgroundColor: ["red", "blue", "yellow"]
+                          backgroundColor: ["#36A2EB", "#FFCD56", "#FF6384"]
                         }
                       ]
                     }}
@@ -1329,7 +1329,7 @@ class GroupForm extends React.Component {
                             getFieldValue("independent"),
                             getFieldValue("hostel")
                           ],
-                          backgroundColor: ["red", "blue", "yellow", "green"]
+                          backgroundColor: ["#9966FF", "#36A2EB", "#FF6384", "#4BC0C0"]
                         }
                       ]
                     }}
@@ -1446,14 +1446,14 @@ class GroupForm extends React.Component {
             <Panel key="7">
               <Form.Item label="Прочие сведения">
                 <Form.Item>
-                  {getFieldDecorator("more", {
+                  {getFieldDecorator("others", {
                     rules: [
                       {
                         pattern: /(^[^]{0,1000}$)/,
                         message: "Максимум 1000 символов!"
                       }
                     ],
-                    initialValue: this.state.form.more
+                    initialValue: this.state.form.others
                   })(<TextArea autosize={{minRows: 6, maxRows: 9}}/>)}
                 </Form.Item>
               </Form.Item>
