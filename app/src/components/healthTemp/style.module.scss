@@ -45,3 +45,81 @@
   display: flex;
   align-items: flex-start;
 }
+
+@media screen and (min-width : 1400px)
+{ 
+  .temp 
+  {
+    display: flex;
+    font-size: 65px;
+    font-weight: bold;
+    margin-right: 15px;
+  }
+
+  .thermometer
+  {
+    font-size: 20px;
+  }
+
+  .count
+  {
+    font-size: 25px;
+  }
+
+  .expl 
+  {
+    font-size: 15px;
+  }
+}
+
+@media screen and (min-width : 1600px)
+{   
+  .temp 
+  {
+    display: flex;
+    font-size: 100px;
+    font-weight: bold;
+    margin-right: 15px;
+  }
+
+  .thermometer
+  {
+    font-size: 30px;
+  }
+
+  .count
+  {
+    font-size: 30px;
+  }
+
+  .expl 
+  {
+    font-size: 20px;
+  }
+}
+
+@media screen and (min-width : 2000px)
+{   
+  .temp 
+  {
+    display: flex;
+    font-size: 150px;
+    font-weight: bold;
+    margin-right: 15px;
+  }
+
+  .thermometer
+  {
+    font-size: 45px;
+  }
+
+  .count
+  {
+    font-size: 35px;
+  }
+
+  .expl 
+  {
+    font-size: 25px;
+  }
+}
