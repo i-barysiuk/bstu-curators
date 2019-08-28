@@ -4,100 +4,65 @@ import style from "../timeline/style.module.scss";
 
 var stretches = true;
 
-let data = [
-  //Dataset
-  {
-    event: "17 Марта - 20 Апреля 2019",
-    dateStart: new Date("March 17, 2019 03:24:00"),
-    dateEnd: new Date("April 20, 2019 03:24:00"),
-    isActive: false
-  },
-  {
-    event: "23 Июня 2019",
-    dateStart: new Date("June 23, 2019 03:24:00"),
-    dateEnd: null,
-    isActive: false
-  },
-  {
-    event: "23 Июля - 30 Июля 2019",
-    dateStart: new Date("July 23, 2019 03:24:00"),
-    dateEnd: new Date("July 30, 2019 03:24:00"),
-    isActive: false
-  },
-  {
-    event: "Прямо сейчас!",
-    dateStart: new Date(),
-    dateEnd: null,
-    isActive: true
-  },
-  {
-    event: "30 Сентября 2019",
-    dateStart: new Date("September 30, 2019 03:24:00"),
-    dateEnd: null,
-    isActive: false
-  },
-  {
-    event: "20 Октября - 30 Октября 2019",
-    dateStart: new Date("October 20, 2019 00:00:00"),
-    dateEnd: new Date("October 30, 2019 00:00:00"),
-    isActive: false
-  }
-];
-
-function positionGet(date) {
-  //To get dots shift from left side
-  var fDate = data[0].dateStart;
-  var lDate = data[data.length - 1].dateStart;
-  var allSet = lDate - fDate;
-  var curDate = date - fDate;
-  var ret = (curDate / allSet) * 100;
-  return ret.toString();
-}
-
-function whenContinuous(ind) {
-  var start = data[ind].dateStart;
-  var end = data[ind].dateEnd;
-  if (end != null && stretches === true)
-    return (
-      (
-        parseFloat(positionGet(end), 10) - parseFloat(positionGet(start), 10)
-      ).toString() + "%"
-    );
-  else return undefined;
-}
-
-function styleGet(ind) {
-  //To get styles of each dot
-  var shift;
-  if (ind === 0) shift = 10;
-  else shift = positionGet(data[ind].dateStart) + "%";
-  var style = {
-    position: "absolute",
-    left: shift,
-    width: whenContinuous(ind),
-    minWidth: "20px",
-    borderRadius: "1000px"
-  };
-  if (ind === data.length - 1)
-    style = {
-      position: "absolute",
-      right: 10,
-      width: whenContinuous(ind),
-      minWidth: "20px",
-      borderRadius: "1000px"
-    };
-  return style;
-}
-
 class TimelineComp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       timelineWidth: "0%",
       isVisible: false,
-      data: data
+      data: []
     };
   }
+
+  whenContinuous = ind => {
+    if (this.state.data.length !== 0) {
+      var start = this.state.data[ind].dateStart;
+      var end = this.state.data[ind].dateEnd;
+      if (end != null && stretches === true)
+        return (
+          (
+            parseFloat(this.positionGet(end), 10) -
+            parseFloat(this.positionGet(start), 10)
+          ).toString() + "%"
+        );
+      else return undefined;
+    } else return undefined;
+  };
+
+  positionGet = date => {
+    //To get dots shift from left side
+    if (this.state.data.length !== 0) {
+      var fDate = this.state.data[0].dateStart;
+      var lDate = this.state.data[this.state.data.length - 1].dateStart;
+      var allSet = lDate - fDate;
+      var curDate = date - fDate;
+      var ret = (curDate / allSet) * 100;
+      return ret.toString();
+    }
+  };
+
+  styleGet = ind => {
+    //To get styles of each dot
+    var shift;
+    if (ind === 0) shift = 10;
+    else shift = this.positionGet(this.state.data[ind].dateStart) + "%";
+    var style = {
+      position: "absolute",
+      left: shift,
+      width: this.whenContinuous(ind),
+      minWidth: "20px",
+      borderRadius: "1000px"
+    };
+    if (ind === this.state.data.length - 1)
+      style = {
+        position: "absolute",
+        right: 10,
+        width: this.whenContinuous(ind),
+        minWidth: "20px",
+        borderRadius: "1000px"
+      };
+    return style;
+  };
 
   dataToDates() {
     if (!this.props.data) return;
@@ -105,7 +70,13 @@ class TimelineComp extends React.Component {
       {
         event: "Начало года",
         dateStart: new Date(this.props.data.coursePeriodStart),
-        dateEnd: new Date(this.props.data.coursePeriodEnd),
+        dateEnd: null,
+        isActive: false
+      },
+      {
+        event: "Зимние каникулы",
+        dateStart: new Date(this.props.data.winterHolidayStart),
+        dateEnd: new Date(this.props.data.winterHolidayEnd),
         isActive: false
       },
       {
@@ -113,25 +84,68 @@ class TimelineComp extends React.Component {
         dateStart: new Date(this.props.data.winterSessionStart),
         dateEnd: new Date(this.props.data.winterSessionEnd),
         isActive: false
+      },
+      {
+        event: "Летняя сессия",
+        dateStart: new Date(this.props.data.summerSessionStart),
+        dateEnd: new Date(this.props.data.summerSessionEnd),
+        isActive: false
+      },
+      {
+        event: "Практика",
+        dateStart: new Date(this.props.data.practiceStart),
+        dateEnd: new Date(this.props.data.practiceEnd),
+        isActive: false
+      },
+      {
+        event: "Первая аттестация",
+        dateStart: new Date(this.props.data.attestation1Start),
+        dateEnd: new Date(this.props.data.attestation1End),
+        isActive: false
+      },
+      {
+        event: "Вторая аттестация",
+        dateStart: new Date(this.props.data.attestation2Start),
+        dateEnd: new Date(this.props.data.attestation2End),
+        isActive: false
+      },
+      {
+        event: "Третья аттестация",
+        dateStart: new Date(this.props.data.attestation3Start),
+        dateEnd: new Date(this.props.data.attestation3End),
+        isActive: false
+      },
+      {
+        event: "Четвертая аттестация",
+        dateStart: new Date(this.props.data.attestation4Start),
+        dateEnd: new Date(this.props.data.attestation4End),
+        isActive: false
+      },
+      {
+        event: "Конец года",
+        dateStart: new Date(this.props.data.coursePeriodEnd),
+        dateEnd: null,
+        isActive: false
       }
     ];
     this.setState({ data: dates });
   }
 
   componentDidMount() {
-    if (data !== undefined) {
+    if (this.state.data !== undefined) {
       setTimeout(() => {
+        this.dataToDates();
         this.setState({
-          timelineWidth: positionGet(new Date()) + "%"
+          timelineWidth: this.positionGet(new Date()) + "%"
         });
       }, 500);
       setTimeout(() => {
         this.setState({
           isVisible: true
         });
-        this.dataToDates();
       }, 2500);
     }
+    console.log(this.state.data);
   }
 
   render() {
@@ -156,7 +170,7 @@ class TimelineComp extends React.Component {
                   placement="bottom"
                   visible={this.state.isVisible}
                 >
-                  <div className={style.icon} style={styleGet(index)} />
+                  <div className={style.icon} style={this.styleGet(index)} />
                 </Popover>
               );
             else
@@ -167,7 +181,7 @@ class TimelineComp extends React.Component {
                   trigger="hover"
                   placement="bottom"
                 >
-                  <div className={style.icon} style={styleGet(index)} />
+                  <div className={style.icon} style={this.styleGet(index)} />
                 </Popover>
               );
           })}
