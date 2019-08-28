@@ -56,7 +56,12 @@ export default class GroupProfile extends React.Component {
 
         <Row>
           <Col>
-            <Timeline />
+            <Timeline
+              data={
+                this.props.group.studyProcess &&
+                this.props.group.studyProcess[this.props.group.course]
+              }
+            />
           </Col>
         </Row>
 
