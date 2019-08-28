@@ -4,7 +4,7 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.addColumn("groups", "curatorId", {
       type: Sequelize.UUID,
-      allowNull: false
+      allowNull: true
     });
   },
 
