@@ -131,6 +131,10 @@ class TimelineComp extends React.Component {
     this.setState({ data: dates });
   }
 
+  componentWillReceiveProps() {
+    this.dataToDates();
+  }
+
   componentDidMount() {
     if (this.state.data !== undefined) {
       setTimeout(() => {
