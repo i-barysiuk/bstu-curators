@@ -1,9 +1,12 @@
 const Group = require("../db/models/Group");
+const User = require("../db/models/User");
+
 const _ = require("lodash");
 
 class GroupService {
   get(id) {
     return Group.findOne({
+      include: [{ model: User }],
       where: {
         id
       }
@@ -73,7 +76,7 @@ class GroupService {
   }
 
   update(body, id) {
-    return User.update(body, {
+    return Group.update(body, {
       where: {
         id
       },
@@ -82,7 +85,7 @@ class GroupService {
   }
 
   delete(id) {
-    return User.destroy({
+    return Group.destroy({
       where: {
         id
       }

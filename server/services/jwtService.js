@@ -9,7 +9,7 @@ class JWTService {
         role: data.role
       },
       secret,
-      { expiresIn: "1h" }
+      { expiresIn: "30m" }
     );
     var refreshToken = jwt.sign(
       {
@@ -26,7 +26,16 @@ class JWTService {
   }
 
   validate(token) {
-    var err = jwt.verify(token, secret);
+    try {
+      var decoded = jwt.verify(token, secret);
+      return decoded;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  getInfo(token) {
+    var err = jwt.decode(token, secret);
     return err;
   }
 }

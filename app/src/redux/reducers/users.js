@@ -1,4 +1,3 @@
-import { message } from "antd";
 import {
   WHO_AM_I_REQUEST,
   WHO_AM_I_SUCCESS,
@@ -21,7 +20,6 @@ export default function usersReducer(state = initialState, action) {
       newState.profile = action.payload;
       return newState;
     case WHO_AM_I_FAILED:
-      message.error(action.payload);
       newState.isProfileLoading = false;
       return newState;
     default:
