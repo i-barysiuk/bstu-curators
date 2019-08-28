@@ -8,7 +8,8 @@ import {
   Button,
   Col,
   Row,
-  Modal
+  Modal,
+  Collapse
 } from "antd";
 import style from "../registerForm/style.module.scss";
 import AuthService from "../../services/AuthService";
@@ -16,6 +17,7 @@ import { withRouter } from "react-router-dom";
 import moment from "moment";
 
 const { Step } = Steps;
+const { Panel } = Collapse;
 
 function disabledDate(current) {
   return current && current > moment().endOf("day");
@@ -94,6 +96,7 @@ class RegistrationForm extends React.Component {
   normalize = value => {
     return value && value.replace(/ /g, "").trim();
   };
+ 
 
   prev() {
     const current = this.state.currentStep - 1;
@@ -121,12 +124,22 @@ class RegistrationForm extends React.Component {
 
   render() {
     const { currentStep } = this.state;
-    const { getFieldDecorator, getFieldsError } = this.props.form;
-    const steps = [
-      {
-        title: "",
-        content: (
-          <React.Fragment>
+    const {
+      form: { getFieldDecorator, getFieldsError}
+    } = this.props;
+    const steps = [1,2,3];
+    return (
+      <div className={style.container + " " + this.props.className}>
+        <Form onSubmit={this.handleSubmit}>
+        <Steps current={currentStep} style={{paddingBottom:20}}>
+            <Step /><Step /><Step />
+        </Steps>
+          <Collapse 
+          className={style.collapsePanel}
+          bordered={false}
+          activeKey = {`${currentStep+1}`}
+          >
+            <Panel key="1">
             <Form.Item label="Фамилия">
               {getFieldDecorator("last_name", {
                 rules: [
@@ -177,17 +190,12 @@ class RegistrationForm extends React.Component {
                 initialValue: this.state.form.f_name
               })(<Input placeholder="Введите свое отчество" />)}
             </Form.Item>
-          </React.Fragment>
-        )
-      },
-      {
-        title: "",
-        content: (
-          <React.Fragment>
+            </Panel>
+            <Panel key="2">
             <Row type="flex" justify="space-between">
-              <Col>
-                <Form.Item label="Пол">
-                  {getFieldDecorator("sex", {
+               <Col>
+                 <Form.Item label="Пол">
+                   {getFieldDecorator("sex", {
                     rules: [{ required: true, message: "Пол не выбран!" }],
                     initialValue: this.state.form.sex
                   })(
@@ -211,7 +219,6 @@ class RegistrationForm extends React.Component {
                 </Form.Item>
               </Col>
             </Row>
-
             <Form.Item label="Кафедра, отдел или факультет">
               {getFieldDecorator("department", {
                 initialValue: this.state.form.department
@@ -227,15 +234,10 @@ class RegistrationForm extends React.Component {
                 initialValue: this.state.form.title
               })(<Input placeholder="Введите научное звание" />)}
             </Form.Item>
-          </React.Fragment>
-        )
-      },
-      {
-        title: "",
-        content: (
-          <React.Fragment>
+            </Panel>
+            <Panel key="3">
             <Form.Item label="Электронная почта">
-              {getFieldDecorator("email", {
+             {getFieldDecorator("email", {
                 rules: [
                   {
                     required: true,
@@ -310,18 +312,9 @@ class RegistrationForm extends React.Component {
                 validateFirst: true
               })(<Input.Password placeholder="Подтвердите пароль" />)}
             </Form.Item>
-          </React.Fragment>
-        )
-      }
-    ];
-    return (
-      <div className={style.container + " " + this.props.className}>
-        <Form onSubmit={this.handleSubmit}>
-          <Steps current={currentStep} className={style.steps}>
-            {steps.map((item, i) => (
-              <Step key={i} title={item.title} />
-            ))}
-          </Steps>
+            </Panel>
+          </Collapse>
+
           <div className={style.stepsContent}>{steps[currentStep].content}</div>
           <div className={style.stepsAction}>
             <Button disabled={currentStep === 0} onClick={() => this.prev()}>
