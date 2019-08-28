@@ -12,7 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Input, Icon } from "antd";
 import Collapse from "../common/collapse/Collapse";
-import { openModal } from "../../redux/actions/modal";
+import { openGroupModal } from "../../redux/actions/modal";
 import {
   addGroupToFavouriteRequest,
   removeGroupFromFavouriteRequest
@@ -48,14 +48,14 @@ class GroupCard extends React.Component {
       groups: { favorite, my, all, archive },
       fetchAll,
       fetchArchive,
-      openModal
+      openGroupModal
     } = this.props;
     return (
       <div className={style.container}>
         <div className={style.head}>
           <div className={style.headerRow}>
             <span className={style.header}>Группы</span>
-            <BigButton icon={faPlus} onClick={openModal} primary />
+            <BigButton icon={faPlus} onClick={openGroupModal} primary />
           </div>
 
           <Input
@@ -133,7 +133,7 @@ class GroupCard extends React.Component {
 }
 
 const mapDispatchToProps = {
-  openModal,
+  openGroupModal,
   addGroupToFavouriteRequest,
   removeGroupFromFavouriteRequest
 };

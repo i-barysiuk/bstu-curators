@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import locale from "antd/es/date-picker/locale/ru_RU";
 import {
   Form,
@@ -15,7 +16,7 @@ import {
   Icon,
   Card
 } from "antd";
-import {closeModal} from "../../redux/actions/modal"
+import {closeStudentModal} from "../../redux/actions/modal"
 import style from "./style.module.scss"
 
 const { Option } = Select;
@@ -46,7 +47,7 @@ class StudentForm extends React.Component {
     const {
       form: { getFieldDecorator, getFieldValue },
       isOpen,
-      closeModal
+      closeStudentModal
     } = this.props;
 
     var cardContent = [];
@@ -81,9 +82,9 @@ class StudentForm extends React.Component {
         maskClosable={false}
         okText={"Сохранить"}
         cancelText={"Отмена"}
-        //onCancel={() => closeModal()|this.setState({current: 0})}
+        onCancel={() => closeStudentModal()|this.setState({current: 0})}
         //onOk={() => this.save() ? closeModal() : null}
-        visible={true}//isOpen
+        visible={isOpen}
         zIndex={1030}
       >
       <Form>
@@ -103,11 +104,11 @@ class StudentForm extends React.Component {
             <Row type="flex" gutter={20} style={{paddingTop:30}}>
             <Col span={8} push={2}>
             <Form.Item label="Фамилия">
-            {getFieldDecorator("surname", {
+            {getFieldDecorator("last_name", {
                       rules: [
                         {
                           required: true,
-                          message: "Пожалуйста укажите фамилию"
+                          message: "Укажите фамилию"
                         },
                         {
                           pattern: /(^[А-Я]{1}[а-я]{1,20}$)|(^[А-Я]{1}[а-я]{1,20}-[А-я]{1,20}$)/,
@@ -115,17 +116,17 @@ class StudentForm extends React.Component {
                         }
                       ],
                       validateTrigger: "onBlur",
-                      initialValue: this.state.form.surname
+                      initialValue: this.state.form.last_name
                     })(<Input />)}
             </Form.Item>
             </Col>
             <Col span={8} push={4}>
             <Form.Item label="Имя">
-            {getFieldDecorator("name", {
+            {getFieldDecorator("full_name", {
                       rules: [
                         {
                           required: true,
-                          message: "Пожалуйста укажите имя"
+                          message: "Укажите имя"
                         },
                         {
                           pattern: /(^[А-Я]{1}[а-я]{1,20}$)/,
@@ -133,7 +134,7 @@ class StudentForm extends React.Component {
                         }
                       ],
                       validateTrigger: "onBlur",
-                      initialValue: this.state.form.name
+                      initialValue: this.state.form.full_name
                     })(<Input />)}
             </Form.Item>
             </Col>
@@ -141,11 +142,11 @@ class StudentForm extends React.Component {
             <Row type="flex" gutter={20}>
             <Col span={8} push={2}>
             <Form.Item label="Отчество">
-            {getFieldDecorator("patronymic", {
+            {getFieldDecorator("f_name", {
                       rules: [
                         {
                           required: true,
-                          message: "Пожалуйста укажите отчество"
+                          message: "Укажите отчество"
                         },
                         {
                           pattern: /(^[А-Я]{1}[а-я]{1,20}$)/,
@@ -153,17 +154,17 @@ class StudentForm extends React.Component {
                         }
                       ],
                       validateTrigger: "onBlur",
-                      initialValue: this.state.form.patronymic
+                      initialValue: this.state.form.f_name
                     })(<Input />)}
             </Form.Item>
             </Col>
             <Col span={8} push={4}>
             <Form.Item label="Должность">
-            {getFieldDecorator("post", {
+            {getFieldDecorator("position", {
                       rules: [
                         {
                           required: true,
-                          message: "Пожалуйста укажите отчество"
+                          message: "Укажите должность"
                         },
                         {
                           pattern: /(^[А-Я]{1}[а-я]{1,20}$)/,
@@ -171,7 +172,7 @@ class StudentForm extends React.Component {
                         }
                       ],
                       validateTrigger: "onBlur",
-                      initialValue: this.state.form.post
+                      initialValue: this.state.form.position
                     })(<Input />)}
                     </Form.Item>
                     </Col>
@@ -179,7 +180,7 @@ class StudentForm extends React.Component {
                     <Row type="flex" gutter={20}>
                     <Col span={8} push={2}>
                     <Form.Item label="Факультет">
-                    {getFieldDecorator("department", {
+                    {getFieldDecorator("faculty", {
                       rules: [
                         {
                           required: true,
@@ -187,8 +188,8 @@ class StudentForm extends React.Component {
                           whitespace: true
                         }
                       ],
-                      initialValue: this.state.form.department,
-                      validateTrigger: "onChange"
+                      initialValue: this.state.form.faculty,
+                      validateTrigger: "onBlur"
                     })(
                       <Select
                         dropdownClassName={style.select}
@@ -206,6 +207,8 @@ class StudentForm extends React.Component {
                         <Option value="СФ">СФ</Option>
                         <Option value="ЭФ">ЭФ</Option>
                         <Option value="МСФ">МСФ</Option>
+                        <Option value="Заочное">Заочное</Option>
+                        <Option value="Иностранные">Иностранные</Option>
                       </Select>
                     )}
                   </Form.Item>
@@ -216,7 +219,7 @@ class StudentForm extends React.Component {
                       rules: [
                         {
                           required: true,
-                          message: "Пожалуйста укажите отчество"
+                          message: "Укажите группу"
                         },
                         {
                           pattern: /(^[А-Я]{1}[а-я]{1,20}$)/,
@@ -238,7 +241,7 @@ class StudentForm extends React.Component {
                   })(
                     <Radio.Group buttonStyle="solid" className={style.radio}>
                       <Radio.Button value={"men"}>Мужской</Radio.Button>
-                      <Radio.Button value={"woman"}>Женский</Radio.Button>
+                      <Radio.Button value={"women"}>Женский</Radio.Button>
                     </Radio.Group>
                   )}
                   </Form.Item>
@@ -249,7 +252,7 @@ class StudentForm extends React.Component {
                       rules: [
                         {
                           required: true,
-                          message: "Пожалуйста укажите отчество"
+                          message: "Пожалуйста укажите дату рождения"
                         },
                         {
                           pattern: /(^[А-Я]{1}[а-я]{1,20}$)/,
@@ -292,7 +295,7 @@ class StudentForm extends React.Component {
                 <Row type="flex" gutter={20}>
                 <Col span={8} push={2}>
                 <Form.Item label="Серия и номер паспорта">
-                {getFieldDecorator("series", {
+                {getFieldDecorator("passport_series", {
                           rules: [
                             {
                               required: true,
@@ -304,13 +307,13 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.series
+                          initialValue: this.state.form.passport_series
                         })(<Input />)}
                 </Form.Item>
                 </Col>
                 <Col span={8} push={4}>
                 <Form.Item label="Идентификационный номер">
-                {getFieldDecorator("identification", {
+                {getFieldDecorator("passportId", {
                           rules: [
                             {
                               required: true,
@@ -322,7 +325,7 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.identification
+                          initialValue: this.state.form.passportId
                         })(<Input />)}
                 </Form.Item>
                 </Col>
@@ -330,7 +333,7 @@ class StudentForm extends React.Component {
                 <Row type="flex" gutter={20}>
                 <Col span={8} push={2}>
                 <Form.Item label="Кем выдан">
-                {getFieldDecorator("issued", {
+                {getFieldDecorator("issuing_authority", {
                           rules: [
                             {
                               required: true,
@@ -342,13 +345,13 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.issued
+                          initialValue: this.state.form.issuing_authority
                         })(<Input />)}
                 </Form.Item>
                 </Col>
                 <Col span={8} push={4}>
                 <Form.Item label="Когда выдан">
-                      {getFieldDecorator("dateOfIssue", {
+                      {getFieldDecorator("date_issue", {
                       rules: [
                         {
                           required: true,
@@ -360,7 +363,7 @@ class StudentForm extends React.Component {
                         }
                       ],
                       validateTrigger: "onBlur",
-                      initialValue: this.state.form.dateOfIssue
+                      initialValue: this.state.form.date_issue
                     })(<DatePicker 
                     locale={locale} 
                     className={style.datePicker}
@@ -383,7 +386,7 @@ class StudentForm extends React.Component {
           <Row type='flex' gutter={20}>
           <Col span={8} push={2}>
           <Form.Item label="Город">
-                {getFieldDecorator("homeCity", {
+                {getFieldDecorator("home_city", {
                           rules: [
                             {
                               required: true,
@@ -395,13 +398,13 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.homeCity
+                          initialValue: this.state.form.home_city
                         })(<Input />)}
                 </Form.Item>
                 </Col>
                 <Col span={8} push={4}>
                 <Form.Item label="Город">
-                {getFieldDecorator("city", {
+                {getFieldDecorator("study_city", {
                           rules: [
                             {
                               required: true,
@@ -413,7 +416,7 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.city
+                          initialValue: this.state.form.study_city
                         })(<Input />)}
                 </Form.Item>
                 </Col>
@@ -421,7 +424,7 @@ class StudentForm extends React.Component {
                 <Row type='flex' gutter={20}>
                 <Col span={8} push={2}>
                 <Form.Item label="Улица">
-                {getFieldDecorator("homeStreet", {
+                {getFieldDecorator("home_street", {
                           rules: [
                             {
                               required: true,
@@ -433,13 +436,13 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.homeStreet
+                          initialValue: this.state.form.home_street
                         })(<Input />)}
                 </Form.Item>
                 </Col>
                 <Col span={8} push={4}>
                 <Form.Item label="Улица">
-                {getFieldDecorator("street", {
+                {getFieldDecorator("study_street", {
                           rules: [
                             {
                               required: true,
@@ -451,7 +454,7 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.street
+                          initialValue: this.state.form.study_street
                         })(<Input />)}
                 </Form.Item>
                 </Col>
@@ -459,7 +462,7 @@ class StudentForm extends React.Component {
                 <Row type='flex' gutter={20}>
                 <Col span={8} push={2}>
                 <Form.Item label="Дом">
-                {getFieldDecorator("homeNumber", {
+                {getFieldDecorator("home_number", {
                           rules: [
                             {
                               required: true,
@@ -471,13 +474,13 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.homeNumber
+                          initialValue: this.state.form.home_number
                         })(<Input />)}
                 </Form.Item>
                 </Col>
                 <Col span={8} push={4}>
                 <Form.Item label="Дом">
-                {getFieldDecorator("number", {
+                {getFieldDecorator("study_number", {
                           rules: [
                             {
                               required: true,
@@ -489,7 +492,7 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.number
+                          initialValue: this.state.form.study_number
                         })(<Input />)}
                 </Form.Item>
                 </Col>
@@ -497,7 +500,7 @@ class StudentForm extends React.Component {
                 <Row type='flex' gutter={20}>
                 <Col span={8} push={2}>
                 <Form.Item label="Квартира">
-                {getFieldDecorator("homeRoomNumber", {
+                {getFieldDecorator("home_room", {
                           rules: [
                             {
                               required: true,
@@ -509,13 +512,13 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.homeRoomNumber
+                          initialValue: this.state.form.home_room
                         })(<Input />)}
                 </Form.Item>
                 </Col>
                 <Col span={8} push={4}>
                 <Form.Item label="Квартира">
-                {getFieldDecorator("roomNumber", {
+                {getFieldDecorator("study_room", {
                           rules: [
                             {
                               required: true,
@@ -527,7 +530,7 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.roomNumber
+                          initialValue: this.state.form.study_room
                         })(<Input />)}
                 </Form.Item>
                 </Col>
@@ -575,11 +578,11 @@ class StudentForm extends React.Component {
             <Row type='flex' gutter={20}>
             <Col span={8} push={2}>
                 <Form.Item label="Статус">
-                {getFieldDecorator("rStatus", {
+                {getFieldDecorator("representatives.status", {
                           rules: [
                             {
                               required: true,
-                              message: "Пожалуйста укажите статус"
+                              message: "Заполните это поле"
                             },
                             {
                               pattern: /(^[А-я]{1,20}$)/,
@@ -587,7 +590,7 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.rStatus
+                          initialValue: this.state.form.representatives.status
                         })(<Input />)}
                 </Form.Item>
                 </Col>
@@ -595,11 +598,11 @@ class StudentForm extends React.Component {
                 <Row type='flex' gutter={20}>
                 <Col span={8} push={2}>
                 <Form.Item label="Фамилия">
-                {getFieldDecorator("rSurname", {
+                {getFieldDecorator("representatives.last_name", {
                           rules: [
                             {
                               required: true,
-                              message: "Пожалуйста укажите город"
+                              message: "Заполните это поле"
                             },
                             {
                               pattern: /(^[А-я]{1,20}$)/,
@@ -607,17 +610,17 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.rSurname
+                          initialValue: this.state.form.representatives.last_name
                         })(<Input />)}
                 </Form.Item>
                 </Col>
                 <Col span={8} push={4}>
                 <Form.Item label="Имя">
-                {getFieldDecorator("rName", {
+                {getFieldDecorator("representatives.full_name", {
                           rules: [
                             {
                               required: true,
-                              message: "Пожалуйста укажите город"
+                              message: "Заполните это поле"
                             },
                             {
                               pattern: /(^[А-я]{1,20}$)/,
@@ -625,7 +628,7 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.rName
+                          initialValue: this.state.form.representatives.full_name
                         })(<Input />)}
                 </Form.Item>
                 </Col>
@@ -633,11 +636,11 @@ class StudentForm extends React.Component {
                 <Row type='flex' gutter={20}>
                 <Col span={8} push={2}>
                 <Form.Item label="Отчество">
-                {getFieldDecorator("rPatronymic", {
+                {getFieldDecorator("representatives.f_name", {
                           rules: [
                             {
                               required: true,
-                              message: "Пожалуйста укажите город"
+                              message: "Заполните это поле"
                             },
                             {
                               pattern: /(^[А-я]{1,20}$)/,
@@ -645,7 +648,7 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.rPatronymic
+                          initialValue: this.state.form.representatives.f_name
                         })(<Input />)}
                 </Form.Item>
                 </Col>
@@ -653,11 +656,11 @@ class StudentForm extends React.Component {
                 <Row type='flex' gutter={20}>
                 <Col span={8} push={2}>
                 <Form.Item label="Место работы/Должность">
-                {getFieldDecorator("rPost", {
+                {getFieldDecorator("representatives.position", {
                           rules: [
                             {
                               required: true,
-                              message: "Пожалуйста укажите город"
+                              message: "Заполните это поле"
                             },
                             {
                               pattern: /(^[А-я]{1,20}$)/,
@@ -665,17 +668,17 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.rPost
+                          initialValue: this.state.form.representatives.position
                         })(<Input />)}
                 </Form.Item>
                 </Col>
                 <Col span={8} push={4}>
                 <Form.Item label="Телефон">
-                {getFieldDecorator("rPhone", {
+                {getFieldDecorator("representatives.phone", {
                           rules: [
                             {
                               required: true,
-                              message: "Пожалуйста укажите город"
+                              message: "Заполните это поле"
                             },
                             {
                               pattern: /(^[А-я]{1,20}$)/,
@@ -683,7 +686,7 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.rPhone
+                          initialValue: this.state.form.representatives.phone
                         })(<Input />)}
                 </Form.Item>
                 </Col>
@@ -700,11 +703,11 @@ class StudentForm extends React.Component {
             <Row type='flex' gutter={20} style={{paddingTop:30}}>
             <Col span={8} push={2}>
             <Form.Item label="Хронические заболевания">
-                {getFieldDecorator("diseases", {
+                {getFieldDecorator("hronic_disease", {
                           rules: [
                             {
                               required: true,
-                              message: "Пожалуйста укажите город"
+                              message: "Заполните это поле"
                             },
                             {
                               pattern: /(^[А-я]{1,20}$)/,
@@ -712,7 +715,7 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.diseases
+                          initialValue: this.state.form.hronic_disease
                         })(<Input />)}
                 </Form.Item>
                 </Col>
@@ -720,11 +723,11 @@ class StudentForm extends React.Component {
                 <Row type='flex' gutter={20}>
                 <Col span={8} push={2}>
                 <Form.Item label="Группа здоровья">
-                {getFieldDecorator("health", {
+                {getFieldDecorator("health_group", {
                           rules: [
                             {
                               required: true,
-                              message: "Пожалуйста укажите город"
+                              message: "Заполните это поле"
                             },
                             {
                               pattern: /(^[А-я]{1,20}$)/,
@@ -732,17 +735,17 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.health
+                          initialValue: this.state.form.health_group
                         })(<Input />)}
                 </Form.Item>
                 </Col>
                 <Col span={8} push={4}>
                 <Form.Item label="Группа по физкультуре">
-                {getFieldDecorator("sport", {
+                {getFieldDecorator("pe_group", {
                           rules: [
                             {
                               required: true,
-                              message: "Пожалуйста укажите город"
+                              message: "Заполните это поле"
                             },
                             {
                               pattern: /(^[А-я]{1,20}$)/,
@@ -750,7 +753,7 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.sport
+                          initialValue: this.state.form.pe_group
                         })(<Input />)}
                 </Form.Item>
                 </Col>
@@ -759,10 +762,12 @@ class StudentForm extends React.Component {
           <Panel key="6">
           <Row type='flex' style={{paddingTop:30}}>
           <Col span={12} push={2}>
-          <Select mode="tags" className={style.tags} dropdownClassName={style.select}></Select>
+          {getFieldDecorator("hobbies", {
+            initialValue: this.state.form.hobbies
+          })(<Select mode="tags" className={style.tags} dropdownClassName={style.select}></Select>)}
           </Col>
           <Col span={8} push={4}>
-          Здесь будет круговая диаграмма
+          Здесь что-то будет
           </Col>
           </Row>
           </Panel>
@@ -774,7 +779,7 @@ class StudentForm extends React.Component {
                           rules: [
                             {
                               required: true,
-                              message: "Пожалуйста укажите город"
+                              message: "Заполните это поле"
                             },
                             {
                               pattern: /(^[А-я]{1,20}$)/,
@@ -794,7 +799,7 @@ class StudentForm extends React.Component {
                           rules: [
                             {
                               required: true,
-                              message: "Пожалуйста укажите город"
+                              message: "Заполните это поле"
                             },
                             {
                               pattern: /(^[А-я]{1,20}$)/,
@@ -808,11 +813,11 @@ class StudentForm extends React.Component {
                 </Col>
                 <Col span={8} push={4}>
                 <Form.Item label="Номер студенческого билета">
-                {getFieldDecorator("studNumber", {
+                {getFieldDecorator("studentId", {
                           rules: [
                             {
                               required: true,
-                              message: "Пожалуйста укажите город"
+                              message: "Заполните это поле"
                             },
                             {
                               pattern: /(^[А-я]{1,20}$)/,
@@ -820,7 +825,7 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.studNumber
+                          initialValue: this.state.form.studentId
                         })(<Input />)}
                 </Form.Item>
                 </Col>
@@ -832,7 +837,7 @@ class StudentForm extends React.Component {
                           rules: [
                             {
                               required: true,
-                              message: "Пожалуйста укажите город"
+                              message: "Заполните это поле"
                             },
                             {
                               pattern: /(^[А-я]{1,20}$)/,
@@ -857,12 +862,11 @@ const WrappedStudentForm = Form.create({ name: "student" })(StudentForm);
 
 const mapStateToProps = state => ({
   profileId: state.users.profile.id,
-  isOpen: state.modal.isOpen
+  isOpen: state.modal.studentsIsOpen
 });
 
 const mapDispatchToProps = {
-  closeModal,
+  closeStudentModal,
 }
 
-export default WrappedStudentForm;
-//export default connect(mapStateToProps, mapDispatchToProps)(WrappedStudentForm);
+export default connect(mapStateToProps, mapDispatchToProps)(WrappedStudentForm);

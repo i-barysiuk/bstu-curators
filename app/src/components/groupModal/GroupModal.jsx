@@ -20,7 +20,7 @@ import {
 } from "antd";
 import { getGroupData } from "../../helper/group";
 import GroupsService from "../../services/GroupsService";
-import {closeModal} from "../../redux/actions/modal"
+import {closeGroupModal} from "../../redux/actions/modal"
 import style from "./style.module.scss"
 import debounce from "lodash/debounce";
 
@@ -68,7 +68,7 @@ class GroupForm extends React.Component {
 
   closingAfterSave = () => {
     this.setState({validStatus:false});
-    this.props.closeModal();
+    this.props.closeGroupModal();
   }
 
   normalize = value => {
@@ -136,7 +136,7 @@ class GroupForm extends React.Component {
     const {
       form: { getFieldDecorator, getFieldValue, getFieldError },
       isOpen,
-      closeModal
+      closeGroupModal
     } = this.props;
 
     const current = this.state.current;
@@ -237,7 +237,7 @@ class GroupForm extends React.Component {
         className={style.modal}
         destroyOnClose={true}
         maskClosable={false}
-        onCancel={() => closeModal()|this.setState({current: 0})}
+        onCancel={() => closeGroupModal()|this.setState({current: 0})}
         visible={isOpen}
         okText={"Сохранить"}
         cancelText={"Отмена"}
@@ -1474,11 +1474,11 @@ const WrappedGroupForm = Form.create({ name: "group" })(GroupForm);
 
 const mapStateToProps = state => ({
   profileId: state.users.profile.id,
-  isOpen: state.modal.isOpen
+  isOpen: state.modal.groupIsOpen
 });
 
 const mapDispatchToProps = {
-  closeModal,
+  closeGroupModal,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WrappedGroupForm);
