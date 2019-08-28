@@ -1,6 +1,6 @@
 const groupConfig = [
   { name: "gender", data: ["men", "women"] },
-  { name: "community", data: ["brsm", "profkom", "studsovet", "othersOO"] },
+  { name: "community", data: ["brsm", "profkom", "studsovet", "others"] },
   { name: "family", data: ["full", "notfull", "manychild", "orphan"] },
   { name: "geography", data: ["local", "nonresident", "foreign"] },
   { name: "living", data: ["parents", "relatives", "independent", "hostel"] },
@@ -18,6 +18,11 @@ const groupConfig = [
   }
 ];
 
+const replaceConfig = [
+  { name: "total", newName: "totalSudents" },
+  { name: "more", newName: "others" }
+];
+
 export const getGroupData = data => {
   const newData = { ...data };
   // eslint-disable-next-line array-callback-return
@@ -31,7 +36,9 @@ export const getGroupData = data => {
       return object;
     }, {});
   });
-  newData.totalStudents = newData.total;
-  delete newData.total;
+  replaceConfig.map(item => {
+    newData[item.newName] = newData[item.name];
+    delete newData[item.name];
+  });
   return newData;
 };

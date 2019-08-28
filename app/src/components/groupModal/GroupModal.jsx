@@ -53,6 +53,8 @@ class GroupForm extends React.Component {
 
   save = () => {
       this.props.form.validateFieldsAndScroll(async (err, values) => {
+        console.log(values)
+        console.log(getGroupData(values))
       if (err) {
         return;
       }
@@ -578,7 +580,7 @@ class GroupForm extends React.Component {
                         <div className={style.organisations}>
                         <span>Другие</span>
                         </div>
-                        {getFieldDecorator("othersOO", {
+                        {getFieldDecorator("others", {
                           normalize: this.normalizeNumber,
                           initialValue: group.community.others || 0
                         })(<InputNumber min={0} max={getFieldValue("total")} />)}
@@ -623,7 +625,7 @@ class GroupForm extends React.Component {
                             getFieldValue("brsm"),
                             getFieldValue("profkom"),
                             getFieldValue("studsovet"),
-                            getFieldValue("othersOO")
+                            getFieldValue("others")
                           ],
                           backgroundColor: ["#FF6384", "#FFCD56", "#36A2EB", "#C9CBCF"]
                         }
@@ -1463,7 +1465,7 @@ class GroupForm extends React.Component {
             <Panel key="7">
               <Form.Item label="Прочие сведения">
                 <Form.Item>
-                  {getFieldDecorator("others", {
+                  {getFieldDecorator("more", {
                     rules: [
                       {
                         pattern: /(^[^]{0,1000}$)/,
