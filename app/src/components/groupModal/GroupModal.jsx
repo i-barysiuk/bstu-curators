@@ -53,7 +53,6 @@ class GroupForm extends React.Component {
 
   save = () => {
       this.props.form.validateFieldsAndScroll(async (err, values) => {
-        console.log(values)
         console.log(getGroupData(values))
       if (err) {
         return;
@@ -1452,6 +1451,15 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Аттестация 4">
                             {getFieldDecorator("attestation4" + item, {
+                              initialValue: group.studyPeriod || 0
+                            })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
+                          </Form.Item>
+                        </Col>
+                      </Row>
+                      <Row>
+                      <Col>
+                          <Form.Item label="Практика">
+                            {getFieldDecorator("practice" + item, {
                               initialValue: group.studyPeriod || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
