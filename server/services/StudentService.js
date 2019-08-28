@@ -23,10 +23,6 @@ class StudentService {
     return Student.findAll({});
   }
 
-  getSex()
-
-  get
-
   create(body) {
     return Student.findOrCreate({
       where: {
