@@ -100,6 +100,7 @@ class TimelineComp extends React.Component {
   }
 
   dataToDates() {
+    if (!this.props.data) return;
     var dates = [
       {
         event: "Начало года",

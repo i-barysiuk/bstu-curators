@@ -1,9 +1,12 @@
 const Group = require("../db/models/Group");
+const User = require("../db/models/User");
+
 const _ = require("lodash");
 
 class GroupService {
   get(id) {
     return Group.findOne({
+      include: [{ model: User }],
       where: {
         id
       }

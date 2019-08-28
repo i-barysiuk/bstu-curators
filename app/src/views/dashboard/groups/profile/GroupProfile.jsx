@@ -40,7 +40,8 @@ export default class GroupProfile extends React.Component {
       geography,
       living,
       social,
-      others
+      others,
+      user
     } = this.props.group;
     return (
       <div className={style.container}>
@@ -75,7 +76,8 @@ export default class GroupProfile extends React.Component {
                 geography,
                 living,
                 social,
-                others
+                others,
+                user
               }}
             />
           </Col>

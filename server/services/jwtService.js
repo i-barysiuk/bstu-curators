@@ -9,7 +9,7 @@ class JWTService {
         role: data.role
       },
       secret,
-      { expiresIn: "15s" }
+      { expiresIn: "30m" }
     );
     var refreshToken = jwt.sign(
       {
