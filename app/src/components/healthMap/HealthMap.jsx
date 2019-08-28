@@ -2,7 +2,7 @@ import React from "react";
 import { Line } from "react-chartjs-2";
 import Card from "../common/card/Card";
 import BigButton from "../common/bigButton/BigButton";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus , faFilter} from "@fortawesome/free-solid-svg-icons";
 import { Radio, Checkbox } from "antd";
 import HealthMapService from "../../services/HealthMapService";
 
@@ -57,10 +57,9 @@ class HealthMap extends React.Component {
     return (
       <Card
         title="Здоровье"
-        buttons={
+        buttons={[
           <BigButton
-            icon={faPlus}
-            primary
+            icon={faFilter}
             dropdown
             content={
               <div>
@@ -114,8 +113,9 @@ class HealthMap extends React.Component {
                 </Checkbox>
               </div>
             }
-          />
-        }
+          />,
+          <BigButton icon={faPlus} primary onClick={this.props.onClick} />
+        ]}
       >
         <Line
           data={{
