@@ -57,25 +57,6 @@ class EventForm extends React.Component {
     this.props.closeModal();
   };
 
-  normalize = value => {
-    return value && value.replace(/ /g, "").trim();
-  };
-
-  normalizeNumber = value => {
-    if (!value || value < 0) return 0;
-    else return value;
-  };
-
-  normalizeCourse = value => {
-    if (!value || value < 1) return 1;
-    else return value;
-  };
-
-  validTotal = (rule, value, callback) => {
-    if (!value) callback("Пожалуйста укажите значение");
-    else callback();
-  };
-
   render() {
     const {
       form: { getFieldDecorator, getFieldValue, getFieldError },
@@ -126,7 +107,7 @@ class EventForm extends React.Component {
                   ],
                   validateTrigger: "onBlur",
                   initialValue: this.state.form.subtitle
-                })(<Input placeholder="Группа" />)}
+                })(<Input placeholder="Описание" />)}
               </Form.Item>
             </Col>
           </Row>
@@ -173,7 +154,7 @@ class EventForm extends React.Component {
                       }
                     ],
                     initialValue: this.state.form.description
-                  })(<TextArea autosize={{ minRows: 4, maxRows: 6 }} />)}
+                  })(<TextArea autosize={{ minRows: 2, maxRows: 5 }} />)}
                 </Form.Item>
               </Form.Item>
             </Col>
@@ -186,15 +167,16 @@ class EventForm extends React.Component {
 
 const WrappedEventForm = Form.create({ name: "event" })(EventForm);
 
-// const mapStateToProps = state => ({
-//   profileId: state.users.profile.id,
-//   isOpen: state.modal.isOpen
-// });
+const mapStateToProps = state => ({
+  profileId: state.users.profile.id,
+  isOpen: true //state.modal.isOpen
+});
 
-// const mapDispatchToProps = {
-//   closeModal,
-// }
+const mapDispatchToProps = {
+  closeModal
+};
 
-// export default connect(mapStateToProps, mapDispatchToProps)(WrappedEventForm);
-
-export default WrappedEventForm;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WrappedEventForm);
