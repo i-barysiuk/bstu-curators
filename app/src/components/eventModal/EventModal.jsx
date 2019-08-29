@@ -9,16 +9,16 @@ import {
   Col,
   Input,
   Select,
-  InputNumber,
-  Slider,
   Collapse,
   DatePicker,
-  Alert
+  Alert,
+  Steps
 } from "antd";
 import { getGroupData } from "../../helper/group";
 import GroupsService from "../../services/GroupsService";
 import { closeModal } from "../../redux/actions/modal";
 import style from "./style.module.scss";
+import debounce from "lodash/debounce";
 
 const { Step } = Steps;
 const { Option } = Select;
@@ -31,15 +31,10 @@ class EventForm extends React.Component {
     super(props);
     this.closingAfterSave = debounce(this.closingAfterSave, 10);
     this.state = {
-      current: 0,
       validStatus: false,
       form: {}
     };
   }
-
-  changeStep = current => {
-    this.setState({ current });
-  };
 
   save = () => {
     this.props.form.validateFieldsAndScroll(async (err, values) => {
@@ -53,7 +48,7 @@ class EventForm extends React.Component {
       } catch (e) {
         console.log(e);
       }
-      this.setState({ current: 0, validStatus: true });
+      this.setState({ validStatus: true });
     });
   };
 
@@ -81,42 +76,6 @@ class EventForm extends React.Component {
     else callback();
   };
 
-  validFamily = (rule, value, callback) => {
-    const { getFieldValue } = this.props.form;
-    let diff =
-      getFieldValue("total") -
-      (getFieldValue("full") +
-        getFieldValue("notfull") +
-        getFieldValue("manychild") +
-        getFieldValue("orphan"));
-    if (!diff) callback();
-    else callback(" ");
-  };
-
-  validGeography = (rule, value, callback) => {
-    const { getFieldValue } = this.props.form;
-    let diff =
-      getFieldValue("total") -
-      (getFieldValue("local") +
-        getFieldValue("nonresident") +
-        getFieldValue("foreign"));
-    if (!diff) callback();
-    else callback(" ");
-  };
-
-  validLocation = (rule, value, callback) => {
-    const { getFieldValue } = this.props.form;
-    let diff =
-      getFieldValue("total") -
-      (getFieldValue("parents") +
-        getFieldValue("relatives") +
-        getFieldValue("independent") +
-        getFieldValue("hostel"));
-
-    if (!diff) callback();
-    else callback(" ");
-  };
-
   render() {
     const {
       form: { getFieldDecorator, getFieldValue, getFieldError },
@@ -132,13 +91,95 @@ class EventForm extends React.Component {
         className={style.modal}
         destroyOnClose={true}
         maskClosable={false}
-        onCancel={() => closeModal() | this.setState({ current: 0 })}
+        onCancel={() => closeModal()}
         visible={isOpen}
         okText={"Сохранить"}
         cancelText={"Отмена"}
         onOk={this.save}
         zIndex={1030}
-      ></Modal>
+      >
+        <Form>
+          <Row type="flex" gutter={24}>
+            <Col span={12}>
+              <Form.Item label="Название события:">
+                {getFieldDecorator("title", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Пожалуйста укажите название события"
+                    }
+                  ],
+                  normalize: this.normalize,
+                  validateTrigger: "onBlur",
+                  initialValue: this.state.form.title
+                })(<Input placeholder="Событие" />)}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Краткое описание события:">
+                {getFieldDecorator("subtitle", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Пожалуйста укажите краткое описание события"
+                    }
+                  ],
+                  validateTrigger: "onBlur",
+                  initialValue: this.state.form.subtitle
+                })(<Input placeholder="Группа" />)}
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Item label="Место проведения:">
+                {getFieldDecorator("place", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Пожалуйста укажите название события"
+                    }
+                  ],
+                  normalize: this.normalize,
+                  validateTrigger: "onBlur",
+                  initialValue: this.state.form.place
+                })(<Input placeholder="Место" />)}
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Item label="Дата проведения:">
+                {getFieldDecorator("eventDate", {
+                  initialValue: this.state.form.eventDate || 0
+                })(
+                  <RangePicker
+                    locale={locale}
+                    dropdownClassName={style.rangePicker}
+                  />
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Item label="Полное описание события">
+                <Form.Item>
+                  {getFieldDecorator("description", {
+                    rules: [
+                      {
+                        pattern: /(^[^]{0,1000}$)/,
+                        message: "Максимум 1000 символов!"
+                      }
+                    ],
+                    initialValue: this.state.form.description
+                  })(<TextArea autosize={{ minRows: 4, maxRows: 6 }} />)}
+                </Form.Item>
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+      </Modal>
     );
   }
 }
