@@ -40,7 +40,8 @@ export default class GroupProfile extends React.Component {
       geography,
       living,
       social,
-      others
+      others,
+      user
     } = this.props.group;
     return (
       <div className={style.container}>
@@ -56,7 +57,12 @@ export default class GroupProfile extends React.Component {
 
         <Row>
           <Col>
-            <Timeline />
+            <Timeline
+              data={
+                this.props.group.studyProcess &&
+                this.props.group.studyProcess[this.props.group.course]
+              }
+            />
           </Col>
         </Row>
 
@@ -70,7 +76,8 @@ export default class GroupProfile extends React.Component {
                 geography,
                 living,
                 social,
-                others
+                others,
+                user
               }}
             />
           </Col>

@@ -8,7 +8,11 @@ import {
   GROUPS__ALL_REQUEST,
   GROUPS__ALL_SUCCESS,
   GROUPS__ARCHIVE_REQUEST,
-  GROUPS__ARCHIVE_SUCCESS
+  GROUPS__ARCHIVE_SUCCESS,
+  GROUPS__FAVORITE_ADD_REQUEST,
+  GROUPS__FAVORITE_ADD_SUCCESS,
+  GROUPS__FAVORITE_REMOVE_REQUEST,
+  GROUPS__FAVORITE_REMOVE_SUCCESS
 } from "../actionsTypes/groups";
 
 export const fetchMyAndFavGroups = () => ({
@@ -54,4 +58,24 @@ export const fetchActiveGroupSuccess = ({ group }) => ({
 
 export const fetchActiveGroupFailed = () => ({
   type: GROUPS__ACTIVE_FAILED
+});
+
+export const addGroupToFavouriteRequest = ({ group }) => ({
+  type: GROUPS__FAVORITE_ADD_REQUEST,
+  payload: group
+});
+
+export const pushGroupToFavourite = ({ group }) => ({
+  type: GROUPS__FAVORITE_ADD_SUCCESS,
+  payload: group
+});
+
+export const removeGroupFromFavouriteRequest = ({ group }) => ({
+  type: GROUPS__FAVORITE_REMOVE_REQUEST,
+  payload: group
+});
+
+export const popGroupFromFavourite = ({ favorite }) => ({
+  type: GROUPS__FAVORITE_REMOVE_SUCCESS,
+  payload: favorite
 });

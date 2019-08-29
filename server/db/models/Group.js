@@ -1,6 +1,8 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../");
 
+const User = require("./User");
+
 var Group = sequelize.define(
   "groups",
   {
@@ -16,7 +18,7 @@ var Group = sequelize.define(
     group: {
       type: Sequelize.ENUM(
         "ФЭИС",
-        "ЭФ ",
+        "ЭФ",
         "СФ",
         "МСФ",
         "ФИСЭ",
@@ -99,5 +101,10 @@ var Group = sequelize.define(
     timestamps: true
   }
 );
+
+Group.belongsTo(User, {
+  onDelete: "CASCADE",
+  foreignKey: "curatorId"
+});
 
 module.exports = Group;

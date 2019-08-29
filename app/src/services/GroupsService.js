@@ -21,8 +21,17 @@ class Groups {
   }
 
   async addGroup(data) {
-    console.log(data);
     const response = await api(`/groups/`, "POST", data);
+    return response.data;
+  }
+
+  async addFavoriteGroup({ id }) {
+    const response = await api(`/groups/${id}/add_favorite`, "PUT");
+    return response.data;
+  }
+
+  async removeFavoriteGroup({ id }) {
+    const response = await api(`/groups/${id}/remove_favorite`, "PUT");
     return response.data;
   }
 }

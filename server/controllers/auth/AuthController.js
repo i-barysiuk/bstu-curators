@@ -33,7 +33,7 @@ router.post("/login", (req, res) => {
 
 router.post("/refresh", (req, res) => {
   var ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-  var decoded = JWTService.validate(req.body.token);
+  var decoded = JWTService.getInfo(req.body.token);
 
   UserService.get(decoded.id)
     .then(user => {
@@ -116,7 +116,7 @@ router.post("/check", (req, res) => {
 });
 
 router.post("/logout", (req, res) => {
-  const user = JWTService.validate(req.body.token);
+  const user = JWTService.getInfo(req.body.token);
   UserService.get(user.id)
     .then(data => {
       if (!data) throw new Error("User not found");

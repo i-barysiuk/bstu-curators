@@ -13,9 +13,35 @@ import {
 import { Input, Icon } from "antd";
 import Collapse from "../common/collapse/Collapse";
 import { openModal } from "../../redux/actions/modal";
+import {
+  addGroupToFavouriteRequest,
+  removeGroupFromFavouriteRequest
+} from "../../redux/actions/groups";
 
 class GroupCard extends React.Component {
   onGroupClick = id => this.props.history.push(`/dashboard/groups/${id}`);
+
+  addFavorite = group => {
+    this.props.addGroupToFavouriteRequest({ group });
+  };
+
+  removeFavorite = group => {
+    this.props.removeGroupFromFavouriteRequest({ group });
+  };
+
+  isFavorite = id => {
+    const ids = this.props.groups.favorite.map(group => group.id);
+    if (ids.indexOf(id) > -1) {
+      return true;
+    }
+    return false;
+  };
+
+  onStarClick = group => {
+    this.isFavorite(group.id)
+      ? this.removeFavorite(group)
+      : this.addFavorite(group);
+  };
 
   render() {
     const {
@@ -40,25 +66,33 @@ class GroupCard extends React.Component {
         </div>
         <div className={style.content}>
           <Collapse icon={faStar} title="Избранное" show>
-            {favorite.map(group => (
-              <GroupsCard
-                key={group.id}
-                group={group.name}
-                onClick={() => this.onGroupClick(group.id)}
-                course={group.course}
-              />
-            ))}
+            {favorite[0]
+              ? favorite.map(group => (
+                  <GroupsCard
+                    favorite
+                    key={group.id}
+                    group={group.name}
+                    onStarClick={() => this.removeFavorite(group)}
+                    onClick={() => this.onGroupClick(group.id)}
+                    course={group.course}
+                  />
+                ))
+              : "Избранных групп нет"}
           </Collapse>
 
           <Collapse icon={faHeart} title="Мои группы">
-            {my.map(group => (
-              <GroupsCard
-                key={group.id}
-                group={group.name}
-                onClick={() => this.onGroupClick(group.id)}
-                course={group.course}
-              />
-            ))}
+            {my[0]
+              ? my.map(group => (
+                  <GroupsCard
+                    favorite={this.isFavorite(group.id)}
+                    onStarClick={() => this.onStarClick(group)}
+                    key={group.id}
+                    group={group.name}
+                    onClick={() => this.onGroupClick(group.id)}
+                    course={group.course}
+                  />
+                ))
+              : "У Вас пока нет групп, но Вы можете их создать!"}
           </Collapse>
 
           <Collapse icon={faUniversity} fetch={fetchAll} title="Все группы">
@@ -66,6 +100,7 @@ class GroupCard extends React.Component {
               <Collapse icon={faHeart} key={keyName} title={keyName}>
                 {all[keyName].map(group => (
                   <GroupsCard
+                    onStarClick={() => this.onStarClick(group)}
                     key={group.name}
                     onClick={() => this.onGroupClick(group.id)}
                     group={group.name}
@@ -79,8 +114,9 @@ class GroupCard extends React.Component {
           <Collapse icon={faArchive} fetch={fetchArchive} title="Архив">
             {Object.keys(archive).map(keyName => (
               <Collapse icon={faHeart} key={keyName} title={keyName}>
-                {all[keyName].map(group => (
+                {archive[keyName].map(group => (
                   <GroupsCard
+                    onStarClick={() => this.onStarClick(group)}
                     key={group.name}
                     onClick={() => this.onGroupClick(group.id)}
                     group={group.name}
@@ -97,7 +133,9 @@ class GroupCard extends React.Component {
 }
 
 const mapDispatchToProps = {
-  openModal
+  openModal,
+  addGroupToFavouriteRequest,
+  removeGroupFromFavouriteRequest
 };
 
 export default connect(

@@ -22,6 +22,7 @@ import { getGroupData } from "../../helper/group";
 import GroupsService from "../../services/GroupsService";
 import {closeModal} from "../../redux/actions/modal"
 import style from "./style.module.scss"
+import debounce from "lodash/debounce";
 
 const { Step } = Steps;
 const { Option } = Select;
@@ -29,11 +30,18 @@ const { TextArea } = Input;
 const { Panel } = Collapse;
 const { RangePicker } = DatePicker;
 
+function is_valid(diff){
+  if (!diff) return 'validating';
+  else return 'warning';
+}
+
 class GroupForm extends React.Component {
   constructor(props) {
     super(props);
+    this.closingAfterSave=debounce(this.closingAfterSave,10);
     this.state = {
       current: 0,
+      validStatus: false,
       form: {}
     };
   }
@@ -43,26 +51,28 @@ class GroupForm extends React.Component {
   };
 
   save = () => {
-    var valid = false;
-    this.props.form.validateFieldsAndScroll(async (err, values) => {
+      this.props.form.validateFieldsAndScroll(async (err, values) => {
       if (err) {
         return;
       }
       let group = getGroupData(values);
       group.curatorId = this.props.profileId;
-      valid = true;
       try {
         await GroupsService.addGroup(group);
-        this.setState({current: 0 });
       } catch (e) {
         console.log(e);
       }
-    })
-    return valid;
+      this.setState({current: 0, validStatus: true });
+    });
   };
 
+  closingAfterSave = () => {
+    this.setState({validStatus:false});
+    this.props.closeModal();
+  }
+
   normalize = value => {
-    return value && value.replace(/s+/g, "").trim();
+    return value && value.replace(/ /g, "").trim();
   };
 
   normalizeNumber = value => {
@@ -80,61 +90,51 @@ class GroupForm extends React.Component {
     else callback();
   };
 
-  validFamily = () => {
+  validFamily = (rule, value, callback) => {
     const {getFieldValue} = this.props.form;
-    if
+    let diff = 
+    getFieldValue('total') -
     (
-      getFieldValue('total') !==
-        (
-          getFieldValue('full') +
-          getFieldValue('notfull') +
-          getFieldValue('manychild') +
-          getFieldValue('orphan')
-        )
-    )
-    {
-      return 'warning'
-    }
-    else
-      return 'validating'
+      getFieldValue('full') +
+      getFieldValue('notfull') +
+      getFieldValue('manychild') +
+      getFieldValue('orphan')
+    );
+      if (!diff) callback();
+      else callback(' ');
   }
 
-  validGeography = () => {
+  validGeography = (rule, value, callback) => {
     const {getFieldValue} = this.props.form;
-    if
+    let diff = 
+    getFieldValue('total') -
     (
-      getFieldValue('total') !==
-        (
-          getFieldValue('local') +
-          getFieldValue('nonresident') +
-          getFieldValue('foreign')
-        )
-    )
-      return 'warning'
-    else
-      return 'success' 
+      getFieldValue('local') +
+      getFieldValue('nonresident') +
+      getFieldValue('foreign')
+    );
+    if (!diff) callback();
+    else callback(' ');
   }
 
-  validLocation = () => {
+  validLocation = (rule, value, callback) => {
     const {getFieldValue} = this.props.form;
-    if
-    (
-      getFieldValue('total') !==
+    let diff =
+    getFieldValue('total') -
         (
           getFieldValue('parents') +
           getFieldValue('relatives') +
           getFieldValue('independent') +
           getFieldValue('hostel')
-        )
-    )
-      return 'warning'
-    else
-      return 'success'
+        );
+
+        if (!diff) callback();
+        else callback(' ');
   }
 
   render() {
     const {
-      form: { getFieldDecorator, getFieldValue },
+      form: { getFieldDecorator, getFieldValue, getFieldError },
       isOpen,
       closeModal
     } = this.props;
@@ -143,10 +143,86 @@ class GroupForm extends React.Component {
 
     var study = [];
 
-    for (var i = 1; i <= getFieldValue("totalCourse") && i <= 6; i++) {
+    for (let i = 1; i <= getFieldValue("totalCourse") && i <= 6; i++) {
       study.push(i);
     }
+
+    const steps = [
+      'Основное',
+      'Состав',
+      'Социальное',
+      'География',
+      'Проживание',
+      'Учеба',
+      'Прочее'
+    ]
     
+    //from validate
+
+    if(this.state.validStatus) this.closingAfterSave();
+
+    var validStep = [
+      {
+        valid:
+        getFieldError('cathedra')
+      ||getFieldError('course')
+      ||getFieldError('department')
+      ||getFieldError('fullName')
+      ||getFieldError('group')
+      ||getFieldError('name')
+      },
+      {valid:getFieldError('total')},
+      {
+        valid:
+        getFieldError('full')
+      &&getFieldError('notfull')
+      &&getFieldError('manychild')
+      &&getFieldError('orphan')
+      },
+      {
+        valid:
+        getFieldError('local')
+      &&getFieldError('nonresident')
+      &&getFieldError('foreign')
+      },
+      {
+        valid:
+        getFieldError('parents')
+      &&getFieldError('relatives')
+      &&getFieldError('independent')
+      &&getFieldError('hostel')
+      },
+      {valid:null},
+      {valid:null},
+    ]
+
+
+    var familyDiff = 
+    getFieldValue('total') -
+    (
+      getFieldValue('full') +
+      getFieldValue('notfull') +
+      getFieldValue('manychild') +
+      getFieldValue('orphan')
+    );
+
+    var geoDiff = 
+    getFieldValue('total') -
+    (
+      getFieldValue('local') +
+      getFieldValue('nonresident') +
+      getFieldValue('foreign')
+    );
+
+    var locDiff =
+    getFieldValue('total') -
+        (
+          getFieldValue('parents') +
+          getFieldValue('relatives') +
+          getFieldValue('independent') +
+          getFieldValue('hostel')
+        );
+
     return (
       <Modal
         width={"70%"}
@@ -159,13 +235,19 @@ class GroupForm extends React.Component {
         visible={isOpen}
         okText={"Сохранить"}
         cancelText={"Отмена"}
-        onOk={() => this.save() ? closeModal() : null}
+        onOk={this.save}
         zIndex={1030}
       >
-        <Steps current={current} onChange={this.changeStep} style={{paddingBottom:20}}>
-            <Step /><Step /><Step />
-            <Step /><Step /><Step />
-            <Step />
+        <Steps current={current} onChange={this.changeStep} style={{paddingBottom:20}} labelPlacement='vertical'>
+        {steps.map((item, index) => {
+                  return (
+                    <Step 
+                    key={index}
+                    status={index === current ? 'process' : validStep[index].valid ? 'error' : 'wait'} 
+                    title={item}
+                    />
+                  );
+                })}
           </Steps>
         <Form>
         <Collapse 
@@ -185,7 +267,7 @@ class GroupForm extends React.Component {
                         },
                         {
                           pattern: /(^[А-Я]{1,6}-[0-9]{1,3}$)/,
-                          message: "Неверный формат! Пример: AC-59"
+                          message: "Неверный формат! Пример: АС-59"
                         }
                       ],
                       normalize: this.normalize,
@@ -203,9 +285,9 @@ class GroupForm extends React.Component {
                           message: "Пожалуйста укажите название группы"
                         },
                         {
-                          pattern: /((^[А-Я]{1,1}[\sA-я]{1,50}-[0-9]{1,3}$))/,
+                          pattern: /((^[А-Я]{1,1}[\sA-я]{1,50} - [0-9]{1,3}$))/,
                           message:
-                            "Неверный формат! Пример: Aвтоматизированные системы обработки информации-59"
+                            "Неверный формат! Пример: Автоматизированные системы обработки информации - 59"
                         }
                       ],
                       validateTrigger: "onBlur",
@@ -259,6 +341,8 @@ class GroupForm extends React.Component {
                         <Option value="СФ">СФ</Option>
                         <Option value="ЭФ">ЭФ</Option>
                         <Option value="МСФ">МСФ</Option>
+                        <Option value="Заочное">Заочное</Option>
+                        <Option value="Иностранные">Иностранные</Option>
                       </Select>
                     )}
                   </Form.Item>
@@ -451,11 +535,6 @@ class GroupForm extends React.Component {
                         <span>БРСМ</span>
                         </div>
                         {getFieldDecorator("brsm", {
-                          rules: [
-                            {
-                              required: true
-                            }
-                          ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(<InputNumber min={0} max={getFieldValue("total")} />)}
@@ -465,11 +544,6 @@ class GroupForm extends React.Component {
                         <span>Профком</span>
                         </div>
                         {getFieldDecorator("profkom", {
-                          rules: [
-                            {
-                              required: true
-                            }
-                          ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(<InputNumber min={0} max={getFieldValue("total")} />)}
@@ -479,11 +553,6 @@ class GroupForm extends React.Component {
                         <span>Студсовет</span>
                         </div>
                         {getFieldDecorator("studsovet", {
-                          rules: [
-                            {
-                              required: true
-                            }
-                          ],
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(<InputNumber min={0} max={getFieldValue("total")} />)}
@@ -492,12 +561,7 @@ class GroupForm extends React.Component {
                         <div className={style.organisations}>
                         <span>Другие</span>
                         </div>
-                        {getFieldDecorator("others", {
-                          rules: [
-                            {
-                              required: true
-                            }
-                          ],
+                        {getFieldDecorator("othersOO", {
                           normalize: this.normalizeNumber,
                           initialValue: this.state.form.total || 0
                         })(<InputNumber min={0} max={getFieldValue("total")} />)}
@@ -516,7 +580,7 @@ class GroupForm extends React.Component {
                             getFieldValue("total") - getFieldValue("women"),
                             getFieldValue("women")
                           ],
-                          backgroundColor: ["#00BFFF", "pink"]
+                          backgroundColor: ["#00BFFF", "#FF6384"]
                         }
                       ]
                     }}
@@ -542,9 +606,9 @@ class GroupForm extends React.Component {
                             getFieldValue("brsm"),
                             getFieldValue("profkom"),
                             getFieldValue("studsovet"),
-                            getFieldValue("others")
+                            getFieldValue("othersOO")
                           ],
-                          backgroundColor: ["red", "blue", "yellow", "green"]
+                          backgroundColor: ["#FF6384", "#FFCD56", "#36A2EB", "#C9CBCF"]
                         }
                       ]
                     }}
@@ -568,7 +632,7 @@ class GroupForm extends React.Component {
                 <span>Состав семьи</span>
                 <Form.Item 
                 label="Полная"
-                validateStatus={this.validFamily()}
+                validateStatus={is_valid(familyDiff)}
                 >
                     <Row gutter={20}>
                       <Col span={20}>
@@ -578,8 +642,13 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
-                        })(<Slider min={0} max={getFieldValue("total")} />)}
+                          initialValue: this.state.form.full || 0
+                        })(
+                          <Slider 
+                        min={0} 
+                        max={familyDiff+getFieldValue('full')} 
+                        />
+                        )}
                       </Col>
                       <Col span={4}>
                         {getFieldDecorator("full", {
@@ -587,11 +656,13 @@ class GroupForm extends React.Component {
                             {
                               required: true
                             },
+                            {validator: this.validFamily}
                           ],
+                          validateTrigger: "onBlur",
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: this.state.form.full || 0
                         })(
-                          <InputNumber min={0} max={getFieldValue("total")}/>
+                          <InputNumber min={0} max={familyDiff+getFieldValue('full')}/>
                         )}
                       </Col>
                     </Row>
@@ -599,7 +670,7 @@ class GroupForm extends React.Component {
 
                     <Form.Item 
                     label="Неполная"
-                    validateStatus={this.validFamily()}
+                    validateStatus={is_valid(familyDiff)}
                     >
                     <Row gutter={20}>
                       <Col span={20}>
@@ -609,11 +680,11 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
+                          initialValue: this.state.form.notfull || 0
                         })(
                           <Slider
                             min={0}
-                            max={getFieldValue("total") - getFieldValue("full")}
+                            max={familyDiff+getFieldValue('notfull')}
                           />
                         )}
                       </Col>
@@ -623,13 +694,15 @@ class GroupForm extends React.Component {
                             {
                               required: true
                             },
+                            {validator: this.validFamily}
                           ],
+                          validateTrigger: "onBlur",
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: this.state.form.notfull || 0
                         })(
                           <InputNumber
                             min={0}
-                            max={getFieldValue("total") - getFieldValue("full")}
+                            max={familyDiff+getFieldValue('notfull')}
                           />
                         )}
                       </Col>
@@ -638,7 +711,7 @@ class GroupForm extends React.Component {
 
                     <Form.Item 
                     label="Многодетная"
-                    validateStatus={this.validFamily()}
+                    validateStatus={is_valid(familyDiff)}
                     >
                     <Row gutter={20}>
                       <Col span={20}>
@@ -648,15 +721,11 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
+                          initialValue: this.state.form.manychild || 0
                         })(
                           <Slider
                             min={0}
-                            max={
-                              getFieldValue("total") -
-                              getFieldValue("full") -
-                              getFieldValue("notfull")
-                            }
+                            max={familyDiff+getFieldValue('manychild')}
                           />
                         )}
                       </Col>
@@ -666,17 +735,15 @@ class GroupForm extends React.Component {
                             {
                               required: true
                             },
+                            {validator: this.validFamily}
                           ],
+                          validateTrigger: "onBlur",
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: this.state.form.manychild || 0
                         })(
                           <InputNumber
                             min={0}
-                            max={
-                              getFieldValue("total") -
-                              getFieldValue("full") -
-                              getFieldValue("notfull")
-                            }
+                            max={familyDiff+getFieldValue('manychild')}
                           />
                         )}
                       </Col>
@@ -685,7 +752,7 @@ class GroupForm extends React.Component {
 
                     <Form.Item 
                     label="Сироты"
-                    validateStatus={this.validFamily()}
+                    validateStatus={is_valid(familyDiff)}
                     >
                     <Row gutter={20}>
                       <Col span={20}>
@@ -695,16 +762,11 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
+                          initialValue: this.state.form.orphan || 0
                         })(
                           <Slider
                             min={0}
-                            max={
-                              getFieldValue("total") -
-                              getFieldValue("full") -
-                              getFieldValue("notfull") -
-                              getFieldValue("manychild")
-                            }
+                            max={familyDiff+getFieldValue('orphan')}
                           />
                         )}
                       </Col>
@@ -714,18 +776,15 @@ class GroupForm extends React.Component {
                             {
                               required: true
                             },
+                            {validator: this.validFamily}
                           ],
+                          validateTrigger: "onBlur",
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: this.state.form.orphan || 0
                         })(
                           <InputNumber
                             min={0}
-                            max={
-                              getFieldValue("total") -
-                              getFieldValue("full") -
-                              getFieldValue("notfull") -
-                              getFieldValue("manychild")
-                            }
+                            max={familyDiff+getFieldValue('orphan')}
                           />
                         )}
                       </Col>
@@ -734,19 +793,19 @@ class GroupForm extends React.Component {
                   <Collapse 
                   className={style.collapsePanel}
                   bordered={false}
-                  activeKey = {this.validFamily()==='warning'?"1":null}
+                  activeKey = {is_valid(familyDiff)}
                   >
-                  <Panel key="1">
+                  <Panel key="warning">
                    <Alert 
                       style={{borderRadius:15}} 
-                      message="(распределите всех)" 
+                      message="распределите всех" 
                       type="warning" showIcon />
                   </Panel>
                   </Collapse>
                   
                   <Collapse bordered={false}>
                     <Panel header="Социальный статус">
-                      <Form.Item label="Льготники:">
+                      <Form.Item>
                         <Row>
                           <Col span={19}>Дети сироты (до 18 лет)</Col>
                           <Col span={4}>
@@ -898,7 +957,7 @@ class GroupForm extends React.Component {
                             getFieldValue("manychild"),
                             getFieldValue("orphan")
                           ],
-                          backgroundColor: ["red", "blue", "yellow", "green"]
+                          backgroundColor: ["#4BC0C0", "#FF9F40", "#9966FF", "#FF6384"]
                         }
                       ]
                     }}
@@ -919,10 +978,9 @@ class GroupForm extends React.Component {
             <Panel key="4">
               <Row type="flex" gutter={20}>
                 <Col span={14}>
-                <span>География</span>
                 <Form.Item 
                     label="Местные"
-                    validateStatus={this.validGeography()}
+                    validateStatus={is_valid(geoDiff)}
                     >
                     <Row gutter={20}>
                       <Col span={20}>
@@ -932,8 +990,8 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
-                        })(<Slider min={0} max={getFieldValue("total")} />)}
+                          initialValue: this.state.form.local || 0
+                        })(<Slider min={0} max={geoDiff+getFieldValue("local")} />)}
                       </Col>
                       <Col span={4}>
                         {getFieldDecorator("local", {
@@ -941,11 +999,13 @@ class GroupForm extends React.Component {
                             {
                               required: true
                             },
+                            {validator:this.validGeography}
                           ],
+                          validateTrigger: "onBlur",
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: this.state.form.local || 0
                         })(
-                          <InputNumber min={0} max={getFieldValue("total")} />
+                          <InputNumber min={0} max={geoDiff+getFieldValue("local")} />
                         )}
                       </Col>
                     </Row>
@@ -953,7 +1013,7 @@ class GroupForm extends React.Component {
 
                     <Form.Item 
                     label="Иногородние"
-                    validateStatus={this.validGeography()}
+                    validateStatus={is_valid(geoDiff)}
                     >
                     <Row gutter={20}>
                       <Col span={20}>
@@ -963,13 +1023,11 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
+                          initialValue: this.state.form.nonresident || 0
                         })(
                           <Slider
                             min={0}
-                            max={
-                              getFieldValue("total") - getFieldValue("local")
-                            }
+                            max={geoDiff+getFieldValue("nonresident")}
                           />
                         )}
                       </Col>
@@ -978,16 +1036,16 @@ class GroupForm extends React.Component {
                           rules: [
                             {
                               required: true
-                            }
+                            },
+                            {validator:this.validGeography}
                           ],
+                          validateTrigger: "onBlur",
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: this.state.form.nonresident || 0
                         })(
                           <InputNumber
                             min={0}
-                            max={
-                              getFieldValue("total") - getFieldValue("local")
-                            }
+                            max={geoDiff+getFieldValue("nonresident")}
                           />
                         )}
                       </Col>
@@ -996,7 +1054,7 @@ class GroupForm extends React.Component {
 
                     <Form.Item 
                     label="Иностранцы"
-                    validateStatus={this.validGeography()}
+                    validateStatus={is_valid(geoDiff)}
                     >
                     <Row gutter={20}>
                       <Col span={20}>
@@ -1006,15 +1064,11 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
+                          initialValue: this.state.form.foreign || 0
                         })(
                           <Slider
                             min={0}
-                            max={
-                              getFieldValue("total") -
-                              getFieldValue("local") -
-                              getFieldValue("nonresident")
-                            }
+                            max={geoDiff+getFieldValue("foreign")}
                           />
                         )}
                       </Col>
@@ -1023,18 +1077,16 @@ class GroupForm extends React.Component {
                           rules: [
                             {
                               required: true
-                            }
+                            },
+                            {validator:this.validGeography}
                           ],
+                          validateTrigger: "onBlur",
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: this.state.form.foreign || 0
                         })(
                           <InputNumber
                             min={0}
-                            max={
-                              getFieldValue("total") -
-                              getFieldValue("local") -
-                              getFieldValue("nonresident")
-                            }
+                            max={geoDiff+getFieldValue("foreign")}
                           />
                         )}
                       </Col>
@@ -1043,9 +1095,9 @@ class GroupForm extends React.Component {
                   <Collapse 
                   className={style.collapsePanel}
                   bordered={false}
-                  activeKey = {this.validGeography()==='warning'?"1":null}
+                  activeKey = {is_valid(geoDiff)}
                   >
-                  <Panel key="1">
+                  <Panel key="warning">
                    <Alert 
                       style={{borderRadius:15}} 
                       message="(распределите всех)" 
@@ -1067,7 +1119,7 @@ class GroupForm extends React.Component {
                             getFieldValue("nonresident"),
                             getFieldValue("foreign")
                           ],
-                          backgroundColor: ["red", "blue", "yellow"]
+                          backgroundColor: ["#36A2EB", "#FFCD56", "#FF6384"]
                         }
                       ]
                     }}
@@ -1088,10 +1140,9 @@ class GroupForm extends React.Component {
             <Panel key="5">
               <Row type="flex" gutter={20}>
                 <Col span={14}>
-                  <span>Проживание</span>
                   <Form.Item 
                     label="С родителями"
-                    validateStatus={this.validLocation()}
+                    validateStatus={is_valid(locDiff)}
                     >
                     <Row gutter={20}>
                       <Col span={20}>
@@ -1101,8 +1152,8 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
-                        })(<Slider min={0} max={getFieldValue("total")} />)}
+                          initialValue: this.state.form.parents || 0
+                        })(<Slider min={0} max={getFieldValue("parents")+locDiff} />)}
                       </Col>
                       <Col span={4}>
                         {getFieldDecorator("parents", {
@@ -1110,11 +1161,12 @@ class GroupForm extends React.Component {
                             {
                               required: true
                             },
+                            {validator:this.validLocation}
                           ],
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: this.state.form.parents || 0
                         })(
-                          <InputNumber min={0} max={getFieldValue("total")} />
+                          <InputNumber min={0} max={getFieldValue("parents")+locDiff} />
                         )}
                       </Col>
                     </Row>
@@ -1122,7 +1174,7 @@ class GroupForm extends React.Component {
 
                     <Form.Item 
                     label="С родственниками"
-                    validateStatus={this.validLocation()}
+                    validateStatus={is_valid(locDiff)}
                     >
                     <Row gutter={20}>
                       <Col span={20}>
@@ -1132,13 +1184,11 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
+                          initialValue: this.state.form.relatives || 0
                         })(
                           <Slider
                             min={0}
-                            max={
-                              getFieldValue("total") - getFieldValue("parents")
-                            }
+                            max={getFieldValue("relatives")+locDiff}
                           />
                         )}
                       </Col>
@@ -1148,15 +1198,15 @@ class GroupForm extends React.Component {
                             {
                               required: true
                             },
+                            {validator:this.validLocation}
                           ],
+                          validateTrigger: "onBlur",
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: this.state.form.relatives || 0
                         })(
                           <InputNumber
                             min={0}
-                            max={
-                              getFieldValue("total") - getFieldValue("parents")
-                            }
+                            max={getFieldValue("relatives")+locDiff}
                           />
                         )}
                       </Col>
@@ -1165,7 +1215,7 @@ class GroupForm extends React.Component {
 
                     <Form.Item 
                     label="Самостоятельно"
-                    validateStatus={this.validLocation()}
+                    validateStatus={is_valid(locDiff)}
                     >
                     <Row gutter={20}>
                       <Col span={20}>
@@ -1175,15 +1225,11 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
+                          initialValue: this.state.form.independent || 0
                         })(
                           <Slider
                             min={0}
-                            max={
-                              getFieldValue("total") -
-                              getFieldValue("parents") -
-                              getFieldValue("relatives")
-                            }
+                            max={getFieldValue("independent")+locDiff}
                           />
                         )}
                       </Col>
@@ -1193,17 +1239,15 @@ class GroupForm extends React.Component {
                             {
                               required: true
                             },
+                            {validator:this.validLocation}
                           ],
+                          validateTrigger: "onBlur",
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: this.state.form.independent || 0
                         })(
                           <InputNumber
                             min={0}
-                            max={
-                              getFieldValue("total") -
-                              getFieldValue("parents") -
-                              getFieldValue("relatives")
-                            }
+                            max={getFieldValue("independent")+locDiff}
                           />
                         )}
                       </Col>
@@ -1212,7 +1256,7 @@ class GroupForm extends React.Component {
 
                     <Form.Item 
                     label="В общежитии"
-                    validateStatus={this.validLocation()}
+                    validateStatus={is_valid(locDiff)}
                     >
                     <Row gutter={20}>
                       <Col span={20}>
@@ -1222,16 +1266,11 @@ class GroupForm extends React.Component {
                               required: true
                             }
                           ],
-                          initialValue: this.state.form.total || 0
+                          initialValue: this.state.form.hostel || 0
                         })(
                           <Slider
                             min={0}
-                            max={
-                              getFieldValue("total") -
-                              getFieldValue("parents") -
-                              getFieldValue("relatives") -
-                              getFieldValue("independent")
-                            }
+                            max={getFieldValue("hostel")+locDiff}
                           />
                         )}
                       </Col>
@@ -1241,18 +1280,15 @@ class GroupForm extends React.Component {
                             {
                               required: true
                             },
+                            {validator:this.validLocation}
                           ],
+                          validateTrigger: "onBlur",
                           normalize: this.normalizeNumber,
-                          initialValue: this.state.form.total || 0
+                          initialValue: this.state.form.hostel || 0
                         })(
                           <InputNumber
                             min={0}
-                            max={
-                              getFieldValue("total") -
-                              getFieldValue("parents") -
-                              getFieldValue("relatives") -
-                              getFieldValue("independent")
-                            }
+                            max={getFieldValue("hostel")+locDiff}
                           />
                         )}
                       </Col>
@@ -1262,9 +1298,9 @@ class GroupForm extends React.Component {
                   <Collapse 
                   className={style.collapsePanel}
                   bordered={false}
-                  activeKey = {this.validLocation()==='warning'?"1":null}
+                  activeKey = {is_valid(locDiff)}
                   >
-                  <Panel key="1">
+                  <Panel key="warning">
                    <Alert 
                       style={{borderRadius:15}} 
                       message="(распределите всех)" 
@@ -1293,7 +1329,7 @@ class GroupForm extends React.Component {
                             getFieldValue("independent"),
                             getFieldValue("hostel")
                           ],
-                          backgroundColor: ["red", "blue", "yellow", "green"]
+                          backgroundColor: ["#9966FF", "#36A2EB", "#FF6384", "#4BC0C0"]
                         }
                       ]
                     }}
@@ -1329,11 +1365,6 @@ class GroupForm extends React.Component {
                 <Col span={14}>
                   <Form.Item label="Период обучения:">
                     {getFieldDecorator("studyPeriod", {
-                      rules: [
-                        {
-                          required: true
-                        }
-                      ],
                       initialValue: this.state.form.studyPeriod || 0
                     })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                   </Form.Item>
@@ -1347,11 +1378,6 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Срок курса:">
                             {getFieldDecorator("coursePeriod" + item, {
-                              rules: [
-                                {
-                                  required: true
-                                }
-                              ],
                               initialValue: this.state.form.studyPeriod || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
@@ -1359,11 +1385,6 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Зимние каникулы:">
                             {getFieldDecorator("winterHoliday" + item, {
-                              rules: [
-                                {
-                                  required: true
-                                }
-                              ],
                               initialValue: this.state.form.studyPeriod || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
@@ -1373,11 +1394,6 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Зимняя сессия">
                             {getFieldDecorator("winterSession" + item, {
-                              rules: [
-                                {
-                                  required: true
-                                }
-                              ],
                               initialValue: this.state.form.studyPeriod || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
@@ -1385,11 +1401,6 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Летняя сессия">
                             {getFieldDecorator("summerSession" + item, {
-                              rules: [
-                                {
-                                  required: true
-                                }
-                              ],
                               initialValue: this.state.form.studyPeriod || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
@@ -1399,11 +1410,6 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Аттестация 1">
                             {getFieldDecorator("attestation1" + item, {
-                              rules: [
-                                {
-                                  required: true
-                                }
-                              ],
                               initialValue: this.state.form.studyPeriod || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
@@ -1411,11 +1417,6 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Аттестация 2">
                             {getFieldDecorator("attestation2" + item, {
-                              rules: [
-                                {
-                                  required: true
-                                }
-                              ],
                               initialValue: this.state.form.studyPeriod || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
@@ -1425,11 +1426,6 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Аттестация 3">
                             {getFieldDecorator("attestation3" + item, {
-                              rules: [
-                                {
-                                  required: true
-                                }
-                              ],
                               initialValue: this.state.form.studyPeriod || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
@@ -1437,11 +1433,6 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Аттестация 4">
                             {getFieldDecorator("attestation4" + item, {
-                              rules: [
-                                {
-                                  required: true
-                                }
-                              ],
                               initialValue: this.state.form.studyPeriod || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
@@ -1455,14 +1446,14 @@ class GroupForm extends React.Component {
             <Panel key="7">
               <Form.Item label="Прочие сведения">
                 <Form.Item>
-                  {getFieldDecorator("more", {
+                  {getFieldDecorator("others", {
                     rules: [
                       {
                         pattern: /(^[^]{0,1000}$)/,
                         message: "Максимум 1000 символов!"
                       }
                     ],
-                    initialValue: this.state.form.more
+                    initialValue: this.state.form.others
                   })(<TextArea autosize={{minRows: 6, maxRows: 9}}/>)}
                 </Form.Item>
               </Form.Item>

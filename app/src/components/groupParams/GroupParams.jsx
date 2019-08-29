@@ -6,7 +6,6 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { 
   Avatar,
   Collapse,
-  Input,
   Row,
   Col,
   } from "antd";
@@ -23,49 +22,62 @@ const config = [
     label: "gender",
     labels: ["Юноши", "Девушки"],
     labelsIds: ["men", "women"],
-    backgroundColor: ["#00BFFF", "pink"],
+    backgroundColor: ["#00BFFF", "#FF6384"],
     text: "Гендерный состав"
   },
   {
     label: "community",
     labels: ["БРСМ", "ПРОФКОМ", "Студсовет", "Прочая"],
     labelsIds: ["brsm", "profkom", "studsovet", "others"],
-    backgroundColor: ["red", "blue", "yellow", "green"],
+    backgroundColor: ["#FF6384", "#FFCD56", "#36A2EB", "#C9CBCF"],
     text: "Общественные организации"
   },
   {
     label: "family",
     labels: ["Полная", "Не полная", "Многодетные", "Сироты"],
     labelsIds: ["full", "notfull", "manychild", "orphan"],
-    backgroundColor: ["red", "blue", "yellow", "green"],
+    backgroundColor: ["#4BC0C0", "#FF9F40", "#9966FF", "#FF6384"],
     text: "Состав семьи"
   },
   {
     label: "geography",
     labels: ["Местный", "Иногородний", "Иностранный"],
     labelsIds: ["local", "nonresident", "foreign"],
-    backgroundColor: ["red", "blue", "yellow"],
+    backgroundColor: ["#36A2EB", "#FFCD56", "#FF6384"],
     text: "География"
   },
   {
     label: "living",
     labels: ["Родители", "Родственники", "Самостоятельно", "Общежитие"],
     labelsIds: ["parents", "relatives", "independent", "hostel"],
-    backgroundColor: ["red", "blue", "yellow", "green"],
+    backgroundColor: ["#9966FF", "#36A2EB", "#FF6384", "#4BC0C0"],
     text: "Проживание"
   }
 ];
 export default ({ data }) => {
+  var curatorName =
+    data.user &&
+    data.user.first_name +
+      " " +
+      (data.user.f_name !== null ? data.user.f_name : "") +
+      " " +
+      data.user.last_name;
+  var curatorInitials =
+    data.user &&
+    data.user.last_name[0] +
+      data.user.first_name[0] +
+      (data.user.f_name !== null ? data.user.f_name[0] : "");
+
   return (
     <Card
       title="Характеристика"
       buttons={<BigButton icon={faPen} onClick={() => {}} />}
     >
       <div className={style.curator}>
-        <Avatar size={64}>КМС</Avatar>
+        <Avatar size={64}>{curatorInitials}</Avatar>
         <div>
-          Краснова Мария Степановна
-          <br /> <span>Кафедра гуманитарных наук</span>
+          {curatorName}
+          <br /> <span>{data.user && data.user.department}</span>
         </div>
       </div>
 
@@ -99,58 +111,39 @@ export default ({ data }) => {
           ))}
       </div>
       <Collapse bordered={false}>
-        <Panel  header = "Социальный статус" key="1">
-        <Row gutter={30} >
-                        <Row>
-                          <Col span={10}>Дети сироты (до 18 лет)  </Col>
-                          <Col span={4}>
-                              <Input className={style.InputValue} value = {data.socOrphan18}
-                              />
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col span={10}>Дети без родителей (до 18 лет) </Col>
-                          <Col span={4}>
-                              <Input className={style.InputValue} value = {data.socWithoutParents18}
-                              />
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col span={10}>Сироты и без родителей (18-23)  </Col>
-                          <Col span={4}>
-                              <Input className={style.InputValue} value = {data.socOrphans}
-                              />
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col span={10}>Особенности развития </Col>
-                          <Col span={4}>
-                              <Input className={style.InputValue} value = {data.socFeature}
-                              />
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col span={10}>Родители инвалиды  </Col>
-                          <Col span={4}>
-                              <Input className={style.InputValue} value = {data.socParentsInvalid}
-                              />
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col span={10}>Регионы ЧАЭС  </Col>
-                          <Col span={4}>
-                              <Input className={style.InputValue}  value = {data.socCHAES}
-                              />
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col span={10}>Семьи из зоны загрязнения  </Col>
-                          <Col span={4}>
-                              <Input className={style.InputValue} value = {data.socCHAESRegion}
-                              />
-                          </Col>
-                        </Row>
-                      </Row>
+        <Panel header="Социальный статус" key="1">
+          {data.social && (
+            <React.Fragment>
+              <Row>
+                <Col span={20}>Дети сироты (до 18 лет)</Col>
+                <Col span={4}>{data.social.socOrphan18 || " - "}</Col>
+              </Row>
+              <Row>
+                <Col span={20}>Дети без родителей (до 18 лет)</Col>
+                <Col span={4}>{data.social.socWithoutParents18 || " - "}</Col>
+              </Row>
+              <Row>
+                <Col span={20}>Сироты и без родителей (18-23)</Col>
+                <Col span={4}>{data.social.socOrphans || " - "}</Col>
+              </Row>
+              <Row>
+                <Col span={20}>Особенности развития </Col>
+                <Col span={4}>{data.social.socFeature || " - "}</Col>
+              </Row>
+              <Row>
+                <Col span={20}>Родители инвалиды </Col>
+                <Col span={4}>{data.social.socParentsInvalid || " - "}</Col>
+              </Row>
+              <Row>
+                <Col span={20}>Регионы ЧАЭС </Col>
+                <Col span={4}>{data.social.socCHAES || " - "}</Col>
+              </Row>
+              <Row>
+                <Col span={20}>Семьи из зоны загрязнения </Col>
+                <Col span={4}>{data.social.socCHAESRegion || " - "}</Col>
+              </Row>
+            </React.Fragment>
+          )}
         </Panel>
         <Panel header= " Прочее " key=" 2 ">
           {data.others}
