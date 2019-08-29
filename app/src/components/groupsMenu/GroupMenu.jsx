@@ -98,7 +98,7 @@ class GroupCard extends React.Component {
                     group={group.name}
                     onStarClick={() => this.removeFavorite(group)}
                     onClick={() => this.onGroupClick(group.id)}
-                    onArchiveClick  = {() => this.addToArchive(group)}
+                    onArchiveClick  = {() => this.onArchiveClick(group)}
                     course={group.course}
                   />
                 ))
@@ -114,7 +114,7 @@ class GroupCard extends React.Component {
                     key={group.id}
                     group={group.name}
                     onClick={() => this.onGroupClick(group.id)}
-                    onArchiveClick = {() => this.addToArchive(group)}
+                    onArchiveClick = {() => this.onArchiveClick(group)}
                     course={group.course}
                   />
                 ))
@@ -127,7 +127,7 @@ class GroupCard extends React.Component {
                 {all[keyName].map(group => (
                   <GroupsCard
                     onStarClick={() => this.onStarClick(group)}
-                    onArchiveClick = {() => this.addToArchive(group)}
+                    onArchiveClick = {() => this.onArchiveClick(group)}
                     key={group.name}
                     onClick={() => this.onGroupClick(group.id)}
                     group={group.name}
