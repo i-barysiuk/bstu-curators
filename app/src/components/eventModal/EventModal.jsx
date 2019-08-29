@@ -118,7 +118,7 @@ class EventForm extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: "Пожалуйста укажите название события"
+                      message: "Пожалуйста укажите место проведения"
                     }
                   ],
                   normalize: this.normalize,
