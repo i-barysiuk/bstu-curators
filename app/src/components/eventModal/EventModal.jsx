@@ -79,7 +79,7 @@ class EventForm extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: "Пожалуйста укажите название события"
+                      message: "Пожалуйста, укажите название события"
                     }
                   ],
                   validateTrigger: "onBlur",
@@ -93,7 +93,7 @@ class EventForm extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: "Пожалуйста укажите краткое описание события"
+                      message: "Пожалуйста, укажите краткое описание события"
                     }
                   ],
                   validateTrigger: "onBlur",
@@ -109,7 +109,7 @@ class EventForm extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: "Пожалуйста укажите место проведения"
+                      message: "Пожалуйста, укажите место проведения"
                     }
                   ],
                   validateTrigger: "onBlur",
@@ -124,8 +124,9 @@ class EventForm extends React.Component {
                 {getFieldDecorator("eventDate", {
                   rules: [
                     {
+                      type: "array",
                       required: true,
-                      message: "Пожалуйста укажите время проведения"
+                      message: "Пожалуйста, укажите время проведения"
                     }
                   ],
                   initialValue: this.state.form.eventDate || 0
