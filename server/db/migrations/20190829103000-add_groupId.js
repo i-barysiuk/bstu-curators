@@ -2,13 +2,13 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.addColumn("groups", "curatorId", {
+    return queryInterface.addColumn("students", "groupId", {
       type: Sequelize.UUID,
-      allowNull: true
+      allowNull: false
     });
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.removeColumn("groups", "curatorId");
+    return queryInterface.removeColumn("students", "groupId");
   }
 };

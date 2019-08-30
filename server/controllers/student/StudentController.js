@@ -15,6 +15,12 @@ router.get("/:id", (req, res) => {
     .catch(err => console.error(err));
 });
 
+router.get("/:id/group", (req, res) => {
+  StudentService.findGroup(req.params.id)
+    .then(data => res.status(200).json(data))
+    .catch(err => console.error("ERROR IS " + err));
+});
+
 router.post("/", (req, res) => {
   StudentService.create(req.body)
     .then(student => res.status(201).json(student))
