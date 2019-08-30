@@ -10,27 +10,13 @@ import {
   faIdCard
 } from "@fortawesome/free-solid-svg-icons";
 
-class FourButtons extends React.Component {
-  constructor(props)
-  {
-    super(props);
-    this.state = { display: "flex" };
-    this.click = this.click.bind(this);
-  }
-
-  click()
-  {
-    this.setState({ display: 'none' });
-  }
-
-  render() {
+function FourButtons()  {
     return (
-        <div style={{ display: this.state.display }} className={style.container} >
+        <div className={style.container} >
           <Row gutter={100} className={style.firstRow}>
             <Col span={12}>
               <NavLink to="/dashboard/groups">
                 <Button 
-                onClick={this.click} 
                 type="primary" 
                 className={style.butt}>
                   <FontAwesomeIcon icon={faUsers} className={style.icons} />  
@@ -40,7 +26,6 @@ class FourButtons extends React.Component {
             <Col span={12}>
               <NavLink to="/dashboard/students">
                 <Button 
-                onClick={this.click}
                 type="primary" 
                 className={style.butt}>
                   <FontAwesomeIcon icon={faIdCard} className={style.icons} />    
@@ -53,7 +38,6 @@ class FourButtons extends React.Component {
             <Col span={12}>
               <NavLink to="/dashboard/events">
                 <Button 
-                onClick={this.click}
                 type="primary" 
                 className={style.butt}>
                   <FontAwesomeIcon icon={faCalendarAlt} className={style.icons} />  
@@ -63,7 +47,6 @@ class FourButtons extends React.Component {
             <Col span={12}>
               <NavLink to="/dashboard/reports">
                 <Button 
-                onClick={this.click}
                 type="primary" 
                 className={style.butt}>
                   <FontAwesomeIcon icon={faFileAlt} className={style.icons} />  
@@ -73,7 +56,6 @@ class FourButtons extends React.Component {
           </Row>
         </div>
     );
-  }
 }
 
 export default FourButtons;
