@@ -18,14 +18,13 @@ class EventService {
   create(body) {
     return Event.findOrCreate({
       where: {
-        id: body.id
+        title: body.title
       },
       defaults: {
         createdAt: body.createdAt,
         updatedAt: body.updatedAt,
         onlineAt: body.onlineAt,
         creator: body.creator,
-        title: body.title,
         subtitle: body.subtitle,
         place: body.place,
         dataStart: body.dataStart,

@@ -18,6 +18,7 @@ import {
   removeGroupFromFavouriteRequest,
   addGroupToArchiveRequest,
   removeGroupFromArchiveRequest
+  editGroupRequest
 } from "../../redux/actions/groups";
 
 class GroupCard extends React.Component {
@@ -72,7 +73,8 @@ class GroupCard extends React.Component {
       groups: { favorite, my, all, archive },
       fetchAll,
       fetchArchive,
-      openModal
+      openModal,
+      editGroupRequest
     } = this.props;
     return (
       <div className={style.container}>
@@ -97,6 +99,7 @@ class GroupCard extends React.Component {
                     key={group.id}
                     group={group.name}
                     onStarClick={() => this.removeFavorite(group)}
+                    onEditClick={() => editGroupRequest({ id: group.id })}
                     onClick={() => this.onGroupClick(group.id)}
                     onArchiveClick  = {() => this.addToArchive(group)}
                     course={group.course}
@@ -111,6 +114,7 @@ class GroupCard extends React.Component {
                   <GroupsCard
                     favorite={this.isFavorite(group.id)}
                     onStarClick={() => this.onStarClick(group)}
+                    onEditClick={() => editGroupRequest({ id: group.id })}
                     key={group.id}
                     group={group.name}
                     onClick={() => this.onGroupClick(group.id)}
@@ -128,6 +132,7 @@ class GroupCard extends React.Component {
                   <GroupsCard
                     onStarClick={() => this.onStarClick(group)}
                     onArchiveClick = {() => this.addToArchive(group)}
+                    onEditClick={() => editGroupRequest({ id: group.id })}
                     key={group.name}
                     onClick={() => this.onGroupClick(group.id)}
                     group={group.name}
@@ -145,6 +150,7 @@ class GroupCard extends React.Component {
                   <GroupsCard
                     onArchiveClick = {() => this.removeFromArchive(group)}
                     onStarClick={() => this.onStarClick(group)}
+                    onEditClick={() => editGroupRequest({ id: group.id })}
                     key={group.name}
                     onClick={() => this.onGroupClick(group.id)}
                     group={group.name}
@@ -166,6 +172,7 @@ const mapDispatchToProps = {
   removeGroupFromFavouriteRequest,
   addGroupToArchiveRequest,
   removeGroupFromArchiveRequest
+  editGroupRequest
 };
 
 export default connect(

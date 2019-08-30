@@ -1,9 +1,11 @@
 import React from "react";
 import style from "./style.module.scss";
+import { connect } from "react-redux";
 import EventCard from "../eventCard/EventCard";
 import Card from "../common/card/Card";
 import BigButton from "../common/bigButton/BigButton";
 import { faPlus, faFilter } from "@fortawesome/free-solid-svg-icons";
+import { openEventsModal } from "../../redux/actions/eventModal";
 import "moment/locale/ru";
 const moment = require("moment");
 
@@ -38,38 +40,51 @@ var data = [
   }
 ];
 
-function EventList(props) {
-  return (
-    <Card
-      title={"События"}
-      buttons={[
-        <BigButton icon={faFilter} onClick={props.onClick} />,
-        <BigButton icon={faPlus} primary onClick={props.onClick} />
-      ]}
-      contentCenter
-    >
-      <div className={style.cards}>
-        {data.map((item, index) => {
-          var utc = moment(item.utc);
-          return (
-            <div className={style.item} key={item.id}>
-              {index === 0 ||
-                (utc.format("M") !==
-                  moment(data[index - 1].utc).format("M") && (
-                  <div className={style.month}> {utc.format("MMMM")} </div>
-                ))}
-              <EventCard
-                event={item.icon}
-                title={item.title}
-                subTitle={item.subTitle}
-                utc={item.utc}
-              />
-            </div>
-          );
-        })}
-      </div>
-    </Card>
-  );
+class EventList extends React.Component {
+  render() {
+    return (
+      <Card
+        title={"События"}
+        buttons={[
+          <BigButton icon={faFilter} onClick={this.props.onClick} />,
+          <BigButton
+            icon={faPlus}
+            primary
+            onClick={this.props.openEventsModal}
+          />
+        ]}
+        contentCenter
+      >
+        <div className={style.cards}>
+          {data.map((item, index) => {
+            var utc = moment(item.utc);
+            return (
+              <div className={style.item} key={item.id}>
+                {index === 0 ||
+                  (utc.format("M") !==
+                    moment(data[index - 1].utc).format("M") && (
+                    <div className={style.month}> {utc.format("MMMM")} </div>
+                  ))}
+                <EventCard
+                  event={item.icon}
+                  title={item.title}
+                  subTitle={item.subTitle}
+                  utc={item.utc}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </Card>
+    );
+  }
 }
 
-export default EventList;
+const mapDispatchToProps = {
+  openEventsModal
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(EventList);
