@@ -71,18 +71,19 @@ export const getGroupData = data => {
     }, {});
     newData.studyProcess[i] = courseDates;
   }
+
   const { studyPeriodStart, studyPeriodEnd } = getDate(
     "studyPeriod",
-    newData.studyPeriod
+    get(newData, "studyPeriod", null)
   );
-  newData = { ...newData, studyPeriodStart, studyPeriodEnd };
+  // newData = { ...newData, studyPeriodStart, studyPeriodEnd };
   delete newData.studyPeriod;
   return newData;
 };
 
 export const getDate = (name, dates) => {
   if (!dates) {
-    return;
+    return {};
   }
   const [start, end] = dates;
   let newDate = {};
