@@ -51,7 +51,7 @@ class EventForm extends React.Component {
 
   render() {
     const {
-      form: { getFieldDecorator, getFieldValue, getFieldError },
+      form: { getFieldDecorator },
       isOpen,
       closeEventsModal
     } = this.props;
