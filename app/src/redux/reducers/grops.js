@@ -7,6 +7,8 @@ import {
   GROUPS__ARCHIVE_SUCCESS,
   GROUPS__FAVORITE_ADD_SUCCESS,
   GROUPS__FAVORITE_REMOVE_SUCCESS,
+  GROUPS__ARCHIVE_ADD_SUCCESS,
+  GROUPS__ARCHIVE_REMOVE_SUCCESS
   GROUPS__EDIT_SUCCESS,
   GROUPS__EDIT_END
 } from "../actionsTypes/groups";
@@ -40,6 +42,12 @@ export default (state = defaultGroupsState, action) => {
       return { ...state, all: action.payload };
 
     case GROUPS__ARCHIVE_SUCCESS:
+      return { ...state, archive: action.payload };
+
+    case GROUPS__ARCHIVE_ADD_SUCCESS:
+      return { ...state, archive: [...state.archive, action.payload] };
+
+    case GROUPS__ARCHIVE_REMOVE_SUCCESS:
       return { ...state, archive: action.payload };
 
     case GROUPS__FAVORITE_ADD_SUCCESS:
