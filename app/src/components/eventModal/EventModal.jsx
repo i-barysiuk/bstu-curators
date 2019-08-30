@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import locale from "antd/es/date-picker/locale/ru_RU";
 import {
   Form,
@@ -11,11 +10,10 @@ import {
   Select,
   Collapse,
   DatePicker,
-  Alert,
   Steps
 } from "antd";
 import { getGroupData } from "../../helper/group";
-import GroupsService from "../../services/GroupsService";
+import EventService from "../../services/EventService";
 import { closeModal } from "../../redux/actions/modal";
 import style from "./style.module.scss";
 import debounce from "lodash/debounce";
@@ -41,10 +39,17 @@ class EventForm extends React.Component {
       if (err) {
         return;
       }
-      let group = getGroupData(values);
-      group.curatorId = this.props.profileId;
+      let event = {
+        creator: this.props.profileId,
+        title: values.title,
+        subtitle: values.subtitle,
+        place: values.place,
+        dataStart: values.eventDate[0],
+        dataEnd: values.eventDate[1],
+        description: values.description
+      };
       try {
-        await GroupsService.addGroup(group);
+        await EventService.addEvent(event);
       } catch (e) {
         console.log(e);
       }
@@ -128,17 +133,18 @@ class EventForm extends React.Component {
               </Form.Item>
             </Col>
           </Row>
-          <Row>
-            <Col>
+          <Row type="flex" gutter={24}>
+            <Col span={12}>
               <Form.Item label="Дата проведения:">
                 {getFieldDecorator("eventDate", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Пожалуйста укажите время проведения"
+                    }
+                  ],
                   initialValue: this.state.form.eventDate || 0
-                })(
-                  <RangePicker
-                    locale={locale}
-                    dropdownClassName={style.rangePicker}
-                  />
-                )}
+                })(<RangePicker locale={locale} />)}
               </Form.Item>
             </Col>
           </Row>
