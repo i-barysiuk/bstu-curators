@@ -47,7 +47,11 @@ class EventList extends React.Component {
         title={"События"}
         buttons={[
           <BigButton icon={faFilter} onClick={this.props.onClick} />,
-          <BigButton icon={faPlus} primary onClick={this.props.onClick} />
+          <BigButton
+            icon={faPlus}
+            primary
+            onClick={this.props.openEventsModal}
+          />
         ]}
         contentCenter
       >

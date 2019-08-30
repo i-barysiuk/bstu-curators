@@ -13,7 +13,7 @@ const { RangePicker } = DatePicker;
 class EventForm extends React.Component {
   constructor(props) {
     super(props);
-    this.closingAfterSave = debounce(this.closingAfterSave, 10);
+    this.closingAfterSave = debounce(this.closingAfterSave, 100);
     this.state = {
       validStatus: false,
       form: {}
@@ -40,12 +40,13 @@ class EventForm extends React.Component {
         console.log(e);
       }
       this.setState({ validStatus: true });
+      this.closingAfterSave();
     });
   };
 
   closingAfterSave = () => {
     this.setState({ validStatus: false });
-    this.props.closeModal();
+    this.props.closeEventsModal();
   };
 
   render() {
@@ -81,7 +82,6 @@ class EventForm extends React.Component {
                       message: "Пожалуйста укажите название события"
                     }
                   ],
-                  normalize: this.normalize,
                   validateTrigger: "onBlur",
                   initialValue: this.state.form.title
                 })(<Input placeholder="Событие" />)}
@@ -112,7 +112,6 @@ class EventForm extends React.Component {
                       message: "Пожалуйста укажите место проведения"
                     }
                   ],
-                  normalize: this.normalize,
                   validateTrigger: "onBlur",
                   initialValue: this.state.form.place
                 })(<Input placeholder="Место" />)}

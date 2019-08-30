@@ -83,7 +83,7 @@ export default class GroupProfile extends React.Component {
             />
           </Col>
           <Col span={10}>
-            <EventList onClick={openEventsModal} />
+            <EventList />
           </Col>
         </Row>
 
