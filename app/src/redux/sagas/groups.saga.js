@@ -7,7 +7,7 @@ import {
   GROUPS__FAVORITE_ADD_REQUEST,
   GROUPS__FAVORITE_REMOVE_REQUEST,
   GROUPS__ARCHIVE_ADD_REQUEST,
-  GROUPS__ARCHIVE_REMOVE_REQUEST
+  GROUPS__ARCHIVE_REMOVE_REQUEST,
   GROUPS__EDIT_REQUEST
 } from "../actionsTypes/groups";
 import {
@@ -20,7 +20,7 @@ import {
   pushGroupToFavourite,
   popGroupFromFavourite,
   popGroupFromArchive,
-  pushGroupToArchive
+  pushGroupToArchive,
   editGroupSucces
 } from "../actions/groups";
 import { openModal } from "../actions/modal";

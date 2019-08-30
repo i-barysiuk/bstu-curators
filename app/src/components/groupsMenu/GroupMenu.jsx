@@ -17,7 +17,7 @@ import {
   addGroupToFavouriteRequest,
   removeGroupFromFavouriteRequest,
   addGroupToArchiveRequest,
-  removeGroupFromArchiveRequest
+  removeGroupFromArchiveRequest,
   editGroupRequest
 } from "../../redux/actions/groups";
 
@@ -101,7 +101,7 @@ class GroupCard extends React.Component {
                     onStarClick={() => this.removeFavorite(group)}
                     onEditClick={() => editGroupRequest({ id: group.id })}
                     onClick={() => this.onGroupClick(group.id)}
-                    onArchiveClick  = {() => this.addToArchive(group)}
+                    onArchiveClick={() => this.addToArchive(group)}
                     course={group.course}
                   />
                 ))
@@ -118,7 +118,7 @@ class GroupCard extends React.Component {
                     key={group.id}
                     group={group.name}
                     onClick={() => this.onGroupClick(group.id)}
-                    onArchiveClick = {() => this.addToArchive(group)}
+                    onArchiveClick={() => this.addToArchive(group)}
                     course={group.course}
                   />
                 ))
@@ -131,7 +131,7 @@ class GroupCard extends React.Component {
                 {all[keyName].map(group => (
                   <GroupsCard
                     onStarClick={() => this.onStarClick(group)}
-                    onArchiveClick = {() => this.addToArchive(group)}
+                    onArchiveClick={() => this.addToArchive(group)}
                     onEditClick={() => editGroupRequest({ id: group.id })}
                     key={group.name}
                     onClick={() => this.onGroupClick(group.id)}
@@ -148,7 +148,7 @@ class GroupCard extends React.Component {
               <Collapse icon={faHeart} key={keyName} title={keyName}>
                 {archive[keyName].map(group => (
                   <GroupsCard
-                    onArchiveClick = {() => this.removeFromArchive(group)}
+                    onArchiveClick={() => this.removeFromArchive(group)}
                     onStarClick={() => this.onStarClick(group)}
                     onEditClick={() => editGroupRequest({ id: group.id })}
                     key={group.name}
@@ -171,7 +171,7 @@ const mapDispatchToProps = {
   addGroupToFavouriteRequest,
   removeGroupFromFavouriteRequest,
   addGroupToArchiveRequest,
-  removeGroupFromArchiveRequest
+  removeGroupFromArchiveRequest,
   editGroupRequest
 };
 

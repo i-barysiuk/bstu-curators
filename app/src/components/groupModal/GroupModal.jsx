@@ -153,7 +153,6 @@ class GroupForm extends React.Component {
     const {
       form: { getFieldDecorator, getFieldValue, getFieldError },
       isOpen,
-      closeModal,
       group
     } = this.props;
 

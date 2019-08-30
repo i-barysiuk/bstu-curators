@@ -4,7 +4,6 @@ import PageHead from "../../../../components/pageHead/PageHead";
 import BigButton from "../../../../components/common/bigButton/BigButton";
 import { faPen, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { Row, Col } from "antd";
-import { openEventsModal } from "../../../../redux/actions/eventModal";
 
 import Timeline from "../../../../components/timeline/Timeline";
 import GroupParams from "../../../../components/groupParams/GroupParams";
