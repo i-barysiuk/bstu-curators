@@ -1,9 +1,8 @@
 import React from "react";
-import EventModal from "../../components/eventModal/EventModal";
 
 class Sandbox extends React.Component {
   render() {
-    return <EventModal isOpen />;
+    return 111;
   }
 }
 

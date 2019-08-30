@@ -1,27 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import locale from "antd/es/date-picker/locale/ru_RU";
-import {
-  Form,
-  Modal,
-  Row,
-  Col,
-  Input,
-  Select,
-  Collapse,
-  DatePicker,
-  Steps
-} from "antd";
-import { getGroupData } from "../../helper/group";
+import { Form, Modal, Row, Col, Input, DatePicker } from "antd";
 import EventService from "../../services/EventService";
-import { closeModal } from "../../redux/actions/modal";
+import { closeEventsModal } from "../../redux/actions/eventModal";
 import style from "./style.module.scss";
 import debounce from "lodash/debounce";
 
-const { Step } = Steps;
-const { Option } = Select;
 const { TextArea } = Input;
-const { Panel } = Collapse;
 const { RangePicker } = DatePicker;
 
 class EventForm extends React.Component {
@@ -66,7 +52,7 @@ class EventForm extends React.Component {
     const {
       form: { getFieldDecorator, getFieldValue, getFieldError },
       isOpen,
-      closeModal
+      closeEventsModal
     } = this.props;
 
     return (
@@ -77,7 +63,7 @@ class EventForm extends React.Component {
         className={style.modal}
         destroyOnClose={true}
         maskClosable={false}
-        onCancel={() => closeModal()}
+        onCancel={() => closeEventsModal()}
         visible={isOpen}
         okText={"Сохранить"}
         cancelText={"Отмена"}
@@ -150,7 +136,7 @@ class EventForm extends React.Component {
           </Row>
           <Row>
             <Col>
-              <Form.Item label="Полное описание события">
+              <Form.Item label="Полное описание события:">
                 <Form.Item>
                   {getFieldDecorator("description", {
                     rules: [
@@ -175,11 +161,11 @@ const WrappedEventForm = Form.create({ name: "event" })(EventForm);
 
 const mapStateToProps = state => ({
   profileId: state.users.profile.id,
-  isOpen: true //state.modal.isOpen
+  isOpen: state.eventModal.isOpen
 });
 
 const mapDispatchToProps = {
-  closeModal
+  closeEventsModal
 };
 
 export default connect(
