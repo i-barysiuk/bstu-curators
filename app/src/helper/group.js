@@ -1,4 +1,5 @@
 import moment from "moment";
+import { get } from "lodash";
 
 const groupConfig = [
   { name: "gender", data: ["men", "women"] },
@@ -42,7 +43,7 @@ const replaceConfig = [
 ];
 
 export const getGroupData = data => {
-  const newData = { ...data };
+  let newData = { ...data };
   // eslint-disable-next-line array-callback-return
   groupConfig.map(item => {
     newData[item.name] = item.data.reduce((object, item) => {
@@ -55,12 +56,14 @@ export const getGroupData = data => {
     }, {});
   });
 
+  // eslint-disable-next-line array-callback-return
   replaceConfig.map(item => {
     newData[item.newName] = newData[item.name];
     delete newData[item.name];
   });
 
   for (let i = 1; i < 7; i++) {
+    // eslint-disable-next-line no-loop-func
     const courseDates = dateConfig.reduce((object, item) => {
       const dates = getDate(item, newData[item + i]);
       delete newData[item + i];
@@ -68,6 +71,12 @@ export const getGroupData = data => {
     }, {});
     newData.studyProcess[i] = courseDates;
   }
+  const { studyPeriodStart, studyPeriodEnd } = getDate(
+    "studyPeriod",
+    newData.studyPeriod
+  );
+  newData = { ...newData, studyPeriodStart, studyPeriodEnd };
+  delete newData.studyPeriod;
   return newData;
 };
 
@@ -80,4 +89,12 @@ export const getDate = (name, dates) => {
   newDate[`${name}Start`] = moment(start).format("YYYY-MM-DD");
   newDate[`${name}End`] = moment(end).format("YYYY-MM-DD");
   return newDate;
+};
+
+export const formDate = (name, objcet) => {
+  const start = get(objcet, `${name}Start`, null);
+  const end = get(objcet, `${name}End`, null);
+  if (start && end) {
+    return [moment(start), moment(end)];
+  }
 };

@@ -12,9 +12,6 @@ import {
 } from "../actionsTypes/groups";
 
 const defaultEdit = {
-  gender: {},
-  community: {},
-  family: {},
   geography: {},
   living: {},
   social: {},
