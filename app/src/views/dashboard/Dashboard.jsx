@@ -1,5 +1,5 @@
 import Menu from "../../components/menu/Menu";
-import FourButtons from "../../components/fourButtons/FourButtons";
+import FourButtons from  "../../components/fourButtons/FourButtons";
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Request from "../../components/request/Request";
