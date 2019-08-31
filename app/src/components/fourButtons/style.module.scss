@@ -1,0 +1,28 @@
+
+.container
+{
+    display: flex;
+    flex-direction: column;
+    height: 100% ;
+    margin-left: auto ;
+    margin-right: auto ;
+    padding-top: 15vh ; 
+}
+
+.firstRow
+{
+    margin-bottom: 100px ;
+}
+
+.butt
+{
+    width: 20vw;
+    height: 20vw;
+    max-width: 300px;
+    max-height: 300px;
+}
+
+.icons
+{
+    font-size: 60px;
+}
