@@ -15,7 +15,7 @@ router.get("/:id", (req, res) => {
     .catch(err => console.error(err));
 });
 
-router.get("/:id/group", (req, res) => {
+router.get("/group/:id", (req, res) => {
   StudentService.findGroup(req.params.id)
     .then(data => res.status(200).json(data))
     .catch(err => console.error("ERROR IS " + err));
