@@ -1,5 +1,5 @@
 import Menu from "../../components/menu/Menu";
-import FourButtons from "../../components/fourButtons/FourButtons";
+import FourButtons from  "../../components/fourButtons/FourButtons";
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Request from "../../components/request/Request";
@@ -7,7 +7,7 @@ import NotFound from "../404/404";
 import PageWrapper from "../../containers/pageWrapper/PageWrapper";
 import GroupLayout from "./groups";
 import StudentLayout from "./students";
-import FourButtons from  '../../components/fourButtons/FourButtons';
+
 
 import GroupModal from "../../components/groupModal/GroupModal";
 import EventModal from "../../components/eventModal/EventModal";
