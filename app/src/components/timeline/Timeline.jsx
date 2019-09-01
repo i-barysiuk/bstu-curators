@@ -172,7 +172,6 @@ class TimelineComp extends React.Component {
   }
 
   render() {
-    console.log(this.state.data);
     return (
       <div className={style.container}>
         {this.state.data.length === 0 ? (
