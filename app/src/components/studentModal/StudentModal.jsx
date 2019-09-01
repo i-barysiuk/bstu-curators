@@ -14,55 +14,253 @@ import {
   Button,
   Radio,
   Icon,
-  Card
+  Table,
+  Alert
 } from "antd";
 import {closeStudentModal} from "../../redux/actions/modal"
+import moment from "moment";
 import style from "./style.module.scss"
 
 const { Option } = Select;
 const { Panel } = Collapse;
 const { Step } = Steps;
 
+///////////////EDITABLE TABLE/////////////////////////////
+
+const EditableContext = React.createContext();
+
+const EditableRow = ({ form, index, ...props }) => (
+  <EditableContext.Provider value={form}>
+    <tr {...props} />
+  </EditableContext.Provider>
+);
+
+const EditableFormRow = Form.create()(EditableRow);
+
+class EditableCell extends React.Component {
+  state = {
+    editing: true,
+  };
+
+  toggleEdit = () => {
+    const editing = !this.state.editing;
+    this.setState({ editing });
+  };
+
+  save = e => {
+    const { record, handleSave } = this.props;
+    this.form.validateFields((error, values) => {
+      if (error && error[e.currentTarget.id]) {
+        return;
+      }
+      this.toggleEdit();
+      handleSave({ ...record, ...values });
+    });
+  };
+
+  renderCell = form => {
+    this.form = form;
+    const { children, dataIndex, record } = this.props;
+    const { editing } = this.state;
+    const pattern = (dataIndex) => {
+      switch (dataIndex) {
+        case "status": return /(^[А-я]{3,12}$)/;
+        case "full_name": return /(^[А-я ---]{3,40}$)/;
+        case "position": return /(^[А-я ---]{3,40}$)/;
+        case "phone": return /(^[+()0-9---]{6,17}$)/;
+        default: return null;
+      }
+    };
+    return editing ? (
+      <Form.Item style={{ margin: 0 }}>
+        {form.getFieldDecorator(dataIndex, {
+          rules: [
+            {
+              required: true,
+              message: "Это поле не может быть пустым",
+            },
+            {
+              required: true,
+              pattern: pattern(dataIndex),
+              message: "Неверный формат"
+            }
+          ],
+          initialValue: record[dataIndex],
+        })(<Input ref={node => (this.input = node)} onPressEnter={this.save} onBlur={this.save} />)}
+      </Form.Item>
+    ) : (
+      <div
+        style={{ paddingRight: 24 }}
+        onClick={this.toggleEdit}
+      >
+        {children}
+      </div>
+    );
+  };
+
+  render() {
+    const {
+      editable,
+      dataIndex,
+      title,
+      record,
+      index,
+      handleSave,
+      children,
+      ...restProps
+    } = this.props;
+    return (
+      <td {...restProps}>
+        {editable ? (
+          <EditableContext.Consumer>{this.renderCell}</EditableContext.Consumer>
+        ) : (
+          children
+        )}
+      </td>
+    );
+  }
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+
+function disabledDate(current) {
+  return current && current > moment().endOf("day");
+}
+
 class StudentForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       current: 0,
-      cardState: "card",
-      form: {}
+      form: {
+        representatives: []
+      },
+      count: 0,
     };
+    this.columns = [
+      {
+        title: 'Статус',
+        dataIndex: 'status',
+        editable: true,
+      },
+      {
+        title: 'ФИО',
+        dataIndex: 'full_name',
+        editable: true,
+      },
+      {
+        title: 'Место работы/Должность',
+        dataIndex: 'position',
+        editable: true,
+      },
+      {
+        title: 'Телефон',
+        dataIndex: 'phone',
+        editable: true,
+      },
+      {
+        title: 'Действия',
+        dataIndex: 'action',
+        width: "10%",
+        render: (text, record) =>
+          this.state.form.representatives.length >= 1 ? (
+            <Button onClick={() => this.handleDelete(record.key)}>
+            <Icon type="delete"/>Удалить
+            </Button>
+          ) : null,
+      },
+    ];
   }
+
+  clearTable = () => {
+    this.setState({ form: { representatives: []}, count: 0 });
+  }
+
+  handleDelete = key => {
+    const representatives = [...this.state.form.representatives];
+    this.setState({ form: {representatives: representatives.filter(item => item.key !== key) } });
+  };
+
+  handleAdd = () => {
+    const { count } = this.state;
+    const { representatives } = this.state.form;
+    const newData = { key: count };
+    this.setState({
+      form: { representatives: [...representatives, newData]},
+      count: count + 1,
+    });
+  };
+
+  handleSave = row => {
+    const newData = [...this.state.form.representatives];
+    const index = newData.findIndex(item => row.key === item.key);
+    const item = newData[index];
+    newData.splice(index, 1, {
+      ...item,
+      ...row,
+    });
+    this.setState({ form: { representatives: newData } });
+  };
 
   changeStep = current => {
     this.setState({ current });
   };
 
-  setCardVisible = () => {
-    if(this.state.cardState==="card") this.setState({cardState: "add"});
-    else this.setState({cardState:"card"});
+  validTable = () => {
+    var pattern = [
+      /(^[А-я]{3,12}$)/,
+      /(^[А-я ---]{3,40}$)/,
+      /(^[А-я ---]{3,40}$)/,
+      /(^[+()0-9---]{6,15}$)/
+    ]
+    return (
+    this.state.form.representatives.filter(
+      item => 
+      !(
+        pattern[0].test(item.status)
+      &&pattern[1].test(item.full_name)
+      &&pattern[2].test(item.position)
+      &&pattern[3].test(item.phone)
+      )
+      ).length
+      )
   }
 
   render() {
-    const { current } = this.state;
+    const components = {
+      body: {
+        row: EditableFormRow,
+        cell: EditableCell,
+      },
+    };
+    const columns = this.columns.map(col => {
+      if (!col.editable) {
+        return col;
+      }
+      return {
+        ...col,
+        onCell: record => ({
+          record,
+          editable: col.editable,
+          dataIndex: col.dataIndex,
+          title: col.title,
+          handleSave: this.handleSave,
+        }),
+      };
+    });
+
+    const { 
+      form: { representatives },
+      current
+     } = this.state;
+
     const {
-      form: { getFieldDecorator, getFieldValue },
+      form: { getFieldDecorator, getFieldError },
       isOpen,
       closeStudentModal
     } = this.props;
-
-    var cardContent = [];
-
-    for (var i = 1; i <= 3; i++) {
-      cardContent.push(i);
-    }
     
-    var steps = [];
-
-    for (let i = 0; i < 7; i++){
-      steps.push(i);
-    }
-
-    const stepName = [
+    var steps = [
       'Общие сведения',
       'Паспортные данные',
       'Место жительства',
@@ -70,6 +268,53 @@ class StudentForm extends React.Component {
       'Медицинские данные',
       'Хобби',
       'Контакты'
+    ];
+
+    var validStep = [
+      {
+        valid:
+        getFieldError('last_name')
+      ||getFieldError('full_name')
+      ||getFieldError('f_name')
+      ||getFieldError('position')
+      ||getFieldError('faculty')
+      ||getFieldError('group')
+      ||getFieldError('sex')
+      ||getFieldError('birthday')
+      },
+      {
+        valid:
+        getFieldError('nationality')
+      ||getFieldError('passport_series')
+      ||getFieldError('passportId')
+      ||getFieldError('issuing_authority')
+      ||getFieldError('date_issue')
+      },
+      {
+        valid:
+        getFieldError('home_adress')
+      ||getFieldError('study_adress')
+      },
+      {
+        valid:
+        this.validTable()
+      },
+      {
+        valid:
+        getFieldError('hronic_disease')
+      ||getFieldError('health_group')
+      ||getFieldError('pe_group')
+      },
+      {
+        valid:
+        null
+      },
+      {
+        valid:
+        getFieldError('phone')
+      ||getFieldError('email')
+      ||getFieldError('studentId')
+      },
     ]
     
     return (
@@ -82,16 +327,20 @@ class StudentForm extends React.Component {
         maskClosable={false}
         okText={"Сохранить"}
         cancelText={"Отмена"}
-        onCancel={() => closeStudentModal()|this.setState({current: 0})}
+        onCancel={() => closeStudentModal()|this.setState({current: 0})|this.clearTable()}
         //onOk={() => this.save() ? closeModal() : null}
         visible={isOpen}
         zIndex={1030}
       >
       <Form>
-        <Steps current={current} onChange={this.changeStep} style={{paddingBottom:20}} labelPlacement='vertical'>
-        {steps.map(item => {
+      <Steps current={current} onChange={this.changeStep} style={{paddingBottom:20}} labelPlacement='vertical'>
+        {steps.map((item, index) => {
                   return (
-                    <Step status={item === current ? 'process' : 'wait'} title={stepName[item]}/>
+                    <Step 
+                    key={index}
+                    status={index === current ? 'process' : validStep[index].valid ? 'error' : 'wait'} 
+                    title={item}
+                    />
                   );
                 })}
           </Steps>
@@ -251,17 +500,14 @@ class StudentForm extends React.Component {
                       {getFieldDecorator("birthday", {
                       rules: [
                         {
+                          type: "array",
                           required: true,
                           message: "Пожалуйста укажите дату рождения"
                         },
-                        {
-                          pattern: /(^[А-Я]{1}[а-я]{1,20}$)/,
-                          message: "Введены некорректные данные"
-                        }
                       ],
-                      validateTrigger: "onBlur",
                       initialValue: this.state.form.birthday
                     })(<DatePicker 
+                    disabledDate={disabledDate}
                     locale={locale} 
                     className={style.datePicker}
                     dropdownClassName={style.datePickerDD}
@@ -375,22 +621,17 @@ class StudentForm extends React.Component {
                 </Row>
           </Panel>
           <Panel key="3">
-          <Row type='flex' gutter={20} style={{paddingTop:30}}>
-          <Col span={8} push={2}>
-          <label>Домашний адрес</label>
-          </Col>
-          <Col span={8} push={4}>
-          <label>Адрес в период обучения</label>
-          </Col>
-          </Row>
           <Row type='flex' gutter={20}>
-          <Col span={8} push={2}>
-          <Form.Item label="Город">
-                {getFieldDecorator("home_city", {
+          <Col span={6} push={2}>
+          <label>Домашний адрес:</label>
+          </Col>
+          <Col span={12}>
+          <Form.Item>
+                {getFieldDecorator("home_adress", {
                           rules: [
                             {
                               required: true,
-                              message: "Пожалуйста укажите город"
+                              message: "Пожалуйста укажите адрес"
                             },
                             {
                               pattern: /(^[А-я]{1,20}$)/,
@@ -402,13 +643,18 @@ class StudentForm extends React.Component {
                         })(<Input />)}
                 </Form.Item>
                 </Col>
-                <Col span={8} push={4}>
-                <Form.Item label="Город">
-                {getFieldDecorator("study_city", {
+            </Row>
+            <Row type='flex' gutter={20}>
+            <Col span={6} push={2}>
+          <label>Адрес в период обучения:</label>
+          </Col>
+            <Col span={12}>
+            <Form.Item>
+                {getFieldDecorator("study_adress", {
                           rules: [
                             {
                               required: true,
-                              message: "Пожалуйста укажите город"
+                              message: "Пожалуйста укажите адрес"
                             },
                             {
                               pattern: /(^[А-я]{1,20}$)/,
@@ -421,283 +667,28 @@ class StudentForm extends React.Component {
                 </Form.Item>
                 </Col>
                 </Row>
-                <Row type='flex' gutter={20}>
-                <Col span={8} push={2}>
-                <Form.Item label="Улица">
-                {getFieldDecorator("home_street", {
-                          rules: [
-                            {
-                              required: true,
-                              message: "Пожалуйста укажите улицу"
-                            },
-                            {
-                              pattern: /(^[А-я]{1,20}$)/,
-                              message: "Введены некорректные данные"
-                            }
-                          ],
-                          validateTrigger: "onBlur",
-                          initialValue: this.state.form.home_street
-                        })(<Input />)}
-                </Form.Item>
-                </Col>
-                <Col span={8} push={4}>
-                <Form.Item label="Улица">
-                {getFieldDecorator("study_street", {
-                          rules: [
-                            {
-                              required: true,
-                              message: "Пожалуйста укажите улицу"
-                            },
-                            {
-                              pattern: /(^[А-я]{1,20}$)/,
-                              message: "Введены некорректные данные"
-                            }
-                          ],
-                          validateTrigger: "onBlur",
-                          initialValue: this.state.form.study_street
-                        })(<Input />)}
-                </Form.Item>
-                </Col>
-                </Row>
-                <Row type='flex' gutter={20}>
-                <Col span={8} push={2}>
-                <Form.Item label="Дом">
-                {getFieldDecorator("home_number", {
-                          rules: [
-                            {
-                              required: true,
-                              message: "Пожалуйста укажите номер дома"
-                            },
-                            {
-                              pattern: /(^[А-я]{1,20}$)/,
-                              message: "Введены некорректные данные"
-                            }
-                          ],
-                          validateTrigger: "onBlur",
-                          initialValue: this.state.form.home_number
-                        })(<Input />)}
-                </Form.Item>
-                </Col>
-                <Col span={8} push={4}>
-                <Form.Item label="Дом">
-                {getFieldDecorator("study_number", {
-                          rules: [
-                            {
-                              required: true,
-                              message: "Пожалуйста укажите номер дома"
-                            },
-                            {
-                              pattern: /(^[А-я]{1,20}$)/,
-                              message: "Введены некорректные данные"
-                            }
-                          ],
-                          validateTrigger: "onBlur",
-                          initialValue: this.state.form.study_number
-                        })(<Input />)}
-                </Form.Item>
-                </Col>
-                </Row>
-                <Row type='flex' gutter={20}>
-                <Col span={8} push={2}>
-                <Form.Item label="Квартира">
-                {getFieldDecorator("home_room", {
-                          rules: [
-                            {
-                              required: true,
-                              message: "Пожалуйста укажите номер квартиры"
-                            },
-                            {
-                              pattern: /(^[А-я]{1,20}$)/,
-                              message: "Введены некорректные данные"
-                            }
-                          ],
-                          validateTrigger: "onBlur",
-                          initialValue: this.state.form.home_room
-                        })(<Input />)}
-                </Form.Item>
-                </Col>
-                <Col span={8} push={4}>
-                <Form.Item label="Квартира">
-                {getFieldDecorator("study_room", {
-                          rules: [
-                            {
-                              required: true,
-                              message: "Пожалуйста укажите номер квартиры"
-                            },
-                            {
-                              pattern: /(^[А-я]{1,20}$)/,
-                              message: "Введены некорректные данные"
-                            }
-                          ],
-                          validateTrigger: "onBlur",
-                          initialValue: this.state.form.study_room
-                        })(<Input />)}
-                </Form.Item>
-                </Col>
-                </Row>
           </Panel>
           <Panel key="4">
-            <Collapse 
-            style={{paddingTop:30}}
-            className={style.collapsePanel}
-            bordered={false}
-            activeKey = {this.state.cardState}
-            >
-            <Panel key="card">
-            <Row type='flex'>
-              <Col span={4} push={2}>
-              <Button onClick={this.setCardVisible}><Icon type="plus"/>Добавить</Button>
-              </Col>
-            </Row>
-            <Row type='flex'>
-            {cardContent.map(item => {
-                  return (
-                    <Card 
-                    title="Статус"
-                    extra=
-                    {
-                    <Button 
-                    onClick={this.setCardVisible}
-                    >
-                    <Icon type='edit'/>
-                    </Button>
-                    }
-                    bordered={false}
-                    style={{background: "#E1E1E1", borderRadius: 15, width: 300, height: 350, margin: 20 }}>
-                    <Row type='flex'>
-                    ФИО<br/><br/>
-                    Должность<br/><br/>
-                    Номер
-                    </Row>
-                    </Card>
-                  );
-                  })}
-                  </Row>
-            </Panel>
-            <Panel key="add">
-            <Row type='flex' gutter={20}>
-            <Col span={8} push={2}>
-                <Form.Item label="Статус">
-                {getFieldDecorator("representatives.status", {
-                          rules: [
-                            {
-                              required: true,
-                              message: "Заполните это поле"
-                            },
-                            {
-                              pattern: /(^[А-я]{1,20}$)/,
-                              message: "Введены некорректные данные"
-                            }
-                          ],
-                          validateTrigger: "onBlur",
-                          initialValue: this.state.form.representatives.status
-                        })(<Input />)}
-                </Form.Item>
-                </Col>
-                </Row>
-                <Row type='flex' gutter={20}>
-                <Col span={8} push={2}>
-                <Form.Item label="Фамилия">
-                {getFieldDecorator("representatives.last_name", {
-                          rules: [
-                            {
-                              required: true,
-                              message: "Заполните это поле"
-                            },
-                            {
-                              pattern: /(^[А-я]{1,20}$)/,
-                              message: "Введены некорректные данные"
-                            }
-                          ],
-                          validateTrigger: "onBlur",
-                          initialValue: this.state.form.representatives.last_name
-                        })(<Input />)}
-                </Form.Item>
-                </Col>
-                <Col span={8} push={4}>
-                <Form.Item label="Имя">
-                {getFieldDecorator("representatives.full_name", {
-                          rules: [
-                            {
-                              required: true,
-                              message: "Заполните это поле"
-                            },
-                            {
-                              pattern: /(^[А-я]{1,20}$)/,
-                              message: "Введены некорректные данные"
-                            }
-                          ],
-                          validateTrigger: "onBlur",
-                          initialValue: this.state.form.representatives.full_name
-                        })(<Input />)}
-                </Form.Item>
-                </Col>
-                </Row>
-                <Row type='flex' gutter={20}>
-                <Col span={8} push={2}>
-                <Form.Item label="Отчество">
-                {getFieldDecorator("representatives.f_name", {
-                          rules: [
-                            {
-                              required: true,
-                              message: "Заполните это поле"
-                            },
-                            {
-                              pattern: /(^[А-я]{1,20}$)/,
-                              message: "Введены некорректные данные"
-                            }
-                          ],
-                          validateTrigger: "onBlur",
-                          initialValue: this.state.form.representatives.f_name
-                        })(<Input />)}
-                </Form.Item>
-                </Col>
-                </Row>
-                <Row type='flex' gutter={20}>
-                <Col span={8} push={2}>
-                <Form.Item label="Место работы/Должность">
-                {getFieldDecorator("representatives.position", {
-                          rules: [
-                            {
-                              required: true,
-                              message: "Заполните это поле"
-                            },
-                            {
-                              pattern: /(^[А-я]{1,20}$)/,
-                              message: "Введены некорректные данные"
-                            }
-                          ],
-                          validateTrigger: "onBlur",
-                          initialValue: this.state.form.representatives.position
-                        })(<Input />)}
-                </Form.Item>
-                </Col>
-                <Col span={8} push={4}>
-                <Form.Item label="Телефон">
-                {getFieldDecorator("representatives.phone", {
-                          rules: [
-                            {
-                              required: true,
-                              message: "Заполните это поле"
-                            },
-                            {
-                              pattern: /(^[А-я]{1,20}$)/,
-                              message: "Введены некорректные данные"
-                            }
-                          ],
-                          validateTrigger: "onBlur",
-                          initialValue: this.state.form.representatives.phone
-                        })(<Input />)}
-                </Form.Item>
-                </Col>
-                </Row>
-                <Row type='flex'>
-              <Col span={4} push={18}>
-              <Button onClick={this.setCardVisible} type="primary"><Icon type="edit"/>Записать</Button>
-              </Col>
-              </Row>
-                </Panel>
-                </Collapse>
+          <Button onClick={this.handleAdd} type="primary" style={{ margin: 16 }}>
+          <Icon type="plus" />Добавить
+          </Button>
+          <Collapse 
+          className={style.collapsePanel}
+          bordered={false}
+          activeKey = {
+            this.state.form.representatives.length >= 1 
+            ? "tableIsVisible"
+            : "tableIsNotVisible"
+            }
+          >
+          <Panel key="tableIsVisible">
+          <Table
+          components={components}
+          dataSource={representatives}
+          columns={columns}
+          />
+          </Panel>
+          </Collapse>
           </Panel>
           <Panel key="5">
             <Row type='flex' gutter={20} style={{paddingTop:30}}>
@@ -766,8 +757,14 @@ class StudentForm extends React.Component {
             initialValue: this.state.form.hobbies
           })(<Select mode="tags" className={style.tags} dropdownClassName={style.select}></Select>)}
           </Col>
-          <Col span={8} push={4}>
-          Здесь что-то будет
+          <Col span={6} push={4}>
+          <Alert
+            className={style.alert}
+            message="Подсказка"
+            description="Текст подсказки"
+            type="info"
+            showIcon
+          />
           </Col>
           </Row>
           </Panel>
@@ -775,6 +772,11 @@ class StudentForm extends React.Component {
           <Row type='flex' gutter={20} style={{paddingTop:30}}>
           <Col span={8} push={2}>
           <Form.Item label="Телефон">
+          <Row>
+                <Col span={3}>
+                <div style={{width:40}}><label>+375</label></div>
+                </Col>
+                <Col span={21}>
                 {getFieldDecorator("phone", {
                           rules: [
                             {
@@ -789,44 +791,8 @@ class StudentForm extends React.Component {
                           validateTrigger: "onBlur",
                           initialValue: this.state.form.phone
                         })(<Input/>)}
-                </Form.Item>
                 </Col>
                 </Row>
-                <Row type='flex' gutter={20}>
-                <Col span={8} push={2}>
-                <Form.Item label="UID">
-                {getFieldDecorator("uid", {
-                          rules: [
-                            {
-                              required: true,
-                              message: "Заполните это поле"
-                            },
-                            {
-                              pattern: /(^[А-я]{1,20}$)/,
-                              message: "Введены некорректные данные"
-                            }
-                          ],
-                          validateTrigger: "onBlur",
-                          initialValue: this.state.form.uid
-                        })(<Input />)}
-                </Form.Item>
-                </Col>
-                <Col span={8} push={4}>
-                <Form.Item label="Номер студенческого билета">
-                {getFieldDecorator("studentId", {
-                          rules: [
-                            {
-                              required: true,
-                              message: "Заполните это поле"
-                            },
-                            {
-                              pattern: /(^[А-я]{1,20}$)/,
-                              message: "Введены некорректные данные"
-                            }
-                          ],
-                          validateTrigger: "onBlur",
-                          initialValue: this.state.form.studentId
-                        })(<Input />)}
                 </Form.Item>
                 </Col>
                 </Row>
@@ -849,6 +815,24 @@ class StudentForm extends React.Component {
                         })(<Input type="email"/>)}
                 </Form.Item>
                 </Col>
+                <Col span={8} push={4}>
+                <Form.Item label="Номер студенческого билета">
+                {getFieldDecorator("studentId", {
+                          rules: [
+                            {
+                              required: true,
+                              message: "Заполните это поле"
+                            },
+                            {
+                              pattern: /(^[А-я]{1,20}$)/,
+                              message: "Введены некорректные данные"
+                            }
+                          ],
+                          validateTrigger: "onBlur",
+                          initialValue: this.state.form.studentId
+                        })(<Input />)}
+                </Form.Item>
+                </Col>
                 </Row>
           </Panel>
         </Collapse>
@@ -862,7 +846,7 @@ const WrappedStudentForm = Form.create({ name: "student" })(StudentForm);
 
 const mapStateToProps = state => ({
   profileId: state.users.profile.id,
-  isOpen: state.modal.studentsIsOpen
+  isOpen: state.modal.studentIsOpen
 });
 
 const mapDispatchToProps = {
