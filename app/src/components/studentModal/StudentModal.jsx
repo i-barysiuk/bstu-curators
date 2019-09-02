@@ -291,6 +291,8 @@ class StudentForm extends React.Component {
       'Контакты'
     ];
 
+    if(this.state.validStatus) closeStudentModal();
+
     var validStep = [
       {
         valid:
