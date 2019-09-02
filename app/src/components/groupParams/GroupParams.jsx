@@ -3,7 +3,12 @@ import style from "./style.module.scss";
 import Card from "../common/card/Card";
 import BigButton from "../common/bigButton/BigButton";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { Avatar, Collapse, Row, Col } from "antd";
+import { 
+  Avatar,
+  Collapse,
+  Row,
+  Col,
+  } from "antd";
 import { Pie } from "react-chartjs-2";
 
 const { Panel } = Collapse;
@@ -49,7 +54,6 @@ const config = [
     text: "Проживание"
   }
 ];
-
 export default ({ data }) => {
   var curatorName =
     data.user &&
@@ -106,7 +110,6 @@ export default ({ data }) => {
             </div>
           ))}
       </div>
-
       <Collapse bordered={false}>
         <Panel header="Социальный статус" key="1">
           {data.social && (
@@ -142,7 +145,7 @@ export default ({ data }) => {
             </React.Fragment>
           )}
         </Panel>
-        <Panel header="Прочее" key="2">
+        <Panel header= " Прочее " key=" 2 ">
           {data.others}
         </Panel>
       </Collapse>
