@@ -3,7 +3,7 @@ import { get } from "lodash";
 
 const groupConfig = [
   { name: "gender", data: ["men", "women"] },
-  { name: "community", data: ["brsm", "profkom", "studsovet", "others"] },
+  { name: "community", data: ["brsm", "profkom", "studsovet", "othersOO"] },
   { name: "family", data: ["full", "notfull", "manychild", "orphan"] },
   { name: "geography", data: ["local", "nonresident", "foreign"] },
   { name: "living", data: ["parents", "relatives", "independent", "hostel"] },

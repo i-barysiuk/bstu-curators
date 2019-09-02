@@ -20,7 +20,7 @@ import {
 } from "antd";
 import { getGroupData, formDate } from "../../helper/group";
 import GroupsService from "../../services/GroupsService";
-import {closeModal} from "../../redux/actions/modal"
+import {closeGroupModal} from "../../redux/actions/modal"
 import {editGroupEnd} from "../../redux/actions/groups"
 import style from "./style.module.scss"
 import debounce from "lodash/debounce";
@@ -78,7 +78,7 @@ class GroupForm extends React.Component {
 
   closingAfterSave = () => {
     this.setState({validStatus:false});
-    this.props.closeModal();
+    this.props.closeGroupModal();
   }
 
   normalize = value => {
@@ -143,8 +143,8 @@ class GroupForm extends React.Component {
   }
 
   onCancel = () => {
-    const {closeModal, editGroupEnd} = this.props
-    closeModal()
+    const {closeGroupModal, editGroupEnd} = this.props
+    closeGroupModal()
     editGroupEnd()
     this.setState({current: 0})
   }
@@ -579,7 +579,7 @@ class GroupForm extends React.Component {
                         <div className={style.organisations}>
                         <span>Другие</span>
                         </div>
-                        {getFieldDecorator("others", {
+                        {getFieldDecorator("othersOO", {
                           normalize: this.normalizeNumber,
                           initialValue: get(group, "community.others") || 0
                         })(<InputNumber min={0} max={getFieldValue("total")} />)}
@@ -624,7 +624,7 @@ class GroupForm extends React.Component {
                             getFieldValue("brsm"),
                             getFieldValue("profkom"),
                             getFieldValue("studsovet"),
-                            getFieldValue("others")
+                            getFieldValue("othersOO")
                           ],
                           backgroundColor: ["#FF6384", "#FFCD56", "#36A2EB", "#C9CBCF"]
                         }
@@ -1473,7 +1473,7 @@ class GroupForm extends React.Component {
             <Panel key="7">
               <Form.Item label="Прочие сведения">
                 <Form.Item>
-                  {getFieldDecorator("more", {
+                  {getFieldDecorator("others", {
                     rules: [
                       {
                         pattern: /(^[^]{0,1000}$)/,
@@ -1496,12 +1496,12 @@ const WrappedGroupForm = Form.create({ name: "group" })(GroupForm);
 
 const mapStateToProps = state => ({
   profileId: state.users.profile.id,
-  isOpen: state.modal.isOpen,
+  isOpen: state.modal.groupIsOpen,
   group: state.groups.editing
 });
 
 const mapDispatchToProps = {
-  closeModal,
+  closeGroupModal,
   editGroupEnd
 }
 
