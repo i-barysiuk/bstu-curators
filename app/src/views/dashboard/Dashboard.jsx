@@ -11,6 +11,7 @@ import StudentLayout from "./students";
 
 import GroupModal from "../../components/groupModal/GroupModal";
 import EventModal from "../../components/eventModal/EventModal";
+import StudentModal from "../../components/studentModal/StudentModal"
 
 class Dashboard extends React.Component {
   render() {
@@ -59,6 +60,7 @@ class Dashboard extends React.Component {
           />
         </Switch>
         <GroupModal />
+        <StudentModal />
         <EventModal />
       </div>
     );
