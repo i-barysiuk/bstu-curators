@@ -7,7 +7,7 @@ export default props => {
       <div>
         <div className={style.header}>
           {props.title}
-          <span className={style.course}>{props.course}</span>
+          {props.course && <span className={style.course}>{props.course}</span>}
         </div>
         <div className={style.subHeader}>{props.subtitle}</div>
       </div>
