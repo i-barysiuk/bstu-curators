@@ -18,6 +18,7 @@ import {
   Alert
 } from "antd";
 import {closeStudentModal} from "../../redux/actions/modal"
+import StudentService from "../../services/StudentService";
 import moment from "moment";
 import style from "./style.module.scss"
 
@@ -132,6 +133,7 @@ class StudentForm extends React.Component {
     super(props);
     this.state = {
       current: 0,
+      validStatus: false,
       form: {
         representatives: []
       },
@@ -173,7 +175,8 @@ class StudentForm extends React.Component {
   }
 
   clearTable = () => {
-    this.setState({ form: { representatives: []}, count: 0 });
+    this.setState({ form: { representatives: []}, count: 0, current: 0, validStatus: true });
+    this.props.closeStudentModal();
   }
 
   handleDelete = key => {
@@ -206,12 +209,26 @@ class StudentForm extends React.Component {
     this.setState({ current });
   };
 
+  save = () => {
+    this.props.form.validateFieldsAndScroll(async (err, values) => {
+    if (err || this.validTable()) {
+      return;
+    }
+    try {
+      await StudentService.addStudent(values);
+    } catch (e) {
+      console.log(e);
+    }
+    this.clearTable();
+  });
+};
+
   validTable = () => {
     var pattern = [
       /(^[А-я]{3,12}$)/,
       /(^[А-я ---]{3,40}$)/,
       /(^[А-я ---]{3,40}$)/,
-      /(^[+()0-9---]{6,15}$)/
+      /(^[+()0-9---]{6,17}$)/
     ]
     return (
     this.state.form.representatives.filter(
@@ -225,6 +242,10 @@ class StudentForm extends React.Component {
       ).length
       )
   }
+
+  normalize = value => {
+    return value && value.replace(/ /g, "").trim();
+  };
 
   render() {
     const components = {
@@ -327,8 +348,8 @@ class StudentForm extends React.Component {
         maskClosable={false}
         okText={"Сохранить"}
         cancelText={"Отмена"}
-        onCancel={() => closeStudentModal()|this.setState({current: 0})|this.clearTable()}
-        //onOk={() => this.save() ? closeModal() : null}
+        onCancel={() => closeStudentModal()|this.clearTable()}
+        onOk={() => this.save()}
         visible={isOpen}
         zIndex={1030}
       >
@@ -360,7 +381,7 @@ class StudentForm extends React.Component {
                           message: "Укажите фамилию"
                         },
                         {
-                          pattern: /(^[А-Я]{1}[а-я]{1,20}$)|(^[А-Я]{1}[а-я]{1,20}-[А-я]{1,20}$)/,
+                          pattern: /(^[А-Я]{1}[а-я]{1,20}$)|(^[А-Я]{1}[а-я]{1,20}-[А-Я]{1}[а-я]{1,20}$)/,
                           message: "Введены некорректные данные"
                         }
                       ],
@@ -416,7 +437,7 @@ class StudentForm extends React.Component {
                           message: "Укажите должность"
                         },
                         {
-                          pattern: /(^[А-Я]{1}[а-я]{1,20}$)/,
+                          pattern: /(^[А-я ---]{1,20}$)/,
                           message: "Введены некорректные данные"
                         }
                       ],
@@ -463,7 +484,7 @@ class StudentForm extends React.Component {
                   </Form.Item>
                   </Col>
                   <Col span={8} push={4}>
-                  <Form.Item label="Группа">
+                  <Form.Item label="Группа (кратко)">
                   {getFieldDecorator("group", {
                       rules: [
                         {
@@ -471,10 +492,11 @@ class StudentForm extends React.Component {
                           message: "Укажите группу"
                         },
                         {
-                          pattern: /(^[А-Я]{1}[а-я]{1,20}$)/,
+                          pattern: /(^[А-Я]{1,6}-[0-9]{1,3}$)/,
                           message: "Введены некорректные данные"
                         }
                       ],
+                      normalize: this.normalize,
                       validateTrigger: "onBlur",
                       initialValue: this.state.form.group
                     })(<Input />)}
@@ -500,7 +522,6 @@ class StudentForm extends React.Component {
                       {getFieldDecorator("birthday", {
                       rules: [
                         {
-                          type: "array",
                           required: true,
                           message: "Пожалуйста укажите дату рождения"
                         },
@@ -528,7 +549,7 @@ class StudentForm extends React.Component {
                               message: "Пожалуйста укажите гражданство"
                             },
                             {
-                              pattern: /(^[А-я]{1,20}$)/,
+                              pattern: /(^[А-я A-Z]{1,20}$)/,
                               message: "Введены некорректные данные"
                             }
                           ],
@@ -548,7 +569,7 @@ class StudentForm extends React.Component {
                               message: "Пожалуйста укажите серию и номер паспорта"
                             },
                             {
-                              pattern: /(^[А-я]{1,20}$)/,
+                              pattern: /(^[A-z0-9]{1,20}$)/,
                               message: "Введены некорректные данные"
                             }
                           ],
@@ -566,7 +587,7 @@ class StudentForm extends React.Component {
                               message: "Пожалуйста укажите идентификационный номер"
                             },
                             {
-                              pattern: /(^[А-я]{1,20}$)/,
+                              pattern: /(^[A-z0-9]{1,20}$)/,
                               message: "Введены некорректные данные"
                             }
                           ],
@@ -586,7 +607,7 @@ class StudentForm extends React.Component {
                               message: "Пожалуйста укажите кем выдан паспорт"
                             },
                             {
-                              pattern: /(^[А-я]{1,20}$)/,
+                              pattern: /(^[А-я ]{1,30}$)/,
                               message: "Введены некорректные данные"
                             }
                           ],
@@ -603,14 +624,10 @@ class StudentForm extends React.Component {
                           required: true,
                           message: "Пожалуйста укажите дату"
                         },
-                        {
-                          pattern: /(^[А-Я]{1}[а-я]{1,20}$)/,
-                          message: "Введены некорректные данные"
-                        }
                       ],
-                      validateTrigger: "onBlur",
                       initialValue: this.state.form.date_issue
                     })(<DatePicker 
+                    disabledDate={disabledDate}
                     locale={locale} 
                     className={style.datePicker}
                     dropdownClassName={style.datePickerDD}
@@ -634,7 +651,7 @@ class StudentForm extends React.Component {
                               message: "Пожалуйста укажите адрес"
                             },
                             {
-                              pattern: /(^[А-я]{1,20}$)/,
+                              pattern: /(^[ ./А-я---0-9]{1,40}$)/,
                               message: "Введены некорректные данные"
                             }
                           ],
@@ -657,7 +674,7 @@ class StudentForm extends React.Component {
                               message: "Пожалуйста укажите адрес"
                             },
                             {
-                              pattern: /(^[А-я]{1,20}$)/,
+                              pattern: /(^[ ./А-я---0-9]{1,40}$)/,
                               message: "Введены некорректные данные"
                             }
                           ],
@@ -701,7 +718,7 @@ class StudentForm extends React.Component {
                               message: "Заполните это поле"
                             },
                             {
-                              pattern: /(^[А-я]{1,20}$)/,
+                              pattern: /(^[А-я ,/-]{0,50}$)/,
                               message: "Введены некорректные данные"
                             }
                           ],
@@ -784,7 +801,7 @@ class StudentForm extends React.Component {
                               message: "Заполните это поле"
                             },
                             {
-                              pattern: /(^[А-я]{1,20}$)/,
+                              pattern: /(^[()0-9---]{6,13}$)/,
                               message: "Введены некорректные данные"
                             }
                           ],
@@ -806,10 +823,11 @@ class StudentForm extends React.Component {
                               message: "Заполните это поле"
                             },
                             {
-                              pattern: /(^[А-я]{1,20}$)/,
+                              pattern: /(^[A-z0-9@.]{5,40}$)/,
                               message: "Введены некорректные данные"
                             }
                           ],
+                          normalize: this.normalize,
                           validateTrigger: "onBlur",
                           initialValue: this.state.form.email
                         })(<Input type="email"/>)}
@@ -824,7 +842,7 @@ class StudentForm extends React.Component {
                               message: "Заполните это поле"
                             },
                             {
-                              pattern: /(^[А-я]{1,20}$)/,
+                              pattern: /(^[0-9]{5,10}$)/,
                               message: "Введены некорректные данные"
                             }
                           ],
