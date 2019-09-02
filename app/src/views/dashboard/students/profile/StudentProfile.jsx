@@ -13,8 +13,6 @@ import HealthMap from "../../../../components/healthMap/HealthMap";
 import AveragePoint from "../../../../components/averagePoint/AveragePoint";
 import AverageMap from "../../../../components/averageMap/AverageMap";
 
-import { toRomane } from "../../../../helper";
-
 export default class StudentProfile extends React.Component {
   render() {
     return (
