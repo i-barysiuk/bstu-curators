@@ -12,10 +12,16 @@ class StudentLayout extends React.Component {
     return (
       <div style={{ display: "flex", height: "100%", flexGrow: 1 }}>
         <StudentMenu />
+        <Route
+          exact
+          path="/dashboard/students"
+          render={props => (
+            <PageWrapper {...props} title="Cтуденты" component={Students} />
+          )}
+        />
         <Switch>
           <Route
-            exec
-            path="/dashboard/students"
+            path="/dashboard/students/id"
             render={props => (
               <PageWrapper
                 {...props}
@@ -26,7 +32,6 @@ class StudentLayout extends React.Component {
           />
           <Route
             path="/dashboard/students/*"
-            // exact
             render={props => (
               <PageWrapper {...props} title="Упс!" component={NotFound} />
             )}
