@@ -6,19 +6,16 @@ import Collapse from "../common/collapse/Collapse";
 import { openStudentModal } from "../../redux/actions/modal";
 import BigButton from "../common/bigButton/BigButton";
 import {
-    faPlus,
-    faUniversity,
-    faUsers,
-  } from "@fortawesome/free-solid-svg-icons";
+  faPlus,
+  faUniversity,
+  faUsers
+} from "@fortawesome/free-solid-svg-icons";
 
 class StudentCards extends React.Component {
   onGroupClick = id => this.props.history.push(`/dashboard/students/${id}`);
 
   render() {
-    const {
-      fetchAll,
-      openStudentModal
-    } = this.props;
+    const { fetchAll, openStudentModal } = this.props;
     return (
       <div className={style.container}>
         <div className={style.head}>
@@ -33,11 +30,13 @@ class StudentCards extends React.Component {
           />
         </div>
         <div className={style.content}>
-          <Collapse icon={faUsers} title="Мои студенты">
-          </Collapse>
+          <Collapse icon={faUsers} title="Мои студенты"></Collapse>
 
-          <Collapse icon={faUniversity} fetch={fetchAll} title="Факультеты">
-           </Collapse>
+          <Collapse
+            icon={faUniversity}
+            fetch={fetchAll}
+            title="Факультеты"
+          ></Collapse>
         </div>
       </div>
     );

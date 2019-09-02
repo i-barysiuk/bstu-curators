@@ -6,7 +6,6 @@ import { faPen, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { Row, Col } from "antd";
 
 import Timeline from "../../../../components/timeline/Timeline";
-import GroupParams from "../../../../components/groupParams/GroupParams";
 import EventList from "../../../../components/eventList/EventList";
 import HealthTemp from "../../../../components/healthTemp/HealthTemp";
 import HealthMap from "../../../../components/healthMap/HealthMap";
@@ -14,43 +13,25 @@ import HealthMap from "../../../../components/healthMap/HealthMap";
 import AveragePoint from "../../../../components/averagePoint/AveragePoint";
 import AverageMap from "../../../../components/averageMap/AverageMap";
 
-import StudentTable from "../../../../components/studentTable/StudentTable";
-import { toRomane } from "../../../../helper";
-
-export default class GroupProfile extends React.Component {
-  componentDidMount() {
-    this.activeGroupRequest();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.match.params.id !== this.props.match.params.id) {
-      this.activeGroupRequest();
-    }
-  }
-
-  activeGroupRequest = () => {
-    const { id } = this.props.match.params;
-    this.props.fetchGroup({ id });
-  };
-
+export default class StudentProfile extends React.Component {
   render() {
-    const {
-      gender,
-      community,
-      family,
-      geography,
-      living,
-      social,
-      others,
-      user
-    } = this.props.group;
     return (
       <div className={style.container}>
         <PageHead
-          title={this.props.group.fullName}
-          course={" - " + toRomane(this.props.group.course)}
+          title={
+            // this.props.student.last_name +
+            // " " +
+            // this.props.student.first_name +
+            // " " +
+            // this.props.student.f_name
+            "Cергиевич Андрей Викторович"
+          }
           subtitle={
-            this.props.group.department + " / " + this.props.group.cathedra
+            // "Номер зачетки: " +
+            // this.props.student.studentId +
+            // " / " +
+            // this.props.student.faculty
+            "Номер зачетки: 1543232364 / ФЭИС / МС-3"
           }
         >
           <BigButton icon={faPen} />
@@ -59,30 +40,11 @@ export default class GroupProfile extends React.Component {
 
         <Row>
           <Col>
-            <Timeline
-              data={
-                this.props.group.studyProcess &&
-                this.props.group.studyProcess[this.props.group.course]
-              }
-            />
+            <Timeline data={[]} />
           </Col>
         </Row>
 
         <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
-          <Col span={14}>
-            <GroupParams
-              data={{
-                gender,
-                community,
-                family,
-                geography,
-                living,
-                social,
-                others,
-                user
-              }}
-            />
-          </Col>
           <Col span={10}>
             <EventList />
           </Col>
@@ -103,12 +65,6 @@ export default class GroupProfile extends React.Component {
           </Col>
           <Col span={8}>
             <AveragePoint />
-          </Col>
-        </Row>
-
-        <Row style={{ marginBottom: "20px" }}>
-          <Col>
-            <StudentTable />
           </Col>
         </Row>
       </div>

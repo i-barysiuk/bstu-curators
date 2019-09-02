@@ -15,8 +15,13 @@ class Groups {
     return response.data;
   }
 
-  async getActiveGroup({ id }) {
+  async getGroup({ id }) {
     const response = await api(`/groups/${id}`);
+    return response.data;
+  }
+
+  async editGroup({ data, id }) {
+    const response = await api(`/groups/${id}`, "PUT", data);
     return response.data;
   }
 
@@ -34,6 +39,14 @@ class Groups {
     const response = await api(`/groups/${id}/remove_favorite`, "PUT");
     return response.data;
   }
+  async addArchiveGroups({ id }) {
+    const response = await api(`/groups/archive/${id}/add_archive`, "PUT");
+    return response.data;
+}
+  async removeArchiveGroups({ id }) {
+    const response = await api(`/groups/archive/${id}/remove_archive`, "PUT");
+    return response.data;
+}
 }
 
 export default new Groups();
