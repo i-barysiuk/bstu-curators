@@ -23,7 +23,7 @@ import {
   pushGroupToArchive,
   editGroupSucces
 } from "../actions/groups";
-import { openModal } from "../actions/modal";
+import { openGroupModal } from "../actions/modal";
 import GroupsService from "../../services/GroupsService";
 
 function* fetchGroups() {
@@ -121,7 +121,7 @@ function* editGroup({ payload }) {
     const group = yield call(() => GroupsService.getGroup({ id: payload }));
     console.log(group);
     yield put(editGroupSucces({ group }));
-    yield put(openModal());
+    yield put(openGroupModal());
   } catch (e) {
     console.log(e);
     yield put(fetchActiveGroupFailed());
