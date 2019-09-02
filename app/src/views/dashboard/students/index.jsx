@@ -9,34 +9,24 @@ import StudentProfile from "./profile/StudentProfile";
 
 class StudentLayout extends React.Component {
   render() {
-    const { students, history } = this.props;
     return (
       <div style={{ display: "flex", height: "100%", flexGrow: 1 }}>
-        <StudentMenu students={students} history={history} />
+        <StudentMenu />
         <Switch>
           <Route
             exec
             path="/dashboard/students"
             render={props => (
-              <PageWrapper {...props} title="Cтуденты" component={Students} />
-            )}
-          />
-
-          <Route
-            exec
-            path="/dashboard/students/:id"
-            render={props => (
               <PageWrapper
                 {...props}
-                title="Cтудент"
+                title="Cтуденты"
                 component={StudentProfile}
               />
             )}
           />
-
           <Route
             path="/dashboard/students/*"
-            exact
+            // exact
             render={props => (
               <PageWrapper {...props} title="Упс!" component={NotFound} />
             )}

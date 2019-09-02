@@ -15,7 +15,7 @@ import AverageMap from "../../../../components/averageMap/AverageMap";
 
 import { toRomane } from "../../../../helper";
 
-export default class GroupProfile extends React.Component {
+export default class StudentProfile extends React.Component {
   render() {
     return (
       <div className={style.container}>
