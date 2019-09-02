@@ -15,6 +15,7 @@ import AveragePoint from "../../../../components/averagePoint/AveragePoint";
 import AverageMap from "../../../../components/averageMap/AverageMap";
 
 import StudentTable from "../../../../components/studentTable/StudentTable";
+import { toRomane } from "../../../../helper";
 
 export default class GroupProfile extends React.Component {
   componentDidMount() {
@@ -47,6 +48,7 @@ export default class GroupProfile extends React.Component {
       <div className={style.container}>
         <PageHead
           title={this.props.group.fullName}
+          course={" - " + toRomane(this.props.group.course)}
           subtitle={
             this.props.group.department + " / " + this.props.group.cathedra
           }
