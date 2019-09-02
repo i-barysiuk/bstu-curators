@@ -1,8 +1,9 @@
 import React from "react";
+import Students from "../dashboard/students/profile/StudentProfile";
 
 class Sandbox extends React.Component {
   render() {
-    return 111;
+    return <Students />;
   }
 }
 

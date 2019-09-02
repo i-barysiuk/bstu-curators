@@ -5,20 +5,14 @@ import NotFound from "../../404/404";
 import PageWrapper from "../../../containers/pageWrapper/PageWrapper";
 import StudentMenu from "../../../components/studentsMenu/studentMenu";
 import Students from "./home/students";
+import StudentProfile from "./profile/StudentProfile";
 
 class StudentLayout extends React.Component {
-
   render() {
-    const {
-      students,
-      history
-    } = this.props;
+    const { students, history } = this.props;
     return (
       <div style={{ display: "flex", height: "100%", flexGrow: 1 }}>
-        <StudentMenu
-          students={students}
-          history={history}
-        />
+        <StudentMenu students={students} history={history} />
         <Switch>
           <Route
             exec
@@ -29,7 +23,19 @@ class StudentLayout extends React.Component {
           />
 
           <Route
-            path="/dashboard/groups/*"
+            exec
+            path="/dashboard/students/:id"
+            render={props => (
+              <PageWrapper
+                {...props}
+                title="Cтудент"
+                component={StudentProfile}
+              />
+            )}
+          />
+
+          <Route
+            path="/dashboard/students/*"
             exact
             render={props => (
               <PageWrapper {...props} title="Упс!" component={NotFound} />
@@ -41,6 +47,4 @@ class StudentLayout extends React.Component {
   }
 }
 
-
-export default connect(
-)(StudentLayout);
+export default connect()(StudentLayout);
