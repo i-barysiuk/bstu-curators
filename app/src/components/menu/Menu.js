@@ -13,6 +13,7 @@ import {
   faIdCard
 } from "@fortawesome/free-solid-svg-icons";
 
+import logoP from "../../assets/images/logos/avatarMax.png";
 import logoK from "../../assets/images/logos/curators.png";
 import { Popover, Badge, Avatar, Button } from "antd";
 
@@ -79,9 +80,9 @@ class Menu extends React.Component {
             placement="rightBottom"
             trigger="click"
             content={<Button onClick={() => this.props.logout()}>Выход</Button>}
-            title="Title"
+            title="Профиль"
           >
-            <Avatar icon="user" className={style.avatar} />
+            <Avatar src={logoP} className={style.avatar} />
           </Popover>
         </div>
       </div>
