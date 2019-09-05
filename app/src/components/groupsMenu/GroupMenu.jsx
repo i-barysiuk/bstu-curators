@@ -12,12 +12,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Input, Icon } from "antd";
 import Collapse from "../common/collapse/Collapse";
-import { openModal } from "../../redux/actions/modal";
+import { openGroupModal } from "../../redux/actions/modal";
 import {
   addGroupToFavouriteRequest,
   removeGroupFromFavouriteRequest,
   addGroupToArchiveRequest,
-  removeGroupFromArchiveRequest
+  removeGroupFromArchiveRequest,
+  editGroupRequest
 } from "../../redux/actions/groups";
 
 class GroupCard extends React.Component {
@@ -72,14 +73,15 @@ class GroupCard extends React.Component {
       groups: { favorite, my, all, archive },
       fetchAll,
       fetchArchive,
-      openModal
+      openGroupModal,
+      editGroupRequest
     } = this.props;
     return (
       <div className={style.container}>
         <div className={style.head}>
           <div className={style.headerRow}>
             <span className={style.header}>Группы</span>
-            <BigButton icon={faPlus} onClick={openModal} primary />
+            <BigButton icon={faPlus} onClick={openGroupModal} primary />
           </div>
 
           <Input
@@ -97,8 +99,9 @@ class GroupCard extends React.Component {
                     key={group.id}
                     group={group.name}
                     onStarClick={() => this.removeFavorite(group)}
+                    onEditClick={() => editGroupRequest({ id: group.id })}
                     onClick={() => this.onGroupClick(group.id)}
-                    onArchiveClick  = {() => this.onArchiveClick(group)}
+                    onArchiveClick={() => this.addToArchive(group)}
                     course={group.course}
                   />
                 ))
@@ -111,10 +114,11 @@ class GroupCard extends React.Component {
                   <GroupsCard
                     favorite={this.isFavorite(group.id)}
                     onStarClick={() => this.onStarClick(group)}
+                    onEditClick={() => editGroupRequest({ id: group.id })}
                     key={group.id}
                     group={group.name}
                     onClick={() => this.onGroupClick(group.id)}
-                    onArchiveClick = {() => this.onArchiveClick(group)}
+                    onArchiveClick={() => this.addToArchive(group)}
                     course={group.course}
                   />
                 ))
@@ -127,7 +131,8 @@ class GroupCard extends React.Component {
                 {all[keyName].map(group => (
                   <GroupsCard
                     onStarClick={() => this.onStarClick(group)}
-                    onArchiveClick = {() => this.onArchiveClick(group)}
+                    onArchiveClick={() => this.addToArchive(group)}
+                    onEditClick={() => editGroupRequest({ id: group.id })}
                     key={group.name}
                     onClick={() => this.onGroupClick(group.id)}
                     group={group.name}
@@ -143,8 +148,9 @@ class GroupCard extends React.Component {
               <Collapse icon={faHeart} key={keyName} title={keyName}>
                 {archive[keyName].map(group => (
                   <GroupsCard
-                    onArchiveClick = {() => this.removeFromArchive(group)}
+                    onArchiveClick={() => this.removeFromArchive(group)}
                     onStarClick={() => this.onStarClick(group)}
+                    onEditClick={() => editGroupRequest({ id: group.id })}
                     key={group.name}
                     onClick={() => this.onGroupClick(group.id)}
                     group={group.name}
@@ -161,11 +167,12 @@ class GroupCard extends React.Component {
 }
 
 const mapDispatchToProps = {
-  openModal,
+  openGroupModal,
   addGroupToFavouriteRequest,
   removeGroupFromFavouriteRequest,
   addGroupToArchiveRequest,
-  removeGroupFromArchiveRequest
+  removeGroupFromArchiveRequest,
+  editGroupRequest
 };
 
 export default connect(

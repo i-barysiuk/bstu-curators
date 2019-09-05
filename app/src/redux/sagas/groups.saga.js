@@ -7,7 +7,8 @@ import {
   GROUPS__FAVORITE_ADD_REQUEST,
   GROUPS__FAVORITE_REMOVE_REQUEST,
   GROUPS__ARCHIVE_ADD_REQUEST,
-  GROUPS__ARCHIVE_REMOVE_REQUEST
+  GROUPS__ARCHIVE_REMOVE_REQUEST,
+  GROUPS__EDIT_REQUEST
 } from "../actionsTypes/groups";
 import {
   fetchGroupsSuccess,
@@ -19,8 +20,10 @@ import {
   pushGroupToFavourite,
   popGroupFromFavourite,
   popGroupFromArchive,
-  pushGroupToArchive
+  pushGroupToArchive,
+  editGroupSucces
 } from "../actions/groups";
+import { openGroupModal } from "../actions/modal";
 import GroupsService from "../../services/GroupsService";
 
 function* fetchGroups() {
@@ -55,9 +58,7 @@ function* fetchArchiveGroups() {
 
 function* fetchActiveGroup({ payload }) {
   try {
-    const group = yield call(() =>
-      GroupsService.getActiveGroup({ id: payload })
-    );
+    const group = yield call(() => GroupsService.getGroup({ id: payload }));
     yield put(fetchActiveGroupSuccess({ group }));
   } catch (e) {
     console.log(e);
@@ -115,6 +116,18 @@ function* removeArchiveGroup({ payload }) {
   }
 }
 
+function* editGroup({ payload }) {
+  try {
+    const group = yield call(() => GroupsService.getGroup({ id: payload }));
+    console.log(group);
+    yield put(editGroupSucces({ group }));
+    yield put(openGroupModal());
+  } catch (e) {
+    console.log(e);
+    yield put(fetchActiveGroupFailed());
+  }
+}
+
 export default function*() {
   yield takeLatest(GROUPS_REQUEST, fetchGroups);
   yield takeLatest(GROUPS__ACTIVE_REQUEST, fetchActiveGroup);
@@ -124,5 +137,5 @@ export default function*() {
   yield takeLatest(GROUPS__FAVORITE_REMOVE_REQUEST, removeFavoriteGroup);
   yield takeLatest(GROUPS__ARCHIVE_ADD_REQUEST, addArchiveGroup);
   yield takeLatest(GROUPS__ARCHIVE_REMOVE_REQUEST, removeArchiveGroup);
-  
+  yield takeLatest(GROUPS__EDIT_REQUEST, editGroup);
 }

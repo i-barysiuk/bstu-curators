@@ -16,7 +16,10 @@ import {
   GROUPS__FAVORITE_ADD_REQUEST,
   GROUPS__FAVORITE_ADD_SUCCESS,
   GROUPS__FAVORITE_REMOVE_REQUEST,
-  GROUPS__FAVORITE_REMOVE_SUCCESS
+  GROUPS__FAVORITE_REMOVE_SUCCESS,
+  GROUPS__EDIT_REQUEST,
+  GROUPS__EDIT_SUCCESS,
+  GROUPS__EDIT_END
 } from "../actionsTypes/groups";
 
 export const fetchMyAndFavGroups = () => ({
@@ -102,4 +105,17 @@ export const removeGroupFromArchiveRequest = ({ group }) => ({
 export const popGroupFromArchive = ({ archive }) => ({
   type: GROUPS__ARCHIVE_REMOVE_SUCCESS,
   payload: archive
+});
+export const editGroupRequest = ({ id }) => ({
+  type: GROUPS__EDIT_REQUEST,
+  payload: id
+});
+
+export const editGroupSucces = ({ group }) => ({
+  type: GROUPS__EDIT_SUCCESS,
+  payload: group
+});
+
+export const editGroupEnd = () => ({
+  type: GROUPS__EDIT_END
 });

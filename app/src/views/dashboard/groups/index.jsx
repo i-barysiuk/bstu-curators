@@ -35,9 +35,15 @@ class GroupsLayout extends React.Component {
           fetchArchive={fetchArchiveGroups}
           history={history}
         />
+        <Route
+          exact
+          path="/dashboard/groups"
+          render={props => (
+            <PageWrapper {...props} title="Группы" component={Groups} />
+          )}
+        />
         <Switch>
           <Route
-            exec
             path="/dashboard/groups/:id/students"
             render={props => (
               <PageWrapper
@@ -60,16 +66,7 @@ class GroupsLayout extends React.Component {
             )}
           />
           <Route
-            exec
-            path="/dashboard/groups"
-            render={props => (
-              <PageWrapper {...props} title="Группы" component={Groups} />
-            )}
-          />
-
-          <Route
             path="/dashboard/groups/*"
-            exact
             render={props => (
               <PageWrapper {...props} title="Упс!" component={NotFound} />
             )}

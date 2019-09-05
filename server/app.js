@@ -10,6 +10,7 @@ const onlineUpdate = require("./middlewares/online");
 const AuthController = require("./controllers/auth/AuthController");
 const UserController = require("./controllers/user/UserController");
 const GroupController = require("./controllers/group/GroupController");
+const EventController = require("./controllers/event/EventController");
 
 const UserService = require("./services/UserService");
 
@@ -41,5 +42,6 @@ app.get("/", (req, res) => {
 app.use("/api/auth", AuthController);
 app.use("/api/users", isAuth, UserController);
 app.use("/api/groups", isAuth, GroupController);
+app.use("/api/events", isAuth, EventController);
 
 module.exports = app;
