@@ -705,6 +705,7 @@ class StudentForm extends React.Component {
           >
           <Panel key="tableIsVisible">
           <Table
+          className={style.table}
           components={components}
           dataSource={representatives}
           columns={columns}
