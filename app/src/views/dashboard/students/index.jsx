@@ -6,11 +6,12 @@ import PageWrapper from "../../../containers/pageWrapper/PageWrapper";
 import StudentMenu from "../../../components/studentsMenu/studentMenu";
 import Students from "./home/students";
 import StudentProfile from "./profile/StudentProfile";
+import style from "./style.module.scss";
 
 class StudentLayout extends React.Component {
   render() {
     return (
-      <div style={{ display: "flex", height: "100%", flexGrow: 1 }}>
+      <div className={style.layout}>
         <StudentMenu />
         <Route
           exact

@@ -26,3 +26,13 @@
 {
     font-size: 60px;
 }
+
+@media (max-width: 700px){
+    .butt
+{
+    width: 32vw;
+    height: 32vw;
+    max-width: 300px;
+    max-height: 300px;
+}
+}

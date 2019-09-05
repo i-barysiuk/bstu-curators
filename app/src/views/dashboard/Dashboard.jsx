@@ -7,7 +7,7 @@ import NotFound from "../404/404";
 import PageWrapper from "../../containers/pageWrapper/PageWrapper";
 import GroupLayout from "./groups";
 import StudentLayout from "./students";
-
+import style from "./style.module.scss";
 
 import GroupModal from "../../components/groupModal/GroupModal";
 import EventModal from "../../components/eventModal/EventModal";
@@ -16,7 +16,7 @@ import StudentModal from "../../components/studentModal/StudentModal"
 class Dashboard extends React.Component {
   render() {
     return (
-      <div style={{ display: "flex", height: "100%", flexGrow: 1 }}>
+      <div className={style.dashboard}>
         <Menu /> 
         <Switch>
           <Route

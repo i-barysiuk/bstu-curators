@@ -66,7 +66,7 @@ class Menu extends React.Component {
 
         <div className={style.downMenu}>
           <Popover
-            placement="rightBottom"
+            placement={document.body.clientWidth > 700 ? "rightBottom" : "bottomRight"}
             trigger="click"
             content="button"
             title="Title"
@@ -76,7 +76,7 @@ class Menu extends React.Component {
             </Badge>
           </Popover>
           <Popover
-            placement="rightBottom"
+            placement={document.body.clientWidth > 700 ? "rightBottom" : "bottomRight"}
             trigger="click"
             content={<Button onClick={() => this.props.logout()}>Выход</Button>}
             title="Title"

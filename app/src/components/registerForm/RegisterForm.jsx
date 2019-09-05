@@ -131,7 +131,7 @@ class RegistrationForm extends React.Component {
     return (
       <div className={style.container + " " + this.props.className}>
         <Form onSubmit={this.handleSubmit}>
-        <Steps current={currentStep} style={{paddingBottom:20}}>
+        <Steps current={currentStep} className={style.steps}>
             <Step /><Step /><Step />
         </Steps>
           <Collapse 

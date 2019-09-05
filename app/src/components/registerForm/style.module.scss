@@ -1,3 +1,7 @@
+.steps{
+  padding-bottom: 20px;
+}
+
 .stepsContent {
   margin-top: 50px;
 }
@@ -16,8 +20,8 @@
     }
 }
 
-@media screen and (max-width: 700px) {
+@media (max-width: 700px) {
   .steps {
-    display: none !important;
+    display: none;
   }
 }
