@@ -13,6 +13,7 @@ import {
   fetchAllGroups,
   fetchArchiveGroups
 } from "../../../redux/actions/groups";
+import style from "./style.module.scss";
 
 class GroupsLayout extends React.Component {
   componentDidMount() {
@@ -28,7 +29,7 @@ class GroupsLayout extends React.Component {
       history
     } = this.props;
     return (
-      <div style={{ display: "flex", height: "100%", flexGrow: 1 }}>
+      <div className={style.layout}>
         <GroupsMenu
           groups={groups}
           fetchAll={fetchAllGroups}
