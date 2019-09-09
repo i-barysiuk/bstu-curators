@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { logout } from "../../redux/actions/auth";
+import { ImageUpload } from "../uploadPicture/UploadPicture";
 import style from "./style.module.scss";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,7 +18,15 @@ import logoP from "../../assets/images/logos/avatarMax.png";
 import logoK from "../../assets/images/logos/curators.png";
 import { Popover, Badge, Avatar, Button } from "antd";
 
+const content = (
+  <div>
+    <p><Button onClick={() => this.props.ImageUpload()}>Сменить аватар</Button></p>
+    <p><Button onClick={() => this.props.logout()}>Выход</Button></p>
+  </div>
+);
+
 class Menu extends React.Component {
+  
   render() {
     return (
       <div>
@@ -79,7 +88,7 @@ class Menu extends React.Component {
           <Popover
             placement="rightBottom"
             trigger="click"
-            content={<Button onClick={() => this.props.logout()}>Выход</Button>}
+            content={content}
             title="Профиль"
           >
             <Avatar src={logoP} className={style.avatar} />
@@ -92,7 +101,7 @@ class Menu extends React.Component {
 }
 const mapStateToProps = ({ auth }) => ({ auth });
 const mapDispatchToProps = {
-  logout
+  logout,
 };
 
 export default connect(
