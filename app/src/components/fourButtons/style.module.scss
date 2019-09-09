@@ -16,6 +16,10 @@
 
 .butt
 {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
     width: 20vw;
     height: 20vw;
     max-width: 300px;
@@ -27,12 +31,53 @@
     font-size: 60px;
 }
 
+.text
+{
+    font-size: 25px;
+    padding-bottom: 10px;
+}
+
 @media (max-width: 700px){
     .butt
-{
-    width: 32vw;
-    height: 32vw;
-    max-width: 300px;
-    max-height: 300px;
+    {
+        width: 32vw;
+        height: 32vw;
+        max-width: 300px;
+        max-height: 300px;
+    }
+    .icons
+    {
+        font-size: 50px;
+    }
+    .text
+    {
+    font-size: 20px;
+    padding-bottom: 10px;
+    }
 }
+
+@media (max-height: 900px)
+{
+    .container
+    {
+        padding-top: 5vh;
+    }
+    .butt
+    {  
+        max-width: 200px;
+        max-height: 200px;
+    }
+}
+
+@media (max-height: 500px)
+{
+    .container
+    {
+        padding-top: 3vh;
+    }
+    .butt
+    {  
+        max-width: 150px;
+        max-height: 150px;
+    }
 }
