@@ -18,16 +18,16 @@ import logoP from "../../assets/images/logos/avatarMax.png";
 import logoK from "../../assets/images/logos/curators.png";
 import { Popover, Badge, Avatar, Button } from "antd";
 
-const content = (
-  <div>
-    <p><Button onClick={() => this.props.ImageUpload()}>Сменить аватар</Button></p>
-    <p><Button onClick={() => this.props.logout()}>Выход</Button></p>
-  </div>
-);
 
 class Menu extends React.Component {
   
-  render() {
+  render() 
+  { const content = (
+    <div>
+      <p><Button onClick={() => this.props.ImageUpload()}>Сменить аватар</Button></p>
+      <p><Button onClick={() => this.props.logout()}>Выход</Button></p>
+    </div>
+  );
     return (
       <div>
       <div className={style.container}>
