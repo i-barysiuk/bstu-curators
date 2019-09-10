@@ -13,7 +13,7 @@ import {
 function FourButtons()  {
     return (
         <div className={style.container} >
-          <Row gutter={100} className={style.firstRow}>
+          <Row gutter={100} className={style.firstRow + ' ' + style.paddingSet}>
             <Col span={12}>
               <NavLink to="/dashboard/groups">
                 <Button 
@@ -34,7 +34,7 @@ function FourButtons()  {
             </Col>
           </Row>
           
-          <Row gutter={100}>
+          <Row gutter={100} className={style.paddingSet}>
             <Col span={12}>
               <NavLink to="/dashboard/events">
                 <Button 
