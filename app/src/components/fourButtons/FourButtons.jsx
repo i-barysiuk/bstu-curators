@@ -19,6 +19,7 @@ function FourButtons()  {
                 <Button 
                 type="primary" 
                 className={style.butt}>
+                  <div className={style.text}>Группы</div>
                   <FontAwesomeIcon icon={faUsers} className={style.icons} />  
                 </Button>
               </NavLink>
@@ -28,6 +29,7 @@ function FourButtons()  {
                 <Button 
                 type="primary" 
                 className={style.butt}>
+                  <div className={style.text}>Студенты</div>
                   <FontAwesomeIcon icon={faIdCard} className={style.icons} />    
                 </Button>
               </NavLink>
@@ -40,6 +42,7 @@ function FourButtons()  {
                 <Button 
                 type="primary" 
                 className={style.butt}>
+                  <div className={style.text}>События</div>
                   <FontAwesomeIcon icon={faCalendarAlt} className={style.icons} />  
                 </Button>
               </NavLink>
@@ -49,6 +52,7 @@ function FourButtons()  {
                 <Button 
                 type="primary" 
                 className={style.butt}>
+                  <div className={style.text}>Отчеты</div>
                   <FontAwesomeIcon icon={faFileAlt} className={style.icons} />  
                 </Button>
               </NavLink>

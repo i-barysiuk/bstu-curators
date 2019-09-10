@@ -10,6 +10,7 @@ import {
   Col,
   } from "antd";
 import { Pie } from "react-chartjs-2";
+import logoP from "../../assets/images/logos/avatarMax.png";
 
 const { Panel } = Collapse;
 
@@ -74,7 +75,7 @@ export default ({ data }) => {
       buttons={<BigButton icon={faPen} onClick={() => {}} />}
     >
       <div className={style.curator}>
-        <Avatar size={64}>{curatorInitials}</Avatar>
+        <Avatar size={64} src={logoP} >{curatorInitials}</Avatar>
         <div>
           {curatorName}
           <br /> <span>{data.user && data.user.department}</span>

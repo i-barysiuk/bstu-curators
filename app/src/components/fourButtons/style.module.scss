@@ -15,6 +15,10 @@
 
 .butt
 {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
     width: 20vw;
     height: 20vw;
     max-width: 300px;
@@ -26,16 +30,30 @@
     font-size: 60px;
 }
 
-@media (max-width: 700px){
-    .butt
+.text
 {
-    width: 32vw;
-    height: 32vw;
-    max-width: 300px;
-    max-height: 300px;
+    font-size: 25px;
+    padding-bottom: 10px;
 }
 
-.paddingSet{
+@media (max-width: 700px){
+    .butt
+    {
+        width: 32vw;
+        height: 32vw;
+        max-width: 300px;
+        max-height: 300px;
+    }
+    .icons
+    {
+        font-size: 50px;
+    }
+    .text
+    {
+    font-size: 20px;
+    padding-bottom: 10px;
+    }
+  .paddingSet{
     >div:first-of-type{
         padding-left: 35px !important; 
         padding-right: 35px !important;
@@ -45,4 +63,30 @@
         padding-right: 0 !important;
     }
 }
+}
+
+@media (max-height: 900px)
+{
+    .container
+    {
+        padding-top: 5vh;
+    }
+    .butt
+    {  
+        max-width: 200px;
+        max-height: 200px;
+    }
+}
+
+@media (max-height: 500px)
+{
+    .container
+    {
+        padding-top: 3vh;
+    }
+    .butt
+    {  
+        max-width: 150px;
+        max-height: 150px;
+    }
 }
