@@ -73,7 +73,7 @@ export default class GroupProfile extends React.Component {
         </Row>
 
         <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
-          <Col span={this.mobile() ? 14 : 24}>
+          <Col span={this.mobile() ? 14 : 24} className={style.margin}>
             <GroupParams
               data={{
                 gender,
