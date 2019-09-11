@@ -33,10 +33,6 @@ export default class GroupProfile extends React.Component {
     this.props.fetchGroup({ id });
   };
 
-  mobile = () => {
-    return document.body.clientWidth > 700;
-  }
-
   render() {
     const {
       gender,
@@ -73,7 +69,7 @@ export default class GroupProfile extends React.Component {
         </Row>
 
         <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
-          <Col span={this.mobile() ? 14 : 24} className={style.margin}>
+          <Col sm={14} xs={24} className={style.margin}>
             <GroupParams
               data={{
                 gender,
@@ -87,13 +83,13 @@ export default class GroupProfile extends React.Component {
               }}
             />
           </Col>
-          <Col span={this.mobile() ? 10 : 24}>
+          <Col sm={10} xs={24}>
             <EventList />
           </Col>
         </Row>
 
         <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
-          <Col span={this.mobile() ? 8 : 24}>
+          <Col sm={8} xs={24}>
             <HealthTemp />
           </Col>
           <Col span={16} className={style.mobile}>
@@ -102,10 +98,10 @@ export default class GroupProfile extends React.Component {
         </Row>
 
         <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
-          <Col span={16} className={style.mobile}>
+          <Col sm={16} className={style.mobile}>
             <AverageMap />
           </Col>
-          <Col span={this.mobile() ? 8 : 24}>
+          <Col sm={8} xs={24}>
             <AveragePoint />
           </Col>
         </Row>

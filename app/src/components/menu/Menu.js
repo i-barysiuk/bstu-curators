@@ -18,9 +18,6 @@ import logoK from "../../assets/images/logos/curators.png";
 import { Popover, Badge, Avatar, Button } from "antd";
 
 class Menu extends React.Component {
-  mobile(){
-    return document.body.clientWidth > 700;
-  }
   render() {
     return (
       <div>
@@ -70,7 +67,7 @@ class Menu extends React.Component {
 
         <div className={style.downMenu}>
           <Popover
-            placement={this.mobile() ? "rightBottom" : "bottomRight"}
+            placement="rightBottom"
             trigger="click"
             content="button"
             title="Title"
@@ -80,7 +77,7 @@ class Menu extends React.Component {
             </Badge>
           </Popover>
           <Popover
-            placement={this.mobile() ? "rightBottom" : "bottomRight"}
+            placement="rightBottom"
             trigger="click"
             content={<Button onClick={() => this.props.logout()}>Выход</Button>}
             title="Профиль"
