@@ -245,7 +245,7 @@ class GroupForm extends React.Component {
         className={style.modal}
         destroyOnClose={true}
         maskClosable={false}
-        onCancel={this.onClose()}
+        onCancel={this.onClose}
         visible={isOpen}
         okText={"Сохранить"}
         cancelText={"Отмена"}
