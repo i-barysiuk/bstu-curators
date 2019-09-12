@@ -133,7 +133,6 @@ class StudentForm extends React.Component {
     super(props);
     this.state = {
       current: 0,
-      validStatus: false,
       form: {
         representatives: []
       },
@@ -174,9 +173,11 @@ class StudentForm extends React.Component {
     ];
   }
 
-  clearTable = () => {
-    this.setState({ form: { representatives: []}, count: 0, current: 0, validStatus: true });
-    this.props.closeStudentModal();
+  onClose = () => {
+    const { closeStudentModal, form:{ resetFields } } = this.props
+    this.setState({ form: { representatives: []}, count: 0, current: 0 })
+    closeStudentModal()
+    resetFields()
   }
 
   handleDelete = key => {
@@ -219,7 +220,7 @@ class StudentForm extends React.Component {
     } catch (e) {
       console.log(e);
     }
-    this.clearTable();
+    this.onClose();
   });
 };
 
@@ -276,7 +277,7 @@ class StudentForm extends React.Component {
      } = this.state;
 
     const {
-      form: { getFieldDecorator, getFieldError },
+      form: { getFieldDecorator, getFieldError, resetFields },
       isOpen,
       closeStudentModal
     } = this.props;
@@ -290,11 +291,6 @@ class StudentForm extends React.Component {
       'Хобби',
       'Контакты'
     ];
-
-    if(this.state.validStatus) {
-      this.setState({validStatus:false});
-      closeStudentModal();
-    }
 
     var validStep = [
       {
@@ -353,7 +349,7 @@ class StudentForm extends React.Component {
         maskClosable={false}
         okText={"Сохранить"}
         cancelText={"Отмена"}
-        onCancel={() => closeStudentModal()|this.clearTable()}
+        onCancel={() => this.onClose()}
         onOk={() => this.save()}
         visible={isOpen}
         zIndex={1030}

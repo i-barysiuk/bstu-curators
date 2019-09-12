@@ -23,7 +23,6 @@ import GroupsService from "../../services/GroupsService";
 import {closeGroupModal} from "../../redux/actions/modal"
 import {editGroupEnd} from "../../redux/actions/groups"
 import style from "./style.module.scss"
-import debounce from "lodash/debounce";
 import {get} from "lodash"
 
 const { Step } = Steps;
@@ -40,10 +39,8 @@ function is_valid(diff){
 class GroupForm extends React.Component {
   constructor(props) {
     super(props);
-    this.closingAfterSave=debounce(this.closingAfterSave,10);
     this.state = {
       current: 0,
-      validStatus: false,
       form: {}
     };
   }
@@ -72,14 +69,9 @@ class GroupForm extends React.Component {
       } catch (e) {
         console.log(e);
       }
-      this.setState({current: 0, validStatus: true });
+      this.onClose();
     });
   };
-
-  closingAfterSave = () => {
-    this.setState({validStatus:false});
-    this.props.closeGroupModal();
-  }
 
   normalize = value => {
     return value && value.replace(/ /g, "").trim();
@@ -142,11 +134,12 @@ class GroupForm extends React.Component {
         else callback(' ');
   }
 
-  onCancel = () => {
-    const {closeGroupModal, editGroupEnd} = this.props
+  onClose = () => {
+    const {closeGroupModal, editGroupEnd } = this.props
     closeGroupModal()
     editGroupEnd()
     this.setState({current: 0})
+    this.props.form.resetFields()
   }
 
   render() {
@@ -176,8 +169,6 @@ class GroupForm extends React.Component {
     
     //from validate
 
-    if(this.state.validStatus) this.closingAfterSave();
-
     var validStep = [
       {
         valid:
@@ -191,23 +182,29 @@ class GroupForm extends React.Component {
       {valid:getFieldError('total')},
       {
         valid:
-        getFieldError('full')
+      (  getFieldError('full')
       &&getFieldError('notfull')
       &&getFieldError('manychild')
       &&getFieldError('orphan')
+      )
+      ||getFieldError('total')
       },
       {
         valid:
-        getFieldError('local')
+      (  getFieldError('local')
       &&getFieldError('nonresident')
       &&getFieldError('foreign')
+      )
+      ||getFieldError('total')
       },
       {
         valid:
-        getFieldError('parents')
+      (  getFieldError('parents')
       &&getFieldError('relatives')
       &&getFieldError('independent')
       &&getFieldError('hostel')
+      )
+      ||getFieldError('total')
       },
       {valid:null},
       {valid:null},
