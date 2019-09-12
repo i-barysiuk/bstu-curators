@@ -4,14 +4,8 @@
   overflow: auto;
 }
 
-@media (max-width: 768px){
+@media (max-width: 700px){
   .container {
     overflow: visible;
-  }
-  .mobile{
-    display: none;
-  }
-  .margin{
-    margin-bottom: 20px;
   }
 }

@@ -1,0 +1,12 @@
+.dashboard{
+    display: flex;
+    height: 100%;
+    flex-grow: 1; 
+    flex-direction: row;
+}
+
+@media (max-width: 768px){
+    .dashboard{
+    flex-direction: column;
+    }
+}

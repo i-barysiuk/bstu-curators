@@ -63,3 +63,43 @@
   width: 16px !important;
   color: $color-icons;
 }
+
+@media (max-width: 768px){
+  .container {
+    flex-direction: row;
+    width: 100%;
+    height: $width-menu;
+  }
+
+  .upMenu,
+  .middleMenu,
+  .downMenu {
+  flex-direction: row;
+  }
+
+.button {
+  margin: 20px;
+  }
+
+.avatar,
+.bell {
+  margin: 5px !important;
+  }
+
+.logo {
+  margin-bottom: 20px;
+  margin-left: 5px;
+  }
+}
+
+@media (max-width: 550px){
+  .button {
+    margin: 10px;
+    }
+}
+
+@media (max-width: 440px){
+  .button {
+    margin: 0;
+    }
+}

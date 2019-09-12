@@ -2,7 +2,7 @@ import React from "react";
 import style from "./style.module.scss";
 import PageHead from "../../../../components/pageHead/PageHead";
 import BigButton from "../../../../components/common/bigButton/BigButton";
-import { faPen, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faEllipsisH, faBorderNone } from "@fortawesome/free-solid-svg-icons";
 import { Row, Col } from "antd";
 
 import Timeline from "../../../../components/timeline/Timeline";
@@ -15,6 +15,7 @@ import AveragePoint from "../../../../components/averagePoint/AveragePoint";
 import AverageMap from "../../../../components/averageMap/AverageMap";
 
 import StudentTable from "../../../../components/studentTable/StudentTable";
+import { toRomane } from "../../../../helper";
 
 export default class GroupProfile extends React.Component {
   componentDidMount() {
@@ -47,11 +48,12 @@ export default class GroupProfile extends React.Component {
       <div className={style.container}>
         <PageHead
           title={this.props.group.fullName}
+          course={" - " + toRomane(this.props.group.course)}
           subtitle={
             this.props.group.department + " / " + this.props.group.cathedra
           }
         >
-          <BigButton icon={faPen} />
+          <BigButton icon={faPen}/>
           <BigButton icon={faEllipsisH} />
         </PageHead>
 
@@ -67,7 +69,7 @@ export default class GroupProfile extends React.Component {
         </Row>
 
         <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
-          <Col span={14}>
+          <Col sm={14} xs={24} className={style.margin}>
             <GroupParams
               data={{
                 gender,
@@ -81,30 +83,30 @@ export default class GroupProfile extends React.Component {
               }}
             />
           </Col>
-          <Col span={10}>
+          <Col sm={10} xs={24}>
             <EventList />
           </Col>
         </Row>
 
         <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
-          <Col span={8}>
+          <Col sm={8} xs={24}>
             <HealthTemp />
           </Col>
-          <Col span={16}>
+          <Col span={16} className={style.mobile}>
             <HealthMap />
           </Col>
         </Row>
 
         <Row type={"flex"} gutter={24} style={{ marginBottom: "20px" }}>
-          <Col span={16}>
+          <Col sm={16} className={style.mobile}>
             <AverageMap />
           </Col>
-          <Col span={8}>
+          <Col sm={8} xs={24}>
             <AveragePoint />
           </Col>
         </Row>
 
-        <Row style={{ marginBottom: "20px" }}>
+        <Row style={{ marginBottom: "20px" }} className={style.mobile}>
           <Col>
             <StudentTable groups={this.props.group.id} />
           </Col>

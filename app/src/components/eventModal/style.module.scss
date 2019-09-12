@@ -40,36 +40,6 @@
     }
 }
 
-.datePickerDD>div{
-    border-radius: 15px;
-    td{
-        div{border-radius: 15px;}
-        a{border-radius: 15px;}
-    }
-}
-
-.datePicker{
-    width: 100%;
-}
-
-.collapse{
-    border-radius: 15px;
-}
-
-.radio{
-    label:first-of-type{
-        border-radius: 15px 15px 0 15px;
-    }
-    label:last-of-type{
-        border-radius: 0 15px 15px 15px;
-    }
-}
-
-.select{
-    border-radius: 15px;
-    overflow: hidden;
-}
-
 .collapsePanel
 >div{
     border-bottom: none !important;
@@ -78,31 +48,23 @@
     }
 }
 
-.tags>div{
+.rangePicker>div{
     border-radius: 15px;
-    li{
-        border-radius: 15px !important;
+    td{
+        div{border-radius: 15px;}
+        a{border-radius: 15px;}
     }
 }
 
-.dropDown{
+.collapse{
+    border-radius: 15px;
+}
+
+.select{
     border-radius: 15px;
     overflow: hidden;
 }
 
-.alert{
-    border-radius: 15px;
-}
-
-.table>div>div{
-    >div{
-        border-radius: 15px;
-        overflow: hidden;
-    }
-    ul>li{
-        border-radius: 15px;
-        a{
-            border-radius: 15px !important;
-        }
-    }
+.organisations{
+    width:70px;
 }

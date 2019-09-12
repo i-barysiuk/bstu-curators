@@ -13,6 +13,7 @@ import {
   fetchAllGroups,
   fetchArchiveGroups
 } from "../../../redux/actions/groups";
+import style from "./style.module.scss";
 
 class GroupsLayout extends React.Component {
   componentDidMount() {
@@ -28,16 +29,22 @@ class GroupsLayout extends React.Component {
       history
     } = this.props;
     return (
-      <div style={{ display: "flex", height: "100%", flexGrow: 1 }}>
+      <div className={style.layout}>
         <GroupsMenu
           groups={groups}
           fetchAll={fetchAllGroups}
           fetchArchive={fetchArchiveGroups}
           history={history}
         />
+        <Route
+          exact
+          path="/dashboard/groups"
+          render={props => (
+            <PageWrapper {...props} title="Группы" component={Groups} />
+          )}
+        />
         <Switch>
           <Route
-            exec
             path="/dashboard/groups/:id/students"
             render={props => (
               <PageWrapper
@@ -60,16 +67,7 @@ class GroupsLayout extends React.Component {
             )}
           />
           <Route
-            exec
-            path="/dashboard/groups"
-            render={props => (
-              <PageWrapper {...props} title="Группы" component={Groups} />
-            )}
-          />
-
-          <Route
             path="/dashboard/groups/*"
-            exact
             render={props => (
               <PageWrapper {...props} title="Упс!" component={NotFound} />
             )}

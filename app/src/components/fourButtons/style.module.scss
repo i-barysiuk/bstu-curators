@@ -1,0 +1,92 @@
+.container
+{
+    display: flex;
+    flex-direction: column;
+    height: 100% ;
+    margin-left: auto ;
+    margin-right: auto ;
+    padding-top: 15vh ;
+}
+
+.firstRow
+{
+    margin-bottom: 100px ;
+}
+
+.butt
+{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    width: 20vw;
+    height: 20vw;
+    max-width: 300px;
+    max-height: 300px;
+}
+
+.icons
+{
+    font-size: 60px;
+}
+
+.text
+{
+    font-size: 25px;
+    padding-bottom: 10px;
+}
+
+@media (max-width: 768px){
+    .butt
+    {
+        width: 32vw;
+        height: 32vw;
+        max-width: 300px;
+        max-height: 300px;
+    }
+    .icons
+    {
+        font-size: 50px;
+    }
+    .text
+    {
+    font-size: 20px;
+    padding-bottom: 10px;
+    }
+  .paddingSet{
+    >div:first-of-type{
+        padding-left: 0 !important; 
+        padding-right: 35px !important;
+    }
+    >div:last-of-type{
+        padding-left: 35px !important; 
+        padding-right: 0 !important;
+    }
+}
+}
+
+@media (max-height: 900px)
+{
+    .container
+    {
+        padding-top: 5vh;
+    }
+    .butt
+    {  
+        max-width: 200px;
+        max-height: 200px;
+    }
+}
+
+@media (max-height: 500px)
+{
+    .container
+    {
+        padding-top: 3vh;
+    }
+    .butt
+    {  
+        max-width: 150px;
+        max-height: 150px;
+    }
+}

@@ -11,6 +11,7 @@ const AuthController = require("./controllers/auth/AuthController");
 const UserController = require("./controllers/user/UserController");
 const GroupController = require("./controllers/group/GroupController");
 const StudentController = require("./controllers/student/StudentController");
+const EventController = require("./controllers/event/EventController");
 
 const UserService = require("./services/UserService");
 
@@ -43,5 +44,6 @@ app.use("/api/auth", AuthController);
 app.use("/api/users", isAuth, UserController);
 app.use("/api/groups", isAuth, GroupController);
 app.use("/api/students", isAuth, StudentController);
+app.use("/api/events", isAuth, EventController);
 
 module.exports = app;
