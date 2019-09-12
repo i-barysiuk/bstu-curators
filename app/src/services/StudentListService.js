@@ -1,14 +1,12 @@
 import api from "../helper/api";
 
 class Students {
-  async getAllStudents() {
-    const response = await api("/students/");
-    return response.data;
+  getAllStudents() {
+    return api("/students/");
   }
 
-  async getStudentsGroup({ groupId }) {
-    const response = await api(`/students/${groupId}`);
-    return response.data;
+  getStudentsGroup(groupId) {
+    return api(`/students/group/${groupId}`);
   }
 }
 

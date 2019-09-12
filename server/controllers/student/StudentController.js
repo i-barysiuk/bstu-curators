@@ -18,7 +18,7 @@ router.get("/:id", (req, res) => {
 router.get("/group/:id", (req, res) => {
   StudentService.findGroup(req.params.id)
     .then(data => res.status(200).json(data))
-    .catch(err => console.error("ERROR IS " + err));
+    .catch(err => console.error(err));
 });
 
 router.post("/", (req, res) => {

@@ -106,7 +106,7 @@ export default class GroupProfile extends React.Component {
 
         <Row style={{ marginBottom: "20px" }}>
           <Col>
-            <StudentTable />
+            <StudentTable groups={this.props.group.id} />
           </Col>
         </Row>
       </div>

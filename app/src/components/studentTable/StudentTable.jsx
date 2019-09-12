@@ -12,68 +12,28 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import Students from "../../services/StudentListService";
+import "moment/locale/ru";
+const moment = require("moment");
 
-// const data = [
-//   {
-//     key: "1",
-//     first_name: "aadasdsss`",
-//     last_name: "Aleks",
-//     f_name: "amaksimkovich",
-//     sex: "woman",
-//     birthday: "15.20.2000",
-//     phone: "+375298411252",
-//     email: "sssssssss@mail.ru"
-//   },
-//   {
-//     key: "2",
-//     first_name: "bendaadaadya",
-//     last_name: "bsafokew",
-//     f_name: "bmaksimkovich",
-//     sex: "man",
-//     birthday: "15.20.2000",
-//     phone: "+375298411478",
-//     email: "eawfasf@mail.ru"
-//   },
-//   {
-//     key: "3",
-//     first_name: "cam",
-//     last_name: "cfsafsafasfasfasBrown",
-//     f_name: "cmaksimkovich",
-//     sex: "man",
-//     birthday: "15.20.2000",
-//     phone: "+375298411490",
-//     email: "eawfasf@mail.ru"
-//   }
-// ];
-var data;
 class Tables extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      data: [],
       searchText: ""
     };
   }
 
-  // getAllStudents = data => {
-  //   var all = Students.getAllStudents(data),
-  //     first_name = [],
-  //     last_name = [],
-  //     f_name = [];
-  //   // eslint-disable-next-line array-callback-return
-  //   all.map(item => {
-  //     first_name.push(item.first_name);
-  //     last_name.push(item.last_name);
-  //     f_name.push(item.f_name);
-  //   });
-  //   this.setState({
-  //     first_names: first_name,
-  //     last_names: last_name,
-  //     f_names: f_name
-  //   });
-  // };
-
-  componentDidMount() {
-    data = Students.getAllStudents();
+  componentDidUpdate(prevProps) {
+    if (prevProps.groups !== this.props.groups) {
+      Students.getStudentsGroup(this.props.groups).then(response => {
+        var tableData = response.data.map(item => {
+          item.birthday = moment(item.birthday).format("DD.MM.YYYY");
+          return { key: item.id, ...item };
+        });
+        this.setState({ data: tableData });
+      });
+    }
   }
 
   getColumnSearchProps = dataIndex => ({
@@ -140,7 +100,6 @@ class Tables extends React.Component {
   };
 
   render() {
-    console.log(data);
     const columns = [
       {
         title: "Фамилия",
@@ -262,7 +221,7 @@ class Tables extends React.Component {
           pagination={false}
           rowSelection={rowSelection}
           columns={columns}
-          dataSource={data}
+          dataSource={this.state.data}
           bordered
         />
       </Card>
