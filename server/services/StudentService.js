@@ -19,6 +19,14 @@ class StudentService {
     });
   }
 
+  findGroup(groupId) {
+    return Student.findAll({
+      where: {
+        groupId
+      }
+    });
+  }
+
   getAll() {
     return Student.findAll({});
   }

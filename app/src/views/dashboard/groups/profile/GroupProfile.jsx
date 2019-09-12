@@ -108,7 +108,7 @@ export default class GroupProfile extends React.Component {
 
         <Row style={{ marginBottom: "20px" }} className={style.mobile}>
           <Col>
-            <StudentTable />
+            <StudentTable groups={this.props.group.id} />
           </Col>
         </Row>
       </div>

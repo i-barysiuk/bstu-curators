@@ -9,6 +9,10 @@ var Student = sequelize.define(
       primaryKey: true,
       defaultValue: Sequelize.UUIDV4
     },
+    groupId: {
+      type: Sequelize.UUID,
+      allowNull: false
+    },
     createdAt: {
       type: Sequelize.DATE
     },

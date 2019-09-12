@@ -4,48 +4,45 @@ import BigButton from "../common/bigButton/BigButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Table, Button, Popover, Icon, Input } from "antd";
 import style from "./style.module.scss";
-import { faPlus, faEllipsisH, faFemale, faMale} from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faEllipsisH,
+  faFemale,
+  faMale
+} from "@fortawesome/free-solid-svg-icons";
 
-const data = [
-  {
-    key: "1",
-    first_name: "aadasdsss`",
-    last_name: "Aleks",
-    f_name: "amaksimkovich",
-    sex: "woman",
-    birthday: "15.20.2000",
-    phone: "+375298411252",
-    email: "sssssssss@mail.ru",
-  },
-  {
-    key: "2",
-    first_name: "bendaadaadya",
-    last_name: "bsafokew",
-    f_name: "bmaksimkovich",
-    sex: "man",
-    birthday: "15.20.2000",
-    phone: "+375298411478",
-    email: "eawfasf@mail.ru",
-  },
-  {
-    key: "3",
-    first_name: "cam",
-    last_name: "cfsafsafasfasfasBrown",
-    f_name: "cmaksimkovich",
-    sex: "man",
-    birthday: "15.20.2000",
-    phone: "+375298411490",
-    email: "eawfasf@mail.ru",
-  },
-];
+import Students from "../../services/StudentListService";
+import "moment/locale/ru";
+const moment = require("moment");
 
 class Tables extends React.Component {
-  state = {
-    searchText: '',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      searchText: ""
+    };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.groups !== this.props.groups) {
+      Students.getStudentsGroup(this.props.groups).then(response => {
+        var tableData = response.data.map(item => {
+          item.birthday = moment(item.birthday).format("DD.MM.YYYY");
+          return { key: item.id, ...item };
+        });
+        this.setState({ data: tableData });
+      });
+    }
+  }
 
   getColumnSearchProps = dataIndex => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters
+    }) => (
       <div style={{ padding: 8 }}>
         <Input
           ref={node => {
@@ -53,9 +50,11 @@ class Tables extends React.Component {
           }}
           placeholder={`Поиск ${dataIndex}`}
           value={selectedKeys[0]}
-          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onChange={e =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
           onPressEnter={() => this.handleSearch(selectedKeys, confirm)}
-          style={{ width: 188, marginBottom: 8, display: 'block' }}
+          style={{ width: 188, marginBottom: 8, display: "block" }}
         />
         <Button
           type="primary"
@@ -66,13 +65,17 @@ class Tables extends React.Component {
         >
           Найти
         </Button>
-        <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+        <Button
+          onClick={() => this.handleReset(clearFilters)}
+          size="small"
+          style={{ width: 90 }}
+        >
           Сбросить
         </Button>
       </div>
     ),
     filterIcon: filtered => (
-      <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />
+      <Icon type="search" style={{ color: filtered ? "#1890ff" : undefined }} />
     ),
     onFilter: (value, record) =>
       record[dataIndex]
@@ -83,7 +86,7 @@ class Tables extends React.Component {
       if (visible) {
         setTimeout(() => this.searchInput.select());
       }
-    },
+    }
   });
 
   handleSearch = (selectedKeys, confirm) => {
@@ -93,114 +96,136 @@ class Tables extends React.Component {
 
   handleReset = clearFilters => {
     clearFilters();
-    this.setState({ searchText: '' });
+    this.setState({ searchText: "" });
   };
 
   render() {
-
-const columns = [
-  {
-    title: "Фамилия",
-    dataIndex: "last_name",
-    ...this.getColumnSearchProps('по фамилии'),
-    onFilter: (value, record) => record.last_name
-     .toString()
-    .toLowerCase()
-    .includes(value.toLowerCase()),
-    sorter: (a, b) =>   {
-      if(a.last_name < b.last_name) { return -1; }
-      if(a.last_name > b.last_name) { return 1; }
-      return 0;}
-  },
-  {
-    title: "Имя",
-    dataIndex: "first_name",
-    ...this.getColumnSearchProps('по имени'),
-    onFilter: (value, record) => record.first_name
-    .toString()
-   .toLowerCase()
-   .includes(value.toLowerCase()),
-    sorter: (a, b) =>   {
-      if(a.first_name < b.first_name) { return -1; }
-      if(a.first_name > b.first_name) { return 1; }
-      return 0;}
-  },
-  {
-    title: "Отчетсво",
-    dataIndex: "f_name",
-    sorter: (a, b) => 
-   {
-    if(a.f_name < b.f_name) { return -1; }
-    if(a.f_name > b.f_name) { return 1; }
-    return 0;}
-  },
-  {
-    title: "Пол",
-    dataIndex: "sex",
-    align: "center",
-    filters: [{ text: 'Мужской', value: 'man' }, { text: 'Женский', value: 'woman' }],
-    onFilter: (value, record) => record.sex.indexOf(value) === 0,
-    render: data => {
-      if (data === "woman") {
-        return (
-        <FontAwesomeIcon icon={faFemale} 
-        className={style.woman}/>);
-      } else {
-        return <FontAwesomeIcon icon={faMale}
-        className={style.man} />   ;
+    const columns = [
+      {
+        title: "Фамилия",
+        dataIndex: "last_name",
+        ...this.getColumnSearchProps("по фамилии"),
+        onFilter: (value, record) =>
+          record.last_name
+            .toString()
+            .toLowerCase()
+            .includes(value.toLowerCase()),
+        sorter: (a, b) => {
+          if (a.last_name < b.last_name) {
+            return -1;
+          }
+          if (a.last_name > b.last_name) {
+            return 1;
+          }
+          return 0;
+        }
+      },
+      {
+        title: "Имя",
+        dataIndex: "first_name",
+        ...this.getColumnSearchProps("по имени"),
+        onFilter: (value, record) =>
+          record.first_name
+            .toString()
+            .toLowerCase()
+            .includes(value.toLowerCase()),
+        sorter: (a, b) => {
+          if (a.first_name < b.first_name) {
+            return -1;
+          }
+          if (a.first_name > b.first_name) {
+            return 1;
+          }
+          return 0;
+        }
+      },
+      {
+        title: "Отчетсво",
+        dataIndex: "f_name",
+        sorter: (a, b) => {
+          if (a.f_name < b.f_name) {
+            return -1;
+          }
+          if (a.f_name > b.f_name) {
+            return 1;
+          }
+          return 0;
+        }
+      },
+      {
+        title: "Пол",
+        dataIndex: "sex",
+        align: "center",
+        filters: [
+          { text: "Мужской", value: "man" },
+          { text: "Женский", value: "woman" }
+        ],
+        onFilter: (value, record) => record.sex.indexOf(value) === 0,
+        render: data => {
+          if (data === "woman") {
+            return <FontAwesomeIcon icon={faFemale} className={style.woman} />;
+          } else {
+            return <FontAwesomeIcon icon={faMale} className={style.man} />;
+          }
+        }
+      },
+      {
+        title: "Дата рождения",
+        dataIndex: "birthday",
+        align: "center"
+      },
+      {
+        title: "Телефон",
+        dataIndex: "phone",
+        align: "center",
+        ...this.getColumnSearchProps("по телефону"),
+        onFilter: (value, record) =>
+          record.phone
+            .toString()
+            .toLowerCase()
+            .includes(value.toLowerCase())
+      },
+      {
+        title: "Электронная почта",
+        dataIndex: "email",
+        align: "center",
+        render: data => (
+          <Popover content={data}>
+            <Button icon="mail" type="primary" />
+          </Popover>
+        )
       }
-    }
-  },
-  {
-    title: "Дата рождения",
-    dataIndex: "birthday",
-    align: "center",
-  },
-  {
-    title: "Телефон",
-    dataIndex: "phone",
-    align: "center",
-    ...this.getColumnSearchProps('по телефону'),
-    onFilter: (value, record) => record.phone
-    .toString()
-   .toLowerCase()
-   .includes(value.toLowerCase()),
-  },
-  {
-    title: "Электронная почта",
-    dataIndex: "email",
-    align: "center",
-    render: data => (
-      <Popover content={data}>
-        <Button icon="mail" type="primary" />
-      </Popover>
-    )
-  }
-];
-const rowSelection = {
-  onChange: (selectedRowKeys, selectedRows) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-  }
-};
-
-  return (
-    <Card
-      title="Список студентов"
-      buttons={
-        <React.Fragment>
-          <BigButton icon={faEllipsisH} dropdown content={123} />
-          <BigButton primary icon={faPlus} />
-        </React.Fragment>
+    ];
+    const rowSelection = {
+      onChange: (selectedRowKeys, selectedRows) => {
+        console.log(
+          `selectedRowKeys: ${selectedRowKeys}`,
+          "selectedRows: ",
+          selectedRows
+        );
       }
-    >
-      <Table size="middle" 
-       pagination = {false} 
-       rowSelection={rowSelection}
-       columns={columns}
-       dataSource={data} 
-       bordered />
-    </Card>
-  );
     };
+
+    return (
+      <Card
+        title="Список студентов"
+        buttons={
+          <React.Fragment>
+            <BigButton icon={faEllipsisH} dropdown content={123} />
+            <BigButton primary icon={faPlus} />
+          </React.Fragment>
+        }
+      >
+        <Table
+          size="middle"
+          pagination={false}
+          rowSelection={rowSelection}
+          columns={columns}
+          dataSource={this.state.data}
+          bordered
+        />
+      </Card>
+    );
   }
-  export default Tables;
+}
+export default Tables;
