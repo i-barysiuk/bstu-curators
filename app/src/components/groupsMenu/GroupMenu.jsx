@@ -67,6 +67,7 @@ class GroupCard extends React.Component {
       ? this.removeFromArchive(group)
       : this.addToArchive(group);
   };
+  
 
   render() {
     const {
@@ -101,7 +102,7 @@ class GroupCard extends React.Component {
                     onStarClick={() => this.removeFavorite(group)}
                     onEditClick={() => editGroupRequest({ id: group.id })}
                     onClick={() => this.onGroupClick(group.id)}
-                    onArchiveClick={() => this.addToArchive(group)}
+                    onArchiveClick={() => this.onArchiveClick(group)}
                     course={group.course}
                   />
                 ))
@@ -118,7 +119,7 @@ class GroupCard extends React.Component {
                     key={group.id}
                     group={group.name}
                     onClick={() => this.onGroupClick(group.id)}
-                    onArchiveClick={() => this.addToArchive(group)}
+                    onArchiveClick={() => this.onArchiveClick(group)}
                     course={group.course}
                   />
                 ))
@@ -131,7 +132,7 @@ class GroupCard extends React.Component {
                 {all[keyName].map(group => (
                   <GroupsCard
                     onStarClick={() => this.onStarClick(group)}
-                    onArchiveClick={() => this.addToArchive(group)}
+                    onArchiveClick={() => this.onArchiveClick(group)}
                     onEditClick={() => editGroupRequest({ id: group.id })}
                     key={group.name}
                     onClick={() => this.onGroupClick(group.id)}
@@ -148,6 +149,7 @@ class GroupCard extends React.Component {
               <Collapse icon={faHeart} key={keyName} title={keyName}>
                 {archive[keyName].map(group => (
                   <GroupsCard
+                    archive
                     onArchiveClick={() => this.removeFromArchive(group)}
                     onStarClick={() => this.onStarClick(group)}
                     onEditClick={() => editGroupRequest({ id: group.id })}
