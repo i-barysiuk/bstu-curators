@@ -24,6 +24,7 @@ import {closeGroupModal} from "../../redux/actions/modal"
 import {editGroupEnd} from "../../redux/actions/groups"
 import style from "./style.module.scss"
 import {get} from "lodash"
+import FormItem from "antd/lib/form/FormItem";
 
 const { Step } = Steps;
 const { Option } = Select;
@@ -77,9 +78,9 @@ class GroupForm extends React.Component {
     return value && value.replace(/ /g, "").trim();
   };
 
-  normalizeNumber = value => {
+  normalizeNumber = value => { 
     if(!value || value < 0) return 0;
-    else return value;
+    else return parseInt(value);
   }
 
   normalizeCourse = value => {
@@ -148,7 +149,7 @@ class GroupForm extends React.Component {
       isOpen,
       group
     } = this.props;
-
+    
     const current = this.state.current;
 
     var study = [];
@@ -227,6 +228,7 @@ class GroupForm extends React.Component {
       getFieldValue('nonresident') +
       getFieldValue('foreign')
     );
+    
 
     var locDiff =
     getFieldValue('total') -
@@ -490,9 +492,10 @@ class GroupForm extends React.Component {
             <Panel key="2">
               <Row type="flex">
                 <Col span={14}>
-                  <Form.Item label="Количество человек">
+                  <label className={style.required}>Количество человек:</label>
                     <Row gutter={16}>
                       <Col span={20}>
+                      <Form.Item>
                         {getFieldDecorator("total", {
                           rules: [
                             {
@@ -502,21 +505,24 @@ class GroupForm extends React.Component {
                           ],
                           initialValue: group.totalStudents || 0
                         })(<Slider min={0} max={40} />)}
+                        </Form.Item>
                       </Col>
                       <Col span={4}>
+                      <Form.Item >
                         {getFieldDecorator("total", {
                           rules: [
                             {
-                              required: true
-                            },
-                            {validator:this.validTotal}
+                              required: true,                              
+                            },   
+                            {validator:this.validTotal}                         
                           ],
                           normalize: this.normalizeNumber,
                           initialValue: group.totalStudents || 0
                         })(<InputNumber min={0} max={40} />)}
+                        </Form.Item>
                       </Col>
                     </Row>
-                  </Form.Item>
+                  
                   <Form.Item label="Гендерный состав">
                     <Row gutter={20}>
                       <Col span={1}>
@@ -543,46 +549,41 @@ class GroupForm extends React.Component {
                       </Col>
                     </Row>
                   </Form.Item>
-                  <Form.Item label="Общественные организации">
-                    <Row>
-                      <Col span={6}>
-                        <div className={style.organisations}>
-                        <span>БРСМ</span>
-                        </div>
+                        
+                    <Row>                                         
+                      <Col span={6}>                        
+                        <Form.Item label="БРСМ">
                         {getFieldDecorator("brsm", {
                           normalize: this.normalizeNumber,
                           initialValue: get(group, "community.brsm") || 0
                         })(<InputNumber min={0} max={getFieldValue("total")} />)}
+                         </Form.Item>
                       </Col>
-                      <Col span={6}>
-                        <div className={style.organisations}>
-                        <span>Профком</span>
-                        </div>
+                      <Col span={6}>                  
+                        <Form.Item label="Профком">
                         {getFieldDecorator("profkom", {
                           normalize: this.normalizeNumber,
                           initialValue: get(group, "community.profkom") || 0
                         })(<InputNumber min={0} max={getFieldValue("total")} />)}
+                        </Form.Item>
                       </Col>
-                      <Col span={6}>
-                        <div className={style.organisations}>
-                        <span>Студсовет</span>
-                        </div>
+                      <Col span={6}>                       
+                        <Form.Item label="Студсовет">
                         {getFieldDecorator("studsovet", {
                           normalize: this.normalizeNumber,
                           initialValue: get(group, "community.studsovet") || 0
                         })(<InputNumber min={0} max={getFieldValue("total")} />)}
+                       </Form.Item >  
                       </Col>
-                      <Col span={6}>
-                        <div className={style.organisations}>
-                        <span>Другие</span>
-                        </div>
+                      <Col span={6}>                        
+                        <Form.Item label="Другие">
                         {getFieldDecorator("othersOO", {
                           normalize: this.normalizeNumber,
                           initialValue: get(group, "community.others") || 0
                         })(<InputNumber min={0} max={getFieldValue("total")} />)}
+                        </Form.Item>
                       </Col>
                     </Row>
-                  </Form.Item>
                 </Col>
                 <Col span={10}>
                   <Pie
@@ -642,15 +643,14 @@ class GroupForm extends React.Component {
               </Row>
             </Panel>
             <Panel key="3">
-              <Row type="flex" gutter={20}>
-                <Col span={14}>
-                <span>Состав семьи</span>
-                <Form.Item 
-                label="Полная"
-                validateStatus={is_valid(familyDiff)}
-                >
+              <Row type="flex" gutter={20}>              
+                <Col span={14}>   
+                <div>Состав семьи</div>             
+                <label className={style.required}>Полная:</label>
                     <Row gutter={20}>
                       <Col span={20}>
+                      <Form.Item                         
+                        validateStatus={is_valid(familyDiff)}>
                         {getFieldDecorator("full", {
                           rules: [
                             {
@@ -659,8 +659,10 @@ class GroupForm extends React.Component {
                           ],
                           initialValue: get(group, "family.full") || 0
                         })(<Slider min={0}  max={familyDiff+getFieldValue('full')} />)}
+                        </Form.Item>
                       </Col>
                       <Col span={4}>
+                        <Form.Item>
                         {getFieldDecorator("full", {
                           rules: [
                             {
@@ -674,16 +676,15 @@ class GroupForm extends React.Component {
                         })(
                           <InputNumber min={0} max={familyDiff+getFieldValue('full')}/>
                         )}
+                        </Form.Item>
                       </Col>
-                    </Row>
-                    </Form.Item>
-
-                    <Form.Item 
-                    label="Неполная"
-                    validateStatus={is_valid(familyDiff)}
-                    >
+                    </Row>   
+                    <label className={style.required}>Неполная:</label>
                     <Row gutter={20}>
                       <Col span={20}>
+                    <Form.Item                    
+                    validateStatus={is_valid(familyDiff)}
+                    >                    
                         {getFieldDecorator("notfull", {
                           rules: [
                             {
@@ -697,8 +698,10 @@ class GroupForm extends React.Component {
                             max={familyDiff+getFieldValue('notfull')}
                           />
                         )}
+                        </Form.Item>
                       </Col>
                       <Col span={4}>
+                        <Form.Item>
                         {getFieldDecorator("notfull", {
                           rules: [
                             {
@@ -715,16 +718,15 @@ class GroupForm extends React.Component {
                             max={familyDiff+getFieldValue('notfull')}
                           />
                         )}
+                        </Form.Item>                        
                       </Col>
                     </Row>
-                    </Form.Item>
+                   
 
-                    <Form.Item 
-                    label="Многодетная"
-                    validateStatus={is_valid(familyDiff)}
-                    >
+                    <label className={style.required}>Многодетная:</label>
                     <Row gutter={20}>
                       <Col span={20}>
+                      <Form.Item validateStatus={is_valid(familyDiff)} >
                         {getFieldDecorator("manychild", {
                           rules: [
                             {
@@ -738,8 +740,10 @@ class GroupForm extends React.Component {
                             max={familyDiff+getFieldValue('manychild')}
                           />
                         )}
+                        </Form.Item>
                       </Col>
                       <Col span={4}>
+                        <Form.Item>
                         {getFieldDecorator("manychild", {
                           rules: [
                             {
@@ -756,16 +760,15 @@ class GroupForm extends React.Component {
                             max={familyDiff+getFieldValue('manychild')}
                           />
                         )}
+                        </Form.Item>
                       </Col>
                     </Row>
-                    </Form.Item>
+                    
 
-                    <Form.Item 
-                    label="Сироты"
-                    validateStatus={is_valid(familyDiff)}
-                    >
+                    <label className={style.required}>Сироты:</label>
                     <Row gutter={20}>
                       <Col span={20}>
+                      <Form.Item validateStatus={is_valid(familyDiff)} >
                         {getFieldDecorator("orphan", {
                           rules: [
                             {
@@ -779,8 +782,10 @@ class GroupForm extends React.Component {
                             max={familyDiff+getFieldValue('orphan')}
                           />
                         )}
+                        </Form.Item>
                       </Col>
                       <Col span={4}>
+                        <Form.Item>
                         {getFieldDecorator("orphan", {
                           rules: [
                             {
@@ -797,9 +802,10 @@ class GroupForm extends React.Component {
                             max={familyDiff+getFieldValue('orphan')}
                           />
                         )}
+                        </Form.Item> 
                       </Col>
                     </Row>
-                  </Form.Item> 
+                  
                   <Collapse 
                   className={style.collapsePanel}
                   bordered={false}
@@ -815,10 +821,11 @@ class GroupForm extends React.Component {
                   
                   <Collapse bordered={false}>
                     <Panel header="Социальный статус">
-                      <Form.Item>
+                      
                         <Row>
                           <Col span={19}>Дети сироты (до 18 лет)</Col>
                           <Col span={4}>
+                          <Form.Item>
                             {getFieldDecorator("socOrphan18", {
                               rules: [
                                 {
@@ -833,11 +840,13 @@ class GroupForm extends React.Component {
                                 max={getFieldValue("total")}
                               />
                             )}
+                            </Form.Item>
                           </Col>
                         </Row>
                         <Row>
                           <Col span={19}>Дети без родителей (до 18 лет)</Col>
                           <Col span={4}>
+                            <Form.Item>
                             {getFieldDecorator("socWithoutParents18", {
                               rules: [
                                 {
@@ -852,11 +861,13 @@ class GroupForm extends React.Component {
                                 max={getFieldValue("total")}
                               />
                             )}
+                            </Form.Item>
                           </Col>
                         </Row>
                         <Row>
                           <Col span={19}>Сироты и без родителей (18-23)</Col>
                           <Col span={4}>
+                            <Form.Item>
                             {getFieldDecorator("socOrphans", {
                               rules: [
                                 {
@@ -871,11 +882,13 @@ class GroupForm extends React.Component {
                                 max={getFieldValue("total")}
                               />
                             )}
+                            </Form.Item>
                           </Col>
                         </Row>
                         <Row>
                           <Col span={19}>Особенности развития</Col>
                           <Col span={4}>
+                          <Form.Item>
                             {getFieldDecorator("socFeature", {
                               rules: [
                                 {
@@ -890,11 +903,13 @@ class GroupForm extends React.Component {
                                 max={getFieldValue("total")}
                               />
                             )}
+                            </Form.Item>
                           </Col>
                         </Row>
                         <Row>
                           <Col span={19}>Родители инвалиды</Col>
                           <Col span={4}>
+                          <Form.Item>
                             {getFieldDecorator("socParentsInvalid", {
                               rules: [
                                 {
@@ -909,11 +924,13 @@ class GroupForm extends React.Component {
                                 max={getFieldValue("total")}
                               />
                             )}
+                            </Form.Item>
                           </Col>
                         </Row>
                         <Row>
                           <Col span={19}>Регионы ЧАЭС</Col>
                           <Col span={4}>
+                          <Form.Item>
                             {getFieldDecorator("socCHAES", {
                               rules: [
                                 {
@@ -928,11 +945,13 @@ class GroupForm extends React.Component {
                                 max={getFieldValue("total")}
                               />
                             )}
+                            </Form.Item>
                           </Col>
                         </Row>
                         <Row>
                           <Col span={19}>Семьи из зоны загрязнения</Col>
                           <Col span={4}>
+                          <Form.Item>
                             {getFieldDecorator("socCHAESRegion", {
                               rules: [
                                 {
@@ -947,9 +966,9 @@ class GroupForm extends React.Component {
                                 max={getFieldValue("total")}
                               />
                             )}
+                            </Form.Item>
                           </Col>
-                        </Row>
-                      </Form.Item>
+                        </Row>                      
                     </Panel>
                   </Collapse>
                 </Col>
@@ -988,12 +1007,10 @@ class GroupForm extends React.Component {
             <Panel key="4">
               <Row type="flex" gutter={20}>
                 <Col span={14}>
-                <Form.Item 
-                    label="Местные"
-                    validateStatus={is_valid(geoDiff)}
-                    >
-                    <Row gutter={20}>
-                      <Col span={20}>
+                <label className={style.required}>Местные:</label>
+                <Row gutter={20}>
+                  <Col span={20}>
+                <Form.Item validateStatus={is_valid(geoDiff)} >                    
                         {getFieldDecorator("local", {
                           rules: [
                             {
@@ -1002,8 +1019,10 @@ class GroupForm extends React.Component {
                           ],
                           initialValue: group.geography.local || 0
                         })(<Slider min={0} max={geoDiff+getFieldValue("local")} />)}
+                        </Form.Item>
                       </Col>
                       <Col span={4}>
+                        <Form.Item>
                         {getFieldDecorator("local", {
                           rules: [
                             {
@@ -1015,18 +1034,16 @@ class GroupForm extends React.Component {
                           normalize: this.normalizeNumber,
                           initialValue: group.geography.local || 0
                         })(
-                          <InputNumber min={0} max={geoDiff+getFieldValue("local")} />
+                          <InputNumber min={0} max={parseInt(geoDiff+getFieldValue("local"))} />
                         )}
+                        </Form.Item>
                       </Col>
-                    </Row>
-                    </Form.Item>
+                    </Row>                   
 
-                    <Form.Item 
-                    label="Иногородние"
-                    validateStatus={is_valid(geoDiff)}
-                    >
+                    <label className={style.required}>Иногородние:</label>
                     <Row gutter={20}>
                       <Col span={20}>
+                      <Form.Item validateStatus={is_valid(geoDiff)}  >
                         {getFieldDecorator("nonresident", {
                           rules: [
                             {
@@ -1040,8 +1057,10 @@ class GroupForm extends React.Component {
                             max={geoDiff+getFieldValue("nonresident")}
                           />
                         )}
+                        </Form.Item>
                       </Col>
                       <Col span={4}>
+                        <Form.Item>
                         {getFieldDecorator("nonresident", {
                           rules: [
                             {
@@ -1058,16 +1077,14 @@ class GroupForm extends React.Component {
                             max={geoDiff+getFieldValue("nonresident")}
                           />
                         )}
+                        </Form.Item>
                       </Col>
-                    </Row>
-                    </Form.Item>
+                    </Row>                    
 
-                    <Form.Item 
-                    label="Иностранцы"
-                    validateStatus={is_valid(geoDiff)}
-                    >
+                    <label className={style.required}>Иностранцы:</label>
                     <Row gutter={20}>
                       <Col span={20}>
+                      <Form.Item validateStatus={is_valid(geoDiff)} >
                         {getFieldDecorator("foreign", {
                           rules: [
                             {
@@ -1081,8 +1098,10 @@ class GroupForm extends React.Component {
                             max={geoDiff+getFieldValue("foreign")}
                           />
                         )}
+                        </Form.Item>
                       </Col>
                       <Col span={4}>
+                        <Form.Item>
                         {getFieldDecorator("foreign", {
                           rules: [
                             {
@@ -1099,9 +1118,10 @@ class GroupForm extends React.Component {
                             max={geoDiff+getFieldValue("foreign")}
                           />
                         )}
+                         </Form.Item>
                       </Col>
                     </Row>
-                  </Form.Item>
+                 
                   <Collapse 
                   className={style.collapsePanel}
                   bordered={false}
@@ -1149,13 +1169,13 @@ class GroupForm extends React.Component {
             </Panel>
             <Panel key="5">
               <Row type="flex" gutter={20}>
-                <Col span={14}>
-                  <Form.Item 
-                    label="С родителями"
-                    validateStatus={is_valid(locDiff)}
-                    >
+                <Col span={14}>    
+                <label className={style.required}>С родителями:</label>              
                     <Row gutter={20}>
                       <Col span={20}>
+                      <Form.Item                     
+                    validateStatus={is_valid(locDiff)}
+                    >
                         {getFieldDecorator("parents", {
                           rules: [
                             {
@@ -1164,8 +1184,10 @@ class GroupForm extends React.Component {
                           ],
                           initialValue: group.living.parents || 0
                         })(<Slider min={0} max={getFieldValue("parents")+locDiff} />)}
+                      </Form.Item>
                       </Col>
                       <Col span={4}>
+                        <Form.Item>
                         {getFieldDecorator("parents", {
                           rules: [
                             {
@@ -1178,16 +1200,15 @@ class GroupForm extends React.Component {
                         })(
                           <InputNumber min={0} max={getFieldValue("parents")+locDiff} />
                         )}
+                        </Form.Item>
                       </Col>
                     </Row>
-                    </Form.Item>
+                    
 
-                    <Form.Item 
-                    label="С родственниками"
-                    validateStatus={is_valid(locDiff)}
-                    >
+                    <label className={style.required}>С родственниками:</label>
                     <Row gutter={20}>
                       <Col span={20}>
+                      <Form.Item validateStatus={is_valid(locDiff)} >
                         {getFieldDecorator("relatives", {
                           rules: [
                             {
@@ -1201,8 +1222,10 @@ class GroupForm extends React.Component {
                             max={getFieldValue("relatives")+locDiff}
                           />
                         )}
+                        </Form.Item>
                       </Col>
                       <Col span={4}>
+                        <Form.Item>
                         {getFieldDecorator("relatives", {
                           rules: [
                             {
@@ -1219,16 +1242,14 @@ class GroupForm extends React.Component {
                             max={getFieldValue("relatives")+locDiff}
                           />
                         )}
+                        </Form.Item>
                       </Col>
-                    </Row>
-                    </Form.Item>
+                    </Row>                    
 
-                    <Form.Item 
-                    label="Самостоятельно"
-                    validateStatus={is_valid(locDiff)}
-                    >
+                    <label className={style.required}>Самостоятельно:</label>
                     <Row gutter={20}>
                       <Col span={20}>
+                      <Form.Item validateStatus={is_valid(locDiff)}>
                         {getFieldDecorator("independent", {
                           rules: [
                             {
@@ -1242,8 +1263,10 @@ class GroupForm extends React.Component {
                             max={getFieldValue("independent")+locDiff}
                           />
                         )}
+                        </Form.Item>
                       </Col>
                       <Col span={4}>
+                        <Form.Item>
                         {getFieldDecorator("independent", {
                           rules: [
                             {
@@ -1260,16 +1283,15 @@ class GroupForm extends React.Component {
                             max={getFieldValue("independent")+locDiff}
                           />
                         )}
+                        </Form.Item>
                       </Col>
                     </Row>
-                    </Form.Item>
+                   
 
-                    <Form.Item 
-                    label="В общежитии"
-                    validateStatus={is_valid(locDiff)}
-                    >
+                    <label className={style.required}>В общежитии:</label>
                     <Row gutter={20}>
                       <Col span={20}>
+                      <Form.Item validateStatus={is_valid(locDiff)}>
                         {getFieldDecorator("hostel", {
                           rules: [
                             {
@@ -1283,8 +1305,10 @@ class GroupForm extends React.Component {
                             max={getFieldValue("hostel")+locDiff}
                           />
                         )}
+                        </Form.Item>
                       </Col>
                       <Col span={4}>
+                        <Form.Item>
                         {getFieldDecorator("hostel", {
                           rules: [
                             {
@@ -1301,9 +1325,9 @@ class GroupForm extends React.Component {
                             max={getFieldValue("hostel")+locDiff}
                           />
                         )}
+                        </Form.Item>
                       </Col>
-                    </Row>
-                  </Form.Item>
+                    </Row>                  
 
                   <Collapse 
                   className={style.collapsePanel}
