@@ -38,7 +38,7 @@ const dateConfig = [
 ];
 
 const replaceConfig = [
-  { name: "total", newName: "totalSudents" },
+  { name: "total", newName: "totalStudents" },
   { name: "more", newName: "others" }
 ];
 
