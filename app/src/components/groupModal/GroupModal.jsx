@@ -1437,7 +1437,6 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Срок курса:">
                             {getFieldDecorator("coursePeriod" + item, {
-                              rules: [{type: "array"}],
                               initialValue: formDate("coursePeriod", group[item]) || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
@@ -1445,7 +1444,6 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Зимние каникулы:">
                             {getFieldDecorator("winterHoliday" + item, {
-                              rules: [{type: "array"}],
                               initialValue: formDate("winterHoliday", group[item]) || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
@@ -1455,7 +1453,6 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Зимняя сессия">
                             {getFieldDecorator("winterSession" + item, {
-                              rules: [{type: "array"}],
                               initialValue: formDate("winterSession", group[item]) || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
@@ -1463,7 +1460,6 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Летняя сессия">
                             {getFieldDecorator("summerSession" + item, {
-                              rules: [{type: "array"}],
                               initialValue: formDate("summerSession", group[item]) || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
@@ -1473,7 +1469,6 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Аттестация 1">
                             {getFieldDecorator("attestation1" + item, {
-                              rules: [{type: "array"}],
                               initialValue: formDate("attestation1", group[item]) || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
@@ -1481,7 +1476,6 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Аттестация 2">
                             {getFieldDecorator("attestation2" + item, {
-                              rules: [{type: "array"}],
                               initialValue: formDate("attestation2", group[item]) || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
@@ -1491,7 +1485,6 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Аттестация 3">
                             {getFieldDecorator("attestation3" + item, {
-                              rules: [{type: "array"}],
                               initialValue: formDate("attestation3", group[item]) || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
@@ -1499,7 +1492,6 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Аттестация 4">
                             {getFieldDecorator("attestation4" + item, {
-                              rules: [{type: "array"}],
                               initialValue: formDate("attestation4", group[item]) || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
@@ -1509,7 +1501,6 @@ class GroupForm extends React.Component {
                       <Col>
                           <Form.Item label="Практика">
                             {getFieldDecorator("practice" + item, {
-                              rules: [{type: "array"}],
                               initialValue: formDate("practice", group[item]) || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
