@@ -24,8 +24,6 @@ import {closeGroupModal} from "../../redux/actions/modal"
 import {editGroupEnd} from "../../redux/actions/groups"
 import style from "./style.module.scss"
 import {get} from "lodash"
-import FormItem from "antd/lib/form/FormItem";
-import { array } from "prop-types";
 
 const { Step } = Steps;
 const { Option } = Select;
@@ -243,6 +241,8 @@ class GroupForm extends React.Component {
           getFieldValue('independent') +
           getFieldValue('hostel')
         );
+
+          console.log(getFieldValue('studyPeriod'))
 
     return (
       <Modal
@@ -1437,14 +1437,14 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Срок курса:">
                             {getFieldDecorator("coursePeriod" + item, {
-                              initialValue: formDate("coursePeriod", group[item]) || 0
+                              initialValue: formDate("coursePeriod", group.studyProcess[item]) || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
                         <Col span={12}>
                           <Form.Item label="Зимние каникулы:">
                             {getFieldDecorator("winterHoliday" + item, {
-                              initialValue: formDate("winterHoliday", group[item]) || 0
+                              initialValue: formDate("winterHoliday", group.studyProcess[item]) || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
@@ -1453,14 +1453,14 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Зимняя сессия">
                             {getFieldDecorator("winterSession" + item, {
-                              initialValue: formDate("winterSession", group[item]) || 0
+                              initialValue: formDate("winterSession", group.studyProcess[item]) || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
                         <Col span={12}>
                           <Form.Item label="Летняя сессия">
                             {getFieldDecorator("summerSession" + item, {
-                              initialValue: formDate("summerSession", group[item]) || 0
+                              initialValue: formDate("summerSession", group.studyProcess[item]) || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
@@ -1469,14 +1469,14 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Аттестация 1">
                             {getFieldDecorator("attestation1" + item, {
-                              initialValue: formDate("attestation1", group[item]) || 0
+                              initialValue: formDate("attestation1", group.studyProcess[item]) || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
                         <Col span={12}>
                           <Form.Item label="Аттестация 2">
                             {getFieldDecorator("attestation2" + item, {
-                              initialValue: formDate("attestation2", group[item]) || 0
+                              initialValue: formDate("attestation2", group.studyProcess[item]) || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
@@ -1485,14 +1485,14 @@ class GroupForm extends React.Component {
                         <Col span={12}>
                           <Form.Item label="Аттестация 3">
                             {getFieldDecorator("attestation3" + item, {
-                              initialValue: formDate("attestation3", group[item]) || 0
+                              initialValue: formDate("attestation3", group.studyProcess[item]) || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
                         <Col span={12}>
                           <Form.Item label="Аттестация 4">
                             {getFieldDecorator("attestation4" + item, {
-                              initialValue: formDate("attestation4", group[item]) || 0
+                              initialValue: formDate("attestation4", group.studyProcess[item]) || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
@@ -1501,7 +1501,7 @@ class GroupForm extends React.Component {
                       <Col>
                           <Form.Item label="Практика">
                             {getFieldDecorator("practice" + item, {
-                              initialValue: formDate("practice", group[item]) || 0
+                              initialValue: formDate("practice", group.studyProcess[item]) || 0
                             })(<RangePicker locale={locale} dropdownClassName={style.rangePicker} />)}
                           </Form.Item>
                         </Col>
