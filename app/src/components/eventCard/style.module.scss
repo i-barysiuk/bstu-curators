@@ -15,6 +15,13 @@
   cursor: pointer;
 }
 
+.date {
+  width: 90px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .time {
   width: 40px;
   display: flex;

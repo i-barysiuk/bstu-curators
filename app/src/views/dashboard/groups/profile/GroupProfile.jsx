@@ -2,7 +2,7 @@ import React from "react";
 import style from "./style.module.scss";
 import PageHead from "../../../../components/pageHead/PageHead";
 import BigButton from "../../../../components/common/bigButton/BigButton";
-import { faPen, faEllipsisH, faBorderNone } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { Row, Col } from "antd";
 
 import Timeline from "../../../../components/timeline/Timeline";
@@ -53,7 +53,7 @@ export default class GroupProfile extends React.Component {
             this.props.group.department + " / " + this.props.group.cathedra
           }
         >
-          <BigButton icon={faPen}/>
+          <BigButton icon={faPen} />
           <BigButton icon={faEllipsisH} />
         </PageHead>
 
@@ -84,7 +84,7 @@ export default class GroupProfile extends React.Component {
             />
           </Col>
           <Col sm={10} xs={24}>
-            <EventList />
+            <EventList studyData={this.props.group.studyProcess} />
           </Col>
         </Row>
 
