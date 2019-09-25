@@ -1,9 +1,11 @@
 @import "../../variables/Size.scss", "../../variables/Colors.scss";
 
+$const-height: 50px;
+
 .container {
   padding: $cont-padding;
   width: 100%;
-  height: $cont-height;
+  height: $const-height;
   box-shadow: 0 2px 3px 0 #c7c7c7;
   border-radius: $cont-radius;
   display: flex;
