@@ -1,9 +1,8 @@
 import api from "../helper/api";
 
 class Events {
-  async getAllEvents() {
-    const response = await api("/events/");
-    return response.data;
+  getAllEvents() {
+    return api("/events/");
   }
 
   async addEvent(data) {

@@ -1,12 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import locale from "antd/es/date-picker/locale/ru_RU";
-import { Form, Modal, Row, Col, Input, DatePicker } from "antd";
+import { Form, Modal, Row, Col, Input, DatePicker, Select } from "antd";
 import EventService from "../../services/EventService";
 import { closeEventsModal } from "../../redux/actions/eventModal";
 import style from "./style.module.scss";
 import debounce from "lodash/debounce";
 
+const { Option } = Select;
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
 
@@ -32,7 +33,8 @@ class EventForm extends React.Component {
         place: values.place,
         dataStart: values.eventDate[0],
         dataEnd: values.eventDate[1],
-        description: values.description
+        description: values.description,
+        customIcon: values.type
       };
       try {
         await EventService.addEvent(event);
@@ -102,8 +104,8 @@ class EventForm extends React.Component {
               </Form.Item>
             </Col>
           </Row>
-          <Row>
-            <Col>
+          <Row type="flex" gutter={24}>
+            <Col span={12}>
               <Form.Item label="Место проведения:">
                 {getFieldDecorator("place", {
                   rules: [
@@ -115,6 +117,57 @@ class EventForm extends React.Component {
                   validateTrigger: "onBlur",
                   initialValue: this.state.form.place
                 })(<Input placeholder="Место" />)}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Тип события">
+                {getFieldDecorator("type", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Выберите тип события"
+                    }
+                  ],
+                  initialValue: this.state.form.type,
+                  validateTrigger: "onChange"
+                })(
+                  <Select
+                    dropdownClassName={style.select}
+                    showSearch
+                    placeholder="Выберите..."
+                    optionFilterProp="children"
+                    filterOption={(input, option) =>
+                      option.props.children
+                        .toLowerCase()
+                        .indexOf(input.toLowerCase()) >= 0
+                    }
+                  >
+                    <Option value="Экзамен">Экзамен</Option>
+                    <Option value="Культурно-массовое мероприятие">
+                      Культурно-массовое мероприятие
+                    </Option>
+                    <Option value="Донорство">Донорство</Option>
+                    <Option value="Спортивное мероприятие">
+                      Спортивное мероприятие
+                    </Option>
+                    <Option value="Субботник">Субботник</Option>
+                    <Option value="Отработка">Отработка</Option>
+                    <Option value="Зачисление студента">
+                      Зачисление студента
+                    </Option>
+                    <Option value="Отчисление студента">
+                      Отчисление студента
+                    </Option>
+                    <Option value="Пересдача экзамена">
+                      Пересдача экзамена
+                    </Option>
+                    <Option value="Линейка">Линейка</Option>
+                    <Option value="Собрание">Собрание</Option>
+                    <Option value="Кураторский час">Кураторский час</Option>
+                    <Option value="Военный праздник">Военный праздник</Option>
+                    <Option value="Каникулы">Каникулы</Option>
+                  </Select>
+                )}
               </Form.Item>
             </Col>
           </Row>
@@ -130,7 +183,14 @@ class EventForm extends React.Component {
                     }
                   ],
                   initialValue: this.state.form.eventDate || 0
-                })(<RangePicker locale={locale} />)}
+                })(
+                  <RangePicker
+                    locale={locale}
+                    showTime={{ format: "HH:mm" }}
+                    format="YYYY-MM-DD HH:mm"
+                    placeholder={["Дата начала", "Дата конца"]}
+                  />
+                )}
               </Form.Item>
             </Col>
           </Row>
