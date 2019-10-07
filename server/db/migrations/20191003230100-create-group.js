@@ -14,13 +14,13 @@ module.exports = {
         type: Sequelize.DATE
       },
       curatorId: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.UUID,
+        allowNull: true
       },
-      faculty: {
+      group: {
         type: Sequelize.ENUM(
           "ФЭИС",
-          "ЭФ ",
+          "ЭФ",
           "СФ",
           "МСФ",
           "ФИСЭ",
@@ -69,6 +69,33 @@ module.exports = {
       },
       others: {
         type: Sequelize.TEXT,
+        allowNull: true
+      },
+      course: {
+        type: Sequelize.INTEGER,
+        allowNull: true
+      },
+      department: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      cathedra: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      fullName: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      isActive: {
+        type: Sequelize.BOOLEAN,
+        allowNull: true,
+        defaultValue: false
+      },
+
+      studyProcess: {
+        type: Sequelize.JSON,
+        defaultValue: {},
         allowNull: true
       }
     });

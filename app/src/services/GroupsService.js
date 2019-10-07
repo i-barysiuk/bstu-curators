@@ -6,6 +6,10 @@ class Groups {
     return response.data;
   }
 
+  getAll() {
+    return api("/groups/all_groups");
+  }
+
   async getAllGroups() {
     const response = await api("/groups/all");
     return response.data;
@@ -42,11 +46,11 @@ class Groups {
   async addArchiveGroups({ id }) {
     const response = await api(`/groups/archive/${id}/add_archive`, "PUT");
     return response.data;
-}
+  }
   async removeArchiveGroups({ id }) {
     const response = await api(`/groups/archive/${id}/remove_archive`, "PUT");
     return response.data;
-}
+  }
 }
 
 export default new Groups();

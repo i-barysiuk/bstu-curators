@@ -82,6 +82,10 @@ var User = sequelize.define(
       type: Sequelize.JSON,
       defaultValue: [],
       allowNull: false
+    },
+    imageBase64: {
+      type: Sequelize.STRING,
+      allowNull: true
     }
   },
   {

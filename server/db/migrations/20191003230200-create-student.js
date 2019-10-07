@@ -119,6 +119,10 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false
+      },
+      groupId: {
+        type: Sequelize.UUID,
+        allowNull: false
       }
     });
   },
