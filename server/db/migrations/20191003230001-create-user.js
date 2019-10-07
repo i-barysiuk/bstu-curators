@@ -60,6 +60,33 @@ module.exports = {
         defaultValue: false,
         allowNull: false
       },
+      department: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      position: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      title: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      favoriteGroups: {
+        type: Sequelize.JSON,
+        defaultValue: [],
+        allowNull: true
+      },
+
+      favoriteStudents: {
+        type: Sequelize.JSON,
+        defaultValue: [],
+        allowNull: true
+      },
+      imageBase64: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
       tokens: {
         type: Sequelize.JSON,
         defaultValue: [],

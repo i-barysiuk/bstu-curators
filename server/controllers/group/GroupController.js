@@ -25,6 +25,12 @@ router.get("/all", (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
+router.get("/all_groups", (req, res) => {
+  GroupService.getAll()
+    .then(data => res.status(200).json(data))
+    .catch(err => res.status(500).json(err));
+});
+
 router.get("/archive", (req, res) => {
   GroupService.getArchive()
     .then(data => res.status(200).json(data))

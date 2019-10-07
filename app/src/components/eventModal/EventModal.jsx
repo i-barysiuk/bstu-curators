@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import locale from "antd/es/date-picker/locale/ru_RU";
 import { Form, Modal, Row, Col, Input, DatePicker, Select } from "antd";
+import Groups from "../../services/GroupsService";
 import EventService from "../../services/EventService";
 import { closeEventsModal } from "../../redux/actions/eventModal";
 import style from "./style.module.scss";
@@ -17,8 +18,18 @@ class EventForm extends React.Component {
     this.closingAfterSave = debounce(this.closingAfterSave, 100);
     this.state = {
       validStatus: false,
-      form: {}
+      form: {},
+      data: []
     };
+  }
+
+  componentDidMount() {
+    Groups.getAll().then(response => {
+      var groupsData = response.data.map(item => {
+        return { id: item.id, name: item.name };
+      });
+      this.setState({ data: groupsData });
+    });
   }
 
   save = () => {
@@ -36,6 +47,10 @@ class EventForm extends React.Component {
         description: values.description,
         customIcon: values.type
       };
+      let groupsEvent = {
+        creator: this.props.profileId,
+        eventId: values.eventGroups
+      };
       try {
         await EventService.addEvent(event);
       } catch (e) {
@@ -51,13 +66,22 @@ class EventForm extends React.Component {
     this.props.closeEventsModal();
   };
 
+  selector() {
+    const children = [];
+    for (let i = 0; i < this.state.data.length; i++) {
+      children.push(
+        <Option value={this.state.data[i].id}>{this.state.data[i].name}</Option>
+      );
+    }
+    return children;
+  }
+
   render() {
     const {
       form: { getFieldDecorator },
       isOpen,
       closeEventsModal
     } = this.props;
-
     return (
       <Modal
         width={"70%"}
@@ -190,6 +214,35 @@ class EventForm extends React.Component {
                     format="YYYY-MM-DD HH:mm"
                     placeholder={["Дата начала", "Дата конца"]}
                   />
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Необходимые группы:">
+                {getFieldDecorator("eventGroups", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Пожалуйста, укажите группы"
+                    }
+                  ],
+                  initialValue: this.state.form.eventGroups,
+                  validateTrigger: "onChange"
+                })(
+                  <Select
+                    dropdownClassName={style.select}
+                    showSearch
+                    mode="multiple"
+                    placeholder="Выберите..."
+                    optionFilterProp="children"
+                    filterOption={(input, option) =>
+                      option.props.children
+                        .toLowerCase()
+                        .indexOf(input.toLowerCase()) >= 0
+                    }
+                  >
+                    {this.selector()}
+                  </Select>
                 )}
               </Form.Item>
             </Col>

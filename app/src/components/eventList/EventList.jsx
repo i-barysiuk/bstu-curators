@@ -18,12 +18,6 @@ class EventList extends React.Component {
     };
   }
 
-  // compare = (a, b) => {
-  //   if (a.dataEnd > b.dataEnd) return 1; // если первое значение больше второго
-  //   if (a.dataEnd == b.dataEnd) return 0; // если равны
-  //   if (a.dataEnd < b.dataEnd) return -1; // если первое значение меньше второго
-  // };
-
   componentDidMount() {
     Events.getAllEvents(this.props.events).then(response => {
       var eventsData = response.data.map(item => {
