@@ -7,6 +7,17 @@ module.exports = {
         queryInterface.createTable(
           "groupsEvents",
           {
+            id: {
+              type: Sequelize.UUID,
+              primaryKey: true,
+              defaultValue: Sequelize.UUIDV4
+            },
+            createdAt: {
+              type: Sequelize.DATE
+            },
+            updatedAt: {
+              type: Sequelize.DATE
+            },
             assignAt: {
               type: Sequelize.DATE
             },
@@ -22,6 +33,11 @@ module.exports = {
         queryInterface.createTable(
           "studentsEvents",
           {
+            id: {
+              type: Sequelize.UUID,
+              primaryKey: true,
+              defaultValue: Sequelize.UUIDV4
+            },
             assignAt: {
               type: Sequelize.DATE
             },

@@ -4,6 +4,11 @@ const sequelize = require("../");
 var GroupsEvents = sequelize.define(
   "groupsEvents",
   {
+    id: {
+      type: Sequelize.UUID,
+      primaryKey: true,
+      defaultValue: Sequelize.UUIDV4
+    },
     assignAt: {
       type: Sequelize.DATE
     },
