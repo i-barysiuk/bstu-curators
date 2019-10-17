@@ -94,13 +94,10 @@ class UserService {
     }
 
     setImageBase64(body, id) {
-        return User.update(body, {
+        return User.update({ imageBase64: body.imageUrl }, {
             where: {
                 id
             },
-            defaults: {
-                imageBase64: body.imageUrl
-            }
         });
     }
 
