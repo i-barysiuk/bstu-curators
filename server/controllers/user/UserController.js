@@ -10,6 +10,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/me", (req, res) => {
+    console.log("1");
     UserService.get(req.user.id)
         .then(data => res.status(200).json(data))
         .catch(err => console.error(err));
@@ -62,8 +63,8 @@ router.delete("/:id", (req, res) => {
         });
 });
 
-router.post("/setAvatar/:id", (req, res) => {
-    UserService.setImageBase64(req.body)
+router.post("/setAvatar", (req, res) => {
+    UserService.setImageBase64(req.body, req.user.id)
         .then(user => res.status(201).json(user))
         .catch(err => console.error(err));
 });
