@@ -4,6 +4,9 @@ class Events {
   getAllEvents() {
     return api("/events/");
   }
+  getGroupsEvent(eventId) {
+    return api(`/events/${eventId}`);
+  }
 
   async addEvent(data) {
     const response = await api("/events/", "POST", data);

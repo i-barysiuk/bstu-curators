@@ -6,7 +6,7 @@ import Card from "../common/card/Card";
 import BigButton from "../common/bigButton/BigButton";
 import { faPlus, faFilter } from "@fortawesome/free-solid-svg-icons";
 import { openEventsModal } from "../../redux/actions/eventModal";
-import Events from "../../services/EventService";
+import GroupsEvents from "../../services/GroupsEventService";
 import "moment/locale/ru";
 const moment = require("moment");
 
@@ -18,13 +18,16 @@ class EventList extends React.Component {
     };
   }
 
-  componentDidMount() {
-    Events.getAllEvents(this.props.events).then(response => {
-      var eventsData = response.data.map(item => {
-        return { key: item.id, ...item };
+  componentDidUpdate(prevProps) {
+    if (prevProps.groups !== this.props.groups) {
+      GroupsEvents.getGroupsEvent(this.props.groups).then(response => {
+        console.log(response.data);
+        var eventsData = response.data.map(item => {
+          return { key: item.id, ...item.event };
+        });
+        this.setState({ data: eventsData });
       });
-      this.setState({ data: eventsData });
-    });
+    }
   }
 
   render() {
@@ -41,8 +44,6 @@ class EventList extends React.Component {
         ]}
         contentCenter
       >
-        {/* {this.state.data.sort(this.compare)} */}
-        {/* {console.log(this.state.data)} */}
         <div className={style.cards}>
           {this.state.data.map((item, index) => {
             item.dataStart = moment(item.dataStart);

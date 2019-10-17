@@ -242,8 +242,6 @@ class GroupForm extends React.Component {
           getFieldValue('hostel')
         );
 
-          console.log(getFieldValue('studyPeriod'))
-
     return (
       <Modal
         width={"70%"}

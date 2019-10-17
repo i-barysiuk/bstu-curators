@@ -84,7 +84,10 @@ export default class GroupProfile extends React.Component {
             />
           </Col>
           <Col sm={10} xs={24}>
-            <EventList studyData={this.props.group.studyProcess} />
+            <EventList
+              studyData={this.props.group.studyProcess}
+              groups={this.props.group.id}
+            />
           </Col>
         </Row>
 

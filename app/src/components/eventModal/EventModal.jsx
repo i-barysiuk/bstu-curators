@@ -4,6 +4,8 @@ import locale from "antd/es/date-picker/locale/ru_RU";
 import { Form, Modal, Row, Col, Input, DatePicker, Select } from "antd";
 import Groups from "../../services/GroupsService";
 import EventService from "../../services/EventService";
+import GroupsEventService from "../../services/GroupsEventService";
+
 import { closeEventsModal } from "../../redux/actions/eventModal";
 import style from "./style.module.scss";
 import debounce from "lodash/debounce";
@@ -47,15 +49,25 @@ class EventForm extends React.Component {
         description: values.description,
         customIcon: values.type
       };
-      let groupsEvent = {
-        creator: this.props.profileId,
-        eventId: values.eventGroups
-      };
+      var eventId;
       try {
-        await EventService.addEvent(event);
+        await EventService.addEvent(event).then(data => {
+          eventId = data[0].id;
+        });
       } catch (e) {
         console.log(e);
       }
+      let groupsEvent = {
+        creator: this.props.profileId,
+        eventId: eventId,
+        groupId: values.eventGroups
+      };
+      try {
+        await GroupsEventService.create(groupsEvent);
+      } catch (e) {
+        console.log(e);
+      }
+      // console.log(groupsEvent);
       this.setState({ validStatus: true });
       this.closingAfterSave();
     });

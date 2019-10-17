@@ -4,7 +4,7 @@ const Op = Sequelize.Op;
 
 class EventService {
   get(id) {
-    return Event.findOne({
+    return Event.findAll({
       where: {
         id
       }
