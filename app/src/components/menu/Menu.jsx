@@ -13,7 +13,7 @@ import {
   faBell,
   faIdCard
 } from "@fortawesome/free-solid-svg-icons";
-
+  
 import logoP from "../../assets/images/logos/avatarMax.png";
 import logoK from "../../assets/images/logos/curators.png";
 import { Popover, Badge, Avatar, Button} from "antd";
@@ -52,17 +52,18 @@ class Menu extends React.Component {
           imageUrl,
           loading: false,
         });
-      UsersService.setAvatar(imageUrl);
+      UsersService.setAvatar(this.state.imageUrl);
       }
       );
     }
   };
   
   render() {
+    console.log(this.props.users)
     const uploadButton = (
       <div>
         <Icon type={this.state.loading ? 'loading' : 'plus'} />
-        <div className="ant-upload-text">Upload</div>
+        <div className="ant-upload-text">Загрузить</div>
       </div>
     );
     const { imageUrl } = this.state;
@@ -146,7 +147,7 @@ class Menu extends React.Component {
             content={content}
             title="Профиль"
           >
-            <Avatar src={logoP} className={style.avatar} />
+            <Avatar src={this.props.users && this.props.users.profile && this.props.users.profile.imageBase64} className={style.avatar} />
           </Popover>
         </div>
       </div>
@@ -154,7 +155,7 @@ class Menu extends React.Component {
     );
   }
 }
-const mapStateToProps = ({ auth }) => ({ auth });
+const mapStateToProps = ({ auth, users }) => ({ auth, users });
 const mapDispatchToProps = {
   logout
 };
