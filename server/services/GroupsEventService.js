@@ -1,12 +1,14 @@
 const Sequelize = require("sequelize");
 const GroupsEvent = require("../db/models/GroupsEvents");
+const Events = require("../db/models/Events");
 const Op = Sequelize.Op;
 
 class GroupsEventService {
-  get(id) {
-    return GroupsEvent.findOne({
+  get(groupId) {
+    return GroupsEvent.findAll({
+      include: [{ model: Events }],
       where: {
-        id
+        groupId
       }
     });
   }

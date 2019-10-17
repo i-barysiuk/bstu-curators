@@ -12,20 +12,17 @@ module.exports = {
               primaryKey: true,
               defaultValue: Sequelize.UUIDV4
             },
-            createdAt: {
-              type: Sequelize.DATE
-            },
-            updatedAt: {
-              type: Sequelize.DATE
-            },
+
             assignAt: {
               type: Sequelize.DATE
             },
             groupId: {
-              type: Sequelize.STRING
+              type: Sequelize.UUID,
+              allowNull: false
             },
             eventId: {
-              type: Sequelize.STRING
+              type: Sequelize.UUID,
+              allowNull: false
             }
           },
           { transaction: t }

@@ -1,8 +1,12 @@
 import api from "../helper/api";
 
-class Events {
+class GroupsEvents {
   getAllEvents() {
     return api("/g_events/");
+  }
+
+  getGroupsEvent(groupId) {
+    return api(`/g_events/${groupId}`);
   }
 
   async create(data) {
@@ -11,4 +15,4 @@ class Events {
   }
 }
 
-export default new Events();
+export default new GroupsEvents();
