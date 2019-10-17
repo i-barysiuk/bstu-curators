@@ -10,8 +10,8 @@ class UserService {
         return api("/users/like", "POST", { value: like });
     }
 
-    setAvatar(id, imageUrl) {
-        return api(`/users/setAvatar/${id}`, "POST", { imageUrl: imageUrl });
+    setAvatar(imageUrl) {
+        return api(`/users/setAvatar`, "POST", { imageUrl: imageUrl });
     }
 }
 
