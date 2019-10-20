@@ -21,7 +21,6 @@ class EventList extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.groups !== this.props.groups) {
       GroupsEvents.getGroupsEvent(this.props.groups).then(response => {
-        console.log(response.data);
         var eventsData = response.data.map(item => {
           return { key: item.id, ...item.event };
         });

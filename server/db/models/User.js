@@ -84,7 +84,7 @@ var User = sequelize.define(
       allowNull: false
     },
     imageBase64: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
       allowNull: true
     }
   },
