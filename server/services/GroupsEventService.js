@@ -9,7 +9,8 @@ class GroupsEventService {
       include: [{ model: Events }],
       where: {
         groupId
-      }
+      },
+      order: [[Events, "dataStart", "ASC"]]
     });
   }
 
