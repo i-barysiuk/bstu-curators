@@ -33,13 +33,13 @@ class EventList extends React.Component {
 
   sortEvent = data => {
     var curentDate = new Date();
-    switch (data) {
+     switch (data) {
       case "ALL":
         this.setState({ sortData: this.state.data });
         break;
       case "PAST":
         var pastEvent = this.state.data.filter(item => {
-          if (curentDate > item.dataStart) {
+          if (curentDate > new Date(item.dataEnd)) {
             return { ...item };
           }
           return 0;
@@ -48,12 +48,24 @@ class EventList extends React.Component {
         break;
       case "ACTIVE":
         var activeEvent = this.state.data.filter(item => {
-          if (curentDate < item.dataStart) {
+          if (
+            curentDate > item.dataStart &&
+            curentDate < new Date(item.dataEnd)
+          ) {
             return { ...item };
           }
           return 0;
         });
         this.setState({ sortData: activeEvent });
+        break;
+      case "FUTURE":
+        var futureEvent = this.state.data.filter(item => {
+          if (curentDate < item.dataStart) {
+            return { ...item };
+          }
+          return 0;
+        });
+        this.setState({ sortData: futureEvent });
         break;
       default:
         return this.setState({ sortData: this.state.data });
@@ -88,6 +100,12 @@ class EventList extends React.Component {
                     onClick={() => this.sortEvent("ACTIVE")}
                   >
                     Актуальные
+                  </Radio.Button>
+                  <Radio.Button
+                    value={"FUTURE"}
+                    onClick={() => this.sortEvent("FUTURE")}
+                  >
+                    Будущие
                   </Radio.Button>
                 </Radio.Group>
               </div>
