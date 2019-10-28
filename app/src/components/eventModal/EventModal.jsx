@@ -58,7 +58,6 @@ class EventForm extends React.Component {
         console.log(e);
       }
       let groupsEvent = {
-        creator: this.props.profileId,
         eventId: eventId,
         groupId: values.eventGroups
       };
@@ -67,7 +66,6 @@ class EventForm extends React.Component {
       } catch (e) {
         console.log(e);
       }
-      // console.log(groupsEvent);
       this.setState({ validStatus: true });
       this.closingAfterSave();
     });
