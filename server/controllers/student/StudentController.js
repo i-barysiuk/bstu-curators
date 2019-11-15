@@ -22,6 +22,7 @@ router.get("/group/:id", (req, res) => {
 });
 
 router.post("/", (req, res) => {
+  console.log(req.body);
   StudentService.create(req.body)
     .then(student => res.status(201).json(student))
     .catch(err => console.error(err));

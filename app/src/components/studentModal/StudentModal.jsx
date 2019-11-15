@@ -66,7 +66,7 @@ class EditableCell extends React.Component {
     const pattern = (dataIndex) => {
       switch (dataIndex) {
         case "status": return /(^[А-я]{3,12}$)/;
-        case "full_name": return /(^[А-я ---]{3,40}$)/;
+        case "first_name": return /(^[А-я ---]{3,40}$)/;
         case "position": return /(^[А-я ---]{3,40}$)/;
         case "phone": return /(^[+()0-9---]{6,17}$)/;
         default: return null;
@@ -146,7 +146,7 @@ class StudentForm extends React.Component {
       },
       {
         title: 'ФИО',
-        dataIndex: 'full_name',
+        dataIndex: 'first_name',
         editable: true,
       },
       {
@@ -236,7 +236,7 @@ class StudentForm extends React.Component {
       item => 
       !(
         pattern[0].test(item.status)
-      &&pattern[1].test(item.full_name)
+      &&pattern[1].test(item.first_name)
       &&pattern[2].test(item.position)
       &&pattern[3].test(item.phone)
       )
@@ -296,7 +296,7 @@ class StudentForm extends React.Component {
       {
         valid:
         getFieldError('last_name')
-      ||getFieldError('full_name')
+      ||getFieldError('first_name')
       ||getFieldError('f_name')
       ||getFieldError('position')
       ||getFieldError('faculty')
@@ -323,7 +323,7 @@ class StudentForm extends React.Component {
       },
       {
         valid:
-        getFieldError('hronic_disease')
+        getFieldError('chronic_disease')
       ||getFieldError('health_group')
       ||getFieldError('pe_group')
       },
@@ -393,7 +393,7 @@ class StudentForm extends React.Component {
             </Col>
             <Col span={8} push={4}>
             <Form.Item label="Имя">
-            {getFieldDecorator("full_name", {
+            {getFieldDecorator("first_name", {
                       rules: [
                         {
                           required: true,
@@ -405,7 +405,7 @@ class StudentForm extends React.Component {
                         }
                       ],
                       validateTrigger: "onBlur",
-                      initialValue: this.state.form.full_name
+                      initialValue: this.state.form.first_name
                     })(<Input />)}
             </Form.Item>
             </Col>
@@ -713,7 +713,7 @@ class StudentForm extends React.Component {
             <Row type='flex' gutter={20} style={{paddingTop:30}}>
             <Col span={8} push={2}>
             <Form.Item label="Хронические заболевания">
-                {getFieldDecorator("hronic_disease", {
+                {getFieldDecorator("chronic_disease", {
                           rules: [
                             {
                               required: true,
@@ -725,7 +725,7 @@ class StudentForm extends React.Component {
                             }
                           ],
                           validateTrigger: "onBlur",
-                          initialValue: this.state.form.hronic_disease
+                          initialValue: this.state.form.chronic_disease
                         })(<Input />)}
                 </Form.Item>
                 </Col>

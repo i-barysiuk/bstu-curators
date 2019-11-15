@@ -6,7 +6,7 @@ import Groups from "../../services/GroupsService";
 import EventService from "../../services/EventService";
 import GroupsEventService from "../../services/GroupsEventService";
 
-import { closeEventsModal } from "../../redux/actions/eventModal";
+import { closeEventsModal } from "../../redux/actions/modal";
 import style from "./style.module.scss";
 import debounce from "lodash/debounce";
 
@@ -89,7 +89,7 @@ class EventForm extends React.Component {
   render() {
     const {
       form: { getFieldDecorator },
-      isOpen,
+      eventIsOpen,
       closeEventsModal
     } = this.props;
     return (
@@ -101,7 +101,7 @@ class EventForm extends React.Component {
         destroyOnClose={true}
         maskClosable={false}
         onCancel={() => closeEventsModal()}
-        visible={isOpen}
+        visible={eventIsOpen}
         okText={"Сохранить"}
         cancelText={"Отмена"}
         onOk={this.save}
@@ -284,7 +284,7 @@ const WrappedEventForm = Form.create({ name: "event" })(EventForm);
 
 const mapStateToProps = state => ({
   profileId: state.users.profile.id,
-  isOpen: state.eventModal.isOpen
+  eventIsOpen: state.modal.eventIsOpen
 });
 
 const mapDispatchToProps = {
