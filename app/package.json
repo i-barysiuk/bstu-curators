@@ -13,7 +13,7 @@
     "font-awesome": "^4.7.0",
     "history": "^4.9.0",
     "jsonwebtoken": "^8.5.1",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "react": "^16.8.6",
     "react-chartjs-2": "^2.7.6",
     "react-document-meta": "^3.0.0-beta.2",
